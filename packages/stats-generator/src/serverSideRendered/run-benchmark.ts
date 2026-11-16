@@ -13,8 +13,9 @@ import type {
   ServerSideRenderedRunResult,
 } from './types.ts'
 import { assembleServerRendering } from '../server-rendering.ts'
+import { measurementsConfig } from '../measurements.ts'
 
-const SERVER_SIDE_RENDERED_PATH = '/server-side-rendered'
+const SERVER_SIDE_RENDERED_PATH = measurementsConfig.serverSideRendered.path
 
 function getBrowserVersion(chromiumPath: string): string | undefined {
   try {

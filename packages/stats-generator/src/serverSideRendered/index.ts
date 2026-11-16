@@ -1,5 +1,5 @@
 import { measurementsConfig } from '../measurements.ts'
-import { servingFrameworks } from '../serving-frameworks.ts'
+import { getFrameworks } from '../get-frameworks.ts'
 import { startBenchmarkServer } from '../benchmark-server.ts'
 import { getHost } from '../serve/common.ts'
 import { runBenchmark } from './run-benchmark.ts'
@@ -12,31 +12,41 @@ export async function runServerSideRenderedBenchmark(
   packageName: string,
   runs: number = measurementsConfig.serverSideRendered.runs,
 ): Promise<ServerSideRenderedBenchmarkResult> {
-  const config = servingFrameworks.find((f) => f.package === packageName)
+  const frameworks = (await getFrameworks()).filter(({ app }) =>
+    app?.measurements.includes('serverSideRendered'),
+  )
+  const framework = frameworks.find(({ app }) => app?.package === packageName)
+  const app = framework?.app
 
-  if (!config) {
+  if (!framework || !app) {
     throw new Error(
-      `Unknown server side rendered package: ${packageName}. Available: ${servingFrameworks.map((f) => f.package).join(', ')}`,
+      `Unknown server side rendered package: ${packageName}. Available: ${frameworks.map(({ app }) => app?.package).join(', ')}`,
     )
   }
+  if (!app.serveScript) {
+    throw new Error(`Serve script is not configured for ${packageName}`)
+  }
 
-  console.info(`Starting server for ${config.displayName}...`)
-  const killServer = await startBenchmarkServer(config, {
-    host: SERVER_SIDE_RENDERED_HOST,
-    port: SERVER_SIDE_RENDERED_PORT,
-    readinessPath: '/server-side-rendered',
-  })
+  const name = `${app.benchmarkName ?? framework.name}-server-side-rendered`
+  const displayName = `${framework.displayName} Server Side Rendered`
+  console.info(`Starting server for ${displayName}...`)
+  const killServer = await startBenchmarkServer(
+    { package: packageName, serveScript: app.serveScript },
+    {
+      host: SERVER_SIDE_RENDERED_HOST,
+      port: SERVER_SIDE_RENDERED_PORT,
+      readinessPath: measurementsConfig.serverSideRendered.path,
+    },
+  )
 
   try {
-    console.info(
-      `Running server side rendered benchmark for ${config.displayName}...`,
-    )
+    console.info(`Running server side rendered benchmark for ${displayName}...`)
     return await runBenchmark(
       `http://${SERVER_SIDE_RENDERED_HOST}:${SERVER_SIDE_RENDERED_PORT}`,
-      `${config.package === 'app-next-js' ? 'next' : config.package === 'app-tanstack-start-react' ? 'tanstack-start' : config.package.slice(4)}-server-side-rendered`,
-      config.displayName,
+      name,
+      displayName,
       runs,
-      config.fullDocumentNavigation,
+      app.fullDocumentNavigation ?? false,
     )
   } finally {
     killServer()
