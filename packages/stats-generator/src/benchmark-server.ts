@@ -3,7 +3,6 @@ import { join } from 'node:path'
 import { setTimeout as sleep } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
 import { packagesDir } from './constants.ts'
-import type { ServingFrameworkConfig } from './serving-frameworks.ts'
 
 export async function waitForBenchmarkServer(
   url: string,
@@ -23,7 +22,7 @@ export async function waitForBenchmarkServer(
 }
 
 export async function startBenchmarkServer(
-  config: Pick<ServingFrameworkConfig, 'package' | 'serveScript'>,
+  config: { package: string; serveScript: string },
   options: {
     host: string
     port: number
