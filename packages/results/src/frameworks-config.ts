@@ -7,6 +7,9 @@ export interface TestConfig {
   browserBuildOutputDir?: string
   devServerPort?: number
   measurements: MeasurementName[]
+  serveScript?: string
+  fullDocumentNavigation?: boolean
+  benchmarkName?: string
 }
 
 export interface FrameworkConfig {
@@ -48,6 +51,8 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-astro',
+      serveScript: 'astro.ts',
+      fullDocumentNavigation: true,
       buildScript: 'build',
       buildOutputDir: 'dist',
       measurements: [
@@ -78,6 +83,7 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-next-js',
+      serveScript: 'next.ts',
       buildScript: 'build',
       buildOutputDir: '.next',
       measurements: [
@@ -109,6 +115,7 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-nuxt',
+      serveScript: 'nitro.ts',
       buildScript: 'build',
       buildOutputDir: '.output',
       measurements: [
@@ -140,6 +147,7 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-pracht',
+      serveScript: 'pracht.ts',
       buildScript: 'build',
       buildOutputDir: 'dist',
       measurements: [
@@ -171,6 +179,7 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-react-router',
+      serveScript: 'react-router.ts',
       buildScript: 'build',
       buildOutputDir: 'build',
       measurements: [
@@ -202,6 +211,7 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-solid-start',
+      serveScript: 'nitro.ts',
       buildScript: 'build',
       buildOutputDir: '.output',
       measurements: [
@@ -232,6 +242,7 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-solid',
+      serveScript: 'solid.ts',
       buildScript: 'build',
       buildOutputDir: 'dist',
       measurements: [
@@ -262,6 +273,7 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-sveltekit',
+      serveScript: 'sveltekit.ts',
       buildScript: 'build',
       buildOutputDir: 'build',
       measurements: [
@@ -292,6 +304,8 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-tanstack-start-react',
+      serveScript: 'tanstack-start.ts',
+      benchmarkName: 'tanstack-start',
       buildScript: 'build',
       buildOutputDir: '.output',
       measurements: [

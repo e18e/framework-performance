@@ -1,3 +1,4 @@
+import { measurementsConfig } from '../measurements.ts'
 import { assembleClientRendering } from '../client-rendering.ts'
 import { existsSync, readdirSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
@@ -14,7 +15,7 @@ import type {
   ClientSideRenderedRunResult,
 } from './types.ts'
 
-const CLIENT_SIDE_RENDERED_PATH = '/client-side-rendered'
+const CLIENT_SIDE_RENDERED_PATH = measurementsConfig.clientSideRendered.path
 
 function findChromium(): string {
   if (process.env.CHROME_PATH) return process.env.CHROME_PATH

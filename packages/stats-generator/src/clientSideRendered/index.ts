@@ -3,87 +3,13 @@ import { spawn } from 'node:child_process'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { packagesDir } from '../constants.ts'
+import { getFrameworks } from '../get-frameworks.ts'
 import { getHost } from '../serve/common.ts'
 import { runBenchmark } from './run-benchmark.ts'
 import type { ClientSideRenderedBenchmarkResult } from './types.ts'
 
 const CLIENT_SIDE_RENDERED_HOST = getHost()
 const CLIENT_SIDE_RENDERED_PORT = 3001
-
-interface ClientSideRenderedFrameworkConfig {
-  name: string
-  displayName: string
-  package: string
-  /** Filename of the serve script in src/serve/ */
-  serveScript: string
-  fullDocumentNavigation: boolean
-}
-
-const CLIENT_SIDE_RENDERED_FRAMEWORKS: ClientSideRenderedFrameworkConfig[] = [
-  {
-    name: 'astro-client-side-rendered',
-    displayName: 'Astro Client Side Rendered',
-    package: 'app-astro',
-    serveScript: 'astro.ts',
-    fullDocumentNavigation: true,
-  },
-  {
-    name: 'next-client-side-rendered',
-    displayName: 'Next.js Client Side Rendered',
-    package: 'app-next-js',
-    serveScript: 'next.ts',
-    fullDocumentNavigation: false,
-  },
-  {
-    name: 'nuxt-client-side-rendered',
-    displayName: 'Nuxt Client Side Rendered',
-    package: 'app-nuxt',
-    serveScript: 'nitro.ts',
-    fullDocumentNavigation: false,
-  },
-  {
-    name: 'pracht-client-side-rendered',
-    displayName: 'Pracht Client Side Rendered',
-    package: 'app-pracht',
-    serveScript: 'pracht.ts',
-    fullDocumentNavigation: false,
-  },
-  {
-    name: 'react-router-client-side-rendered',
-    displayName: 'React Router Client Side Rendered',
-    package: 'app-react-router',
-    serveScript: 'react-router.ts',
-    fullDocumentNavigation: false,
-  },
-  {
-    name: 'solid-start-client-side-rendered',
-    displayName: 'SolidStart Client Side Rendered',
-    package: 'app-solid-start',
-    serveScript: 'nitro.ts',
-    fullDocumentNavigation: false,
-  },
-  {
-    name: 'solid-client-side-rendered',
-    displayName: 'Solid 2.0 Client Side Rendered',
-    package: 'app-solid',
-    serveScript: 'solid.ts',
-    fullDocumentNavigation: false,
-  },
-  {
-    name: 'sveltekit-client-side-rendered',
-    displayName: 'SvelteKit Client Side Rendered',
-    package: 'app-sveltekit',
-    serveScript: 'sveltekit.ts',
-    fullDocumentNavigation: false,
-  },
-  {
-    name: 'tanstack-start-client-side-rendered',
-    displayName: 'TanStack Start Client Side Rendered',
-    package: 'app-tanstack-start-react',
-    serveScript: 'tanstack-start.ts',
-    fullDocumentNavigation: false,
-  },
-]
 
 async function waitForServer(url: string, timeoutMs = 30_000): Promise<void> {
   const deadline = Date.now() + timeoutMs
@@ -100,11 +26,12 @@ async function waitForServer(url: string, timeoutMs = 30_000): Promise<void> {
 }
 
 async function spawnServer(
-  config: ClientSideRenderedFrameworkConfig,
+  packageName: string,
+  serveScript: string,
 ): Promise<() => void> {
-  const appDir = join(packagesDir, config.package)
+  const appDir = join(packagesDir, packageName)
   const scriptPath = fileURLToPath(
-    new URL(`../serve/${config.serveScript}`, import.meta.url),
+    new URL(`../serve/${serveScript}`, import.meta.url),
   )
 
   const proc = spawn('node', [scriptPath, appDir], {
@@ -118,17 +45,17 @@ async function spawnServer(
   })
 
   proc.stdout?.on('data', (chunk: Buffer) =>
-    process.stdout.write(`[${config.package}] ${chunk}`),
+    process.stdout.write(`[${packageName}] ${chunk}`),
   )
   proc.stderr?.on('data', (chunk: Buffer) =>
-    process.stderr.write(`[${config.package}] ${chunk}`),
+    process.stderr.write(`[${packageName}] ${chunk}`),
   )
 
   let exited = false
   proc.on('exit', (code) => {
     exited = true
     if (code != null && code !== 0) {
-      console.error(`[${config.package}] server exited with code ${code}`)
+      console.error(`[${packageName}] server exited with code ${code}`)
     }
   })
 
@@ -142,7 +69,7 @@ async function spawnServer(
 
   await Promise.race([
     waitForServer(
-      `http://${CLIENT_SIDE_RENDERED_HOST}:${CLIENT_SIDE_RENDERED_PORT}/client-side-rendered`,
+      `http://${CLIENT_SIDE_RENDERED_HOST}:${CLIENT_SIDE_RENDERED_PORT}${measurementsConfig.clientSideRendered.path}`,
     ),
     exitPromise,
   ])
@@ -156,29 +83,34 @@ export async function runClientSideRenderedBenchmark(
   packageName: string,
   runs: number = measurementsConfig.clientSideRendered.runs,
 ): Promise<ClientSideRenderedBenchmarkResult> {
-  const config = CLIENT_SIDE_RENDERED_FRAMEWORKS.find(
-    (f) => f.package === packageName,
+  const frameworks = (await getFrameworks()).filter(({ app }) =>
+    app?.measurements.includes('clientSideRendered'),
   )
+  const framework = frameworks.find(({ app }) => app?.package === packageName)
+  const app = framework?.app
 
-  if (!config) {
+  if (!framework || !app) {
     throw new Error(
-      `Unknown client-side rendered package: ${packageName}. Available: ${CLIENT_SIDE_RENDERED_FRAMEWORKS.map((f) => f.package).join(', ')}`,
+      `Unknown client-side rendered package: ${packageName}. Available: ${frameworks.map(({ app }) => app?.package).join(', ')}`,
     )
   }
+  if (!app.serveScript) {
+    throw new Error(`Serve script is not configured for ${packageName}`)
+  }
 
-  console.info(`Starting server for ${config.displayName}...`)
-  const killServer = await spawnServer(config)
+  const name = `${app.benchmarkName ?? framework.name}-client-side-rendered`
+  const displayName = `${framework.displayName} Client Side Rendered`
+  console.info(`Starting server for ${displayName}...`)
+  const killServer = await spawnServer(packageName, app.serveScript)
 
   try {
-    console.info(
-      `Running client-side rendered benchmark for ${config.displayName}...`,
-    )
+    console.info(`Running client-side rendered benchmark for ${displayName}...`)
     return await runBenchmark(
       `http://${CLIENT_SIDE_RENDERED_HOST}:${CLIENT_SIDE_RENDERED_PORT}`,
-      config.name,
-      config.displayName,
+      name,
+      displayName,
       runs,
-      config.fullDocumentNavigation,
+      app.fullDocumentNavigation ?? false,
     )
   } finally {
     killServer()
