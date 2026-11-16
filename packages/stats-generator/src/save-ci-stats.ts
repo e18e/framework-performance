@@ -657,11 +657,13 @@ export async function processCIStats(
   }
 
   if (!validateOnly) {
+    const { plainLinksPath: _plainLinksPath, ...ssrLoad } =
+      measurementsConfig.ssrLoad
     for (const { starter, app } of frameworks) {
       const configuration = {
         ...measurementsConfig,
         ssrLoad: {
-          ...measurementsConfig.ssrLoad,
+          ...ssrLoad,
           path: app
             ? getSSRLoadPath(app.package, 'ssrLoad')
             : measurementsConfig.ssrLoad.path,

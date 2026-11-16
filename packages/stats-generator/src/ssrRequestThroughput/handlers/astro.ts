@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url'
 import { packagesDir } from '../../constants.ts'
 import type { ServerRenderHandler } from '../types.ts'
 
-export async function buildAstroHandler(): Promise<ServerRenderHandler> {
+export default async function buildAstroHandler(): Promise<ServerRenderHandler> {
   const entryPath = join(
     packagesDir,
     'app-astro',

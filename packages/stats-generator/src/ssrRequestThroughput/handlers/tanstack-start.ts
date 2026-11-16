@@ -13,7 +13,7 @@ interface NitroGlobal {
   >
 }
 
-export async function buildTanStackStartHandler(): Promise<ServerRenderHandler> {
+export default async function buildTanStackStartHandler(): Promise<ServerRenderHandler> {
   const entryPath = join(
     packagesDir,
     'app-tanstack-start-react',

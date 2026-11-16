@@ -1,13 +1,9 @@
+import { frameworksConfig } from '../frameworks.ts'
+import type { FrameworkConfig } from '../types.ts'
 import { measurementsConfig } from '../measurements.ts'
 
 export type SSRLoadKind = 'ssrLoad' | 'ssrRouterLinkLoad'
-export const routerLinkPackages = new Set([
-  'app-next-js',
-  'app-nuxt',
-  'app-pracht',
-  'app-react-router',
-  'app-tanstack-start-react',
-])
+
 export function getSSRLoadKind(): SSRLoadKind {
   const kind = process.env.SSR_LOAD_KIND ?? 'ssrLoad'
   if (kind !== 'ssrLoad' && kind !== 'ssrRouterLinkLoad')
@@ -15,9 +11,12 @@ export function getSSRLoadKind(): SSRLoadKind {
   return kind
 }
 export function getSSRLoadPath(packageName: string, kind: SSRLoadKind): string {
-  if (kind === 'ssrRouterLinkLoad' && !routerLinkPackages.has(packageName))
+  const frameworks: FrameworkConfig[] = frameworksConfig
+  const app = frameworks.find(({ app }) => app?.package === packageName)?.app
+  const supportsRouterLinks = app?.measurements.includes('ssrRouterLinkLoad')
+  if (kind === 'ssrRouterLinkLoad' && !supportsRouterLinks)
     throw new Error(`Router link load is not supported for ${packageName}`)
-  return kind === 'ssrLoad' && routerLinkPackages.has(packageName)
-    ? '/server-side-rendered-plain-links'
+  return kind === 'ssrLoad' && supportsRouterLinks
+    ? measurementsConfig.ssrLoad.plainLinksPath
     : measurementsConfig[kind].path
 }

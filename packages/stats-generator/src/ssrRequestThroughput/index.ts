@@ -1,124 +1,65 @@
 import { measurementsConfig } from '../measurements.ts'
 import { runBenchmark } from './run-benchmark.ts'
-import { buildAstroHandler } from './handlers/astro.ts'
-import { buildBaselineHtmlHandler } from './handlers/baseline-html.ts'
-import { buildNuxtHandler } from './handlers/nuxt.ts'
-import { buildPrachtHandler } from './handlers/pracht.ts'
-import { buildSvelteKitHandler } from './handlers/sveltekit.ts'
-import { buildNextJSHandler } from './handlers/nextjs.ts'
-import { buildReactRouterHandler } from './handlers/react-router.ts'
-import { buildSolidStartHandler } from './handlers/solid-start.ts'
-import { buildSolidHandler } from './handlers/solid.ts'
-import { buildTanStackStartHandler } from './handlers/tanstack-start.ts'
+import { frameworksConfig } from '../frameworks.ts'
+import type { FrameworkConfig } from '../types.ts'
 import type {
   ServerRenderHandler,
   SSRRequestThroughputBenchmarkResult,
 } from './types.ts'
 
-interface SSRRequestThroughputFrameworkConfig {
-  name: string
-  displayName: string
-  package: string
-  buildHandler: () => Promise<ServerRenderHandler>
-}
-
-const SSR_REQUEST_THROUGHPUT_FRAMEWORKS: SSRRequestThroughputFrameworkConfig[] =
-  [
-    {
-      name: 'baseline-html',
-      displayName: 'Baseline HTML SSR Request Handler Throughput',
-      package: 'app-baseline-html',
-      buildHandler: buildBaselineHtmlHandler,
-    },
-    {
-      name: 'astro-ssr-request-throughput',
-      displayName: 'Astro SSR Request Handler Throughput',
-      package: 'app-astro',
-      buildHandler: buildAstroHandler,
-    },
-    {
-      name: 'nuxt-ssr-request-throughput',
-      displayName: 'Nuxt SSR Request Handler Throughput',
-      package: 'app-nuxt',
-      buildHandler: buildNuxtHandler,
-    },
-    {
-      name: 'sveltekit-ssr-request-throughput',
-      displayName: 'SvelteKit SSR Request Handler Throughput',
-      package: 'app-sveltekit',
-      buildHandler: buildSvelteKitHandler,
-    },
-    {
-      name: 'next-ssr-request-throughput',
-      displayName: 'Next.js SSR Request Handler Throughput',
-      package: 'app-next-js',
-      buildHandler: buildNextJSHandler,
-    },
-    {
-      name: 'pracht-ssr-request-throughput',
-      displayName: 'Pracht SSR Request Handler Throughput',
-      package: 'app-pracht',
-      buildHandler: buildPrachtHandler,
-    },
-    {
-      name: 'react-router-ssr-request-throughput',
-      displayName: 'React Router SSR Request Handler Throughput',
-      package: 'app-react-router',
-      buildHandler: buildReactRouterHandler,
-    },
-    {
-      name: 'solid-start-ssr-request-throughput',
-      displayName: 'SolidStart SSR Request Handler Throughput',
-      package: 'app-solid-start',
-      buildHandler: buildSolidStartHandler,
-    },
-    {
-      name: 'solid-ssr-request-throughput',
-      displayName: 'Solid 2.0 SSR Request Handler Throughput',
-      package: 'app-solid',
-      buildHandler: buildSolidHandler,
-    },
-    {
-      name: 'tanstack-start-ssr-request-throughput',
-      displayName: 'TanStack Start SSR Request Handler Throughput',
-      package: 'app-tanstack-start-react',
-      buildHandler: buildTanStackStartHandler,
-    },
-  ]
+const frameworks: FrameworkConfig[] = frameworksConfig
+const throughputFrameworks = frameworks.filter(({ app }) =>
+  app?.measurements.includes('ssrRequestThroughput'),
+)
 
 export function supportsSSRRequestThroughputBenchmark(
   packageName: string,
 ): boolean {
-  return SSR_REQUEST_THROUGHPUT_FRAMEWORKS.some(
-    (framework) => framework.package === packageName,
-  )
+  return throughputFrameworks.some(({ app }) => app?.package === packageName)
 }
 
 export async function runSSRRequestThroughputBenchmark(
   packageName: string,
   runs: number = measurementsConfig.ssrRequestThroughput.runs,
 ): Promise<SSRRequestThroughputBenchmarkResult> {
-  const config = SSR_REQUEST_THROUGHPUT_FRAMEWORKS.find(
-    (f) => f.package === packageName,
+  const framework = throughputFrameworks.find(
+    ({ app }) => app?.package === packageName,
   )
+  const app = framework?.app
 
-  if (!config) {
+  if (!framework || !app) {
     throw new Error(
-      `Unknown SSR request throughput package: ${packageName}. Available: ${SSR_REQUEST_THROUGHPUT_FRAMEWORKS.map((f) => f.package).join(', ')}`,
+      `Unknown SSR request throughput package: ${packageName}. Available: ${throughputFrameworks.map(({ app }) => app?.package).join(', ')}`,
     )
   }
+  if (!app.throughputHandler) {
+    throw new Error(
+      `SSR request throughput handler is not configured for ${packageName}`,
+    )
+  }
+
+  const name =
+    framework.name === 'baseline-html'
+      ? framework.name
+      : `${app.benchmarkName ?? framework.name}-ssr-request-throughput`
+  const displayName = `${framework.displayName} SSR Request Handler Throughput`
 
   const previousNodeEnv = process.env.NODE_ENV
   process.env.NODE_ENV = 'production'
 
   try {
-    const handler = await config.buildHandler()
+    const {
+      default: buildHandler,
+    }: {
+      default: () => Promise<ServerRenderHandler>
+    } = await import(`./handlers/${app.throughputHandler}`)
+    const handler = await buildHandler()
     const results = await runBenchmark(
       [
         {
-          name: config.name,
-          displayName: config.displayName,
-          package: config.package,
+          name,
+          displayName,
+          package: packageName,
           handler,
         },
       ],

@@ -13,7 +13,7 @@ interface NitroGlobal {
   >
 }
 
-export async function buildSolidStartHandler(): Promise<ServerRenderHandler> {
+export default async function buildSolidStartHandler(): Promise<ServerRenderHandler> {
   const entryPath = join(
     packagesDir,
     'app-solid-start',

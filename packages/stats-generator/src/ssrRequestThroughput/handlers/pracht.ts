@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url'
 import { packagesDir } from '../../constants.ts'
 import type { ServerRenderHandler } from '../types.ts'
 
-export async function buildPrachtHandler(): Promise<ServerRenderHandler> {
+export default async function buildPrachtHandler(): Promise<ServerRenderHandler> {
   const entryPath = join(
     packagesDir,
     'app-pracht',

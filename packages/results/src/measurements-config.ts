@@ -26,7 +26,10 @@ export const measurementsConfig = {
     warmupMinimumRequests: 16,
     path: '/ssr-throughput',
   },
-  ssrLoad: { ...ssrLoad },
+  ssrLoad: {
+    ...ssrLoad,
+    plainLinksPath: '/server-side-rendered-plain-links',
+  },
   ssrRouterLinkLoad: { ...ssrLoad },
   clientSideRendered: {
     runs: 5,
