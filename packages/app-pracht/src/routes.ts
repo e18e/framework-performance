@@ -36,6 +36,14 @@ export const app = defineApp({
         render: 'spa',
       },
     ),
+    route('/ssr-img-jpeg', './routes/ssr-img-jpeg.tsx', {
+      id: 'ssr-img-jpeg',
+      render: 'ssr',
+    }),
+    route('/ssr-img-webp', './routes/ssr-img-webp.tsx', {
+      id: 'ssr-img-webp',
+      render: 'ssr',
+    }),
     route('/ssr-throughput', './routes/ssr-throughput.tsx', {
       id: 'ssr-throughput',
       render: 'ssr',

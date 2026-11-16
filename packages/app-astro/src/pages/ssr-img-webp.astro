@@ -1,0 +1,26 @@
+---
+import {
+  galleryStyle,
+  posterStyle,
+  getSSRImages,
+} from '../../../testdata/src/ssr-images'
+
+export const prerender = false
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>SSR Image Benchmark</title>
+  </head>
+  <body>
+    <main class="ssr-image-gallery" style={galleryStyle}>
+      {
+        getSSRImages('webp').map(({ fetchPriority, ...image }) => (
+          <img style={posterStyle} {...image} fetchpriority={fetchPriority} />
+        ))
+      }
+    </main>
+  </body>
+</html>

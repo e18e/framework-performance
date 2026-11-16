@@ -129,6 +129,34 @@ declare module 'virtual:file-routes' {
       >
     },
     {
+      path: '/ssr-img-jpeg/'
+      page: true
+      $component: FileRouteLazyRef<
+        Pick<
+          typeof import('./src/routes/ssr-img-jpeg/index'),
+          Extract<
+            'default',
+            keyof typeof import('./src/routes/ssr-img-jpeg/index')
+          >
+        >
+      >
+      $$route?: undefined
+    },
+    {
+      path: '/ssr-img-webp/'
+      page: true
+      $component: FileRouteLazyRef<
+        Pick<
+          typeof import('./src/routes/ssr-img-webp/index'),
+          Extract<
+            'default',
+            keyof typeof import('./src/routes/ssr-img-webp/index')
+          >
+        >
+      >
+      $$route?: undefined
+    },
+    {
       path: '/ssr-throughput/'
       page: true
       $component: FileRouteLazyRef<
@@ -183,6 +211,38 @@ declare module 'virtual:file-routes' {
           Extract<
             'default',
             keyof typeof import('./src/routes/initial-load/index')
+          >
+        >
+      >
+      $$route?: undefined
+      children?: undefined
+    },
+    {
+      path: '/ssr-img-jpeg/'
+      id: '/ssr-img-jpeg/'
+      page: true
+      $component: FileRouteLazyRef<
+        Pick<
+          typeof import('./src/routes/ssr-img-jpeg/index'),
+          Extract<
+            'default',
+            keyof typeof import('./src/routes/ssr-img-jpeg/index')
+          >
+        >
+      >
+      $$route?: undefined
+      children?: undefined
+    },
+    {
+      path: '/ssr-img-webp/'
+      id: '/ssr-img-webp/'
+      page: true
+      $component: FileRouteLazyRef<
+        Pick<
+          typeof import('./src/routes/ssr-img-webp/index'),
+          Extract<
+            'default',
+            keyof typeof import('./src/routes/ssr-img-webp/index')
           >
         >
       >

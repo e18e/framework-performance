@@ -14,6 +14,8 @@ import { Route as ClientSideRenderedRouteImport } from './routes/client-side-ren
 import { Route as InitialLoadRouteImport } from './routes/initial-load'
 import { Route as ServerSideRenderedRouteImport } from './routes/server-side-rendered'
 import { Route as ServerSideRenderedPlainLinksRouteImport } from './routes/server-side-rendered-plain-links'
+import { Route as SsrImgJpegRouteImport } from './routes/ssr-img-jpeg'
+import { Route as SsrImgWebpRouteImport } from './routes/ssr-img-webp'
 import { Route as SsrThroughputRouteImport } from './routes/ssr-throughput'
 import { Route as ClientSideRenderedIdRouteImport } from './routes/client-side-rendered_.$id'
 import { Route as ServerSideRenderedIdRouteImport } from './routes/server-side-rendered_.$id'
@@ -44,6 +46,16 @@ const ServerSideRenderedPlainLinksRoute =
     path: '/server-side-rendered-plain-links',
     getParentRoute: () => rootRouteImport,
   } as any)
+const SsrImgJpegRoute = SsrImgJpegRouteImport.update({
+  id: '/ssr-img-jpeg',
+  path: '/ssr-img-jpeg',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SsrImgWebpRoute = SsrImgWebpRouteImport.update({
+  id: '/ssr-img-webp',
+  path: '/ssr-img-webp',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SsrThroughputRoute = SsrThroughputRouteImport.update({
   id: '/ssr-throughput',
   path: '/ssr-throughput',
@@ -66,6 +78,8 @@ export interface FileRoutesByFullPath {
   '/initial-load': typeof InitialLoadRoute
   '/server-side-rendered': typeof ServerSideRenderedRoute
   '/server-side-rendered-plain-links': typeof ServerSideRenderedPlainLinksRoute
+  '/ssr-img-jpeg': typeof SsrImgJpegRoute
+  '/ssr-img-webp': typeof SsrImgWebpRoute
   '/ssr-throughput': typeof SsrThroughputRoute
   '/client-side-rendered/$id': typeof ClientSideRenderedIdRoute
   '/server-side-rendered/$id': typeof ServerSideRenderedIdRoute
@@ -76,6 +90,8 @@ export interface FileRoutesByTo {
   '/initial-load': typeof InitialLoadRoute
   '/server-side-rendered': typeof ServerSideRenderedRoute
   '/server-side-rendered-plain-links': typeof ServerSideRenderedPlainLinksRoute
+  '/ssr-img-jpeg': typeof SsrImgJpegRoute
+  '/ssr-img-webp': typeof SsrImgWebpRoute
   '/ssr-throughput': typeof SsrThroughputRoute
   '/client-side-rendered/$id': typeof ClientSideRenderedIdRoute
   '/server-side-rendered/$id': typeof ServerSideRenderedIdRoute
@@ -87,6 +103,8 @@ export interface FileRoutesById {
   '/initial-load': typeof InitialLoadRoute
   '/server-side-rendered': typeof ServerSideRenderedRoute
   '/server-side-rendered-plain-links': typeof ServerSideRenderedPlainLinksRoute
+  '/ssr-img-jpeg': typeof SsrImgJpegRoute
+  '/ssr-img-webp': typeof SsrImgWebpRoute
   '/ssr-throughput': typeof SsrThroughputRoute
   '/client-side-rendered_/$id': typeof ClientSideRenderedIdRoute
   '/server-side-rendered_/$id': typeof ServerSideRenderedIdRoute
@@ -99,6 +117,8 @@ export interface FileRouteTypes {
     | '/initial-load'
     | '/server-side-rendered'
     | '/server-side-rendered-plain-links'
+    | '/ssr-img-jpeg'
+    | '/ssr-img-webp'
     | '/ssr-throughput'
     | '/client-side-rendered/$id'
     | '/server-side-rendered/$id'
@@ -109,6 +129,8 @@ export interface FileRouteTypes {
     | '/initial-load'
     | '/server-side-rendered'
     | '/server-side-rendered-plain-links'
+    | '/ssr-img-jpeg'
+    | '/ssr-img-webp'
     | '/ssr-throughput'
     | '/client-side-rendered/$id'
     | '/server-side-rendered/$id'
@@ -119,6 +141,8 @@ export interface FileRouteTypes {
     | '/initial-load'
     | '/server-side-rendered'
     | '/server-side-rendered-plain-links'
+    | '/ssr-img-jpeg'
+    | '/ssr-img-webp'
     | '/ssr-throughput'
     | '/client-side-rendered_/$id'
     | '/server-side-rendered_/$id'
@@ -130,6 +154,8 @@ export interface RootRouteChildren {
   InitialLoadRoute: typeof InitialLoadRoute
   ServerSideRenderedRoute: typeof ServerSideRenderedRoute
   ServerSideRenderedPlainLinksRoute: typeof ServerSideRenderedPlainLinksRoute
+  SsrImgJpegRoute: typeof SsrImgJpegRoute
+  SsrImgWebpRoute: typeof SsrImgWebpRoute
   SsrThroughputRoute: typeof SsrThroughputRoute
   ClientSideRenderedIdRoute: typeof ClientSideRenderedIdRoute
   ServerSideRenderedIdRoute: typeof ServerSideRenderedIdRoute
@@ -172,6 +198,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ServerSideRenderedPlainLinksRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ssr-img-jpeg': {
+      id: '/ssr-img-jpeg'
+      path: '/ssr-img-jpeg'
+      fullPath: '/ssr-img-jpeg'
+      preLoaderRoute: typeof SsrImgJpegRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/ssr-img-webp': {
+      id: '/ssr-img-webp'
+      path: '/ssr-img-webp'
+      fullPath: '/ssr-img-webp'
+      preLoaderRoute: typeof SsrImgWebpRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/ssr-throughput': {
       id: '/ssr-throughput'
       path: '/ssr-throughput'
@@ -202,6 +242,8 @@ const rootRouteChildren: RootRouteChildren = {
   InitialLoadRoute: InitialLoadRoute,
   ServerSideRenderedRoute: ServerSideRenderedRoute,
   ServerSideRenderedPlainLinksRoute: ServerSideRenderedPlainLinksRoute,
+  SsrImgJpegRoute: SsrImgJpegRoute,
+  SsrImgWebpRoute: SsrImgWebpRoute,
   SsrThroughputRoute: SsrThroughputRoute,
   ClientSideRenderedIdRoute: ClientSideRenderedIdRoute,
   ServerSideRenderedIdRoute: ServerSideRenderedIdRoute,
