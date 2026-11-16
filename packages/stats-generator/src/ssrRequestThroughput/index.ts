@@ -49,9 +49,9 @@ export async function runSSRRequestThroughputBenchmark(
 
   try {
     const {
-      default: buildHandler,
+      buildHandler,
     }: {
-      default: () => Promise<ServerRenderHandler>
+      buildHandler: () => Promise<ServerRenderHandler>
     } = await import(`./handlers/${app.throughputHandler}`)
     const handler = await buildHandler()
     const results = await runBenchmark(

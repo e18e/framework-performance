@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url'
 import { packagesDir } from '../../constants.ts'
 import type { ServerRenderHandler } from '../types.ts'
 
-export default async function buildSvelteKitHandler(): Promise<ServerRenderHandler> {
+export async function buildHandler(): Promise<ServerRenderHandler> {
   const entryPath = join(packagesDir, 'app-sveltekit', 'build', 'handler.js')
   const entryUrl = pathToFileURL(entryPath).href
   const { handler } = await import(entryUrl)
