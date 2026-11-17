@@ -14,15 +14,17 @@ The production server runs on `PORT`, defaulting to 3000. The benchmark harness
 starts `dist/ssr/index.js` for HTTP and browser tests, and imports
 `dist/ssr/app.js` for in-process request-handler throughput.
 
-| Route                               | Workload                                               |
-| ----------------------------------- | ------------------------------------------------------ |
-| `/server-side-rendered`             | 1,000 server-rendered rows with Void `Link` components |
-| `/server-side-rendered-plain-links` | The same loader and table with ordinary anchors        |
-| `/server-side-rendered/:id`         | Server-rendered detail destination                     |
-| `/ssr-throughput`                   | 1,000 server-rendered rows without links               |
-| `/client-side-rendered`             | 1,000 rows generated and rendered in the browser       |
-| `/client-side-rendered/:id`         | Client-rendered detail destination                     |
-| `/initial-load`                     | The shared landing-page copy, markup, and CSS          |
+| Route                               | Workload                                                  |
+| ----------------------------------- | --------------------------------------------------------- |
+| `/server-side-rendered`             | 1,000 server-rendered rows with Void `Link` components    |
+| `/server-side-rendered-plain-links` | The same loader and table with ordinary anchors           |
+| `/server-side-rendered/:id`         | Server-rendered detail destination                        |
+| `/ssr-throughput`                   | 1,000 server-rendered rows without links                  |
+| `/client-side-rendered`             | 1,000 rows generated and rendered in the browser          |
+| `/client-side-rendered/:id`         | Client-rendered detail destination                        |
+| `/initial-load`                     | The shared landing-page copy, markup, and CSS             |
+| `/ssr-img-jpeg`                     | Three server-rendered JPEG images using native `img` tags |
+| `/ssr-img-webp`                     | The same three images as WebP using native `img` tags     |
 
 Server-rendered tables use `testData()` from `../testdata/src/ssr.ts`. Rows are
 created once per module instance and loaded through its zero-delay timer on
@@ -40,3 +42,7 @@ for production-server and in-process-handler wiring, and
 rendering workloads and paired plain-anchor/router-link routes. The initial-load
 page follows the shared example added in
 [#735](https://github.com/e18e/framework-performance/pull/735).
+
+The image routes follow [the baseline image routes (#874)](https://github.com/e18e/framework-performance/pull/874),
+using the same poster files, dimensions, fetch priority, and shared CSS. Both
+pages use on-demand SSR with the default React hydration behavior.
