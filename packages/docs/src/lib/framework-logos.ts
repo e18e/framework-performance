@@ -57,8 +57,7 @@ export const frameworkBrands: Record<string, FrameworkBrand> = {
   },
   void: {
     logo: {
-      dark: '/framework-logos/void-light.svg',
-      light: '/framework-logos/void.svg',
+      dark: '/framework-logos/void.svg',
       width: 80,
       wordmark: true,
     },
