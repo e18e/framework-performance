@@ -1,3 +1,4 @@
+import { withJokeFramework, withJokeCWV } from './e18e-joke'
 import { INTERACTION_PHASES } from './interaction-phases'
 import { stackGrays } from './chart-styles'
 import { prepareInitialLoadResources } from './initial-load'
@@ -23,12 +24,14 @@ const latest = Object.entries(resultFiles)
 const history = Object.entries(resultFiles)
   .filter(([path]) => path.includes('/versions/'))
   .map(([, result]) => result)
-export const starterStats = latest
-  .filter((result) => result.projects.starter)
-  .map(prepareStarterResult)
-export const ssrRequestThroughputStats = latest
-  .filter((result) => result.projects.app)
-  .map(prepareRuntimeResult)
+export const starterStats = withJokeFramework(
+  latest.filter((result) => result.projects.starter).map(prepareStarterResult),
+  'starter',
+)
+export const ssrRequestThroughputStats = withJokeFramework(
+  latest.filter((result) => result.projects.app).map(prepareRuntimeResult),
+  'app',
+)
 export const starterHistory = history
   .filter((result) => result.projects.starter)
   .map(prepareStarterResult)
@@ -119,7 +122,7 @@ export function getCWVStatsChartData(cwv: CWV, device: Device) {
     }))
 }
 
-const cwvEntries = await getCollection('cwv')
+const cwvEntries = withJokeCWV(await getCollection('cwv'))
 export type Device = 'desktop' | 'mobile'
 
 export const initialLoadSeries = [

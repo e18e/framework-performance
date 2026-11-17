@@ -1,3 +1,4 @@
+import { jokeName } from './e18e-joke.ts'
 import { frameworksConfig } from '@framework-performance/results/frameworks-config'
 
 export type ThemedValue = { dark: string; light?: string }
@@ -9,6 +10,7 @@ export interface FrameworkBrand {
 }
 
 export const frameworkBrands: Record<string, FrameworkBrand> = {
+  'e18e-js': { logo: { dark: '/favicon.svg' }, color: { dark: '#7bb560' } },
   'baseline-html': { logo: { dark: '/framework-logos/html5.svg' } },
   astro: {
     logo: {
@@ -62,6 +64,7 @@ export const frameworkBrands: Record<string, FrameworkBrand> = {
 
 const brandKeyByDisplayName = new Map<string, string>([
   ...frameworksConfig.map((f) => [f.displayName, f.name] as const),
+  [jokeName, 'e18e-js'],
   ['Nuxt.js', 'nuxt'],
   ['Gatsby', 'gatsby'],
   ['WordPress', 'wordpress'],
@@ -81,7 +84,9 @@ export function getBrandByDisplayName(name: string) {
 }
 
 export function getBrandByPackage(packageName: string) {
-  const key = brandKeyByPackage.get(packageName)
+  const key = ['starter-e18e-js', 'app-e18e-js'].includes(packageName)
+    ? 'e18e-js'
+    : brandKeyByPackage.get(packageName)
   return key == null ? undefined : frameworkBrands[key]
 }
 

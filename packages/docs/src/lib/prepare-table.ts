@@ -1,3 +1,4 @@
+import { withJokeFramework, withJokeCWV, jokeName } from './e18e-joke'
 import type { TableColumn } from '../components/StatsTable.astro'
 import type {
   ChartDatum,
@@ -21,13 +22,15 @@ const results = Object.values(resultFiles).sort(
     frameworksConfig.findIndex((f) => f.name === a.framework) -
     frameworksConfig.findIndex((f) => f.name === b.framework),
 )
-const starterStats = results
-  .filter((result) => result.projects.starter)
-  .map(prepareStarterResult)
-const ssrRequestThroughputStats = results
-  .filter((result) => result.projects.app)
-  .map(prepareRuntimeResult)
-const cwvEntries = await getCollection('cwv')
+const starterStats = withJokeFramework(
+  results.filter((result) => result.projects.starter).map(prepareStarterResult),
+  'starter',
+)
+const ssrRequestThroughputStats = withJokeFramework(
+  results.filter((result) => result.projects.app).map(prepareRuntimeResult),
+  'app',
+)
+const cwvEntries = withJokeCWV(await getCollection('cwv'))
 const codeComparisonEntries = await getCollection('codeComparison')
 
 export type Device = 'desktop' | 'mobile'
@@ -208,7 +211,8 @@ export const frameworkDepsStats = starterStats.flatMap((f) => {
   const frameworkPackage = frameworksConfig.find(
     (framework) => framework.starter?.package === f.package,
   )?.frameworkPackage
-  if (dependencies == null || frameworkPackage == null) return []
+  if (dependencies == null || (frameworkPackage == null && f.name !== jokeName))
+    return []
 
   const graphQuery =
     f.frameworkVersion != null && f.frameworkVersion !== 'unknown'
@@ -225,8 +229,11 @@ export const frameworkDepsStats = starterStats.flatMap((f) => {
         dependencies.developmentDependencyCount.value.toLocaleString(),
       productionDependencyCount:
         dependencies.productionDependencyCount.value.toLocaleString(),
-      graph: 'View',
-      graphUrl: `https://npmgraph.js.org/?q=${encodeURIComponent(graphQuery)}`,
+      graph: f.name === jokeName ? 'Joke' : 'View',
+      graphUrl:
+        f.name === jokeName
+          ? '/framework/e18e-js/'
+          : `https://npmgraph.js.org/?q=${encodeURIComponent(graphQuery ?? '')}`,
     },
   ]
 })
