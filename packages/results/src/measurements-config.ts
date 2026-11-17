@@ -28,10 +28,15 @@ export const measurementsConfig = {
   },
   ssrLoad: { ...ssrLoad },
   ssrRouterLinkLoad: { ...ssrLoad },
-  serverSideRendered: {
+  clientSideRendered: {
     runs: 5,
     scenario: interactionScenarioLabel,
     path: '/client-side-rendered',
+  },
+  serverSideRendered: {
+    runs: 5,
+    scenario: interactionScenarioLabel,
+    path: '/server-side-rendered',
   },
   initialLoad: {
     path: '/initial-load',
