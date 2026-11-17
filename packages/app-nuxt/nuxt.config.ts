@@ -1,4 +1,5 @@
 export default defineNuxtConfig({
+  modules: ['@nuxt/image'],
   compatibilityDate: 'latest',
   nitro: {
     compressPublicAssets: process.env.COMPRESS_PUBLIC_ASSETS === 'true',
