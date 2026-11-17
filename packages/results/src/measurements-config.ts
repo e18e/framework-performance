@@ -30,10 +30,10 @@ export const measurementsConfig = {
   ssrRouterLinkLoad: { ...ssrLoad },
   clientSideRendered: {
     runs: 5,
-    scenarioLabel: interactionScenarioLabel,
+    scenario: interactionScenarioLabel,
     path: '/client-side-rendered',
   },
-  serverSideRendered: { runs: 5, scenarioLabel: interactionScenarioLabel },
+  serverSideRendered: { runs: 5, scenario: interactionScenarioLabel },
   initialLoad: {
     path: '/initial-load',
   },
