@@ -65,7 +65,7 @@ runtime configuration details are described in Framework Specific Notes.
 | SolidStart     | Solid                                | Vite                         | Nitro               |
 | SvelteKit      | Svelte                               | Vite                         | Node adapter        |
 | TanStack Start | React                                | Vite                         | Nitro               |
-| Void           | React                                | Vite                         | No runtime app      |
+| Void           | React                                | Vite                         | Node.js (Hono)      |
 | Baseline HTML  | None                                 | No build step                | Node.js             |
 
 Baseline HTML is a runtime-only comparison. Each project's `package.json`
@@ -352,6 +352,7 @@ Current pinned dependencies are listed in each project's `package.json`:
 - [SolidStart](https://github.com/e18e/framework-performance/blob/main/packages/app-solid-start/package.json)
 - [SvelteKit](https://github.com/e18e/framework-performance/blob/main/packages/app-sveltekit/package.json)
 - [TanStack Start (React)](https://github.com/e18e/framework-performance/blob/main/packages/app-tanstack-start-react/package.json)
+- [Void](https://github.com/e18e/framework-performance/blob/main/packages/app-void/package.json)
 - [Baseline HTML](https://github.com/e18e/framework-performance/blob/main/packages/app-baseline-html/package.json)
 
 ### Framework Specific Notes

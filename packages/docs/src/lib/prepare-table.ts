@@ -203,21 +203,11 @@ export const minimumNodeVersionTableData = starterStats.map((f) => ({
     : '—',
 }))
 
-const frameworkPackageNames: Record<string, string> = {
-  'starter-astro': 'astro',
-  'starter-next-js': 'next',
-  'starter-nuxt': 'nuxt',
-  'starter-pracht': '@pracht/core',
-  'starter-react-router': '@react-router/dev',
-  'starter-solid': 'solid-js',
-  'starter-solid-start': '@solidjs/start',
-  'starter-sveltekit': '@sveltejs/kit',
-  'starter-tanstack-start-react': '@tanstack/react-start',
-}
-
 export const frameworkDepsStats = starterStats.flatMap((f) => {
   const dependencies = f.frameworkDependencies
-  const frameworkPackage = frameworkPackageNames[f.package]
+  const frameworkPackage = frameworksConfig.find(
+    (framework) => framework.starter?.package === f.package,
+  )?.frameworkPackage
   if (dependencies == null || frameworkPackage == null) return []
 
   const graphQuery =
