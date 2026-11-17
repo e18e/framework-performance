@@ -8,7 +8,6 @@ export interface TestConfig {
   devServerPort?: number
   measurements: MeasurementName[]
   serveScript?: string
-  throughputHandler?: string
   fullDocumentNavigation?: boolean
   benchmarkName?: string
 }
@@ -28,7 +27,6 @@ export const frameworksConfig = [
     frameworkPackage: 'node',
     app: {
       package: 'app-baseline-html',
-      throughputHandler: 'baseline-html.ts',
       serveScript: 'baseline-html.ts',
       buildScript: 'build',
       buildOutputDir: '.',
@@ -54,7 +52,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-astro',
-      throughputHandler: 'astro.ts',
       serveScript: 'astro.ts',
       fullDocumentNavigation: true,
       buildScript: 'build',
@@ -87,7 +84,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-next-js',
-      throughputHandler: 'nextjs.ts',
       serveScript: 'next.ts',
       buildScript: 'build',
       buildOutputDir: '.next',
@@ -120,7 +116,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-nuxt',
-      throughputHandler: 'nuxt.ts',
       serveScript: 'nitro.ts',
       buildScript: 'build',
       buildOutputDir: '.output',
@@ -153,7 +148,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-pracht',
-      throughputHandler: 'pracht.ts',
       serveScript: 'pracht.ts',
       buildScript: 'build',
       buildOutputDir: 'dist',
@@ -186,7 +180,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-react-router',
-      throughputHandler: 'react-router.ts',
       serveScript: 'react-router.ts',
       buildScript: 'build',
       buildOutputDir: 'build',
@@ -219,7 +212,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-solid-start',
-      throughputHandler: 'solid-start.ts',
       serveScript: 'nitro.ts',
       buildScript: 'build',
       buildOutputDir: '.output',
@@ -251,7 +243,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-solid',
-      throughputHandler: 'solid.ts',
       serveScript: 'solid.ts',
       buildScript: 'build',
       buildOutputDir: 'dist',
@@ -283,7 +274,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-sveltekit',
-      throughputHandler: 'sveltekit.ts',
       serveScript: 'sveltekit.ts',
       buildScript: 'build',
       buildOutputDir: 'build',
@@ -315,7 +305,6 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-tanstack-start-react',
-      throughputHandler: 'tanstack-start.ts',
       serveScript: 'tanstack-start.ts',
       benchmarkName: 'tanstack-start',
       buildScript: 'build',
