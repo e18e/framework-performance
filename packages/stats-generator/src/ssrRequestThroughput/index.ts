@@ -62,10 +62,7 @@ export async function runSSRRequestThroughputBenchmark(
     )
   }
 
-  const name =
-    framework.name === 'baseline-html'
-      ? framework.name
-      : `${app.benchmarkName ?? framework.name}-ssr-request-throughput`
+  const name = `${app.benchmarkName ?? framework.name}-ssr-request-throughput`
   const displayName = `${framework.displayName} SSR Request Handler Throughput`
 
   const previousNodeEnv = process.env.NODE_ENV
