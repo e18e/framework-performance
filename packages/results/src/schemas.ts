@@ -202,7 +202,7 @@ export const LegacySSRRequestThroughputSchema = z.object({
   avgLatency: scalarWithUnit('ms', z.number().nonnegative()),
   medianLatency: scalarWithUnit('ms', z.number().nonnegative()),
   requests: scalarWithUnit('requests', z.number().positive()),
-  bodySize: scalarWithUnit('KiB', z.number().positive()),
+  bodySize: scalarWithUnit('bytes', z.number().int().positive()),
   duplicationFactor: scalarWithUnit('ratio', z.number().nonnegative()),
 })
 
@@ -219,7 +219,7 @@ export const RequestThroughputBenchmarkSchema = createBenchmarkBaseSchema(
     requestThroughput: OperationsPerSecondMetricSchema,
     latency: MillisecondsMetricSchema,
     totalRequests: scalarWithUnit('requests', z.number().int().positive()),
-    bodySize: scalarWithUnit('KiB', z.number().positive()),
+    bodySize: scalarWithUnit('bytes', z.number().int().positive()),
     duplicationFactor: scalarWithUnit('ratio', z.number().nonnegative()),
   })
   .refine(

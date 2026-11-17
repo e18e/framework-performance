@@ -1,7 +1,7 @@
 ---
 import type { ChartMeasurement } from '../../lib/types'
 import {
-  prepareSsrRequestThroughputTestsBodySizeKbHistory,
+  prepareSsrRequestThroughputTestsBodySizeBytesHistory,
   prepareSsrRequestThroughputTestsLatencyMsHistory,
   prepareSsrRequestThroughputTestsOpsPerSecHistory,
 } from '../../lib/prepare-chart'
@@ -18,7 +18,7 @@ const { versions } = Astro.props
   {...prepareSsrRequestThroughputTestsOpsPerSecHistory(versions)}
 />
 <VersionLineChart
-  {...prepareSsrRequestThroughputTestsBodySizeKbHistory(versions)}
+  {...prepareSsrRequestThroughputTestsBodySizeBytesHistory(versions)}
 />
 <VersionLineChart
   {...prepareSsrRequestThroughputTestsLatencyMsHistory(versions)}

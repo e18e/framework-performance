@@ -319,7 +319,7 @@ export const requestThroughputTableData = ssrRequestThroughputStats.flatMap(
         package: f.package,
         requestThroughput: Math.round(tests.requestThroughput).toLocaleString(),
         latency: `${Number(tests.latency.toFixed(3))}${tests.latencyUnit}`,
-        bodySize: `${tests.bodySize.value} ${tests.bodySize.unit}`,
+        bodySize: `${Number((tests.bodySize.value / 1024).toFixed(2))} KiB`,
         duplicationFactor: `${tests.duplicationFactor.value}x`,
       },
     ]

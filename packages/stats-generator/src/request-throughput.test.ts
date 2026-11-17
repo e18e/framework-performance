@@ -7,7 +7,7 @@ import {
 } from './request-throughput.ts'
 
 const responseMetrics = {
-  bodySize: { value: 20.25, unit: 'KiB' as const },
+  bodySize: { value: 20_736, unit: 'bytes' as const },
   duplicationFactor: { value: 1.25, unit: 'ratio' as const },
 }
 function fixture() {

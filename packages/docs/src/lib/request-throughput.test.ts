@@ -32,7 +32,7 @@ const benchmark = {
   },
   latency: { mean: 16, median: 4, min: 4, max: 40, unit: 'ms' },
   totalRequests: { value: 9, unit: 'requests' },
-  bodySize: { value: 20.5, unit: 'KiB' },
+  bodySize: { value: 20_992, unit: 'bytes' },
   duplicationFactor: { value: 1.25, unit: 'ratio' },
 } satisfies NonNullable<FrameworkResult['ssrRequestThroughput']>
 
@@ -65,7 +65,7 @@ test('legacy mean latency remains distinct from the reported request median', ()
     avgLatency: { value: 4, unit: 'ms' },
     medianLatency: { value: 2, unit: 'ms' },
     requests: { value: 64, unit: 'requests' },
-    bodySize: { value: 20, unit: 'KiB' },
+    bodySize: { value: 20_480, unit: 'bytes' },
     duplicationFactor: { value: 1, unit: 'ratio' },
   } satisfies NonNullable<FrameworkResult['ssrRequestThroughput']>
   const normalized = formatThroughput(legacy)

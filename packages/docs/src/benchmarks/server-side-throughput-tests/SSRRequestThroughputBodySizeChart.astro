@@ -1,7 +1,7 @@
 ---
 import {
-  prepareSsrRequestThroughputTestsBodySizeKbComparison,
-  prepareSsrRequestThroughputTestsBodySizeKbMonthlyComparison,
+  prepareSsrRequestThroughputTestsBodySizeBytesComparison,
+  prepareSsrRequestThroughputTestsBodySizeBytesMonthlyComparison,
   runtimeHistory,
   ssrRequestThroughputStats,
 } from '../../lib/prepare-chart'
@@ -11,10 +11,10 @@ import ViewSwitcher from '../../components/ViewSwitcher.astro'
 import ComparisonBarChart from '../../components/ComparisonBarChart.astro'
 import ComparisonLineChart from '../../components/ComparisonLineChart.astro'
 
-const bar = prepareSsrRequestThroughputTestsBodySizeKbComparison(
+const bar = prepareSsrRequestThroughputTestsBodySizeBytesComparison(
   ssrRequestThroughputStats,
 )
-const line = prepareSsrRequestThroughputTestsBodySizeKbMonthlyComparison(
+const line = prepareSsrRequestThroughputTestsBodySizeBytesMonthlyComparison(
   runtimeHistory,
   ssrRequestThroughputStats,
 )

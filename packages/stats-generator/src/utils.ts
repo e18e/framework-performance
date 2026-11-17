@@ -273,7 +273,10 @@ export function normalizeCIStats<T extends CIStats>(stats: T): T {
       avgLatency: { value: legacyStats.ssrAvgLatencyMs, unit: 'ms' },
       medianLatency: { value: legacyStats.ssrMedianLatencyMs, unit: 'ms' },
       requests: { value: legacyStats.ssrSamples, unit: 'requests' },
-      bodySize: { value: legacyStats.ssrBodySizeKb, unit: 'KiB' },
+      bodySize: {
+        value: Math.round(legacyStats.ssrBodySizeKb * 1024),
+        unit: 'bytes',
+      },
       duplicationFactor: {
         value: legacyStats.ssrDuplicationFactor,
         unit: 'ratio',

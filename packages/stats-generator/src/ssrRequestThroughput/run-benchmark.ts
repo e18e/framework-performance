@@ -200,7 +200,7 @@ export async function runBenchmark(
       displayName: config.displayName,
       package: config.package,
       benchmark: assembleRequestThroughput(iterationsByName.get(config.name)!, {
-        bodySize: { value: Number((length / 1024).toFixed(2)), unit: 'KiB' },
+        bodySize: { value: length, unit: 'bytes' },
         duplicationFactor: {
           value: Number(duplicationFactor.toFixed(2)),
           unit: 'ratio',

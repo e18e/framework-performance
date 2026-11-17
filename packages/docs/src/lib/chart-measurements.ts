@@ -661,31 +661,31 @@ export function prepareSsrRequestThroughputTestsOpsPerSecMonthlyComparison(
   )
 }
 
-export function prepareSsrRequestThroughputTestsBodySizeKbHistory(
+export function prepareSsrRequestThroughputTestsBodySizeBytesHistory(
   records: readonly ChartMeasurement[],
 ): VersionLineChartPayload {
   return history(
     metricCatalogue['ssrRequestThroughput.bodySize'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.ssrRequestThroughput?.bodySize?.value),
+      value: finiteValue(record.ssrRequestThroughput?.bodySize?.value, 1024),
     })),
   )
 }
 
-export function prepareSsrRequestThroughputTestsBodySizeKbComparison(
+export function prepareSsrRequestThroughputTestsBodySizeBytesComparison(
   records: readonly ChartMeasurement[],
 ): PreparedComparisonChart {
   return comparison(
     metricCatalogue['ssrRequestThroughput.bodySize'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.ssrRequestThroughput?.bodySize?.value),
+      value: finiteValue(record.ssrRequestThroughput?.bodySize?.value, 1024),
     })),
   )
 }
 
-export function prepareSsrRequestThroughputTestsBodySizeKbMonthlyComparison(
+export function prepareSsrRequestThroughputTestsBodySizeBytesMonthlyComparison(
   history: readonly ChartMeasurement[],
   latest: readonly ChartMeasurement[],
   now?: Date,
@@ -694,7 +694,7 @@ export function prepareSsrRequestThroughputTestsBodySizeKbMonthlyComparison(
     metricCatalogue['ssrRequestThroughput.bodySize'],
     history,
     latest,
-    (record) => finiteValue(record.ssrRequestThroughput?.bodySize?.value),
+    (record) => finiteValue(record.ssrRequestThroughput?.bodySize?.value, 1024),
     now,
   )
 }
