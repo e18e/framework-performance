@@ -11,5 +11,7 @@ export default [
     '/server-side-rendered-plain-links',
     'routes/server-side-rendered-plain-links.tsx',
   ),
+  route('/ssr-img-jpeg', 'routes/ssr-img-jpeg.tsx'),
+  route('/ssr-img-webp', 'routes/ssr-img-webp.tsx'),
   route('/ssr-throughput', 'routes/ssr-throughput.tsx'),
 ] satisfies RouteConfig

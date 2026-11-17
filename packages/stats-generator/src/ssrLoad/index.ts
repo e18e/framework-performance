@@ -2,6 +2,8 @@ import { spawn } from 'node:child_process'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { packagesDir } from '../constants.ts'
+import { frameworksConfig } from '../frameworks.ts'
+import type { FrameworkConfig } from '../types.ts'
 import { getHost, getPort } from '../serve/common.ts'
 import { runLoadTest } from './run-load-test.ts'
 import type { SSRLoadBenchmarkResult } from './types.ts'
@@ -11,104 +13,28 @@ import { verifySSRLoadTable } from './verify-table.ts'
 
 export const DEFAULT_SSR_LOAD_PORT = 3003
 
-interface SSRLoadFrameworkConfig {
-  name: string
-  displayName: string
-  package: string
-  serveScript: string
-}
-
-const SSR_LOAD_FRAMEWORKS: SSRLoadFrameworkConfig[] = [
-  {
-    name: 'baseline-html-ssr-load',
-    displayName: 'Baseline HTML SSR Load',
-    package: 'app-baseline-html',
-    serveScript: 'baseline-html.ts',
-  },
-  {
-    name: 'astro-ssr-load',
-    displayName: 'Astro SSR Load',
-    package: 'app-astro',
-    serveScript: 'astro.ts',
-  },
-  {
-    name: 'next-ssr-load',
-    displayName: 'Next.js SSR Load',
-    package: 'app-next-js',
-    serveScript: 'next.ts',
-  },
-  {
-    name: 'nuxt-ssr-load',
-    displayName: 'Nuxt SSR Load',
-    package: 'app-nuxt',
-    serveScript: 'nitro.ts',
-  },
-  {
-    name: 'pracht-ssr-load',
-    displayName: 'Pracht SSR Load',
-    package: 'app-pracht',
-    serveScript: 'pracht.ts',
-  },
-  {
-    name: 'react-router-ssr-load',
-    displayName: 'React Router SSR Load',
-    package: 'app-react-router',
-    serveScript: 'react-router.ts',
-  },
-  {
-    name: 'solid-start-ssr-load',
-    displayName: 'SolidStart SSR Load',
-    package: 'app-solid-start',
-    serveScript: 'nitro.ts',
-  },
-  {
-    name: 'solid-ssr-load',
-    displayName: 'Solid 2.0 SSR Load',
-    package: 'app-solid',
-    serveScript: 'solid.ts',
-  },
-  {
-    name: 'sveltekit-ssr-load',
-    displayName: 'SvelteKit SSR Load',
-    package: 'app-sveltekit',
-    serveScript: 'sveltekit.ts',
-  },
-  {
-    name: 'tanstack-start-ssr-load',
-    displayName: 'TanStack Start SSR Load',
-    package: 'app-tanstack-start-react',
-    serveScript: 'tanstack-start.ts',
-  },
-  {
-    name: 'void-ssr-load',
-    displayName: 'Void SSR Load',
-    package: 'app-void',
-    serveScript: 'void.ts',
-  },
-]
+const frameworks: FrameworkConfig[] = frameworksConfig
 
 export function supportsSSRLoadBenchmark(packageName: string): boolean {
-  return getFrameworkConfig(packageName) !== undefined
-}
-
-function getFrameworkConfig(
-  packageName: string,
-): SSRLoadFrameworkConfig | undefined {
-  return SSR_LOAD_FRAMEWORKS.find(
-    (framework) => framework.package === packageName,
+  return frameworks.some(
+    ({ app }) =>
+      app?.package === packageName && app.measurements.includes('ssrLoad'),
   )
 }
 
-function requireFrameworkConfig(packageName: string): SSRLoadFrameworkConfig {
-  const config = getFrameworkConfig(packageName)
+function requireFrameworkConfig(packageName: string) {
+  const eligible = frameworks.filter(({ app }) =>
+    app?.measurements.includes('ssrLoad'),
+  )
+  const framework = eligible.find(({ app }) => app?.package === packageName)
+  const app = framework?.app
 
-  if (!config) {
+  if (!framework || !app) {
     throw new Error(
-      `Unknown SSR load package: ${packageName}. Available: ${SSR_LOAD_FRAMEWORKS.map((framework) => framework.package).join(', ')}`,
+      `Unknown SSR load package: ${packageName}. Available: ${eligible.map(({ app }) => app?.package).join(', ')}`,
     )
   }
-
-  return config
+  return { framework, app }
 }
 
 async function waitForServer(url: string, timeoutMs = 30_000): Promise<void> {
@@ -131,17 +57,24 @@ async function waitForServer(url: string, timeoutMs = 30_000): Promise<void> {
 export async function startSSRLoadServer(
   packageName: string,
 ): Promise<() => void> {
-  return spawnServer(requireFrameworkConfig(packageName))
+  const { app } = requireFrameworkConfig(packageName)
+  if (!app.serveScript) {
+    throw new Error(`Serve script is not configured for ${packageName}`)
+  }
+  const path = getSSRLoadPath(packageName, getSSRLoadKind())
+  return spawnServer(packageName, app.serveScript, path)
 }
 
 async function spawnServer(
-  config: SSRLoadFrameworkConfig,
+  packageName: string,
+  serveScript: string,
+  path: string,
 ): Promise<() => void> {
   const host = getHost()
   const port = getPort(DEFAULT_SSR_LOAD_PORT)
-  const appDir = join(packagesDir, config.package)
+  const appDir = join(packagesDir, packageName)
   const scriptPath = fileURLToPath(
-    new URL(`../serve/${config.serveScript}`, import.meta.url),
+    new URL(`../serve/${serveScript}`, import.meta.url),
   )
 
   const proc = spawn('node', [scriptPath, appDir], {
@@ -155,17 +88,17 @@ async function spawnServer(
   })
 
   proc.stdout?.on('data', (chunk: Buffer) =>
-    process.stdout.write(`[${config.package}] ${chunk}`),
+    process.stdout.write(`[${packageName}] ${chunk}`),
   )
   proc.stderr?.on('data', (chunk: Buffer) =>
-    process.stderr.write(`[${config.package}] ${chunk}`),
+    process.stderr.write(`[${packageName}] ${chunk}`),
   )
 
   let exited = false
   proc.on('exit', (code) => {
     exited = true
     if (code != null && code !== 0) {
-      console.error(`[${config.package}] server exited with code ${code}`)
+      console.error(`[${packageName}] server exited with code ${code}`)
     }
   })
 
@@ -178,9 +111,7 @@ async function spawnServer(
   })
 
   await Promise.race([
-    waitForServer(
-      `http://${host}:${port}${getSSRLoadPath(config.package, getSSRLoadKind())}`,
-    ),
+    waitForServer(`http://${host}:${port}${path}`),
     exitPromise,
   ])
 
@@ -192,7 +123,9 @@ async function spawnServer(
 export async function runSSRLoadBenchmark(
   packageName: string,
 ): Promise<SSRLoadBenchmarkResult> {
-  const config = requireFrameworkConfig(packageName)
+  const { framework, app } = requireFrameworkConfig(packageName)
+  const name = `${app.benchmarkName ?? framework.name}-ssr-load`
+  const displayName = `${framework.displayName} SSR Load`
 
   const measuredPath = getSSRLoadPath(packageName, getSSRLoadKind())
   const remoteUrl = process.env.SSR_LOAD_TARGET_URL
@@ -203,13 +136,13 @@ export async function runSSRLoadBenchmark(
     }
 
     url.pathname = measuredPath
-    console.info(`Using remote server for ${config.displayName}: ${url}`)
+    console.info(`Using remote server for ${displayName}: ${url}`)
     await waitForServer(url.toString())
     verifySSRLoadTable(await (await fetch(url)).text())
     return {
-      name: config.name,
-      displayName: config.displayName,
-      package: config.package,
+      name,
+      displayName,
+      package: packageName,
       tests: await runLoadTest(url.toString()),
     }
   }
@@ -217,16 +150,16 @@ export async function runSSRLoadBenchmark(
   const host = getHost()
   const port = getPort(DEFAULT_SSR_LOAD_PORT)
   const url = `http://${host}:${port}${measuredPath}`
-  console.info(`Starting server for ${config.displayName}...`)
+  console.info(`Starting server for ${displayName}...`)
   const killServer = await startSSRLoadServer(packageName)
 
   try {
     verifySSRLoadTable(await (await fetch(url)).text())
-    console.info(`Running SSR load benchmark for ${config.displayName}...`)
+    console.info(`Running SSR load benchmark for ${displayName}...`)
     return {
-      name: config.name,
-      displayName: config.displayName,
-      package: config.package,
+      name,
+      displayName,
+      package: packageName,
       tests: await runLoadTest(url),
     }
   } finally {

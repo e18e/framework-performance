@@ -1,6 +1,6 @@
 import { getFrameworks } from './get-frameworks.ts'
 import { startSSRLoadServer } from './ssrLoad/index.ts'
-import { getSSRLoadPath, routerLinkPackages } from './ssrLoad/config.ts'
+import { getSSRLoadPath } from './ssrLoad/config.ts'
 import { verifySSRLoadTable } from './ssrLoad/verify-table.ts'
 
 // Validate production builds without measuring or writing benchmark results.
@@ -9,11 +9,13 @@ process.env.PORT = '3003'
 process.env.SSR_LOAD_KIND = 'ssrLoad'
 const selected = process.argv.slice(2)
 for (const framework of await getFrameworks()) {
-  const pkg = framework.app?.package
-  if (!pkg || (selected.length && !selected.includes(pkg))) continue
+  const { app } = framework
+  if (!app?.measurements.includes('ssrLoad')) continue
+  const pkg = app.package
+  if (selected.length && !selected.includes(pkg)) continue
   const stop = await startSSRLoadServer(pkg)
   try {
-    const kinds = routerLinkPackages.has(pkg)
+    const kinds = app.measurements.includes('ssrRouterLinkLoad')
       ? (['ssrLoad', 'ssrRouterLinkLoad'] as const)
       : (['ssrLoad'] as const)
     for (const kind of kinds) {

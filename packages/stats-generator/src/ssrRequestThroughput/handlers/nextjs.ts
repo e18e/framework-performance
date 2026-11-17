@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url'
 import { packagesDir } from '../../constants.ts'
 import type { NodeServerRenderHandler, ServerRenderHandler } from '../types.ts'
 
-export async function buildNextJSHandler(): Promise<ServerRenderHandler> {
+export async function buildHandler(): Promise<ServerRenderHandler> {
   const appDir = join(packagesDir, 'app-next-js')
   const nextEntryPath = join(
     appDir,

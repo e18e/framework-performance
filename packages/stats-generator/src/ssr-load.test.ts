@@ -6,7 +6,7 @@ import { SSRLoadTestsSchema } from '@framework-performance/results'
 import assert from 'node:assert/strict'
 import { readProjectResult } from '@framework-performance/results/storage'
 import { test } from 'node:test'
-import { getSSRLoadPath, routerLinkPackages } from './ssrLoad/config.ts'
+import { getSSRLoadPath } from './ssrLoad/config.ts'
 import { mergeSSRLoadArtifact } from './ssrLoad/merge.ts'
 import { verifySSRLoadTable } from './ssrLoad/verify-table.ts'
 import { renderBaselineHtml } from './baseline-html.ts'
@@ -81,7 +81,13 @@ test('load peak fails explicitly when no stage qualifies', () => {
 })
 
 test('routes and result keys separate the two load tests', () => {
-  for (const pkg of routerLinkPackages) {
+  for (const pkg of [
+    'app-next-js',
+    'app-nuxt',
+    'app-pracht',
+    'app-react-router',
+    'app-tanstack-start-react',
+  ]) {
     assert.equal(
       getSSRLoadPath(pkg, 'ssrLoad'),
       '/server-side-rendered-plain-links',

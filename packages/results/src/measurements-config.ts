@@ -8,7 +8,7 @@ const ssrLoad = {
   path: '/server-side-rendered',
 } as const
 
-const interactionScenario = 'first-row-detail-navigation'
+const interactionScenarioLabel = 'first-row-detail-navigation'
 
 /** Shared defaults for every framework. Scans run once; benchmarks repeat. */
 export const measurementsConfig = {
@@ -26,10 +26,21 @@ export const measurementsConfig = {
     warmupMinimumRequests: 16,
     path: '/ssr-throughput',
   },
-  ssrLoad: { ...ssrLoad },
+  ssrLoad: {
+    ...ssrLoad,
+    plainLinksPath: '/server-side-rendered-plain-links',
+  },
   ssrRouterLinkLoad: { ...ssrLoad },
-  clientSideRendered: { runs: 5, scenario: interactionScenario },
-  serverSideRendered: { runs: 5, scenario: interactionScenario },
+  clientSideRendered: {
+    runs: 5,
+    scenario: interactionScenarioLabel,
+    path: '/client-side-rendered',
+  },
+  serverSideRendered: {
+    runs: 5,
+    scenario: interactionScenarioLabel,
+    path: '/server-side-rendered',
+  },
   initialLoad: {
     path: '/initial-load',
   },

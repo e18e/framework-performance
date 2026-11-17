@@ -3,7 +3,7 @@ import { pathToFileURL } from 'node:url'
 import { packagesDir } from '../../constants.ts'
 import type { ServerRenderHandler } from '../types.ts'
 
-export async function buildNuxtHandler(): Promise<ServerRenderHandler> {
+export async function buildHandler(): Promise<ServerRenderHandler> {
   const entryUrl = pathToFileURL(
     join(packagesDir, 'app-nuxt', '.output', 'server', 'index.mjs'),
   ).href
