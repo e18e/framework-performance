@@ -339,6 +339,7 @@ export const frameworksConfig = [
     },
     app: {
       package: 'app-void',
+      serveScript: 'void.ts',
       buildScript: 'build',
       buildOutputDir: 'dist',
       measurements: [
