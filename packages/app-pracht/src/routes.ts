@@ -40,6 +40,11 @@ export const app = defineApp({
       id: 'ssr-img-jpeg',
       render: 'ssr',
     }),
+    route(
+      '/ssr-img-jpeg-image-component',
+      './routes/ssr-img-jpeg-image-component.tsx',
+      { id: 'ssr-img-jpeg-image-component', render: 'ssr' },
+    ),
     route('/ssr-img-webp', './routes/ssr-img-webp.tsx', {
       id: 'ssr-img-webp',
       render: 'ssr',
