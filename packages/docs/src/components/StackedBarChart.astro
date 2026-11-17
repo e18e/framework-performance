@@ -130,7 +130,6 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
     SHARED_CHART_HEIGHT,
     formatChartValue,
     getFrameworkLogoSource,
-    getFrameworkLogoWidth,
   } from '../lib/chart'
   import type { ChartValueFormat } from '../lib/types'
   interface Segment {
@@ -191,7 +190,6 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
             if (logo instanceof HTMLImageElement) {
               logo.src = source!
               logo.alt = row.name
-              logo.style.width = `${getFrameworkLogoWidth(row.name)}px`
             } else {
               logo.className = 'logo-fallback'
               logo.textContent = row.name.slice(0, 1)
@@ -207,16 +205,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
         const format = (value: number) =>
           formatChartValue(value, payload.valueFormat)
         const definition = defineChart({
-          margin: {
-            left:
-              Math.max(
-                20,
-                ...rows.map((row) => getFrameworkLogoWidth(row.name)),
-              ) + 16,
-            right: 0,
-            top: 12,
-            bottom: 0,
-          },
+          margin: { left: 36, right: 0, top: 12, bottom: 0 },
           focusRing: false,
           marks: [
             ...segments

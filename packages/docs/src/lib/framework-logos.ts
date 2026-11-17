@@ -1,10 +1,7 @@
 import { frameworksConfig } from '@framework-performance/results/frameworks-config'
 
 export type ThemedValue = { dark: string; light?: string }
-export type FrameworkLogo = ThemedValue & {
-  width?: number
-  wordmark?: boolean
-}
+export type FrameworkLogo = ThemedValue
 
 export interface FrameworkBrand {
   logo: FrameworkLogo
@@ -56,11 +53,7 @@ export const frameworkBrands: Record<string, FrameworkBrand> = {
     color: { dark: '#FFA05C' },
   },
   void: {
-    logo: {
-      dark: '/framework-logos/void.svg',
-      width: 80,
-      wordmark: true,
-    },
+    logo: { dark: '/framework-logos/void.svg' },
   },
   // Not benchmarked, but shown in the Core Web Vitals charts.
   gatsby: { logo: { dark: '/framework-logos/gatsby.svg' } },

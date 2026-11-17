@@ -39,7 +39,3 @@ export function getFrameworkLogoSource(name: string) {
     ? undefined
     : resolveThemedValue(brand.logo, document.documentElement.dataset.theme)
 }
-
-export function getFrameworkLogoWidth(name: string) {
-  return getBrandByDisplayName(name)?.logo.width ?? 20
-}

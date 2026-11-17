@@ -109,7 +109,6 @@ const chartPayload = JSON.stringify({
     width: 20px;
     height: 20px;
     margin: 0;
-    object-fit: contain;
     transform: translate(-100%, -50%);
   }
 
@@ -138,7 +137,6 @@ const chartPayload = JSON.stringify({
     SHARED_CHART_HEIGHT,
     formatChartValue,
     getFrameworkLogoSource,
-    getFrameworkLogoWidth,
   } from '../lib/chart'
   import { highlightedGray, primaryGray } from '../lib/chart-styles'
   import type { ChartDatum, ComparisonChartPayload } from '../lib/types'
@@ -150,6 +148,7 @@ const chartPayload = JSON.stringify({
   type RenderContext = ChartRenderContext<ChartDatum, number, string>
 
   const LOGO_SIZE = 20
+  const LOGO_MARGIN = LOGO_SIZE + 16
   const BAND_PADDING = 0.18
   const hosts = new WeakMap<
     HTMLElement,
@@ -190,9 +189,8 @@ const chartPayload = JSON.stringify({
         logo.src = source
         logo.alt = name
         logo.title = name
-        logo.width = getFrameworkLogoWidth(name)
+        logo.width = LOGO_SIZE
         logo.height = LOGO_SIZE
-        logo.style.width = `${logo.width}px`
         return logo
       }),
     )
@@ -253,7 +251,7 @@ const chartPayload = JSON.stringify({
 
     const definition = defineChart({
       margin: {
-        left: Math.max(LOGO_SIZE, ...names.map(getFrameworkLogoWidth)) + 16,
+        left: LOGO_MARGIN,
         top: 12,
         bottom: variance ? 32 : 0,
       },

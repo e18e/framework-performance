@@ -8,16 +8,14 @@ function getFrameworkTitle(name: string, packageName: string) {
   if (logo == null) {
     visual = `<span class="framework-card-symbol" aria-hidden="true">◼</span>`
   } else {
-    const width = logo.width == null ? '' : ` style="width:${logo.width}px"`
-    const dark = `<img class="framework-card-logo${logo.light != null ? ' framework-logo--dark' : ''}" src="${logo.dark}" alt=""${width} />`
+    const dark = `<img class="framework-card-logo${logo.light != null ? ' framework-logo--dark' : ''}" src="${logo.dark}" alt="" />`
     const light =
       logo.light != null
-        ? `<img class="framework-card-logo framework-logo--light" src="${logo.light}" alt=""${width} />`
+        ? `<img class="framework-card-logo framework-logo--light" src="${logo.light}" alt="" />`
         : ''
     visual = dark + light
   }
-  const labelClass = logo?.wordmark ? ' class="sr-only"' : ''
-  return `<span class="framework-card-title">${visual}<span${labelClass}>${name}</span></span>`
+  return `<span class="framework-card-title">${visual}<span>${name}</span></span>`
 }
 
 export const frameworkRows = starterStats.map((framework) => ({
