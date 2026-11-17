@@ -58,12 +58,16 @@ const tabs = await Promise.all(
                 ]}
                 src={logo.dark}
                 alt=""
+                style={logo.width == null ? undefined : `width:${logo.width}px`}
               />
               {logo.light != null && (
                 <img
                   class="code-comparison-logo framework-logo--light"
                   src={logo.light}
                   alt=""
+                  style={
+                    logo.width == null ? undefined : `width:${logo.width}px`
+                  }
                 />
               )}
             </Fragment>
