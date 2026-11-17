@@ -109,7 +109,7 @@ async function main() {
         'starter-nuxt',
         'starter-sveltekit',
         'starter-tanstack-start-react',
-        // 'starter-void',
+        'starter-void',
       ].includes(packageName)
     ) {
       for (const features of featuresByFile.values())
