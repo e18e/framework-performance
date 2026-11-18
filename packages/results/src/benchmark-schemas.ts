@@ -231,7 +231,7 @@ const SSRThroughputBenchmark = BaseBenchmark.extend({
   requestThroughput: createIterationSummary('ops/s'),
   latency: createIterationSummary('ms'),
   requests: createValueWithUnit('requests', z.number().int().nonnegative()),
-  bodySize: createValueWithUnit('KiB', z.number().int().nonnegative()),
+  bodySize: createValueWithUnit('KiB', z.number().positive()),
   duplicationFactor: createValueWithUnit('ratio', z.number().nonnegative()),
 })
 
@@ -280,7 +280,10 @@ const SSRLoadBenchmark = BaseBenchmark.extend({
     }),
   ),
   representativeIterationIndex: z.number().int().nonnegative(),
-  totalRequests: createValueWithUnit('requests', z.number().int().nonnegative()),
+  totalRequests: createValueWithUnit(
+    'requests',
+    z.number().int().nonnegative(),
+  ),
   totalErrors: createValueWithUnit('errors', z.number().int().nonnegative()),
   stage1: SSRLoadStageSummary,
   stage2: SSRLoadStageSummary,
@@ -295,28 +298,47 @@ const SSRLoadRouterLinksBenchmark = SSRLoadBenchmark.extend({
   name: z.literal('ssrLoadRouterLinks'),
 })
 
-export const FrameworkBenchmarkResults = z.object({
+export const HTMLBaselineBenchmarkResult = z.object({
   framework: z.enum(FrameworkOptions),
   timingMeasuredAt: z.iso.datetime(),
   projects: z.record(z.enum(FrameworkProjectOptions), Project.nullable()),
   runner: z.string(),
   browserVersion: z.string(),
+  benchmarks: z.object({
+    csrLighthouse: CSRLighthouseBenchmark,
+    ssrLighthouse: SSRLighthouseBenchmark,
+    ssrInitialLoad: SSRInitialLoadBenchmark,
+    ssrThroughput: SSRThroughputBenchmark,
+    ssrLoad: SSRLoadBenchmark,
+  }),
+
+  // Comes from packages/results/src/measurements-config.ts so leave as flexible type as this can change and is only needed as record
+  configuration: z.record(z.string(), z.unknown()),
+})
+
+export const MetaFrameworkBenchmarkResults = z.object({
+  framework: z.enum(FrameworkOptions),
+  timingMeasuredAt: z.iso.datetime(),
+  projects: z.record(z.enum(FrameworkProjectOptions), Project),
+  runner: z.string(),
+  browserVersion: z.string(),
   frameworkVersion: z.string(),
   frameworkReleasedAt: z.string(),
-  benchmarks: z.object({}),
-  dependencyCounts: DependencyCountBenchmark,
-  buildDuration: BuildBenchmark,
-  installDuration: InstallBenchmark,
-  devServerStartUpDuration: DevServerStartupBenchmark,
-  coreJS: CoreJsBenchmark,
-  browserBaseline: BrowserBaselineBenchmark,
-  minimumNodeVersion: MinimumNodeVersionBenchmark,
-  csrLighthouse: CSRLighthouseBenchmark,
-  ssrLighthouse: SSRLighthouseBenchmark,
-  ssrInitialLoad: SSRInitialLoadBenchmark,
-  ssrThroughput: SSRThroughputBenchmark,
-  ssrLoad: SSRLoadBenchmark,
-  ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark,
+  benchmarks: z.object({
+    dependencyCounts: DependencyCountBenchmark,
+    buildDuration: BuildBenchmark,
+    installDuration: InstallBenchmark,
+    devServerStartUpDuration: DevServerStartupBenchmark,
+    coreJS: CoreJsBenchmark,
+    browserBaseline: BrowserBaselineBenchmark,
+    minimumNodeVersion: MinimumNodeVersionBenchmark,
+    csrLighthouse: CSRLighthouseBenchmark,
+    ssrLighthouse: SSRLighthouseBenchmark,
+    ssrInitialLoad: SSRInitialLoadBenchmark,
+    ssrThroughput: SSRThroughputBenchmark,
+    ssrLoad: SSRLoadBenchmark,
+    ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark,
+  }),
 
   // Comes from packages/results/src/measurements-config.ts so leave as flexible type as this can change and is only needed as record
   configuration: z.record(z.string(), z.unknown()),
