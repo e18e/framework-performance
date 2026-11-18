@@ -70,14 +70,14 @@ function createIterationSummary(unit: BenchmarkUnit) {
 const DependencyCountBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('dependencyCount'),
-  core: createValueWithUnit('count', z.number().nonnegative()),
-  firstParty: createValueWithUnit('count', z.number().nonnegative()),
-  starterProject: createValueWithUnit('count', z.number().nonnegative()),
-  coreDuplicate: createValueWithUnit('count', z.number().nonnegative()),
-  firstPartyDuplicate: createValueWithUnit('count', z.number().nonnegative()),
+  core: createValueWithUnit('count', z.number().int().nonnegative()),
+  firstParty: createValueWithUnit('count', z.number().int().nonnegative()),
+  starterProject: createValueWithUnit('count', z.number().int().nonnegative()),
+  coreDuplicate: createValueWithUnit('count', z.number().int().nonnegative()),
+  firstPartyDuplicate: createValueWithUnit('count', z.number().int().nonnegative()),
   starterProjectDuplicate: createValueWithUnit(
     'count',
-    z.number().nonnegative(),
+    z.number().int().nonnegative(),
   ),
   starterProjectNodeModuleSize: createValueWithUnit(
     'bytes',
