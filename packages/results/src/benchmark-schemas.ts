@@ -298,16 +298,17 @@ const SSRLoadRouterLinksBenchmark = SSRLoadBenchmark.extend({
   name: z.literal('ssrLoadRouterLinks'),
 })
 
+/**
+ * A slimmed down version of the Benchmark Result Schema for the HTML Baseline
+ */
 export const HTMLBaselineBenchmarkResult = z.object({
-  framework: z.enum(FrameworkOptions),
+  framework: z.literal("baseline-html"),
   timingMeasuredAt: z.iso.datetime(),
-  projects: z.record(z.enum(FrameworkProjectOptions), Project.nullable()),
+  projects: z.object({
+    app: Project,
+  }),
   runner: z.string(),
-  browserVersion: z.string(),
   benchmarks: z.object({
-    csrLighthouse: CSRLighthouseBenchmark,
-    ssrLighthouse: SSRLighthouseBenchmark,
-    ssrInitialLoad: SSRInitialLoadBenchmark,
     ssrThroughput: SSRThroughputBenchmark,
     ssrLoad: SSRLoadBenchmark,
   }),
@@ -316,8 +317,13 @@ export const HTMLBaselineBenchmarkResult = z.object({
   configuration: z.record(z.string(), z.unknown()),
 })
 
+/**
+ * Final Benchmark Result schema for all Meta-frameworks results
+ */
 export const MetaFrameworkBenchmarkResults = z.object({
-  framework: z.enum(FrameworkOptions),
+  framework: z.enum(
+    FrameworkOptions.filter((option) => option !== 'baseline-html'),
+  ),
   timingMeasuredAt: z.iso.datetime(),
   projects: z.record(z.enum(FrameworkProjectOptions), Project),
   runner: z.string(),
@@ -337,7 +343,7 @@ export const MetaFrameworkBenchmarkResults = z.object({
     ssrInitialLoad: SSRInitialLoadBenchmark,
     ssrThroughput: SSRThroughputBenchmark,
     ssrLoad: SSRLoadBenchmark,
-    ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark,
+    ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark.optional(),
   }),
 
   // Comes from packages/results/src/measurements-config.ts so leave as flexible type as this can change and is only needed as record
