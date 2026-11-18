@@ -24,7 +24,7 @@ export const frameworkBrands: Record<string, FrameworkBrand> = {
       dark: '/framework-logos/astro-gradient.svg',
       light: '/framework-logos/astro-dark.svg',
     },
-    color: { dark: '#BC52EE', light: '#8A2BC2' },
+    color: { dark: '#A463F2' },
     variant: 'solid',
   },
   next: {
@@ -32,56 +32,58 @@ export const frameworkBrands: Record<string, FrameworkBrand> = {
       dark: '/framework-logos/nextdotjs-light.svg',
       light: '/framework-logos/nextdotjs.svg',
     },
-    color: { dark: '#FFFFFF', light: '#000000' },
+    color: { dark: '#9C6B4E' },
     variant: 'solid',
   },
   nuxt: {
     logo: { dark: '/framework-logos/nuxt.svg' },
-    color: { dark: '#00DC82', light: '#00A35F' },
+    color: { dark: '#3CA951', light: '#36A44D' },
     variant: 'solid',
   },
   pracht: {
     logo: { dark: '/framework-logos/pracht.svg' },
-    color: { dark: '#FBBF24', light: '#A16207' },
+    color: { dark: '#60B9A5', light: '#459F8B' },
     variant: 'solid',
   },
   'react-router': {
     logo: { dark: '/framework-logos/reactrouter.svg' },
-    color: { dark: '#F44250', light: '#CA4245' },
+    color: { dark: '#F985B2', light: '#DC6B98' },
     variant: 'solid',
   },
   solid: {
     logo: { dark: '/framework-logos/solid.svg' },
-    color: { dark: '#7A9FD6', light: '#2C4F7C' },
+    color: { dark: '#4269D0' },
     variant: 'solid',
   },
   'solid-start': {
     logo: { dark: '/framework-logos/solid-start.svg' },
-    color: { dark: '#15ABFF', light: '#0084CE' },
+    color: { dark: '#88ABE4', light: '#6F91C9' },
     variant: 'solid',
   },
   sveltekit: {
     logo: { dark: '/framework-logos/svelte.svg' },
-    color: { dark: '#FF3E00', light: '#E03400' },
+    color: { dark: '#FF725C', light: '#EF644F' },
     variant: 'solid',
   },
   tanstack: {
     logo: { dark: '/framework-logos/tanstack.svg' },
-    color: { dark: '#FFA05C', light: '#D9661A' },
+    color: { dark: '#DAA004', light: '#BA8807' },
     variant: 'solid',
   },
   void: {
     logo: { dark: '/framework-logos/void.svg' },
+    color: { dark: '#D45DD8', light: '#B843BD' },
+    variant: 'solid',
   },
   // Not benchmarked, but shown in the Core Web Vitals charts.
   gatsby: {
     logo: { dark: '/framework-logos/gatsby.svg' },
-    color: { dark: '#A374D5', light: '#663399' },
+    color: { dark: '#DAA004', light: '#BA8807' },
     variant: 'solid',
   },
   wordpress: {
     logo: { dark: '/framework-logos/wordpress.svg' },
-    color: { dark: '#4FA3D9', light: '#21759B' },
+    color: { dark: '#4269D0' },
     variant: 'solid',
   },
 }
