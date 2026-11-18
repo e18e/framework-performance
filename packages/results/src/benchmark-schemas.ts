@@ -70,20 +70,22 @@ function createIterationSummary(unit: BenchmarkUnit) {
 const DependencyCountBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('dependencyCount'),
-  core: createValueWithUnit('count', z.number().int().nonnegative()),
-  firstParty: createValueWithUnit('count', z.number().int().nonnegative()),
-  starterProject: createValueWithUnit('count', z.number().int().nonnegative()),
+
+  coreDev: createValueWithUnit('count', z.number().int().nonnegative()),
+  firstPartyDev: createValueWithUnit('count', z.number().int().nonnegative()),
+  starterDev: createValueWithUnit('count', z.number().int().nonnegative()),
+  coreProd: createValueWithUnit('count', z.number().int().nonnegative()),
+  firstPartyProd: createValueWithUnit('count', z.number().int().nonnegative()),
+  starterProd: createValueWithUnit('count', z.number().int().nonnegative()),
+
   coreDuplicate: createValueWithUnit('count', z.number().int().nonnegative()),
-  firstPartyDuplicate: createValueWithUnit('count', z.number().int().nonnegative()),
-  starterProjectDuplicate: createValueWithUnit(
+  starterDuplicate: createValueWithUnit(
     'count',
     z.number().int().nonnegative(),
   ),
-  starterProjectNodeModuleSize: createValueWithUnit(
-    'bytes',
-    z.number().nonnegative(),
-  ),
-  starterProjectDependencyInstallSize: createValueWithUnit(
+
+  starterNodeModuleSize: createValueWithUnit('bytes', z.number().nonnegative()),
+  starterDependencyInstallSize: createValueWithUnit(
     'bytes',
     z.number().nonnegative(),
   ),
@@ -302,16 +304,16 @@ const SSRLoadRouterLinksBenchmark = SSRLoadBenchmark.extend({
  * A slimmed down version of the Benchmark Result Schema for the HTML Baseline
  */
 export const HTMLBaselineBenchmarkResult = z.object({
-  framework: z.literal("baseline-html"),
+  framework: z.literal('baseline-html'),
   timingMeasuredAt: z.iso.datetime(),
   projects: z.object({
     app: Project,
   }),
   runner: z.string(),
-  benchmarks: z.object({
-    ssrThroughput: SSRThroughputBenchmark,
-    ssrLoad: SSRLoadBenchmark,
-  }),
+
+  // Benchmarks
+  ssrThroughput: SSRThroughputBenchmark.optional(),
+  ssrLoad: SSRLoadBenchmark.optional(),
 
   // Comes from packages/results/src/measurements-config.ts so leave as flexible type as this can change and is only needed as record
   configuration: z.record(z.string(), z.unknown()),
@@ -330,21 +332,21 @@ export const MetaFrameworkBenchmarkResults = z.object({
   browserVersion: z.string(),
   frameworkVersion: z.string(),
   frameworkReleasedAt: z.string(),
-  benchmarks: z.object({
-    dependencyCounts: DependencyCountBenchmark,
-    buildDuration: BuildBenchmark,
-    installDuration: InstallBenchmark,
-    devServerStartUpDuration: DevServerStartupBenchmark,
-    coreJS: CoreJsBenchmark,
-    browserBaseline: BrowserBaselineBenchmark,
-    minimumNodeVersion: MinimumNodeVersionBenchmark,
-    csrLighthouse: CSRLighthouseBenchmark,
-    ssrLighthouse: SSRLighthouseBenchmark,
-    ssrInitialLoad: SSRInitialLoadBenchmark,
-    ssrThroughput: SSRThroughputBenchmark,
-    ssrLoad: SSRLoadBenchmark,
-    ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark.optional(),
-  }),
+
+  // Benchmarks
+  dependencyCounts: DependencyCountBenchmark.optional(),
+  buildDuration: BuildBenchmark.optional(),
+  installDuration: InstallBenchmark.optional(),
+  devServerStartUpDuration: DevServerStartupBenchmark.optional(),
+  coreJS: CoreJsBenchmark.optional(),
+  browserBaseline: BrowserBaselineBenchmark.optional(),
+  minimumNodeVersion: MinimumNodeVersionBenchmark.optional(),
+  csrLighthouse: CSRLighthouseBenchmark.optional(),
+  ssrLighthouse: SSRLighthouseBenchmark.optional(),
+  ssrInitialLoad: SSRInitialLoadBenchmark.optional(),
+  ssrThroughput: SSRThroughputBenchmark.optional(),
+  ssrLoad: SSRLoadBenchmark.optional(),
+  ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark.optional(),
 
   // Comes from packages/results/src/measurements-config.ts so leave as flexible type as this can change and is only needed as record
   configuration: z.record(z.string(), z.unknown()),
