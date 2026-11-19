@@ -1,6 +1,6 @@
 ---
 import { SHARED_CHART_HEIGHT, formatValue } from '../lib/chart'
-import { stackFillOpacity } from '../lib/chart-styles'
+import { barFillColor } from '../lib/chart-styles'
 import type { ChartValueFormat } from '../lib/types'
 interface Series {
   key: string
@@ -25,12 +25,10 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
   {
     !Astro.slots.has('caption') && (
       <ul class="legend" aria-label="Chart series">
-        {series.map((item, index) => (
+        {series.map((item) => (
           <li>
             <span
-              style={`background: color-mix(in srgb, var(--ft-muted) ${Math.round(
-                stackFillOpacity(index, series.length) * 100,
-              )}%, transparent)`}
+              style={`background: ${barFillColor(item.color)}; border-color: ${item.color}`}
             />
             {item.label}
           </li>
@@ -38,13 +36,15 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
       </ul>
     )
   }
-  <div
-    class="stacked-chart"
-    data-stacked={JSON.stringify({ title, series, data, valueFormat })}
-    style={`--chart-height: ${SHARED_CHART_HEIGHT}px`}
-  >
-    <div class="chart-host"></div>
-    <div class="logo-layer" aria-hidden="true"></div>
+  <div class="ft-chart-card">
+    <div
+      class="stacked-chart"
+      data-stacked={JSON.stringify({ title, series, data, valueFormat })}
+      style={`--chart-height: ${SHARED_CHART_HEIGHT}px`}
+    >
+      <div class="chart-host"></div>
+      <div class="logo-layer" aria-hidden="true"></div>
+    </div>
   </div>
   <div class="sr-only">
     <table>
@@ -119,7 +119,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 2px;
-    border: 1px solid var(--ft-muted);
+    border: 1px solid var(--ft-border);
   }
 </style>
 <script>
@@ -140,11 +140,11 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
     formatValue,
     getFrameworkLogoSource,
   } from '../lib/chart'
-  import { BAR_STROKE_WIDTH, stackFillOpacity } from '../lib/chart-styles'
   import {
-    getBrandByDisplayName,
-    resolveBrandColor,
-  } from '../lib/framework-logos'
+    BAR_FILL_OPACITY,
+    BAR_STROKE_WIDTH,
+    barFillColor,
+  } from '../lib/chart-styles'
   import type { ChartValueFormat } from '../lib/types'
   interface Segment {
     name: string
@@ -153,7 +153,6 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
     start: number
     end: number
     color: string
-    opacity: number
     total: number
   }
   interface Payload {
@@ -172,27 +171,13 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
           payload.series.reduce((sum, item) => sum + row.values[item.key]!, 0)
         const rows = payload.data.sort((a, b) => totalFor(a) - totalFor(b))
         if (!rows.length) return
-        const theme = document.documentElement.dataset.theme
-        const muted =
-          getComputedStyle(document.documentElement)
-            .getPropertyValue('--ft-muted')
-            .trim() || '#697586'
-        const textColor =
-          getComputedStyle(document.documentElement)
-            .getPropertyValue('--ft-text')
-            .trim() || '#1f2933'
-        const brandColor = (name: string) => {
-          const brand = getBrandByDisplayName(name)
-          return brand ? resolveBrandColor(brand.color, theme) : muted
-        }
         const segments = rows.flatMap((row) => {
           let offset = 0
           const total = payload.series.reduce(
             (sum, item) => sum + row.values[item.key]!,
             0,
           )
-          const color = brandColor(row.name)
-          return payload.series.map((item, index) => {
+          return payload.series.map((item) => {
             const value = row.values[item.key]!
             const segment = {
               name: row.name,
@@ -200,8 +185,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
               value,
               start: offset,
               end: offset + value,
-              color,
-              opacity: stackFillOpacity(index, payload.series.length),
+              color: item.color,
               total,
             }
             offset += value
@@ -228,6 +212,15 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
             return logo
           }),
         )
+        const muted =
+          getComputedStyle(document.documentElement)
+            .getPropertyValue('--ft-muted')
+            .trim() || '#697586'
+        // Bars are translucent, so labels drawn inside them use the page text colour.
+        const textColor =
+          getComputedStyle(document.documentElement)
+            .getPropertyValue('--ft-text')
+            .trim() || '#1f2933'
         const format = (value: number) =>
           formatValue(value, payload.valueFormat, {
             sigFigs: 2,
@@ -244,7 +237,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
                   x2: 'end',
                   y: 'name',
                   fill: d.color,
-                  fillOpacity: d.opacity,
+                  fillOpacity: BAR_FILL_OPACITY,
                   stroke: d.color,
                   strokeWidth: BAR_STROKE_WIDTH,
                   inset: SHARED_BAR_INSET,
@@ -294,9 +287,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
                   .map((segment) => ({
                     label: segment.label,
                     value: format(segment.value),
-                    color: `color-mix(in srgb, ${segment.color} ${Math.round(
-                      segment.opacity * 100,
-                    )}%, transparent)`,
+                    color: barFillColor(segment.color),
                   })),
               ],
             }),

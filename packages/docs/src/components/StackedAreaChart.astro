@@ -88,39 +88,41 @@ function formatTotal(total: number | null) {
             ))}
           </ul>
         )}
-        <div
-          class="stacked-area-chart-wrapper"
-          data-stacked-area-chart={chartPayload}
-        >
-          <div class="stacked-area-chart-host" />
-          <div class="sr-only">
-            <table>
-              <caption>{title} data</caption>
-              <thead>
-                <tr>
-                  <th scope="col">Framework version</th>
-                  <th scope="col">{totalLabel}</th>
-                  {series.map(({ label }) => (
-                    <th scope="col">{label}</th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {data.map((datum) => (
+        <div class="ft-chart-card">
+          <div
+            class="stacked-area-chart-wrapper"
+            data-stacked-area-chart={chartPayload}
+          >
+            <div class="stacked-area-chart-host" />
+            <div class="sr-only">
+              <table>
+                <caption>{title} data</caption>
+                <thead>
                   <tr>
-                    <th scope="row">{datum.name}</th>
-                    <td>{formatTotal(datum.total)}</td>
-                    {series.map(({ key }) => (
-                      <td>
-                        {formatValue(datum.values[key]!, valueFormat, {
-                          sigFigs: 2,
-                        })}
-                      </td>
+                    <th scope="col">Framework version</th>
+                    <th scope="col">{totalLabel}</th>
+                    {series.map(({ label }) => (
+                      <th scope="col">{label}</th>
                     ))}
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {data.map((datum) => (
+                    <tr>
+                      <th scope="row">{datum.name}</th>
+                      <td>{formatTotal(datum.total)}</td>
+                      {series.map(({ key }) => (
+                        <td>
+                          {formatValue(datum.values[key]!, valueFormat, {
+                            sigFigs: 2,
+                          })}
+                        </td>
+                      ))}
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </>
