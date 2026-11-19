@@ -314,6 +314,13 @@ export const HTMLBaselineBenchmarkResult = z.object({
   }),
   runner: z.string(),
 
+// For HTML Baseline this is Node Version it is using
+  frameworkVersion: z.string(),
+
+  // For HTML Baseline this is Node Version release date it is using
+  frameworkReleasedAt: z.string(),
+
+
   // Benchmarks
   ssrThroughput: SSRThroughputBenchmark.optional(),
   ssrLoad: SSRLoadBenchmark.optional(),
