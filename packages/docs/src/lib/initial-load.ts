@@ -1,7 +1,8 @@
-import type { InitialLoadStats } from '@framework-performance/results/benchmark-schemas'
+import type { SSRInitialLoadBenchmark } from '@framework-performance/results/benchmark-schemas'
+import type { z } from 'astro/zod'
 
 export function prepareInitialLoadResources(
-  resources: InitialLoadStats['resources'],
+  resources: z.output<typeof SSRInitialLoadBenchmark>['resources'],
 ) {
   return {
     html: resources.document.transferSize.value / 1024,

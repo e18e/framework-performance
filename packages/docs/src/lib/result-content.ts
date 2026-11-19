@@ -1,6 +1,6 @@
+import { SSRLoadStageOptions } from '@framework-performance/results/benchmark-types'
 import { getLoadPeakStage } from '@framework-performance/results/selection'
 import type { BenchmarkResult } from '@framework-performance/results/benchmark-schemas'
-import { loadStageKeys } from '@framework-performance/results/benchmark-schemas'
 import { frameworksConfig } from '@framework-performance/results/frameworks-config'
 
 function formatTime(value: {
@@ -44,12 +44,12 @@ function formatLoad(
   value: NonNullable<MetaFrameworkResult['ssrLoad' | 'ssrLoadRouterLinks']>,
 ) {
   const sweep = value.iterations.iterations[value.representativeIterationIndex]!
-  const representativeSweep = loadStageKeys.map((key) => sweep[key])
+  const representativeSweep = SSRLoadStageOptions.map((key) => sweep[key])
   return {
     ...value,
     representativeSweep,
     representativePeak: getLoadPeakStage(representativeSweep),
-    stages: loadStageKeys.map((key) => {
+    stages: SSRLoadStageOptions.map((key) => {
       const stage = value[key]
       return {
         connections: stage.connections,
