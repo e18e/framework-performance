@@ -78,7 +78,10 @@ const DependencyCountBenchmark = BaseBenchmark.extend({
   firstPartyProd: createValueWithUnit('count', z.number().int().nonnegative()),
   starterProd: createValueWithUnit('count', z.number().int().nonnegative()),
 
-  coreDuplicate: createValueWithUnit('count', z.number().int().nonnegative()),
+  firstPartyDuplicate: createValueWithUnit(
+    'count',
+    z.number().int().nonnegative(),
+  ),
   starterDuplicate: createValueWithUnit(
     'count',
     z.number().int().nonnegative(),
@@ -333,7 +336,7 @@ export const MetaFrameworkBenchmarkResults = z.object({
   frameworkVersion: z.string(),
   frameworkReleasedAt: z.string(),
 
-  // Benchmarks
+  // Benchmarks (should always be options to support new benchmarks, removing old ones and frameworks that might not be able to complete one)
   dependencyCounts: DependencyCountBenchmark.optional(),
   buildDuration: BuildBenchmark.optional(),
   installDuration: InstallBenchmark.optional(),
