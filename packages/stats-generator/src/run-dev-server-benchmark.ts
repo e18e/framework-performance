@@ -18,7 +18,12 @@ import {
 } from './dev-server.ts'
 import { summarizeSamples } from './sample-statistics.ts'
 import { createDevServerStats } from './dev-server-statistics.ts'
-import { getFrameworkByPackage, parseArgs, writeJsonFile } from './utils.ts'
+import {
+  getFrameworkByPackage,
+  benchmarkOutputPath,
+  parseArgs,
+  writeJsonFile,
+} from './utils.ts'
 
 const READY_TIMEOUT_MS = 120_000
 const PORT_FREE_TIMEOUT_MS = 10_000
@@ -155,8 +160,8 @@ async function main() {
     console.info(`\nMax dev server start time: ${devServerStartTime.maxMs} ms`)
 
     const stats = createDevServerStats(startTimesMs)
-    const outputPath = join(packagesDir, packageName, 'dev-server-stats.json')
-    writeJsonFile(outputPath, stats)
+    const outputPath = benchmarkOutputPath(packageName, 'dev-server-stats.json')
+    writeJsonFile(outputPath, { devServerStartUpDuration: stats })
 
     console.info(`\n✓ Saved dev server stats to ${outputPath}`)
   } finally {

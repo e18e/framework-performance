@@ -5,7 +5,7 @@ export function renderedSampleMetrics(sample: RenderedTestSample) {
   return {
     firstPaint: { value: sample.firstPaint, unit: 'ms' },
     firstContentfulPaint: { value: sample.firstContentfulPaint, unit: 'ms' },
-    interactionTests: {
+    interaction: {
       interactionLatency: { value: timing.interactionLatency, unit: 'ms' },
       inputDelay: { value: timing.inputDelay, unit: 'ms' },
       processingDuration: { value: timing.processingDuration, unit: 'ms' },

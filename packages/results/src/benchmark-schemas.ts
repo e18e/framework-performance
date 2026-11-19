@@ -36,7 +36,7 @@ const IterationVariance = z.object({
   max: IterationMetricChange,
 })
 
-const IterationSummary = z.object({
+export const IterationSummary = z.object({
   unit: z.enum(BenchmarkUnitOptions),
   mean: z.number(),
   median: z.number(),
@@ -45,7 +45,10 @@ const IterationSummary = z.object({
   variance: IterationVariance.optional(),
 })
 
-function createValueWithUnit(unit: BenchmarkUnit, value: z.ZodNumber) {
+function createValueWithUnit<T extends BenchmarkUnit>(
+  unit: T,
+  value: z.ZodNumber,
+) {
   return z.object({ value, unit: z.literal(unit).default(unit) })
 }
 
@@ -61,13 +64,13 @@ function createIteration<T extends z.ZodType>(iteration: T) {
     })
 }
 
-function createIterationSummary(unit: BenchmarkUnit) {
+function createIterationSummary<T extends BenchmarkUnit>(unit: T) {
   return IterationSummary.extend({
     unit: z.literal(unit).default(unit),
   })
 }
 
-const DependencyCountBenchmark = BaseBenchmark.extend({
+export const DependencyCountBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('dependencyCount'),
 
@@ -94,7 +97,7 @@ const DependencyCountBenchmark = BaseBenchmark.extend({
   ),
 })
 
-const BuildBenchmark = BaseBenchmark.extend({
+export const BuildBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('build'),
   iterations: createIteration(
@@ -107,7 +110,7 @@ const BuildBenchmark = BaseBenchmark.extend({
   warmDuration: createIterationSummary('ms'),
 })
 
-const InstallBenchmark = BaseBenchmark.extend({
+export const InstallBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('install'),
   iterations: createIteration(
@@ -118,7 +121,7 @@ const InstallBenchmark = BaseBenchmark.extend({
   duration: createIterationSummary('ms'),
 })
 
-const DevServerStartupBenchmark = BaseBenchmark.extend({
+export const DevServerStartupBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('devServerStartup'),
   iterations: createIteration(
@@ -129,7 +132,7 @@ const DevServerStartupBenchmark = BaseBenchmark.extend({
   duration: createIterationSummary('ms'),
 })
 
-const CoreJsBenchmark = BaseBenchmark.extend({
+export const CoreJsBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('coreJs'),
   totalVendoredSize: createValueWithUnit(
@@ -139,7 +142,7 @@ const CoreJsBenchmark = BaseBenchmark.extend({
   unnecessaryModules: z.array(z.string()),
 })
 
-const BrowserBaselineBenchmark = BaseBenchmark.extend({
+export const BrowserBaselineBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('browserBaseline'),
   baselineStatus: z.union([
@@ -153,7 +156,7 @@ const BrowserBaselineBenchmark = BaseBenchmark.extend({
   baselineFeatureCount: createValueWithUnit('count', z.number().nonnegative()),
 })
 
-const MinimumNodeVersionBenchmark = BaseBenchmark.extend({
+export const MinimumNodeVersionBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('minimumNodeVersion'),
   nodeVersion: z.string(),
@@ -174,7 +177,7 @@ export const LighthouseInteractionTimingSummary = z.object({
   presentationDelay: createIterationSummary('ms'),
 })
 
-const CSRLighthouseBenchmark = BaseBenchmark.extend({
+export const CSRLighthouseBenchmark = BaseBenchmark.extend({
   project: z.literal('app'),
   name: z.literal('csrLighthouse'),
   iterations: createIteration(
@@ -189,7 +192,7 @@ const CSRLighthouseBenchmark = BaseBenchmark.extend({
   interaction: LighthouseInteractionTimingSummary,
 })
 
-const SSRLighthouseBenchmark = BaseBenchmark.extend({
+export const SSRLighthouseBenchmark = BaseBenchmark.extend({
   project: z.literal('app'),
   name: z.literal('ssrLighthouse'),
   iterations: createIteration(
@@ -204,11 +207,13 @@ const SSRLighthouseBenchmark = BaseBenchmark.extend({
   interaction: LighthouseInteractionTimingSummary,
 })
 
-const SSRInitialLoadBenchmark = BaseBenchmark.extend({
+export const InitialLoadResourceType = z.enum(InitialLoadResourceOptions)
+
+export const SSRInitialLoadBenchmark = BaseBenchmark.extend({
   project: z.literal('app'),
   name: z.literal('ssrInitialLoad'),
   resources: z.record(
-    z.enum(InitialLoadResourceOptions),
+    InitialLoadResourceType,
     z.object({
       requestCount: createValueWithUnit(
         'requests',
@@ -222,7 +227,7 @@ const SSRInitialLoadBenchmark = BaseBenchmark.extend({
   ),
 })
 
-const SSRThroughputBenchmark = BaseBenchmark.extend({
+export const SSRThroughputBenchmark = BaseBenchmark.extend({
   project: z.literal('app'),
   name: z.literal('ssrThroughput'),
   // Each measurement in throughput creates multiple request so we store summaries in our iterations to catch large changes
@@ -240,7 +245,7 @@ const SSRThroughputBenchmark = BaseBenchmark.extend({
   duplicationFactor: createValueWithUnit('ratio', z.number().nonnegative()),
 })
 
-const SSRLoadStage = z.object({
+export const SSRLoadStage = z.object({
   connections: z.number().int().positive(),
   duration: createValueWithUnit('ms', z.number().positive()),
   requests: createValueWithUnit('requests', z.number().int().nonnegative()),
@@ -269,7 +274,7 @@ const SSRLoadStageSummary = z.object({
   maxLatency: createIterationSummary('ms'),
 })
 
-const SSRLoadBenchmark = BaseBenchmark.extend({
+export const SSRLoadBenchmark = BaseBenchmark.extend({
   project: z.literal('app'),
   name: z.literal('ssrLoad'),
   // Each iteration runs all seven connection stages in order.
@@ -299,7 +304,7 @@ const SSRLoadBenchmark = BaseBenchmark.extend({
   stage7: SSRLoadStageSummary,
 })
 
-const SSRLoadRouterLinksBenchmark = SSRLoadBenchmark.extend({
+export const SSRLoadRouterLinksBenchmark = SSRLoadBenchmark.extend({
   name: z.literal('ssrLoadRouterLinks'),
 })
 
@@ -360,3 +365,9 @@ export const MetaFrameworkBenchmarkResults = z.object({
   // Comes from packages/results/src/measurements-config.ts so leave as flexible type as this can change and is only needed as record
   configuration: z.record(z.string(), z.unknown()),
 })
+
+export const BenchmarkResultSchema = z.discriminatedUnion('framework', [
+  HTMLBaselineBenchmarkResult,
+  MetaFrameworkBenchmarkResults,
+])
+export type BenchmarkResult = z.infer<typeof BenchmarkResultSchema>

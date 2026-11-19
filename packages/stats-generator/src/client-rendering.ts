@@ -1,18 +1,21 @@
 import { renderedSampleMetrics } from './rendered-sample-metrics.ts'
-import { ClientRenderingBenchmarkSchema } from '@framework-performance/results'
+import { CSRLighthouseBenchmark } from '@framework-performance/results/benchmark-schemas'
 import { summarizeMetric } from './sample-statistics.ts'
 import type { RenderedTestSample } from './types.ts'
 
 export function assembleClientRendering(iterations: RenderedTestSample[]) {
-  return ClientRenderingBenchmarkSchema.parse({
-    name: 'clientSideRendered',
-    runs: iterations.length,
-    iterations: iterations.map(renderedSampleMetrics),
+  return CSRLighthouseBenchmark.parse({
+    name: 'csrLighthouse',
+    project: 'app',
+    iterations: {
+      runs: iterations.length,
+      iterations: iterations.map(renderedSampleMetrics),
+    },
     firstPaint: summarizeMetric(iterations.map((value) => value.firstPaint)),
     firstContentfulPaint: summarizeMetric(
       iterations.map((value) => value.firstContentfulPaint),
     ),
-    interactionTests: {
+    interaction: {
       ...Object.fromEntries(
         [
           'interactionLatency',

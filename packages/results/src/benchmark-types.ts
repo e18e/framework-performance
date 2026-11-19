@@ -66,3 +66,14 @@ export const InitialLoadResourceOptions = [
   'third-party',
 ] as const
 export type InitialLoadResource = (typeof InitialLoadResourceOptions)[number]
+
+export const SSRLoadStageOptions = [
+  'stage1',
+  'stage2',
+  'stage3',
+  'stage4',
+  'stage5',
+  'stage6',
+  'stage7',
+] as const
+export type SSRLoadStageKey = (typeof SSRLoadStageOptions)[number]

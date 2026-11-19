@@ -9,7 +9,12 @@ import {
   parseRunFrequency,
 } from './benchmark-utils.ts'
 import { packagesDir } from './constants.ts'
-import { writeJsonFile, getFrameworkByPackage, parseArgs } from './utils.ts'
+import {
+  benchmarkOutputPath,
+  writeJsonFile,
+  getFrameworkByPackage,
+  parseArgs,
+} from './utils.ts'
 import { createBuildStats } from './build-statistics.ts'
 import { summarizeSamples } from './sample-statistics.ts'
 
@@ -127,8 +132,8 @@ async function main() {
 
     const stats = createBuildStats(coldBuildTimesMs, warmBuildTimesMs)
 
-    const outputPath = join(packagesDir, packageName, 'build-stats.json')
-    writeJsonFile(outputPath, stats)
+    const outputPath = benchmarkOutputPath(packageName, 'build-stats.json')
+    writeJsonFile(outputPath, { buildDuration: stats })
 
     const buildOutputPath = getBuildOutputPath(
       packageDir,

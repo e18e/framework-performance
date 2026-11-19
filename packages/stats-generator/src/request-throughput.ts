@@ -1,16 +1,10 @@
 import type { z } from 'zod'
-import {
-  RequestThroughputBenchmarkSchema,
-  RequestThroughputIterationSchema,
-  RequestThroughputResultSchema,
-  SSRRequestThroughputStatsSchema,
-} from '@framework-performance/results'
+import { SSRThroughputBenchmark } from '@framework-performance/results/benchmark-schemas'
 import { summarizeMetric } from './sample-statistics.ts'
-import type { CIStats } from './types.ts'
 
 export type RequestThroughputIteration = z.infer<
-  typeof RequestThroughputIterationSchema
->
+  typeof SSRThroughputBenchmark
+>['iterations']['iterations'][number]
 
 export function createRequestThroughputIteration(
   throughputSamples: number[],
@@ -21,15 +15,17 @@ export function createRequestThroughputIteration(
       'Expected one throughput and latency sample per measured HTTP request',
     )
   }
-  return RequestThroughputIterationSchema.parse({
-    requestThroughput: summarizeMetric(throughputSamples),
-    latency: summarizeMetric(latencySamplesMs),
-    requests: { value: latencySamplesMs.length, unit: 'requests' },
-  })
+  return SSRThroughputBenchmark.shape.iterations.shape.iterations.element.parse(
+    {
+      requestThroughput: summarizeMetric(throughputSamples),
+      latency: summarizeMetric(latencySamplesMs),
+      requests: { value: latencySamplesMs.length, unit: 'requests' },
+    },
+  )
 }
 
 type ResponseMetrics = Pick<
-  z.infer<typeof RequestThroughputBenchmarkSchema>,
+  z.infer<typeof SSRThroughputBenchmark>,
   'bodySize' | 'duplicationFactor'
 >
 
@@ -37,12 +33,12 @@ export function assembleRequestThroughput(
   iterations: RequestThroughputIteration[],
   responseMetrics: ResponseMetrics,
 ) {
-  return RequestThroughputBenchmarkSchema.parse({
+  return SSRThroughputBenchmark.parse({
     ...responseMetrics,
-    name: 'ssrRequestThroughput',
-    runs: iterations.length,
-    iterations,
-    totalRequests: {
+    name: 'ssrThroughput',
+    project: 'app',
+    iterations: { runs: iterations.length, iterations },
+    requests: {
       value: iterations.reduce(
         (count, iteration) => count + iteration.requests.value,
         0,
@@ -54,24 +50,4 @@ export function assembleRequestThroughput(
     ),
     latency: summarizeMetric(iterations.map((value) => value.latency.mean)),
   })
-}
-
-export function mergeRequestThroughputArtifact(
-  stats: CIStats,
-  artifact: unknown,
-): CIStats {
-  const incoming = RequestThroughputResultSchema.parse(artifact)
-  const merged = {
-    ...stats,
-    frameworkVersion: incoming.frameworkVersion ?? stats.frameworkVersion,
-    ssrRequestThroughput: incoming.ssrRequestThroughput,
-  }
-  SSRRequestThroughputStatsSchema.parse(merged)
-  return merged
-}
-
-export function validateRequestThroughputForPersistence(stats: CIStats): void {
-  if (stats.ssrRequestThroughput !== undefined) {
-    SSRRequestThroughputStatsSchema.parse(stats)
-  }
 }

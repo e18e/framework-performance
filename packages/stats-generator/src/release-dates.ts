@@ -26,18 +26,3 @@ export async function getPublishTimes(
   )
   return metadata.time
 }
-
-export function withReleasedAt<T extends object>(
-  stats: T,
-  releasedAt: string | undefined,
-): T {
-  const entries = Object.entries(stats).filter(([key]) => key !== 'releasedAt')
-  if (releasedAt == null) return Object.fromEntries(entries) as T
-
-  const index = entries.findIndex(([key]) => key === 'frameworkVersion')
-  entries.splice(index === -1 ? entries.length : index + 1, 0, [
-    'releasedAt',
-    releasedAt,
-  ])
-  return Object.fromEntries(entries) as T
-}

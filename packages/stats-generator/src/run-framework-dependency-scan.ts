@@ -1,10 +1,9 @@
-import { FrameworkDependencyScanSchema } from '@framework-performance/results'
-import { join } from 'node:path'
-import { packagesDir } from './constants.ts'
+import { DependencyCountBenchmark } from '@framework-performance/results/benchmark-schemas'
 import {
   getFrameworkDependencyCountsFromPackageMetadata,
   getFrameworkByPackage,
   parseArgs,
+  benchmarkOutputPath,
   writeJsonFile,
 } from './utils.ts'
 
@@ -17,7 +16,7 @@ async function main() {
 
   const outputPath =
     requestedOutputPath ??
-    join(packagesDir, packageName, 'framework-dependency-stats.json')
+    benchmarkOutputPath(packageName, 'framework-dependency-stats.json')
   const stats = getFrameworkDependencyCountsFromPackageMetadata(
     packageName,
     framework.frameworkPackage,
@@ -25,9 +24,9 @@ async function main() {
 
   writeJsonFile(
     outputPath,
-    FrameworkDependencyScanSchema.parse({
-      ...stats,
-      name: 'frameworkDependencies',
+    DependencyCountBenchmark.pick({ coreDev: true, coreProd: true }).parse({
+      coreDev: stats.developmentDependencyCount,
+      coreProd: stats.productionDependencyCount,
     }),
   )
   console.info(`Saved framework dependency stats to ${outputPath}`)

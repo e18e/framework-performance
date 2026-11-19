@@ -1,9 +1,8 @@
 import { isDeepStrictEqual } from 'node:util'
-import {
-  MetricBaseSchema,
-  type FrameworkResult,
-  type MetricBase,
-} from './schemas.ts'
+import { IterationSummary } from './benchmark-schemas.ts'
+import type { z } from 'zod'
+
+type MetricBase = z.output<typeof IterationSummary>
 
 function percentageChange(current: number, previous: number): number {
   if (previous === 0) return 0
@@ -24,14 +23,11 @@ function record(value: unknown): Record<string, unknown> | undefined {
     : undefined
 }
 
-export function metricSummaries(
-  value: unknown,
-  prefix = '',
-): Map<string, MetricBase> {
+function metricSummaries(value: unknown, prefix = ''): Map<string, MetricBase> {
   const summaries = new Map<string, MetricBase>()
   const object = record(value)
   if (!object) return summaries
-  const metric = MetricBaseSchema.safeParse(object)
+  const metric = IterationSummary.safeParse(object)
   if (metric.success) {
     summaries.set(prefix, value as MetricBase)
     return summaries
@@ -56,11 +52,18 @@ function benchmarkIdentity(value: unknown) {
   )
 }
 
-export function withSummaryVariance(
-  current: FrameworkResult,
-  previous: FrameworkResult | null,
+interface ComparisonMetadata {
+  frameworkVersion?: string
+  runner?: string
+  browserVersion?: string
+  timingMeasuredAt?: string
+}
+
+export function withSummaryVariance<T extends ComparisonMetadata>(
+  current: T,
+  previous: ComparisonMetadata | null,
   measuredTests = Object.keys(current),
-): FrameworkResult {
+): T {
   const result = structuredClone(current)
   const currentRecord = result as Record<string, unknown>
   const previousRecord = previous as Record<string, unknown> | null
@@ -75,11 +78,10 @@ export function withSummaryVariance(
     const oldValue = previousRecord?.[test]
     const oldSummaries = metricSummaries(oldValue)
     for (const [path, summary] of summaries) {
-      delete summary.variance
       if (!measured.has(test)) continue
+      delete summary.variance
       const baseline = oldSummaries.get(path)
-      const browserTest =
-        test === 'clientSideRendered' || test === 'serverSideRendered'
+      const browserTest = test === 'csrLighthouse' || test === 'ssrLighthouse'
       const comparable =
         sameVersion &&
         baseline &&
