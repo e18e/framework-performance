@@ -54,7 +54,7 @@ export async function processCIStats(
     const previous = readBenchmarkResult(framework.name)
     const fresh: Record<string, unknown> = {}
     const dependencyCounts: Record<string, unknown> = {}
-    const versions = new Set<string>()
+    const artifactVersions = new Map<string, string>()
     const browserVersions = new Set<string>()
     const projects: Partial<
       Record<'starter' | 'app', BenchmarkResult['projects']['app']>
@@ -99,7 +99,8 @@ export async function processCIStats(
 
         measuredConfigurations.add(measurement)
         for (const [key, value] of Object.entries(artifact)) {
-          if (key === 'frameworkVersion') versions.add(String(value))
+          if (key === 'frameworkVersion')
+            artifactVersions.set(folder, String(value))
           else if (key === 'browserVersion') browserVersions.add(String(value))
           else if (key === 'dependencyCounts')
             Object.assign(dependencyCounts, value)
@@ -111,10 +112,21 @@ export async function processCIStats(
     }
 
     if (measuredConfigurations.size === 0) continue
-    if (versions.size > 1 || browserVersions.size > 1)
+    const versions = new Set(artifactVersions.values())
+    if (versions.size > 1) {
+      const details = [...artifactVersions]
+        .map(([artifact, version]) => `${artifact}=${version}`)
+        .join(', ')
       throw new Error(
-        `Measurement artifacts disagree on versions for ${framework.name}`,
+        `Measurement artifacts disagree on framework version for ${framework.name}: ${details}`,
       )
+    }
+    const measuredBrowserVersions = [...browserVersions].sort().join(', ')
+    if (browserVersions.size > 1) {
+      console.warn(
+        `Different browser versions for ${framework.name}: ${measuredBrowserVersions}`,
+      )
+    }
     const frameworkVersion = [...versions][0] ?? previous?.frameworkVersion
     if (!frameworkVersion || frameworkVersion === 'unknown')
       throw new Error(`No measured version for ${framework.name}`)
@@ -165,7 +177,7 @@ export async function processCIStats(
         ? previous.frameworkReleasedAt
         : await getReleasedAt(framework.frameworkPackage, frameworkVersion),
       browserVersion:
-        [...browserVersions][0] ??
+        measuredBrowserVersions ||
         (retained?.framework === 'baseline-html'
           ? undefined
           : retained?.browserVersion),
@@ -174,9 +186,14 @@ export async function processCIStats(
       projects,
       configuration,
     })
+    // A combined browser label cannot establish that each Lighthouse job used the same browser as before.
+    const comparisonBaseline =
+      previous && browserVersions.size > 1
+        ? { ...previous, browserVersion: undefined }
+        : previous
     results.set(
       framework.name,
-      withSummaryVariance(assembled, previous, Object.keys(fresh)),
+      withSummaryVariance(assembled, comparisonBaseline, Object.keys(fresh)),
     )
   }
 
