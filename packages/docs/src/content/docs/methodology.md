@@ -303,7 +303,7 @@ pnpm dlx create-void starter-void --toolchain vite --framework react --starter s
   production build output, including JavaScript, TypeScript, Vue, and Svelte
   files. Known server, cache, trace, type, and build-tool output is excluded.
 - Void's browser baseline scan uses
-  `.cloudflare/output/v0/workers/default/assets`, which contains only the client
+  `.cloudflare/output/v1/workers/default/assets`, which contains only the client
   output.
 - Baseline is baseline-detector's overall target result: `high`, `low`, or
   `limited`. When the result is not `high`, baseline-detector also reports the

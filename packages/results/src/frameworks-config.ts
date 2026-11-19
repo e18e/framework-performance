@@ -326,8 +326,8 @@ export const frameworksConfig = [
     starter: {
       package: 'starter-void',
       buildScript: 'build',
-      buildOutputDir: '.cloudflare/output/v0',
-      browserBuildOutputDir: '.cloudflare/output/v0/workers/default/assets',
+      buildOutputDir: '.cloudflare/output/v1',
+      browserBuildOutputDir: '.cloudflare/output/v1/workers/default/assets',
       devServerPort: 5173,
       measurements: [
         'install',
