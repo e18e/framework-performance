@@ -380,10 +380,7 @@ function seriesColorVars(
         ...tooltipConfig.position,
         content: (points, { primaryPoint }) => {
           const primary = primaryPoint?.datum as Row | undefined
-          // The tooltip renders inside the wrapper, so its active row inherits this
-          if (primary) {
-            wrapper.style.setProperty('--tooltip-active-color', primary.stroke)
-          }
+
           return tooltipConfig.content(
             points.map(({ datum }) => datum),
             { scale, yAxisLabel: payload.yAxisLabel, format, primary },

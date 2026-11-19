@@ -5,8 +5,6 @@ export type FrameworkLogo = ThemedValue
 
 export type BrandVariant = 'solid' | 'segmented'
 
-export const BRAND_VARIANTS: readonly BrandVariant[] = ['solid', 'segmented']
-
 export interface FrameworkBrand {
   logo: FrameworkLogo
   color: ThemedValue
