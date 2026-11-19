@@ -3,15 +3,16 @@ import {
   formatBaselineReason,
   formatBaselineStatus,
 } from '../../lib/prepare-table'
-import type { FrameworkResult } from '@framework-performance/results'
+import type { BrowserBaselineBenchmark } from '@framework-performance/results/benchmark-schemas'
+import type { z } from 'astro/zod'
 import StatsTable, { type TableColumn } from '../../components/StatsTable.astro'
 
 interface BrowserBaselineTests {
   baselineStatus?: 'high' | 'low' | false | null
   baselineYear?: number | null
   baselineReason?: string | string[] | null
-  baselineFeatureCount?: NonNullable<
-    FrameworkResult['browserBaseline']
+  baselineFeatureCount?: z.output<
+    typeof BrowserBaselineBenchmark
   >['baselineFeatureCount']
 }
 

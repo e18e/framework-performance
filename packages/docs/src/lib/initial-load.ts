@@ -1,4 +1,4 @@
-import type { InitialLoadStats } from '@framework-performance/results'
+import type { InitialLoadStats } from '@framework-performance/results/benchmark-schemas'
 
 export function prepareInitialLoadResources(
   resources: InitialLoadStats['resources'],

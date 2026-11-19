@@ -4,17 +4,17 @@ import { prepareInitialLoadResources } from './initial-load'
 import { getCollection } from 'astro:content'
 import { frameworksConfig } from '@framework-performance/results/frameworks-config'
 export * from './chart-measurements'
-import type { CombinedResult } from '@framework-performance/results/storage'
+import { BenchmarkResultSchema } from '@framework-performance/results/benchmark-schemas'
 import { prepareRuntimeResult, prepareStarterResult } from './result-content'
 import type { ChartMeasurement, StackedAreaChartPayload } from './types'
 
-const resultFiles = import.meta.glob<CombinedResult>(
+const resultFiles = import.meta.glob<unknown>(
   '../../../results/data/**/*.json',
   { eager: true, import: 'default' },
 )
 const latest = Object.entries(resultFiles)
   .filter(([path]) => path.endsWith('/latest.json'))
-  .map(([, result]) => result)
+  .map(([, result]) => BenchmarkResultSchema.parse(result))
   .sort(
     (a, b) =>
       frameworksConfig.findIndex((f) => f.name === a.framework) -
@@ -22,15 +22,15 @@ const latest = Object.entries(resultFiles)
   )
 const history = Object.entries(resultFiles)
   .filter(([path]) => path.includes('/versions/'))
-  .map(([, result]) => result)
+  .map(([, result]) => BenchmarkResultSchema.parse(result))
 export const starterStats = latest
-  .filter((result) => result.projects.starter)
+  .filter((result) => result.framework !== 'baseline-html')
   .map(prepareStarterResult)
 export const ssrRequestThroughputStats = latest
   .filter((result) => result.projects.app)
   .map(prepareRuntimeResult)
 export const starterHistory = history
-  .filter((result) => result.projects.starter)
+  .filter((result) => result.framework !== 'baseline-html')
   .map(prepareStarterResult)
 export const runtimeHistory = history
   .filter((result) => result.projects.app)
@@ -188,7 +188,7 @@ export function prepareDependencyHistoryChart(
       {
         name: version.frameworkVersion ?? 'Unknown',
         values: { prod, dev },
-        total: counts?.totalDependencyCount?.value ?? null,
+        total: prod + dev,
       },
     ]
   })
@@ -197,6 +197,6 @@ export function prepareDependencyHistoryChart(
     series: dependencySeries,
     valueFormat: 'count',
     yAxisLabel: 'Dependencies',
-    totalLabel: 'Measured total',
+    totalLabel: 'Direct dependencies',
   }
 }
