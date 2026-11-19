@@ -1,19 +1,21 @@
 import { summarizeMetric } from './sample-statistics.ts'
-import { BuildStatsSchema } from '@framework-performance/results'
+import { BuildBenchmark } from '@framework-performance/results/benchmark-schemas'
 
 export function createBuildStats(cold: number[], warm: number[]) {
-  function benchmark(name: 'coldBuild' | 'warmBuild', samples: number[]) {
-    return {
-      name,
-      runs: samples.length,
-      iterations: samples.map((timeMs) => ({
-        duration: { value: timeMs, unit: 'ms' },
+  if (cold.length !== warm.length)
+    throw new Error('Cold and warm build counts differ')
+
+  return BuildBenchmark.parse({
+    name: 'build',
+    project: 'starter',
+    iterations: {
+      runs: cold.length,
+      iterations: cold.map((value, index) => ({
+        coldDuration: { value, unit: 'ms' },
+        warmDuration: { value: warm[index], unit: 'ms' },
       })),
-      duration: summarizeMetric(samples),
-    }
-  }
-  return BuildStatsSchema.parse({
-    coldBuild: benchmark('coldBuild', cold),
-    warmBuild: benchmark('warmBuild', warm),
+    },
+    coldDuration: summarizeMetric(cold),
+    warmDuration: summarizeMetric(warm),
   })
 }

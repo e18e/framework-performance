@@ -1,14 +1,18 @@
+import { SSRLoadStageOptions } from '@framework-performance/results/benchmark-types'
 import { measurementsConfig } from '../measurements.ts'
 import {
   getLoadPeakStage,
   selectRepresentativeIteration,
 } from '@framework-performance/results/selection'
-import { SSRLoadTestsSchema } from '@framework-performance/results'
+import {
+  SSRLoadBenchmark,
+  SSRLoadRouterLinksBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
 import { summarizeMetric } from '../sample-statistics.ts'
-import { getSSRLoadKind } from './config.ts'
+import { getSSRLoadKind, type SSRLoadKind } from './config.ts'
 import { setTimeout as delay } from 'node:timers/promises'
 import autocannon from 'autocannon'
-import type { SSRLoadStageStats, SSRLoadSweep, SSRLoadTests } from './types.ts'
+import type { SSRLoadStageStats, SSRLoadSweep } from './types.ts'
 
 function round(value: number): number {
   return Math.round(value * 1000) / 1000
@@ -32,14 +36,14 @@ async function runStage(
     duration: round(result.duration * 1000),
     requests: result.requests.total,
     errors: result.errors + result.timeouts + result.non2xx,
-    requestThroughput: round(result.requests.average),
+    requestsPerSecond: round(result.requests.average),
     avgLatency: round(result.latency.average),
     p50Latency: round(result.latency.p50),
     p75Latency: round(result.latency.p75),
     p90Latency: round(result.latency.p90),
     p99Latency: round(result.latency.p99),
     maxLatency: round(result.latency.max),
-    byteThroughput: round(result.throughput.average),
+    bytesPerSecond: round(result.throughput.average),
   })
 }
 
@@ -51,14 +55,14 @@ export function measureLoadStage(stage: RawLoadStage): SSRLoadStageStats {
     duration: { value: stage.duration, unit: 'ms' },
     requests: { value: stage.requests, unit: 'requests' },
     errors: { value: stage.errors, unit: 'errors' },
-    requestThroughput: { value: stage.requestThroughput, unit: 'requests/s' },
+    requestsPerSecond: { value: stage.requestsPerSecond, unit: 'requests' },
     avgLatency: { value: stage.avgLatency, unit: 'ms' },
     p50Latency: { value: stage.p50Latency, unit: 'ms' },
     p75Latency: { value: stage.p75Latency, unit: 'ms' },
     p90Latency: { value: stage.p90Latency, unit: 'ms' },
     p99Latency: { value: stage.p99Latency, unit: 'ms' },
     maxLatency: { value: stage.maxLatency, unit: 'ms' },
-    byteThroughput: { value: stage.byteThroughput, unit: 'bytes/s' },
+    bytesPerSecond: { value: stage.bytesPerSecond, unit: 'bytes' },
   }
 }
 
@@ -66,7 +70,7 @@ export async function runLoadTest(
   url: string,
   measureStage: typeof runStage = runStage,
   pause: (ms: number) => Promise<void> = delay,
-): Promise<SSRLoadTests> {
+) {
   const kind = getSSRLoadKind()
   const {
     runs,
@@ -113,36 +117,32 @@ export async function runLoadTest(
       )
       const stage = await measureStage(url, connections, stageDurationMs / 1000)
       console.info(
-        `    ${stage.requests.value} requests, ${stage.errors.value} errors, ${stage.requestThroughput.value} req/s`,
+        `    ${stage.requests.value} requests, ${stage.errors.value} errors, ${stage.requestsPerSecond.value} req/s`,
       )
       stages.push(stage)
     }
     getLoadPeakStage(stages)
     samples.push(stages)
   }
-  return summarizeLoadSweeps(samples, kind)
+  return summarizeBenchmarkSweeps(samples, kind)
 }
 
-/** Keep a real sweep's internally consistent metrics, selected by median peak throughput. */
-export function summarizeLoadSweeps(
+export function summarizeBenchmarkSweeps(
   samples: readonly SSRLoadSweep[],
-  name: SSRLoadTests['name'] = 'ssrLoad',
-): SSRLoadTests {
-  if (samples.length === 0 || samples.length % 2 === 0) {
-    throw new Error('Expected an odd, nonzero number of load sweeps.')
-  }
+  kind: SSRLoadKind = 'ssrLoad',
+) {
   const representativeIterationIndex = selectRepresentativeIteration(samples)
   const fields = [
     'requests',
     'errors',
-    'requestThroughput',
+    'requestsPerSecond',
     'avgLatency',
     'p50Latency',
     'p75Latency',
     'p90Latency',
     'p99Latency',
     'maxLatency',
-    'byteThroughput',
+    'bytesPerSecond',
   ] as const
   const connections = samples[0]!.map((stage) => stage.connections)
   if (
@@ -154,10 +154,16 @@ export function summarizeLoadSweeps(
     )
   )
     throw new Error('Expected matching worker stages in every sweep')
-  return SSRLoadTestsSchema.parse({
-    name,
-    runs: samples.length,
-    iterations: [...samples],
+  const benchmark = {
+    project: 'app',
+    iterations: {
+      runs: samples.length,
+      iterations: samples.map((sweep) =>
+        Object.fromEntries(
+          sweep.map((stage, index) => [SSRLoadStageOptions[index], stage]),
+        ),
+      ),
+    },
     representativeIterationIndex,
     totalRequests: {
       value: samples.reduce(
@@ -191,5 +197,11 @@ export function summarizeLoadSweeps(
         },
       ]),
     ),
-  })
+  }
+  return kind === 'ssrLoad'
+    ? SSRLoadBenchmark.parse({ ...benchmark, name: 'ssrLoad' })
+    : SSRLoadRouterLinksBenchmark.parse({
+        ...benchmark,
+        name: 'ssrLoadRouterLinks',
+      })
 }

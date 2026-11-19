@@ -100,13 +100,11 @@ commands for reproducing each job are in [Measure Framework](./.github/workflows
 
 ### Result Schemas
 
-[`schemas.ts`](./packages/results/src/schemas.ts) defines the Zod schemas used
-to validate benchmark output and derive TypeScript types. Record what actually
-ran, the samples, and the summaries in the benchmark result using the fields
-defined by its schema. Update `FrameworkSchema` and `PackagePathSchema` when
-adding a framework.
-[`storage.ts`](./packages/results/src/storage.ts) uses those schemas to validate
-the combined JSON and associate each measurement with its starter or app.
+`benchmark-schemas.ts` in `packages/results/src/` defines the schemas for individual
+benchmark artifacts and the assembled framework result. `benchmark-types.ts`
+defines framework names, package paths, and metric units. Each benchmark records
+its project, samples, and summaries. CI validates artifacts and assembles the
+latest and versioned results.
 
 ### How the Docs Use Results
 
@@ -134,10 +132,10 @@ For a newer patch within a major or minor version already tracked (for example,
 SolidStart `2.0.0` to `2.0.5`), update the exact framework version in both the
 starter and app `package.json` files, regenerate both lockfiles, and update the
 starter's `first-party-dependencies.json`. Under `packages/results/data/<framework>/`,
-update `frameworkVersion` and the framework dependency version for each affected
-project in `latest.json` and `versions/<old-version>.json`. Rename the versioned
-file to the new patch version to replace the old entry in the major or minor
-history.
+update the top-level `frameworkVersion` and the framework dependency version
+in each affected project's `packageJson` in `latest.json` and
+`versions/<old-version>.json`. Rename the versioned file to the new patch
+version to replace the old entry in the major or minor history.
 Leave measured values and diagnostic messages unchanged; they still reflect the
 previous patch until the Benchmarks workflow reruns after the change reaches
 `main` and opens a stats update PR.

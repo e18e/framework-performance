@@ -3,16 +3,16 @@ import puppeteer from 'puppeteer-core'
 import { startFlow } from 'lighthouse'
 import { z } from 'zod'
 import {
-  InitialLoadResourceTypeSchema,
-  InitialLoadStatsSchema,
-} from '@framework-performance/results'
+  InitialLoadResourceType,
+  SSRInitialLoadBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
 import { findChromium } from '../find-chromium.ts'
 
 const ResourceRowsSchema = z.array(
   z.object({
     requestCount: z.number().int().nonnegative(),
     transferSize: z.number().int().nonnegative(),
-    resourceType: InitialLoadResourceTypeSchema,
+    resourceType: InitialLoadResourceType,
   }),
 )
 
@@ -37,8 +37,9 @@ export function parseResourceSummary(details: unknown) {
   }
   // Do not include third-party when calculating totals.
   // https://developer.chrome.com/docs/lighthouse/performance/resource-summary
-  return InitialLoadStatsSchema.parse({
-    name: 'initialLoad',
+  return SSRInitialLoadBenchmark.parse({
+    name: 'ssrInitialLoad',
+    project: 'app',
     resources,
   })
 }

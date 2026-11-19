@@ -3,13 +3,12 @@ import { globSync, readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { test } from 'node:test'
 import {
-  FrameworkResultSchema,
-  MetricBaseSchema,
-} from '@framework-performance/results'
-import {
-  CombinedResultSchema,
-  resultsRoot,
-} from '@framework-performance/results/storage'
+  BenchmarkResultSchema,
+  IterationSummary,
+  BuildBenchmark,
+  SSRLoadRouterLinksBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
+import { resultsRoot } from '@framework-performance/results/storage'
 
 function assertStoredUnits(value: unknown, path: string): void {
   if (Array.isArray(value)) {
@@ -26,7 +25,7 @@ function assertStoredUnits(value: unknown, path: string): void {
     )
   ) {
     assert.ok(
-      MetricBaseSchema.safeParse(object).success,
+      IterationSummary.safeParse(object).success,
       `${path}: expected an explicit metric unit in the stored JSON`,
     )
   }
@@ -39,29 +38,25 @@ test('every persisted result and history validates with explicit metric units', 
   assert.ok(files.length > 0)
   for (const file of files) {
     const stored = JSON.parse(readFileSync(join(resultsRoot, file), 'utf8'))
-    const result = CombinedResultSchema.safeParse(stored)
-    assert.ok(result.success, `${file}: ${result.error?.message}`)
+    assert.deepEqual(stored, BenchmarkResultSchema.parse(stored), file)
     assertStoredUnits(stored, file)
   }
 })
 
-test('final contract validates nested benchmarks and test identity', () => {
+test('benchmark schemas require valid identities and measured metrics', () => {
   assert.equal(
-    FrameworkResultSchema.safeParse({
-      install: {
-        name: 'install',
-        runs: 2,
-        iterations: [{ duration: 10 }],
-        duration: { mean: 10, median: 10, min: 10, max: 10 },
-        nodeModulesSize: 100,
+    BuildBenchmark.safeParse({
+      project: 'starter',
+      name: 'build',
+      iterations: {
+        runs: 1,
+        iterations: [{ coldDuration: 10, warmDuration: 2 }],
       },
     }).success,
     false,
   )
   assert.equal(
-    FrameworkResultSchema.safeParse({
-      ssrRouterLinkLoad: { name: 'ssrLoad' },
-    }).success,
+    SSRLoadRouterLinksBenchmark.safeParse({ name: 'ssrLoad' }).success,
     false,
   )
 })

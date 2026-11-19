@@ -1,3056 +1,1457 @@
 {
   "framework": "baseline-html",
+  "timingMeasuredAt": "2026-11-19T08:39:50.921Z",
   "projects": {
     "app": {
-      "framework": "baseline-html",
-      "packagePath": "packages/app-baseline-html",
-      "timingMeasuredAt": "2026-11-17T07:51:36.729Z",
-      "runner": "Depot depot-ubuntu-24.04 GitHub Actions runner (2 CPUs, 8 GB RAM, 100 GB disk, 2 GB disk accelerator)",
-      "frameworkVersion": "24.22.1",
-      "releasedAt": "2026-10-20T00:00:00.000Z",
-      "packageJson": {
-        "dependencies": {},
-        "devDependencies": {}
-      }
+      "path": "packages/app-baseline-html",
+      "packageJson": { "dependencies": {}, "devDependencies": {} }
     }
   },
-  "tests": {
-    "ssrRequestThroughput": {
-      "project": "app",
-      "result": {
-        "name": "ssrRequestThroughput",
-        "runs": 5,
-        "iterations": [
-          {
-            "requestThroughput": {
-              "unit": "ops/s",
-              "mean": 843.0060772598665,
-              "median": 826.2455238152014,
-              "min": 465.3011009953233,
-              "max": 6782.880010853264
-            },
-            "latency": {
-              "unit": "ms",
-              "mean": 1.2103653564512091,
-              "median": 1.2102939999995215,
-              "min": 0.14742999999998574,
-              "max": 2.1491460000006555
-            },
-            "requests": {
-              "value": 8262,
-              "unit": "requests"
-            }
+  "runner": "Depot depot-ubuntu-24.04 GitHub Actions runner (2 CPUs, 8 GB RAM, 100 GB disk, 2 GB disk accelerator)",
+  "frameworkVersion": "24.22.1",
+  "frameworkReleasedAt": "2026-10-20T00:00:00.000Z",
+  "ssrThroughput": {
+    "project": "app",
+    "name": "ssrThroughput",
+    "iterations": {
+      "runs": 5,
+      "iterations": [
+        {
+          "requestThroughput": {
+            "unit": "ops/s",
+            "mean": 832.1166709745592,
+            "median": 821.7217206526584,
+            "min": 451.7628010378252,
+            "max": 6729.384530501927
           },
-          {
-            "requestThroughput": {
-              "unit": "ops/s",
-              "mean": 831.1570183111304,
-              "median": 824.6606521408601,
-              "min": 271.1945305486373,
-              "max": 6655.396861309003
-            },
-            "latency": {
-              "unit": "ms",
-              "mean": 1.2165679329683798,
-              "median": 1.2126200000011522,
-              "min": 0.15025400000013178,
-              "max": 3.68739000000096
-            },
-            "requests": {
-              "value": 8220,
-              "unit": "requests"
-            }
+          "latency": {
+            "unit": "ms",
+            "mean": 1.2188399714807967,
+            "median": 1.2169569999996384,
+            "min": 0.1486019999997552,
+            "max": 2.213550999999825
           },
-          {
-            "requestThroughput": {
-              "unit": "ops/s",
-              "mean": 825.5817663638082,
-              "median": 825.5702213525227,
-              "min": 124.90398006530808,
-              "max": 6697.475051874205
-            },
-            "latency": {
-              "unit": "ms",
-              "mean": 1.2255008638480618,
-              "median": 1.2112839999990683,
-              "min": 0.14931000000069616,
-              "max": 8.006150000001071
-            },
-            "requests": {
-              "value": 8160,
-              "unit": "requests"
-            }
+          "requests": { "value": 8205, "unit": "requests" }
+        },
+        {
+          "requestThroughput": {
+            "unit": "ops/s",
+            "mean": 829.9385278309026,
+            "median": 825.2578415090762,
+            "min": 144.64198360859118,
+            "max": 6996.382870040664
           },
-          {
-            "requestThroughput": {
-              "unit": "ops/s",
-              "mean": 827.8056150769761,
-              "median": 821.3161097867775,
-              "min": 318.0531078718211,
-              "max": 6889.424733193928
-            },
-            "latency": {
-              "unit": "ms",
-              "mean": 1.2209563577096758,
-              "median": 1.217558000000281,
-              "min": 0.14514999999664724,
-              "max": 3.144129000000248
-            },
-            "requests": {
-              "value": 8191,
-              "unit": "requests"
-            }
+          "latency": {
+            "unit": "ms",
+            "mean": 1.2190032414675953,
+            "median": 1.2117424999987634,
+            "min": 0.142931000000317,
+            "max": 6.913622000000032
           },
-          {
-            "requestThroughput": {
-              "unit": "ops/s",
-              "mean": 830.6898766906104,
-              "median": 825.6254319060322,
-              "min": 341.7297471307704,
-              "max": 6659.075321073169
-            },
-            "latency": {
-              "unit": "ms",
-              "mean": 1.2138094630416338,
-              "median": 1.2112029999989318,
-              "min": 0.1501709999938612,
-              "max": 2.9262889999954496
-            },
-            "requests": {
-              "value": 8239,
-              "unit": "requests"
-            }
+          "requests": { "value": 8204, "unit": "requests" }
+        },
+        {
+          "requestThroughput": {
+            "unit": "ops/s",
+            "mean": 832.5678698278896,
+            "median": 827.0433242512214,
+            "min": 199.4125306846444,
+            "max": 6460.7413054117205
+          },
+          "latency": {
+            "unit": "ms",
+            "mean": 1.2127716599563525,
+            "median": 1.2091264999999112,
+            "min": 0.15478100000109407,
+            "max": 5.014729999998963
+          },
+          "requests": { "value": 8246, "unit": "requests" }
+        },
+        {
+          "requestThroughput": {
+            "unit": "ops/s",
+            "mean": 824.8169635515081,
+            "median": 824.5063062347757,
+            "min": 121.18374218294738,
+            "max": 6399.508517579466
+          },
+          "latency": {
+            "unit": "ms",
+            "mean": 1.2233478861162044,
+            "median": 1.2128470000025118,
+            "min": 0.15626200000406243,
+            "max": 8.25193200000649
+          },
+          "requests": { "value": 8175, "unit": "requests" }
+        },
+        {
+          "requestThroughput": {
+            "unit": "ops/s",
+            "mean": 837.1223391359171,
+            "median": 826.5617263898008,
+            "min": 399.93696993431587,
+            "max": 7221.676584502166
+          },
+          "latency": {
+            "unit": "ms",
+            "mean": 1.2096522511188408,
+            "median": 1.209831000000122,
+            "min": 0.13847199999872828,
+            "max": 2.50039399999514
+          },
+          "requests": { "value": 8267, "unit": "requests" }
+        }
+      ]
+    },
+    "requestThroughput": {
+      "unit": "ops/s",
+      "mean": 831.3124742641552,
+      "median": 832.1166709745592,
+      "min": 824.8169635515081,
+      "max": 837.1223391359171,
+      "variance": {
+        "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+        "mean": { "percentChange": -0.0766380519487059, "valueChange": -0.6375903226853552 },
+        "median": { "percentChange": 0.08448265121993755, "valueChange": 0.7024008180491137 },
+        "min": { "percentChange": -0.3597372855130916, "valueChange": -2.9778867239982674 },
+        "max": { "percentChange": 0.2853914624497463, "valueChange": 2.3822768713507685 }
+      }
+    },
+    "latency": {
+      "unit": "ms",
+      "mean": 1.216723002027958,
+      "median": 1.2188399714807967,
+      "min": 1.2096522511188408,
+      "max": 1.2233478861162044,
+      "variance": {
+        "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+        "mean": { "percentChange": 0.09146924849835952, "valueChange": 0.001111910330238608 },
+        "median": { "percentChange": 0.28158256042718266, "valueChange": 0.0034224039066570455 },
+        "min": { "percentChange": -0.24231963427325703, "valueChange": -0.0029383450979845183 },
+        "max": { "percentChange": 0.44225593632376636, "valueChange": 0.005386506503468169 }
+      }
+    },
+    "requests": { "value": 41097, "unit": "requests" },
+    "bodySize": { "value": 99154, "unit": "bytes" },
+    "duplicationFactor": { "value": 1, "unit": "ratio" }
+  },
+  "ssrLoad": {
+    "project": "app",
+    "name": "ssrLoad",
+    "iterations": {
+      "runs": 3,
+      "iterations": [
+        {
+          "stage1": {
+            "connections": 1,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 2992, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 598.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 113305190.4, "unit": "bytes" },
+            "avgLatency": { "value": 1.03, "unit": "ms" },
+            "p50Latency": { "value": 1, "unit": "ms" },
+            "p75Latency": { "value": 1, "unit": "ms" },
+            "p90Latency": { "value": 1, "unit": "ms" },
+            "p99Latency": { "value": 2, "unit": "ms" },
+            "maxLatency": { "value": 4, "unit": "ms" }
+          },
+          "stage2": {
+            "connections": 5,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 6622, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1324.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 250727628.8, "unit": "bytes" },
+            "avgLatency": { "value": 3.08, "unit": "ms" },
+            "p50Latency": { "value": 3, "unit": "ms" },
+            "p75Latency": { "value": 3, "unit": "ms" },
+            "p90Latency": { "value": 3, "unit": "ms" },
+            "p99Latency": { "value": 5, "unit": "ms" },
+            "maxLatency": { "value": 7, "unit": "ms" }
+          },
+          "stage3": {
+            "connections": 10,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 7603, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1520.6, "unit": "requests" },
+            "bytesPerSecond": { "value": 287860326.4, "unit": "bytes" },
+            "avgLatency": { "value": 6.2, "unit": "ms" },
+            "p50Latency": { "value": 6, "unit": "ms" },
+            "p75Latency": { "value": 6, "unit": "ms" },
+            "p90Latency": { "value": 8, "unit": "ms" },
+            "p99Latency": { "value": 8, "unit": "ms" },
+            "maxLatency": { "value": 12, "unit": "ms" }
+          },
+          "stage4": {
+            "connections": 25,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 8377, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1675.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 317220454.4, "unit": "bytes" },
+            "avgLatency": { "value": 14.46, "unit": "ms" },
+            "p50Latency": { "value": 14, "unit": "ms" },
+            "p75Latency": { "value": 16, "unit": "ms" },
+            "p90Latency": { "value": 16, "unit": "ms" },
+            "p99Latency": { "value": 17, "unit": "ms" },
+            "maxLatency": { "value": 28, "unit": "ms" }
+          },
+          "stage5": {
+            "connections": 50,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 8353, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1670.6, "unit": "requests" },
+            "bytesPerSecond": { "value": 316276736, "unit": "bytes" },
+            "avgLatency": { "value": 29.35, "unit": "ms" },
+            "p50Latency": { "value": 29, "unit": "ms" },
+            "p75Latency": { "value": 30, "unit": "ms" },
+            "p90Latency": { "value": 32, "unit": "ms" },
+            "p99Latency": { "value": 53, "unit": "ms" },
+            "maxLatency": { "value": 84, "unit": "ms" }
+          },
+          "stage6": {
+            "connections": 100,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 8768, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1753.6, "unit": "requests" },
+            "bytesPerSecond": { "value": 332005376, "unit": "bytes" },
+            "avgLatency": { "value": 56.22, "unit": "ms" },
+            "p50Latency": { "value": 55, "unit": "ms" },
+            "p75Latency": { "value": 58, "unit": "ms" },
+            "p90Latency": { "value": 72, "unit": "ms" },
+            "p99Latency": { "value": 93, "unit": "ms" },
+            "maxLatency": { "value": 1199, "unit": "ms" }
+          },
+          "stage7": {
+            "connections": 200,
+            "duration": { "value": 5010, "unit": "ms" },
+            "requests": { "value": 8677, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1735.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 328597504, "unit": "bytes" },
+            "avgLatency": { "value": 101.87, "unit": "ms" },
+            "p50Latency": { "value": 71, "unit": "ms" },
+            "p75Latency": { "value": 94, "unit": "ms" },
+            "p90Latency": { "value": 122, "unit": "ms" },
+            "p99Latency": { "value": 860, "unit": "ms" },
+            "maxLatency": { "value": 4939, "unit": "ms" }
           }
-        ],
-        "requestThroughput": {
-          "unit": "ops/s",
-          "mean": 831.6480707404784,
-          "median": 830.6898766906104,
-          "min": 825.5817663638082,
-          "max": 843.0060772598665,
-          "variance": {
-            "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-            "mean": {
-              "percentChange": -0.3244208838372128,
-              "valueChange": -2.7068215157968325
-            },
-            "median": {
-              "percentChange": -0.3162629404543985,
-              "valueChange": -2.635499337780061
-            },
-            "min": {
-              "percentChange": -0.7983068669530219,
-              "valueChange": -6.643713151503448
-            },
-            "max": {
-              "percentChange": 0.6698320070484246,
-              "valueChange": 5.609152627228582
-            }
+        },
+        {
+          "stage1": {
+            "connections": 1,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 2963, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 592.6, "unit": "requests" },
+            "bytesPerSecond": { "value": 112191078.4, "unit": "bytes" },
+            "avgLatency": { "value": 1.06, "unit": "ms" },
+            "p50Latency": { "value": 1, "unit": "ms" },
+            "p75Latency": { "value": 1, "unit": "ms" },
+            "p90Latency": { "value": 1, "unit": "ms" },
+            "p99Latency": { "value": 3, "unit": "ms" },
+            "maxLatency": { "value": 5, "unit": "ms" }
+          },
+          "stage2": {
+            "connections": 5,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 6611, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1322.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 250308198.4, "unit": "bytes" },
+            "avgLatency": { "value": 3.11, "unit": "ms" },
+            "p50Latency": { "value": 3, "unit": "ms" },
+            "p75Latency": { "value": 3, "unit": "ms" },
+            "p90Latency": { "value": 3, "unit": "ms" },
+            "p99Latency": { "value": 6, "unit": "ms" },
+            "maxLatency": { "value": 8, "unit": "ms" }
+          },
+          "stage3": {
+            "connections": 10,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 7676, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1535.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 290639052.8, "unit": "bytes" },
+            "avgLatency": { "value": 6.19, "unit": "ms" },
+            "p50Latency": { "value": 6, "unit": "ms" },
+            "p75Latency": { "value": 6, "unit": "ms" },
+            "p90Latency": { "value": 8, "unit": "ms" },
+            "p99Latency": { "value": 8, "unit": "ms" },
+            "maxLatency": { "value": 12, "unit": "ms" }
+          },
+          "stage4": {
+            "connections": 25,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 8429, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1685.8, "unit": "requests" },
+            "bytesPerSecond": { "value": 319107891.2, "unit": "bytes" },
+            "avgLatency": { "value": 14.39, "unit": "ms" },
+            "p50Latency": { "value": 14, "unit": "ms" },
+            "p75Latency": { "value": 15, "unit": "ms" },
+            "p90Latency": { "value": 16, "unit": "ms" },
+            "p99Latency": { "value": 18, "unit": "ms" },
+            "maxLatency": { "value": 34, "unit": "ms" }
+          },
+          "stage5": {
+            "connections": 50,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 8598, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1719.6, "unit": "requests" },
+            "bytesPerSecond": { "value": 325556633.61, "unit": "bytes" },
+            "avgLatency": { "value": 28.5, "unit": "ms" },
+            "p50Latency": { "value": 28, "unit": "ms" },
+            "p75Latency": { "value": 29, "unit": "ms" },
+            "p90Latency": { "value": 30, "unit": "ms" },
+            "p99Latency": { "value": 42, "unit": "ms" },
+            "maxLatency": { "value": 149, "unit": "ms" }
+          },
+          "stage6": {
+            "connections": 100,
+            "duration": { "value": 5010, "unit": "ms" },
+            "requests": { "value": 8650, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1730, "unit": "requests" },
+            "bytesPerSecond": { "value": 327548928, "unit": "bytes" },
+            "avgLatency": { "value": 57.01, "unit": "ms" },
+            "p50Latency": { "value": 56, "unit": "ms" },
+            "p75Latency": { "value": 61, "unit": "ms" },
+            "p90Latency": { "value": 75, "unit": "ms" },
+            "p99Latency": { "value": 96, "unit": "ms" },
+            "maxLatency": { "value": 752, "unit": "ms" }
+          },
+          "stage7": {
+            "connections": 200,
+            "duration": { "value": 5010, "unit": "ms" },
+            "requests": { "value": 8816, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1763.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 333787955.2, "unit": "bytes" },
+            "avgLatency": { "value": 102.16, "unit": "ms" },
+            "p50Latency": { "value": 72, "unit": "ms" },
+            "p75Latency": { "value": 93, "unit": "ms" },
+            "p90Latency": { "value": 117, "unit": "ms" },
+            "p99Latency": { "value": 653, "unit": "ms" },
+            "maxLatency": { "value": 4989, "unit": "ms" }
           }
         },
-        "latency": {
-          "unit": "ms",
-          "mean": 1.2174399948037922,
-          "median": 1.2165679329683798,
-          "min": 1.2103653564512091,
-          "max": 1.2255008638480618,
-          "variance": {
-            "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-            "mean": {
-              "percentChange": 0.5374052857180082,
-              "valueChange": 0.006507614617591528
-            },
-            "median": {
-              "percentChange": 0.7313457513561752,
-              "valueChange": 0.008832720166459307
-            },
-            "min": {
-              "percentChange": 0.5346647485704171,
-              "valueChange": 0.006436980623586663
-            },
-            "max": {
-              "percentChange": 0.41339980539236876,
-              "valueChange": 0.005045360675017818
-            }
+        {
+          "stage1": {
+            "connections": 1,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 3017, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 603.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 114222694.4, "unit": "bytes" },
+            "avgLatency": { "value": 1.03, "unit": "ms" },
+            "p50Latency": { "value": 1, "unit": "ms" },
+            "p75Latency": { "value": 1, "unit": "ms" },
+            "p90Latency": { "value": 1, "unit": "ms" },
+            "p99Latency": { "value": 2, "unit": "ms" },
+            "maxLatency": { "value": 5, "unit": "ms" }
+          },
+          "stage2": {
+            "connections": 5,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 6675, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1335, "unit": "requests" },
+            "bytesPerSecond": { "value": 252772352, "unit": "bytes" },
+            "avgLatency": { "value": 3.09, "unit": "ms" },
+            "p50Latency": { "value": 3, "unit": "ms" },
+            "p75Latency": { "value": 3, "unit": "ms" },
+            "p90Latency": { "value": 3, "unit": "ms" },
+            "p99Latency": { "value": 6, "unit": "ms" },
+            "maxLatency": { "value": 7, "unit": "ms" }
+          },
+          "stage3": {
+            "connections": 10,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 7681, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1536.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 290796339.2, "unit": "bytes" },
+            "avgLatency": { "value": 6.21, "unit": "ms" },
+            "p50Latency": { "value": 6, "unit": "ms" },
+            "p75Latency": { "value": 6, "unit": "ms" },
+            "p90Latency": { "value": 6, "unit": "ms" },
+            "p99Latency": { "value": 9, "unit": "ms" },
+            "maxLatency": { "value": 13, "unit": "ms" }
+          },
+          "stage4": {
+            "connections": 25,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 8531, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1706.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 322987622.4, "unit": "bytes" },
+            "avgLatency": { "value": 14.18, "unit": "ms" },
+            "p50Latency": { "value": 14, "unit": "ms" },
+            "p75Latency": { "value": 14, "unit": "ms" },
+            "p90Latency": { "value": 17, "unit": "ms" },
+            "p99Latency": { "value": 17, "unit": "ms" },
+            "maxLatency": { "value": 26, "unit": "ms" }
+          },
+          "stage5": {
+            "connections": 50,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 8784, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1756.8, "unit": "requests" },
+            "bytesPerSecond": { "value": 332582092.8, "unit": "bytes" },
+            "avgLatency": { "value": 27.9, "unit": "ms" },
+            "p50Latency": { "value": 27, "unit": "ms" },
+            "p75Latency": { "value": 29, "unit": "ms" },
+            "p90Latency": { "value": 30, "unit": "ms" },
+            "p99Latency": { "value": 38, "unit": "ms" },
+            "maxLatency": { "value": 63, "unit": "ms" }
+          },
+          "stage6": {
+            "connections": 100,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 8782, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1756.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 332529664, "unit": "bytes" },
+            "avgLatency": { "value": 56.09, "unit": "ms" },
+            "p50Latency": { "value": 56, "unit": "ms" },
+            "p75Latency": { "value": 59, "unit": "ms" },
+            "p90Latency": { "value": 75, "unit": "ms" },
+            "p99Latency": { "value": 96, "unit": "ms" },
+            "maxLatency": { "value": 107, "unit": "ms" }
+          },
+          "stage7": {
+            "connections": 200,
+            "duration": { "value": 5010, "unit": "ms" },
+            "requests": { "value": 8696, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1739.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 329279078.4, "unit": "bytes" },
+            "avgLatency": { "value": 110.7, "unit": "ms" },
+            "p50Latency": { "value": 82, "unit": "ms" },
+            "p75Latency": { "value": 103, "unit": "ms" },
+            "p90Latency": { "value": 126, "unit": "ms" },
+            "p99Latency": { "value": 1137, "unit": "ms" },
+            "maxLatency": { "value": 4927, "unit": "ms" }
           }
-        },
-        "totalRequests": {
-          "value": 41072,
-          "unit": "requests"
-        },
-        "bodySize": {
-          "value": 99154,
-          "unit": "bytes"
-        },
-        "duplicationFactor": {
-          "value": 1,
-          "unit": "ratio"
+        }
+      ]
+    },
+    "representativeIterationIndex": 2,
+    "totalRequests": { "value": 155301, "unit": "requests" },
+    "totalErrors": { "value": 0, "unit": "errors" },
+    "stage1": {
+      "connections": 1,
+      "requests": {
+        "unit": "requests",
+        "mean": 2990.6666666666665,
+        "median": 2992,
+        "min": 2963,
+        "max": 3017,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 1.447308909995472, "valueChange": 42.666666666666515 },
+          "median": { "percentChange": 1.6649677200135917, "valueChange": 49 },
+          "min": { "percentChange": 2.207657813038979, "valueChange": 64 },
+          "max": { "percentChange": 0.4996668887408394, "valueChange": 15 }
+        }
+      },
+      "errors": {
+        "unit": "errors",
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "requestsPerSecond": {
+        "unit": "requests",
+        "mean": 598.1333333333333,
+        "median": 598.4,
+        "min": 592.6,
+        "max": 603.4,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 1.447308909995472, "valueChange": 8.533333333333303 },
+          "median": { "percentChange": 1.6649677200135837, "valueChange": 9.799999999999955 },
+          "min": { "percentChange": 2.207657813038991, "valueChange": 12.800000000000068 },
+          "max": { "percentChange": 0.4996668887408394, "valueChange": 3 }
+        }
+      },
+      "bytesPerSecond": {
+        "unit": "bytes",
+        "mean": 113239654.40000002,
+        "median": 113305190.4,
+        "min": 112191078.4,
+        "max": 114222694.4,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 1.4521968881495395, "valueChange": 1620923.7333333492 },
+          "median": { "percentChange": 1.6820561077457001, "valueChange": 1874329.600000009 },
+          "min": { "percentChange": 2.2090871096781894, "valueChange": 2424832 },
+          "max": { "percentChange": 0.4958772991985318, "valueChange": 563609.6000000089 }
+        }
+      },
+      "avgLatency": {
+        "unit": "ms",
+        "mean": 1.04,
+        "median": 1.03,
+        "min": 1.03,
+        "max": 1.06,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0.3215434083601146, "valueChange": 0.0033333333333331883 },
+          "median": { "percentChange": -0.9615384615384623, "valueChange": -0.010000000000000009 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 1.9230769230769247, "valueChange": 0.020000000000000018 }
+        }
+      },
+      "p50Latency": {
+        "unit": "ms",
+        "mean": 1,
+        "median": 1,
+        "min": 1,
+        "max": 1,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p75Latency": {
+        "unit": "ms",
+        "mean": 1,
+        "median": 1,
+        "min": 1,
+        "max": 1,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p90Latency": {
+        "unit": "ms",
+        "mean": 1,
+        "median": 1,
+        "min": 1,
+        "max": 1,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p99Latency": {
+        "unit": "ms",
+        "mean": 2.3333333333333335,
+        "median": 2,
+        "min": 2,
+        "max": 3,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 16.666666666666675, "valueChange": 0.3333333333333335 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 50, "valueChange": 1 }
+        }
+      },
+      "maxLatency": {
+        "unit": "ms",
+        "mean": 4.666666666666667,
+        "median": 5,
+        "min": 4,
+        "max": 5,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -12.49999999999999, "valueChange": -0.6666666666666661 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": -28.57142857142857, "valueChange": -2 }
         }
       }
     },
-    "ssrLoad": {
-      "project": "app",
-      "result": {
-        "name": "ssrLoad",
-        "runs": 3,
-        "iterations": [
-          [
-            {
-              "connections": 1,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 2918,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 583.6,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 1.03,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 2,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 4,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 110487142.4,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 5,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 6340,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1268,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 3.13,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 3,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 3,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 4,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 5,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 240058368,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 10,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 7259,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1451.8,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 6.3,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 8,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 9,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 14,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 274910412.8,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 25,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 7870,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1574,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 15.42,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 15,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 16,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 17,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 19,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 34,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 297979084.8,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 50,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8325,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1665,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 29.46,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 29,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 30,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 31,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 44,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 82,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 315175731.2,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 100,
-              "duration": {
-                "value": 5010,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8660,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1732,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 56.96,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 56,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 59,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 73,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 98,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 543,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 327863500.8,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 200,
-              "duration": {
-                "value": 5010,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8493,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1698.6,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 115.74,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 103,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 135,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 155,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 189,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 2729,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 321624473.61,
-                "unit": "bytes/s"
-              }
-            }
-          ],
-          [
-            {
-              "connections": 1,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 2972,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 594.4,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 1.04,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 2,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 8,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 112531865.6,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 5,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 6487,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1297.41,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 3.11,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 3,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 3,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 3,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 14,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 245615820.8,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 10,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 7486,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1497.2,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 6.18,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 9,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 11,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 283456307.2,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 25,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8237,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1647.4,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 14.62,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 14,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 15,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 17,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 18,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 27,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 311872716.8,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 50,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8317,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1663.4,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 29.49,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 29,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 31,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 32,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 39,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 58,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 314966016,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 100,
-              "duration": {
-                "value": 5010,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8303,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1660.6,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 59.39,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 59,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 61,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 77,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 102,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 366,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 314441728,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 200,
-              "duration": {
-                "value": 5010,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8665,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1733,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 113.55,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 96,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 114,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 139,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 220,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 4176,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 328020787.2,
-                "unit": "bytes/s"
-              }
-            }
-          ],
-          [
-            {
-              "connections": 1,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 2988,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 597.6,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 1.03,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 1,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 2,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 5,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 113147904,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 5,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 6621,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1324.2,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 3.09,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 3,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 3,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 3,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 7,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 250701414.4,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 10,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 7772,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1554.4,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 6.13,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 6,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 9,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 11,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 294256640,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 25,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8615,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1723,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 13.99,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 14,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 14,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 16,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 17,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 25,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 326238208,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 50,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8837,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1767.4,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 27.73,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 27,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 29,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 30,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 35,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 115,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 334626816,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 100,
-              "duration": {
-                "value": 5000,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8978,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1795.6,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 54.89,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 55,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 56,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 68,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 92,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 183,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 339974553.61,
-                "unit": "bytes/s"
-              }
-            },
-            {
-              "connections": 200,
-              "duration": {
-                "value": 5010,
-                "unit": "ms"
-              },
-              "requests": {
-                "value": 8708,
-                "unit": "requests"
-              },
-              "errors": {
-                "value": 0,
-                "unit": "errors"
-              },
-              "requestThroughput": {
-                "value": 1741.6,
-                "unit": "requests/s"
-              },
-              "avgLatency": {
-                "value": 113.09,
-                "unit": "ms"
-              },
-              "p50Latency": {
-                "value": 109,
-                "unit": "ms"
-              },
-              "p75Latency": {
-                "value": 122,
-                "unit": "ms"
-              },
-              "p90Latency": {
-                "value": 148,
-                "unit": "ms"
-              },
-              "p99Latency": {
-                "value": 201,
-                "unit": "ms"
-              },
-              "maxLatency": {
-                "value": 1639,
-                "unit": "ms"
-              },
-              "byteThroughput": {
-                "value": 329698508.8,
-                "unit": "bytes/s"
-              }
-            }
-          ]
-        ],
-        "representativeIterationIndex": 1,
-        "totalRequests": {
-          "value": 152851,
-          "unit": "requests"
-        },
-        "totalErrors": {
-          "value": 0,
-          "unit": "errors"
-        },
-        "stage1": {
-          "connections": 1,
-          "requests": {
-            "unit": "requests",
-            "mean": 2959.3333333333335,
-            "median": 2972,
-            "min": 2918,
-            "max": 2988,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -2.4502801889902113,
-                "valueChange": -74.33333333333303
-              },
-              "median": {
-                "percentChange": -2.140270003292723,
-                "valueChange": -65
-              },
-              "min": {
-                "percentChange": -2.992021276595745,
-                "valueChange": -90
-              },
-              "max": {
-                "percentChange": -2.225130890052356,
-                "valueChange": -68
-              }
-            }
-          },
-          "errors": {
-            "unit": "errors",
-            "mean": 0,
-            "median": 0,
-            "min": 0,
-            "max": 0,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "requestThroughput": {
-            "unit": "requests/s",
-            "mean": 591.8666666666667,
-            "median": 594.4,
-            "min": 583.6,
-            "max": 597.6,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -2.4508161146241374,
-                "valueChange": -14.870000000000005
-              },
-              "median": {
-                "percentChange": -2.140270003292723,
-                "valueChange": -13
-              },
-              "min": {
-                "percentChange": -2.9920212765957444,
-                "valueChange": -18
-              },
-              "max": {
-                "percentChange": -2.2267305835964746,
-                "valueChange": -13.610000000000014
-              }
-            }
-          },
-          "avgLatency": {
-            "unit": "ms",
-            "mean": 1.0333333333333334,
-            "median": 1.03,
-            "min": 1.03,
-            "max": 1.04,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -0.321543408360136,
-                "valueChange": -0.0033333333333334103
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": -0.9523809523809532,
-                "valueChange": -0.010000000000000009
-              }
-            }
-          },
-          "p50Latency": {
-            "unit": "ms",
-            "mean": 1,
-            "median": 1,
-            "min": 1,
-            "max": 1,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "p75Latency": {
-            "unit": "ms",
-            "mean": 1,
-            "median": 1,
-            "min": 1,
-            "max": 1,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "p90Latency": {
-            "unit": "ms",
-            "mean": 1,
-            "median": 1,
-            "min": 1,
-            "max": 1,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "p99Latency": {
-            "unit": "ms",
-            "mean": 2,
-            "median": 2,
-            "min": 2,
-            "max": 2,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -14.28571428571429,
-                "valueChange": -0.3333333333333335
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": -33.33333333333333,
-                "valueChange": -1
-              }
-            }
-          },
-          "maxLatency": {
-            "unit": "ms",
-            "mean": 5.666666666666667,
-            "median": 5,
-            "min": 4,
-            "max": 8,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 13.33333333333334,
-                "valueChange": 0.666666666666667
-              },
-              "median": {
-                "percentChange": 25,
-                "valueChange": 1
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 14.285714285714285,
-                "valueChange": 1
-              }
-            }
-          },
-          "byteThroughput": {
-            "unit": "bytes/s",
-            "mean": 112055637.33333333,
-            "median": 112531865.6,
-            "min": 110487142.4,
-            "max": 113147904,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -2.4494608523667383,
-                "valueChange": -2813678.9333333373
-              },
-              "median": {
-                "percentChange": -2.142816435857989,
-                "valueChange": -2464153.600000009
-              },
-              "min": {
-                "percentChange": -2.9921169227228264,
-                "valueChange": -3407872
-              },
-              "max": {
-                "percentChange": -2.220082686753132,
-                "valueChange": -2569011.200000003
-              }
-            }
-          }
-        },
-        "stage2": {
-          "connections": 5,
-          "requests": {
-            "unit": "requests",
-            "mean": 6482.666666666667,
-            "median": 6487,
-            "min": 6340,
-            "max": 6621,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.591836734693877,
-                "valueChange": -312
-              },
-              "median": {
-                "percentChange": -4.588910133843212,
-                "valueChange": -312
-              },
-              "min": {
-                "percentChange": -6.199141884894215,
-                "valueChange": -419
-              },
-              "max": {
-                "percentChange": -3.003222970993261,
-                "valueChange": -205
-              }
-            }
-          },
-          "errors": {
-            "unit": "errors",
-            "mean": 0,
-            "median": 0,
-            "min": 0,
-            "max": 0,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "requestThroughput": {
-            "unit": "requests/s",
-            "mean": 1296.5366666666666,
-            "median": 1297.41,
-            "min": 1268,
-            "max": 1324.2,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.591591444270023,
-                "valueChange": -62.39666666666676
-              },
-              "median": {
-                "percentChange": -4.588174731578164,
-                "valueChange": -62.38999999999987
-              },
-              "min": {
-                "percentChange": -6.199141884894212,
-                "valueChange": -83.79999999999995
-              },
-              "max": {
-                "percentChange": -3.003222970993261,
-                "valueChange": -41
-              }
-            }
-          },
-          "avgLatency": {
-            "unit": "ms",
-            "mean": 3.11,
-            "median": 3.11,
-            "min": 3.09,
-            "max": 3.13,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 1.4130434782608734,
-                "valueChange": 0.043333333333333446
-              },
-              "median": {
-                "percentChange": 1.3029315960912065,
-                "valueChange": 0.040000000000000036
-              },
-              "min": {
-                "percentChange": 1.3114754098360668,
-                "valueChange": 0.040000000000000036
-              },
-              "max": {
-                "percentChange": 1.6233766233766176,
-                "valueChange": 0.04999999999999982
-              }
-            }
-          },
-          "p50Latency": {
-            "unit": "ms",
-            "mean": 3,
-            "median": 3,
-            "min": 3,
-            "max": 3,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "p75Latency": {
-            "unit": "ms",
-            "mean": 3,
-            "median": 3,
-            "min": 3,
-            "max": 3,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "p90Latency": {
-            "unit": "ms",
-            "mean": 3.3333333333333335,
-            "median": 3,
-            "min": 3,
-            "max": 4,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 11.111111111111116,
-                "valueChange": 0.3333333333333335
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 33.33333333333333,
-                "valueChange": 1
-              }
-            }
-          },
-          "p99Latency": {
-            "unit": "ms",
-            "mean": 5.666666666666667,
-            "median": 6,
-            "min": 5,
-            "max": 6,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "maxLatency": {
-            "unit": "ms",
-            "mean": 9,
-            "median": 7,
-            "min": 6,
-            "max": 14,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -3.5714285714285774,
-                "valueChange": -0.3333333333333339
-              },
-              "median": {
-                "percentChange": -12.5,
-                "valueChange": -1
-              },
-              "min": {
-                "percentChange": -25,
-                "valueChange": -2
-              },
-              "max": {
-                "percentChange": 16.666666666666664,
-                "valueChange": 2
-              }
-            }
-          },
-          "byteThroughput": {
-            "unit": "bytes/s",
-            "mean": 245458534.4,
-            "median": 245615820.8,
-            "min": 240058368,
-            "max": 250701414.4,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.601721825066655,
-                "valueChange": -11840170.666666687
-              },
-              "median": {
-                "percentChange": -4.5924341937783115,
-                "valueChange": -11822694.399999976
-              },
-              "min": {
-                "percentChange": -6.206790597634047,
-                "valueChange": -15885926.400000006
-              },
-              "max": {
-                "percentChange": -3.0218526593317403,
-                "valueChange": -7811891.199999988
-              }
-            }
-          }
-        },
-        "stage3": {
-          "connections": 10,
-          "requests": {
-            "unit": "requests",
-            "mean": 7505.666666666667,
-            "median": 7486,
-            "min": 7259,
-            "max": 7772,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.987552217393139,
-                "valueChange": -394
-              },
-              "median": {
-                "percentChange": -5.144450076026356,
-                "valueChange": -406
-              },
-              "min": {
-                "percentChange": -7.705022250476796,
-                "valueChange": -606
-              },
-              "max": {
-                "percentChange": -2.140518761017376,
-                "valueChange": -170
-              }
-            }
-          },
-          "errors": {
-            "unit": "errors",
-            "mean": 0,
-            "median": 0,
-            "min": 0,
-            "max": 0,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "requestThroughput": {
-            "unit": "requests/s",
-            "mean": 1501.1333333333332,
-            "median": 1497.2,
-            "min": 1451.8,
-            "max": 1554.4,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.98755221739315,
-                "valueChange": -78.80000000000018
-              },
-              "median": {
-                "percentChange": -5.1444500760263585,
-                "valueChange": -81.20000000000005
-              },
-              "min": {
-                "percentChange": -7.705022250476799,
-                "valueChange": -121.20000000000005
-              },
-              "max": {
-                "percentChange": -2.140518761017376,
-                "valueChange": -34
-              }
-            }
-          },
-          "avgLatency": {
-            "unit": "ms",
-            "mean": 6.203333333333333,
-            "median": 6.18,
-            "min": 6.13,
-            "max": 6.3,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 1.7495899398578425,
-                "valueChange": 0.10666666666666647
-              },
-              "median": {
-                "percentChange": 1.3114754098360668,
-                "valueChange": 0.08000000000000007
-              },
-              "min": {
-                "percentChange": 0.9884678747940627,
-                "valueChange": 0.05999999999999961
-              },
-              "max": {
-                "percentChange": 2.9411764705882306,
-                "valueChange": 0.17999999999999972
-              }
-            }
-          },
-          "p50Latency": {
-            "unit": "ms",
-            "mean": 6,
-            "median": 6,
-            "min": 6,
-            "max": 6,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "p75Latency": {
-            "unit": "ms",
-            "mean": 6,
-            "median": 6,
-            "min": 6,
-            "max": 6,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "p90Latency": {
-            "unit": "ms",
-            "mean": 6.666666666666667,
-            "median": 6,
-            "min": 6,
-            "max": 8,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 5.263157894736851,
-                "valueChange": 0.3333333333333339
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 14.285714285714285,
-                "valueChange": 1
-              }
-            }
-          },
-          "p99Latency": {
-            "unit": "ms",
-            "mean": 9,
-            "median": 9,
-            "min": 9,
-            "max": 9,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 3.8461538461538534,
-                "valueChange": 0.3333333333333339
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 12.5,
-                "valueChange": 1
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "maxLatency": {
-            "unit": "ms",
-            "mean": 12,
-            "median": 11,
-            "min": 11,
-            "max": 14,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -18.18181818181818,
-                "valueChange": -2.666666666666666
-              },
-              "median": {
-                "percentChange": -31.25,
-                "valueChange": -5
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": -17.647058823529413,
-                "valueChange": -3
-              }
-            }
-          },
-          "byteThroughput": {
-            "unit": "bytes/s",
-            "mean": 284207786.6666667,
-            "median": 283456307.2,
-            "min": 274910412.8,
-            "max": 294256640,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.983786627216426,
-                "valueChange": -14907255.469999969
-              },
-              "median": {
-                "percentChange": -5.140801827895956,
-                "valueChange": -15361638.410000026
-              },
-              "min": {
-                "percentChange": -7.692984772467201,
-                "valueChange": -22911385.599999964
-              },
-              "max": {
-                "percentChange": -2.144538401185591,
-                "valueChange": -6448742.399999976
-              }
-            }
-          }
-        },
-        "stage4": {
-          "connections": 25,
-          "requests": {
-            "unit": "requests",
-            "mean": 8240.666666666666,
-            "median": 8237,
-            "min": 7870,
-            "max": 8615,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -5.159780565465922,
-                "valueChange": -448.33333333333394
-              },
-              "median": {
-                "percentChange": -5.016143911439115,
-                "valueChange": -435
-              },
-              "min": {
-                "percentChange": -9.027858051092359,
-                "valueChange": -781
-              },
-              "max": {
-                "percentChange": -1.4752973467520585,
-                "valueChange": -129
-              }
-            }
-          },
-          "errors": {
-            "unit": "errors",
-            "mean": 0,
-            "median": 0,
-            "min": 0,
-            "max": 0,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "requestThroughput": {
-            "unit": "requests/s",
-            "mean": 1648.1333333333332,
-            "median": 1647.4,
-            "min": 1574,
-            "max": 1723,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -5.1597805654659314,
-                "valueChange": -89.66666666666697
-              },
-              "median": {
-                "percentChange": -5.016143911439115,
-                "valueChange": -87
-              },
-              "min": {
-                "percentChange": -9.027858051092363,
-                "valueChange": -156.20000000000005
-              },
-              "max": {
-                "percentChange": -1.475297346752056,
-                "valueChange": -25.799999999999955
-              }
-            }
-          },
-          "avgLatency": {
-            "unit": "ms",
-            "mean": 14.676666666666668,
-            "median": 14.62,
-            "min": 13.99,
-            "max": 15.42,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 6.4040599323344845,
-                "valueChange": 0.8833333333333364
-              },
-              "median": {
-                "percentChange": 5.712219812002886,
-                "valueChange": 0.7899999999999991
-              },
-              "min": {
-                "percentChange": 2.266081871345033,
-                "valueChange": 0.3100000000000005
-              },
-              "max": {
-                "percentChange": 11.175198269646726,
-                "valueChange": 1.5500000000000007
-              }
-            }
-          },
-          "p50Latency": {
-            "unit": "ms",
-            "mean": 14.333333333333334,
-            "median": 14,
-            "min": 14,
-            "max": 15,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 4.878048780487814,
-                "valueChange": 0.6666666666666679
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 7.6923076923076925,
-                "valueChange": 1
-              },
-              "max": {
-                "percentChange": 7.142857142857142,
-                "valueChange": 1
-              }
-            }
-          },
-          "p75Latency": {
-            "unit": "ms",
-            "mean": 15,
-            "median": 15,
-            "min": 14,
-            "max": 16,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 4.65116279069767,
-                "valueChange": 0.6666666666666661
-              },
-              "median": {
-                "percentChange": 7.142857142857142,
-                "valueChange": 1
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 6.666666666666667,
-                "valueChange": 1
-              }
-            }
-          },
-          "p90Latency": {
-            "unit": "ms",
-            "mean": 16.666666666666668,
-            "median": 17,
-            "min": 16,
-            "max": 17,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 6.382978723404268,
-                "valueChange": 1.0000000000000018
-              },
-              "median": {
-                "percentChange": 6.25,
-                "valueChange": 1
-              },
-              "min": {
-                "percentChange": 6.666666666666667,
-                "valueChange": 1
-              },
-              "max": {
-                "percentChange": 6.25,
-                "valueChange": 1
-              }
-            }
-          },
-          "p99Latency": {
-            "unit": "ms",
-            "mean": 18,
-            "median": 18,
-            "min": 17,
-            "max": 19,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 10.20408163265307,
-                "valueChange": 1.6666666666666679
-              },
-              "median": {
-                "percentChange": 12.5,
-                "valueChange": 2
-              },
-              "min": {
-                "percentChange": 6.25,
-                "valueChange": 1
-              },
-              "max": {
-                "percentChange": 11.76470588235294,
-                "valueChange": 2
-              }
-            }
-          },
-          "maxLatency": {
-            "unit": "ms",
-            "mean": 28.666666666666668,
-            "median": 27,
-            "min": 25,
-            "max": 34,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 7.5,
-                "valueChange": 2
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 21.428571428571427,
-                "valueChange": 6
-              }
-            }
-          },
-          "byteThroughput": {
-            "unit": "bytes/s",
-            "mean": 312030003.2,
-            "median": 311872716.8,
-            "min": 297979084.8,
-            "max": 326238208,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -5.162935225245743,
-                "valueChange": -16986931.203333378
-              },
-              "median": {
-                "percentChange": -5.029137063941885,
-                "valueChange": -16515072
-              },
-              "min": {
-                "percentChange": -9.042170120828999,
-                "valueChange": -29622272
-              },
-              "max": {
-                "percentChange": -1.4569641331531584,
-                "valueChange": -4823449.610000014
-              }
-            }
-          }
-        },
-        "stage5": {
-          "connections": 50,
-          "requests": {
-            "unit": "requests",
-            "mean": 8493,
-            "median": 8325,
-            "min": 8317,
-            "max": 8837,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.758522727272734,
-                "valueChange": -424.33333333333394
-              },
-              "median": {
-                "percentChange": -6.941649899396378,
-                "valueChange": -621
-              },
-              "min": {
-                "percentChange": -6.128668171557562,
-                "valueChange": -543
-              },
-              "max": {
-                "percentChange": -1.2184216409568522,
-                "valueChange": -109
-              }
-            }
-          },
-          "errors": {
-            "unit": "errors",
-            "mean": 0,
-            "median": 0,
-            "min": 0,
-            "max": 0,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "requestThroughput": {
-            "unit": "requests/s",
-            "mean": 1698.6000000000001,
-            "median": 1665,
-            "min": 1663.4,
-            "max": 1767.4,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.758522727272709,
-                "valueChange": -84.86666666666633
-              },
-              "median": {
-                "percentChange": -6.94164989939638,
-                "valueChange": -124.20000000000005
-              },
-              "min": {
-                "percentChange": -6.128668171557557,
-                "valueChange": -108.59999999999991
-              },
-              "max": {
-                "percentChange": -1.2184216409568496,
-                "valueChange": -21.799999999999955
-              }
-            }
-          },
-          "avgLatency": {
-            "unit": "ms",
-            "mean": 28.893333333333334,
-            "median": 29.46,
-            "min": 27.73,
-            "max": 29.49,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 5.206942590120159,
-                "valueChange": 1.4299999999999997
-              },
-              "median": {
-                "percentChange": 7.5182481751824906,
-                "valueChange": 2.0600000000000023
-              },
-              "min": {
-                "percentChange": 1.3893967093235795,
-                "valueChange": 0.379999999999999
-              },
-              "max": {
-                "percentChange": 6.693198263386389,
-                "valueChange": 1.8499999999999979
-              }
-            }
-          },
-          "p50Latency": {
-            "unit": "ms",
-            "mean": 28.333333333333332,
-            "median": 29,
-            "min": 27,
-            "max": 29,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 4.938271604938267,
-                "valueChange": 1.3333333333333321
-              },
-              "median": {
-                "percentChange": 7.4074074074074066,
-                "valueChange": 2
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 7.4074074074074066,
-                "valueChange": 2
-              }
-            }
-          },
-          "p75Latency": {
-            "unit": "ms",
-            "mean": 30,
-            "median": 30,
-            "min": 29,
-            "max": 31,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 4.65116279069767,
-                "valueChange": 1.3333333333333321
-              },
-              "median": {
-                "percentChange": 3.4482758620689653,
-                "valueChange": 1
-              },
-              "min": {
-                "percentChange": 3.571428571428571,
-                "valueChange": 1
-              },
-              "max": {
-                "percentChange": 6.896551724137931,
-                "valueChange": 2
-              }
-            }
-          },
-          "p90Latency": {
-            "unit": "ms",
-            "mean": 31,
-            "median": 31,
-            "min": 30,
-            "max": 32,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 6.896551724137931,
-                "valueChange": 2
-              },
-              "median": {
-                "percentChange": 6.896551724137931,
-                "valueChange": 2
-              },
-              "min": {
-                "percentChange": 3.4482758620689653,
-                "valueChange": 1
-              },
-              "max": {
-                "percentChange": 10.344827586206897,
-                "valueChange": 3
-              }
-            }
-          },
-          "p99Latency": {
-            "unit": "ms",
-            "mean": 39.333333333333336,
-            "median": 39,
-            "min": 35,
-            "max": 44,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 3.5087719298245674,
-                "valueChange": 1.3333333333333357
-              },
-              "median": {
-                "percentChange": 5.405405405405405,
-                "valueChange": 2
-              },
-              "min": {
-                "percentChange": -5.405405405405405,
-                "valueChange": -2
-              },
-              "max": {
-                "percentChange": 10,
-                "valueChange": 4
-              }
-            }
-          },
-          "maxLatency": {
-            "unit": "ms",
-            "mean": 85,
-            "median": 82,
-            "min": 58,
-            "max": 115,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 13.839285714285706,
-                "valueChange": 10.333333333333329
-              },
-              "median": {
-                "percentChange": 1.2345679012345678,
-                "valueChange": 1
-              },
-              "min": {
-                "percentChange": -1.694915254237288,
-                "valueChange": -1
-              },
-              "max": {
-                "percentChange": 36.904761904761905,
-                "valueChange": 31
-              }
-            }
-          },
-          "byteThroughput": {
-            "unit": "bytes/s",
-            "mean": 321589521.06666666,
-            "median": 315175731.2,
-            "min": 314966016,
-            "max": 334626816,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.751675768006422,
-                "valueChange": -16043212.800000012
-              },
-              "median": {
-                "percentChange": -6.949926476278923,
-                "valueChange": -23540531.199999988
-              },
-              "min": {
-                "percentChange": -6.110807220442294,
-                "valueChange": -20499660.800000012
-              },
-              "max": {
-                "percentChange": -1.2073368934292943,
-                "valueChange": -4089446.399999976
-              }
-            }
-          }
-        },
-        "stage6": {
-          "connections": 100,
-          "requests": {
-            "unit": "requests",
-            "mean": 8647,
-            "median": 8660,
-            "min": 8303,
-            "max": 8978,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.481184181456655,
-                "valueChange": -405.66666666666606
-              },
-              "median": {
-                "percentChange": -4.372791519434629,
-                "valueChange": -396
-              },
-              "min": {
-                "percentChange": -7.918376400133082,
-                "valueChange": -714
-              },
-              "max": {
-                "percentChange": -1.1777655476059439,
-                "valueChange": -107
-              }
-            }
-          },
-          "errors": {
-            "unit": "errors",
-            "mean": 0,
-            "median": 0,
-            "min": 0,
-            "max": 0,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "requestThroughput": {
-            "unit": "requests/s",
-            "mean": 1729.3999999999999,
-            "median": 1732,
-            "min": 1660.6,
-            "max": 1795.6,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.481184181456679,
-                "valueChange": -81.13333333333367
-              },
-              "median": {
-                "percentChange": -4.372791519434632,
-                "valueChange": -79.20000000000005
-              },
-              "min": {
-                "percentChange": -7.918376400133091,
-                "valueChange": -142.80000000000018
-              },
-              "max": {
-                "percentChange": -1.1777655476059488,
-                "valueChange": -21.40000000000009
-              }
-            }
-          },
-          "avgLatency": {
-            "unit": "ms",
-            "mean": 57.080000000000005,
-            "median": 56.96,
-            "min": 54.89,
-            "max": 59.39,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 4.823702252693434,
-                "valueChange": 2.626666666666665
-              },
-              "median": {
-                "percentChange": 4.628949301983842,
-                "valueChange": 2.520000000000003
-              },
-              "min": {
-                "percentChange": 1.0493372606774674,
-                "valueChange": 0.5700000000000003
-              },
-              "max": {
-                "percentChange": 8.77289377289377,
-                "valueChange": 4.789999999999999
-              }
-            }
-          },
-          "p50Latency": {
-            "unit": "ms",
-            "mean": 56.666666666666664,
-            "median": 56,
-            "min": 55,
-            "max": 59,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 3.6585365853658542,
-                "valueChange": 2
-              },
-              "median": {
-                "percentChange": 1.8181818181818181,
-                "valueChange": 1
-              },
-              "min": {
-                "percentChange": 1.8518518518518516,
-                "valueChange": 1
-              },
-              "max": {
-                "percentChange": 7.2727272727272725,
-                "valueChange": 4
-              }
-            }
-          },
-          "p75Latency": {
-            "unit": "ms",
-            "mean": 58.666666666666664,
-            "median": 59,
-            "min": 56,
-            "max": 61,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 5.389221556886228,
-                "valueChange": 3
-              },
-              "median": {
-                "percentChange": 5.357142857142857,
-                "valueChange": 3
-              },
-              "min": {
-                "percentChange": 1.8181818181818181,
-                "valueChange": 1
-              },
-              "max": {
-                "percentChange": 8.928571428571429,
-                "valueChange": 5
-              }
-            }
-          },
-          "p90Latency": {
-            "unit": "ms",
-            "mean": 72.66666666666667,
-            "median": 73,
-            "min": 68,
-            "max": 77,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 10.659898477157359,
-                "valueChange": 7
-              },
-              "median": {
-                "percentChange": 10.606060606060606,
-                "valueChange": 7
-              },
-              "min": {
-                "percentChange": 6.25,
-                "valueChange": 4
-              },
-              "max": {
-                "percentChange": 14.925373134328357,
-                "valueChange": 10
-              }
-            }
-          },
-          "p99Latency": {
-            "unit": "ms",
-            "mean": 97.33333333333333,
-            "median": 98,
-            "min": 92,
-            "max": 102,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 3.5460992907801367,
-                "valueChange": 3.3333333333333286
-              },
-              "median": {
-                "percentChange": 4.25531914893617,
-                "valueChange": 4
-              },
-              "min": {
-                "percentChange": -1.0752688172043012,
-                "valueChange": -1
-              },
-              "max": {
-                "percentChange": 7.368421052631578,
-                "valueChange": 7
-              }
-            }
-          },
-          "maxLatency": {
-            "unit": "ms",
-            "mean": 364,
-            "median": 366,
-            "min": 183,
-            "max": 543,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0.7380073800738061,
-                "valueChange": 2.6666666666666856
-              },
-              "median": {
-                "percentChange": 20.394736842105264,
-                "valueChange": 62
-              },
-              "min": {
-                "percentChange": -3.684210526315789,
-                "valueChange": -7
-              },
-              "max": {
-                "percentChange": -7.966101694915253,
-                "valueChange": -47
-              }
-            }
-          },
-          "byteThroughput": {
-            "unit": "bytes/s",
-            "mean": 327426594.13666666,
-            "median": 327863500.8,
-            "min": 314441728,
-            "max": 339974553.61,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -4.481378571931248,
-                "valueChange": -15361638.400000036
-              },
-              "median": {
-                "percentChange": -4.3734230473643745,
-                "valueChange": -14994636.810000002
-              },
-              "min": {
-                "percentChange": -7.907869481765835,
-                "valueChange": -27000832
-              },
-              "max": {
-                "percentChange": -1.1885714256649884,
-                "valueChange": -4089446.3899999857
-              }
-            }
-          }
-        },
-        "stage7": {
-          "connections": 200,
-          "requests": {
-            "unit": "requests",
-            "mean": 8622,
-            "median": 8665,
-            "min": 8493,
-            "max": 8708,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -5.110238820206177,
-                "valueChange": -464.33333333333394
-              },
-              "median": {
-                "percentChange": -4.444199382443758,
-                "valueChange": -403
-              },
-              "min": {
-                "percentChange": -6.13395225464191,
-                "valueChange": -555
-              },
-              "max": {
-                "percentChange": -4.757738160341245,
-                "valueChange": -435
-              }
-            }
-          },
-          "errors": {
-            "unit": "errors",
-            "mean": 0,
-            "median": 0,
-            "min": 0,
-            "max": 0,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "median": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "min": {
-                "percentChange": 0,
-                "valueChange": 0
-              },
-              "max": {
-                "percentChange": 0,
-                "valueChange": 0
-              }
-            }
-          },
-          "requestThroughput": {
-            "unit": "requests/s",
-            "mean": 1724.3999999999999,
-            "median": 1733,
-            "min": 1698.6,
-            "max": 1741.6,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -5.110238820206165,
-                "valueChange": -92.86666666666656
-              },
-              "median": {
-                "percentChange": -4.444199382443754,
-                "valueChange": -80.59999999999991
-              },
-              "min": {
-                "percentChange": -6.13395225464191,
-                "valueChange": -111
-              },
-              "max": {
-                "percentChange": -4.757738160341245,
-                "valueChange": -87
-              }
-            }
-          },
-          "avgLatency": {
-            "unit": "ms",
-            "mean": 114.12666666666667,
-            "median": 113.55,
-            "min": 113.09,
-            "max": 115.74,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 5.263481522474326,
-                "valueChange": 5.7066666666666634
-              },
-              "median": {
-                "percentChange": 4.548384126691831,
-                "valueChange": 4.939999999999998
-              },
-              "min": {
-                "percentChange": 4.94617668893838,
-                "valueChange": 5.329999999999998
-              },
-              "max": {
-                "percentChange": 6.290752135182289,
-                "valueChange": 6.849999999999994
-              }
-            }
-          },
-          "p50Latency": {
-            "unit": "ms",
-            "mean": 102.66666666666667,
-            "median": 103,
-            "min": 96,
-            "max": 109,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 18.91891891891893,
-                "valueChange": 16.333333333333343
-              },
-              "median": {
-                "percentChange": 15.730337078651685,
-                "valueChange": 14
-              },
-              "min": {
-                "percentChange": 18.51851851851852,
-                "valueChange": 15
-              },
-              "max": {
-                "percentChange": 22.47191011235955,
-                "valueChange": 20
-              }
-            }
-          },
-          "p75Latency": {
-            "unit": "ms",
-            "mean": 123.66666666666667,
-            "median": 122,
-            "min": 114,
-            "max": 135,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 18.910256410256416,
-                "valueChange": 19.66666666666667
-              },
-              "median": {
-                "percentChange": 16.19047619047619,
-                "valueChange": 17
-              },
-              "min": {
-                "percentChange": 12.871287128712872,
-                "valueChange": 13
-              },
-              "max": {
-                "percentChange": 27.358490566037734,
-                "valueChange": 29
-              }
-            }
-          },
-          "p90Latency": {
-            "unit": "ms",
-            "mean": 147.33333333333334,
-            "median": 148,
-            "min": 139,
-            "max": 155,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": 10.224438902743158,
-                "valueChange": 13.666666666666686
-              },
-              "median": {
-                "percentChange": 11.278195488721805,
-                "valueChange": 15
-              },
-              "min": {
-                "percentChange": 5.303030303030303,
-                "valueChange": 7
-              },
-              "max": {
-                "percentChange": 13.970588235294118,
-                "valueChange": 19
-              }
-            }
-          },
-          "p99Latency": {
-            "unit": "ms",
-            "mean": 203.33333333333334,
-            "median": 201,
-            "min": 189,
-            "max": 220,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -64.61716937354987,
-                "valueChange": -371.33333333333326
-              },
-              "median": {
-                "percentChange": -69.07692307692308,
-                "valueChange": -449
-              },
-              "min": {
-                "percentChange": -47.93388429752066,
-                "valueChange": -174
-              },
-              "max": {
-                "percentChange": -69.05766526019691,
-                "valueChange": -491
-              }
-            }
-          },
-          "maxLatency": {
-            "unit": "ms",
-            "mean": 2848,
-            "median": 2729,
-            "min": 1639,
-            "max": 4176,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -32.42644732679532,
-                "valueChange": -1366.666666666667
-              },
-              "median": {
-                "percentChange": -35.99906191369606,
-                "valueChange": -1535
-              },
-              "min": {
-                "percentChange": -57.887975334018506,
-                "valueChange": -2253
-              },
-              "max": {
-                "percentChange": -6.951871657754011,
-                "valueChange": -312
-              }
-            }
-          },
-          "byteThroughput": {
-            "unit": "bytes/s",
-            "mean": 326447923.2033333,
-            "median": 328020787.2,
-            "min": 321624473.61,
-            "max": 329698508.8,
-            "variance": {
-              "comparedToMeasuredAt": "2026-11-17T05:13:17.884Z",
-              "mean": {
-                "percentChange": -5.119999999031193,
-                "valueChange": -17616076.79666668
-              },
-              "median": {
-                "percentChange": -4.459036420554332,
-                "valueChange": -15309209.600000024
-              },
-              "min": {
-                "percentChange": -6.135720293921879,
-                "valueChange": -21023948.78999996
-              },
-              "max": {
-                "percentChange": -4.770197622472931,
-                "valueChange": -16515072
-              }
-            }
-          }
+    "stage2": {
+      "connections": 5,
+      "requests": {
+        "unit": "requests",
+        "mean": 6636,
+        "median": 6622,
+        "min": 6611,
+        "max": 6675,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.729759017493158, "valueChange": 176.33333333333303 },
+          "median": { "percentChange": 2.4601578214451494, "valueChange": 159 },
+          "min": { "percentChange": 5.623901581722319, "valueChange": 352 },
+          "max": { "percentChange": 0.270392068499324, "valueChange": 18 }
+        }
+      },
+      "errors": {
+        "unit": "errors",
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "requestsPerSecond": {
+        "unit": "requests",
+        "mean": 1327.2,
+        "median": 1324.4,
+        "min": 1322.2,
+        "max": 1335,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.7297590174931616, "valueChange": 35.26666666666665 },
+          "median": { "percentChange": 2.4601578214451636, "valueChange": 31.800000000000182 },
+          "min": { "percentChange": 5.623901581722327, "valueChange": 70.40000000000009 },
+          "max": { "percentChange": 0.2703920684993172, "valueChange": 3.599999999999909 }
+        }
+      },
+      "bytesPerSecond": {
+        "unit": "bytes",
+        "mean": 251269393.0666667,
+        "median": 250727628.8,
+        "min": 250308198.4,
+        "max": 252772352,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.7367405634255917, "valueChange": 6693410.133333385 },
+          "median": { "percentChange": 2.46397771707108, "valueChange": 6029312 },
+          "min": { "percentChange": 5.630842413850321, "valueChange": 13343129.599999994 },
+          "max": { "percentChange": 0.28079663044043945, "valueChange": 707788.8000000119 }
+        }
+      },
+      "avgLatency": {
+        "unit": "ms",
+        "mean": 3.0933333333333333,
+        "median": 3.09,
+        "min": 3.08,
+        "max": 3.11,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -0.9605122732123877, "valueChange": -0.03000000000000025 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": -2.8125000000000093, "valueChange": -0.0900000000000003 }
+        }
+      },
+      "p50Latency": {
+        "unit": "ms",
+        "mean": 3,
+        "median": 3,
+        "min": 3,
+        "max": 3,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p75Latency": {
+        "unit": "ms",
+        "mean": 3,
+        "median": 3,
+        "min": 3,
+        "max": 3,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p90Latency": {
+        "unit": "ms",
+        "mean": 3,
+        "median": 3,
+        "min": 3,
+        "max": 3,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -10.000000000000004, "valueChange": -0.3333333333333335 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": -25, "valueChange": -1 }
+        }
+      },
+      "p99Latency": {
+        "unit": "ms",
+        "mean": 5.666666666666667,
+        "median": 6,
+        "min": 5,
+        "max": 6,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 6.250000000000011, "valueChange": 0.3333333333333339 },
+          "median": { "percentChange": 20, "valueChange": 1 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "maxLatency": {
+        "unit": "ms",
+        "mean": 7.333333333333333,
+        "median": 7,
+        "min": 7,
+        "max": 8,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -12.000000000000009, "valueChange": -1.0000000000000009 },
+          "median": { "percentChange": -22.22222222222222, "valueChange": -2 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": -11.11111111111111, "valueChange": -1 }
+        }
+      }
+    },
+    "stage3": {
+      "connections": 10,
+      "requests": {
+        "unit": "requests",
+        "mean": 7653.333333333333,
+        "median": 7676,
+        "min": 7603,
+        "max": 7681,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 1.9628741451283376, "valueChange": 147.33333333333303 },
+          "median": { "percentChange": 3.269204897080587, "valueChange": 243 },
+          "min": { "percentChange": 4.093647316538883, "valueChange": 299 },
+          "max": { "percentChange": -1.2851818532322323, "valueChange": -100 }
+        }
+      },
+      "errors": {
+        "unit": "errors",
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "requestsPerSecond": {
+        "unit": "requests",
+        "mean": 1530.6666666666667,
+        "median": 1535.2,
+        "min": 1520.6,
+        "max": 1536.2,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 1.9628741451283436, "valueChange": 29.466666666666697 },
+          "median": { "percentChange": 3.269204897080596, "valueChange": 48.600000000000136 },
+          "min": { "percentChange": 4.09364731653888, "valueChange": 59.799999999999955 },
+          "max": { "percentChange": -1.2851818532322323, "valueChange": -20 }
+        }
+      },
+      "bytesPerSecond": {
+        "unit": "bytes",
+        "mean": 289765239.4666667,
+        "median": 290639052.8,
+        "min": 287860326.4,
+        "max": 290796339.2,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 1.9616886487165828, "valueChange": 5574929.060000002 },
+          "median": { "percentChange": 3.278993945039595, "valueChange": 9227468.800000012 },
+          "min": { "percentChange": 4.095174894330334, "valueChange": 11324620.789999962 },
+          "max": { "percentChange": -1.299047961353459, "valueChange": -3827302.410000026 }
+        }
+      },
+      "avgLatency": {
+        "unit": "ms",
+        "mean": 6.2,
+        "median": 6.2,
+        "min": 6.19,
+        "max": 6.21,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0.8130081300813126, "valueChange": 0.05000000000000071 },
+          "median": { "percentChange": 0.6493506493506499, "valueChange": 0.040000000000000036 },
+          "min": { "percentChange": 1.475409836065586, "valueChange": 0.09000000000000075 },
+          "max": { "percentChange": 0.3231017770597669, "valueChange": 0.019999999999999574 }
+        }
+      },
+      "p50Latency": {
+        "unit": "ms",
+        "mean": 6,
+        "median": 6,
+        "min": 6,
+        "max": 6,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p75Latency": {
+        "unit": "ms",
+        "mean": 6,
+        "median": 6,
+        "min": 6,
+        "max": 6,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p90Latency": {
+        "unit": "ms",
+        "mean": 7.333333333333333,
+        "median": 8,
+        "min": 6,
+        "max": 8,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 14.285714285714285, "valueChange": 1 },
+          "min": { "percentChange": -14.285714285714285, "valueChange": -1 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p99Latency": {
+        "unit": "ms",
+        "mean": 8.333333333333334,
+        "median": 8,
+        "min": 8,
+        "max": 9,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "maxLatency": {
+        "unit": "ms",
+        "mean": 12.333333333333334,
+        "median": 12,
+        "min": 12,
+        "max": 13,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 5.714285714285724, "valueChange": 0.6666666666666679 },
+          "median": { "percentChange": 9.090909090909092, "valueChange": 1 },
+          "min": { "percentChange": 20, "valueChange": 2 },
+          "max": { "percentChange": -7.142857142857142, "valueChange": -1 }
+        }
+      }
+    },
+    "stage4": {
+      "connections": 25,
+      "requests": {
+        "unit": "requests",
+        "mean": 8445.666666666666,
+        "median": 8429,
+        "min": 8377,
+        "max": 8531,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 4.6594241810896655, "valueChange": 375.9999999999991 },
+          "median": { "percentChange": 5.918572505654687, "valueChange": 471 },
+          "min": { "percentChange": 5.85039171089209, "valueChange": 463 },
+          "max": { "percentChange": 2.326976130502579, "valueChange": 194 }
+        }
+      },
+      "errors": {
+        "unit": "errors",
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "requestsPerSecond": {
+        "unit": "requests",
+        "mean": 1689.1333333333332,
+        "median": 1685.8,
+        "min": 1675.4,
+        "max": 1706.2,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 4.6594241810896655, "valueChange": 75.19999999999982 },
+          "median": { "percentChange": 5.91857250565469, "valueChange": 94.20000000000005 },
+          "min": { "percentChange": 5.850391710892098, "valueChange": 92.60000000000014 },
+          "max": { "percentChange": 2.326976130502576, "valueChange": 38.799999999999955 }
+        }
+      },
+      "bytesPerSecond": {
+        "unit": "bytes",
+        "mean": 319771989.3333333,
+        "median": 319107891.2,
+        "min": 317220454.4,
+        "max": 322987622.4,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 4.649832708970787, "valueChange": 14208204.799999952 },
+          "median": { "percentChange": 5.898216615919962, "valueChange": 17773363.199999988 },
+          "min": { "percentChange": 5.8612544834222735, "valueChange": 17563648 },
+          "max": { "percentChange": 2.308394918209745, "valueChange": 7287603.199999988 }
+        }
+      },
+      "avgLatency": {
+        "unit": "ms",
+        "mean": 14.343333333333334,
+        "median": 14.39,
+        "min": 14.18,
+        "max": 14.46,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -4.3777777777777755, "valueChange": -0.6566666666666663 },
+          "median": { "percentChange": -5.515430072225868, "valueChange": -0.8399999999999999 },
+          "min": { "percentChange": -1.8685121107266407, "valueChange": -0.2699999999999996 },
+          "max": { "percentChange": -5.61357702349869, "valueChange": -0.8599999999999994 }
+        }
+      },
+      "p50Latency": {
+        "unit": "ms",
+        "mean": 14,
+        "median": 14,
+        "min": 14,
+        "max": 14,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -4.545454545454541, "valueChange": -0.6666666666666661 },
+          "median": { "percentChange": -6.666666666666667, "valueChange": -1 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": -6.666666666666667, "valueChange": -1 }
+        }
+      },
+      "p75Latency": {
+        "unit": "ms",
+        "mean": 15,
+        "median": 15,
+        "min": 14,
+        "max": 16,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -2.1739130434782648, "valueChange": -0.3333333333333339 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": -6.666666666666667, "valueChange": -1 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p90Latency": {
+        "unit": "ms",
+        "mean": 16.333333333333332,
+        "median": 16,
+        "min": 16,
+        "max": 17,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -3.9215686274509873, "valueChange": -0.6666666666666679 },
+          "median": { "percentChange": -5.88235294117647, "valueChange": -1 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": -5.555555555555555, "valueChange": -1 }
+        }
+      },
+      "p99Latency": {
+        "unit": "ms",
+        "mean": 17.333333333333332,
+        "median": 17,
+        "min": 17,
+        "max": 18,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "maxLatency": {
+        "unit": "ms",
+        "mean": 29.333333333333332,
+        "median": 28,
+        "min": 26,
+        "max": 34,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -11.111111111111114, "valueChange": -3.666666666666668 },
+          "median": { "percentChange": -3.4482758620689653, "valueChange": -1 },
+          "min": { "percentChange": -7.142857142857142, "valueChange": -2 },
+          "max": { "percentChange": -19.047619047619047, "valueChange": -8 }
+        }
+      }
+    },
+    "stage5": {
+      "connections": 50,
+      "requests": {
+        "unit": "requests",
+        "mean": 8578.333333333334,
+        "median": 8598,
+        "min": 8353,
+        "max": 8784,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.644384173580089, "valueChange": 221 },
+          "median": { "percentChange": 3.6153289949385394, "valueChange": 300 },
+          "min": { "percentChange": 1.2362137922676038, "valueChange": 102 },
+          "max": { "percentChange": 3.062302006335797, "valueChange": 261 }
+        }
+      },
+      "errors": {
+        "unit": "errors",
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "requestsPerSecond": {
+        "unit": "requests",
+        "mean": 1715.6666666666667,
+        "median": 1719.6,
+        "min": 1670.6,
+        "max": 1756.8,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.644384173580106, "valueChange": 44.20000000000027 },
+          "median": { "percentChange": 3.6153289949385394, "valueChange": 60 },
+          "min": { "percentChange": 1.2362137922675958, "valueChange": 20.399999999999864 },
+          "max": { "percentChange": 3.0623020063358, "valueChange": 52.200000000000045 }
+        }
+      },
+      "bytesPerSecond": {
+        "unit": "bytes",
+        "mean": 324805154.1366667,
+        "median": 325556633.61,
+        "min": 316276736,
+        "max": 332582092.8,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.6454588131055425, "valueChange": 8371131.733333349 },
+          "median": { "percentChange": 3.60390423276441, "valueChange": 11324620.810000002 },
+          "min": { "percentChange": 1.241923302844672, "valueChange": 3879731.199999988 },
+          "max": { "percentChange": 3.070923711161065, "valueChange": 9909043.189999998 }
+        }
+      },
+      "avgLatency": {
+        "unit": "ms",
+        "mean": 28.583333333333332,
+        "median": 28.5,
+        "min": 27.9,
+        "max": 29.35,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -2.601090413448428, "valueChange": -0.7633333333333319 },
+          "median": { "percentChange": -3.553299492385789, "valueChange": -1.0500000000000007 },
+          "min": { "percentChange": -3.0239833159541223, "valueChange": -0.870000000000001 },
+          "max": { "percentChange": -1.2449528936742849, "valueChange": -0.36999999999999744 }
+        }
+      },
+      "p50Latency": {
+        "unit": "ms",
+        "mean": 28,
+        "median": 28,
+        "min": 27,
+        "max": 29,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -4.545454545454541, "valueChange": -1.3333333333333321 },
+          "median": { "percentChange": -3.4482758620689653, "valueChange": -1 },
+          "min": { "percentChange": -6.896551724137931, "valueChange": -2 },
+          "max": { "percentChange": -3.3333333333333335, "valueChange": -1 }
+        }
+      },
+      "p75Latency": {
+        "unit": "ms",
+        "mean": 29.333333333333332,
+        "median": 29,
+        "min": 29,
+        "max": 30,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -4.3478260869565295, "valueChange": -1.3333333333333357 },
+          "median": { "percentChange": -6.451612903225806, "valueChange": -2 },
+          "min": { "percentChange": -3.3333333333333335, "valueChange": -1 },
+          "max": { "percentChange": -3.225806451612903, "valueChange": -1 }
+        }
+      },
+      "p90Latency": {
+        "unit": "ms",
+        "mean": 30.666666666666668,
+        "median": 30,
+        "min": 30,
+        "max": 32,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -1.0752688172042972, "valueChange": -0.33333333333333215 },
+          "median": { "percentChange": -3.225806451612903, "valueChange": -1 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "p99Latency": {
+        "unit": "ms",
+        "mean": 44.333333333333336,
+        "median": 42,
+        "min": 38,
+        "max": 53,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 15.652173913043477, "valueChange": 6 },
+          "median": { "percentChange": 13.513513513513514, "valueChange": 5 },
+          "min": { "percentChange": 2.7027027027027026, "valueChange": 1 },
+          "max": { "percentChange": 29.268292682926827, "valueChange": 12 }
+        }
+      },
+      "maxLatency": {
+        "unit": "ms",
+        "mean": 98.66666666666667,
+        "median": 84,
+        "min": 63,
+        "max": 149,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 18.400000000000013, "valueChange": 15.333333333333343 },
+          "median": { "percentChange": 1.2048192771084338, "valueChange": 1 },
+          "min": { "percentChange": 14.545454545454545, "valueChange": 8 },
+          "max": { "percentChange": 33.035714285714285, "valueChange": 37 }
+        }
+      }
+    },
+    "stage6": {
+      "connections": 100,
+      "requests": {
+        "unit": "requests",
+        "mean": 8733.333333333334,
+        "median": 8768,
+        "min": 8650,
+        "max": 8782,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.8378537504415746, "valueChange": 241 },
+          "median": { "percentChange": 2.441874050706858, "valueChange": 209 },
+          "min": { "percentChange": 4.392951967173546, "valueChange": 364 },
+          "max": { "percentChange": 1.7377201112140872, "valueChange": 150 }
+        }
+      },
+      "errors": {
+        "unit": "errors",
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "requestsPerSecond": {
+        "unit": "requests",
+        "mean": 1746.6666666666667,
+        "median": 1753.6,
+        "min": 1730,
+        "max": 1756.4,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.8378537504415635, "valueChange": 48.19999999999982 },
+          "median": { "percentChange": 2.441874050706856, "valueChange": 41.799999999999955 },
+          "min": { "percentChange": 4.392951967173543, "valueChange": 72.79999999999995 },
+          "max": { "percentChange": 1.7377201112140872, "valueChange": 30 }
+        }
+      },
+      "bytesPerSecond": {
+        "unit": "bytes",
+        "mean": 330694656,
+        "median": 332005376,
+        "min": 327548928,
+        "max": 332529664,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.8536485935589075, "valueChange": 9175040 },
+          "median": { "percentChange": 2.4593479491950565, "valueChange": 7969177.600000024 },
+          "min": { "percentChange": 4.412133366758582, "valueChange": 13841203.199999988 },
+          "max": { "percentChange": 1.7486163471564893, "valueChange": 5714739.199999988 }
+        }
+      },
+      "avgLatency": {
+        "unit": "ms",
+        "mean": 56.44,
+        "median": 56.22,
+        "min": 56.09,
+        "max": 57.01,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -2.7846357007521516, "valueChange": -1.6166666666666742 },
+          "median": { "percentChange": -2.378885223129023, "valueChange": -1.3700000000000045 },
+          "min": { "percentChange": -1.6999649491763036, "valueChange": -0.9699999999999989 },
+          "max": { "percentChange": -4.217069892473126, "valueChange": -2.510000000000005 }
+        }
+      },
+      "p50Latency": {
+        "unit": "ms",
+        "mean": 55.666666666666664,
+        "median": 56,
+        "min": 55,
+        "max": 56,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -3.4682080924855496, "valueChange": -2 },
+          "median": { "percentChange": -1.7543859649122806, "valueChange": -1 },
+          "min": { "percentChange": -3.508771929824561, "valueChange": -2 },
+          "max": { "percentChange": -5.084745762711865, "valueChange": -3 }
+        }
+      },
+      "p75Latency": {
+        "unit": "ms",
+        "mean": 59.333333333333336,
+        "median": 59,
+        "min": 58,
+        "max": 61,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -1.1111111111111072, "valueChange": -0.6666666666666643 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": -1.694915254237288, "valueChange": -1 },
+          "max": { "percentChange": -1.6129032258064515, "valueChange": -1 }
+        }
+      },
+      "p90Latency": {
+        "unit": "ms",
+        "mean": 74,
+        "median": 75,
+        "min": 72,
+        "max": 75,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 4.166666666666666, "valueChange": 3 },
+          "min": { "percentChange": 1.4084507042253522, "valueChange": 1 },
+          "max": { "percentChange": -5.063291139240507, "valueChange": -4 }
+        }
+      },
+      "p99Latency": {
+        "unit": "ms",
+        "mean": 95,
+        "median": 96,
+        "min": 93,
+        "max": 96,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -5.315614617940194, "valueChange": -5.333333333333329 },
+          "median": { "percentChange": -4, "valueChange": -4 },
+          "min": { "percentChange": -5.1020408163265305, "valueChange": -5 },
+          "max": { "percentChange": -6.796116504854369, "valueChange": -7 }
+        }
+      },
+      "maxLatency": {
+        "unit": "ms",
+        "mean": 686,
+        "median": 752,
+        "min": 107,
+        "max": 1199,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 47.42120343839542, "valueChange": 220.66666666666669 },
+          "median": { "percentChange": 62.77056277056276, "valueChange": 290 },
+          "min": { "percentChange": -42.780748663101605, "valueChange": -80 },
+          "max": { "percentChange": 60.50870147255689, "valueChange": 452 }
+        }
+      }
+    },
+    "stage7": {
+      "connections": 200,
+      "requests": {
+        "unit": "requests",
+        "mean": 8729.666666666666,
+        "median": 8696,
+        "min": 8677,
+        "max": 8816,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.831003612376301, "valueChange": 240.33333333333212 },
+          "median": { "percentChange": 2.9721728833629366, "valueChange": 251 },
+          "min": { "percentChange": 3.4453981878874584, "valueChange": 289 },
+          "max": { "percentChange": 2.0961204400694844, "valueChange": 181 }
+        }
+      },
+      "errors": {
+        "unit": "errors",
+        "mean": 0,
+        "median": 0,
+        "min": 0,
+        "max": 0,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 0, "valueChange": 0 }
+        }
+      },
+      "requestsPerSecond": {
+        "unit": "requests",
+        "mean": 1745.9333333333334,
+        "median": 1739.2,
+        "min": 1735.4,
+        "max": 1763.2,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.8310036123763114, "valueChange": 48.066666666666606 },
+          "median": { "percentChange": 2.9721728833629393, "valueChange": 50.200000000000045 },
+          "min": { "percentChange": 3.445398187887469, "valueChange": 57.80000000000018 },
+          "max": { "percentChange": 2.0961204400694875, "valueChange": 36.200000000000045 }
+        }
+      },
+      "bytesPerSecond": {
+        "unit": "bytes",
+        "mean": 330554845.8666667,
+        "median": 329279078.4,
+        "min": 328597504,
+        "max": 333787955.2,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 2.832522357375502, "valueChange": 9105134.930000007 },
+          "median": { "percentChange": 2.9674563456611924, "valueChange": 9489612.789999962 },
+          "min": { "percentChange": 3.4667767230705735, "valueChange": 11010048 },
+          "max": { "percentChange": 2.0845025254549827, "valueChange": 6815744 }
+        }
+      },
+      "avgLatency": {
+        "unit": "ms",
+        "mean": 104.91000000000001,
+        "median": 102.16,
+        "min": 101.87,
+        "max": 110.7,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -9.52654727340672, "valueChange": -11.046666666666653 },
+          "median": { "percentChange": -12.309012875536483, "valueChange": -14.340000000000003 },
+          "min": { "percentChange": -10.67952652345462, "valueChange": -12.179999999999993 },
+          "max": { "percentChange": -5.642686668939644, "valueChange": -6.61999999999999 }
+        }
+      },
+      "p50Latency": {
+        "unit": "ms",
+        "mean": 75,
+        "median": 72,
+        "min": 71,
+        "max": 82,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -26.47058823529412, "valueChange": -27 },
+          "median": { "percentChange": -30.76923076923077, "valueChange": -32 },
+          "min": { "percentChange": -24.46808510638298, "valueChange": -23 },
+          "max": { "percentChange": -24.074074074074073, "valueChange": -26 }
+        }
+      },
+      "p75Latency": {
+        "unit": "ms",
+        "mean": 96.66666666666667,
+        "median": 94,
+        "min": 93,
+        "max": 103,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -22.252010723860582, "valueChange": -27.666666666666657 },
+          "median": { "percentChange": -26.5625, "valueChange": -34 },
+          "min": { "percentChange": -18.421052631578945, "valueChange": -21 },
+          "max": { "percentChange": -21.374045801526716, "valueChange": -28 }
+        }
+      },
+      "p90Latency": {
+        "unit": "ms",
+        "mean": 121.66666666666667,
+        "median": 122,
+        "min": 117,
+        "max": 126,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": -23.157894736842106, "valueChange": -36.66666666666667 },
+          "median": { "percentChange": -20.77922077922078, "valueChange": -32 },
+          "min": { "percentChange": -20.945945945945947, "valueChange": -31 },
+          "max": { "percentChange": -27.167630057803464, "valueChange": -47 }
+        }
+      },
+      "p99Latency": {
+        "unit": "ms",
+        "mean": 883.3333333333334,
+        "median": 860,
+        "min": 653,
+        "max": 1137,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 163.94422310756974, "valueChange": 548.6666666666667 },
+          "median": { "percentChange": 267.5213675213675, "valueChange": 626 },
+          "min": { "percentChange": 205.14018691588785, "valueChange": 439 },
+          "max": { "percentChange": 104.49640287769783, "valueChange": 581 }
+        }
+      },
+      "maxLatency": {
+        "unit": "ms",
+        "mean": 4951.666666666667,
+        "median": 4939,
+        "min": 4927,
+        "max": 4989,
+        "variance": {
+          "comparedToMeasuredAt": "2026-11-19T06:42:33.005Z",
+          "mean": { "percentChange": 103.27038861521622, "valueChange": 2515.666666666667 },
+          "median": { "percentChange": 104.93775933609959, "valueChange": 2529 },
+          "min": { "percentChange": 311.95652173913044, "valueChange": 3731 },
+          "max": { "percentChange": 34.764991896272285, "valueChange": 1287 }
         }
       }
     }
   },
   "configuration": {
-    "install": {
-      "runs": 5
-    },
-    "build": {
-      "runs": 5
-    },
-    "devServer": {
-      "runs": 5
-    },
+    "install": { "runs": 5 },
+    "build": { "runs": 5 },
+    "devServer": { "runs": 5 },
     "dependencies": null,
     "browserBaseline": null,
     "nodeEngines": null,
@@ -3090,8 +1491,6 @@
       "scenario": "first-row-detail-navigation",
       "path": "/server-side-rendered"
     },
-    "initialLoad": {
-      "path": "/initial-load"
-    }
+    "initialLoad": { "path": "/initial-load" }
   }
 }

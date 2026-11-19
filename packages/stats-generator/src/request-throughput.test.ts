@@ -1,9 +1,9 @@
+import { benchmarkArtifacts } from './benchmark-artifacts.ts'
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import {
   assembleRequestThroughput,
   createRequestThroughputIteration,
-  mergeRequestThroughputArtifact,
 } from './request-throughput.ts'
 
 const responseMetrics = {
@@ -20,37 +20,20 @@ function fixture() {
   )
 }
 
-test('artifact merge validates before merging and preserves unrelated results and environment', () => {
-  const current = {
-    frameworkVersion: 'old',
-    runner: 'current runner',
-    browserVersion: 'current browser',
-    testTime: { value: 123, unit: 'ms' as const },
-    timingMeasuredAt: '2026-10-22T00:00:00Z',
-  }
-  const artifact = {
-    ssrRequestThroughput: fixture(),
-    frameworkVersion: 'new',
-    runner: 'artifact runner',
-    browserVersion: 'stale browser',
-    testTime: { value: 999, unit: 'ms' as const },
-  }
-  const merged = mergeRequestThroughputArtifact(current, artifact)
-  assert.deepEqual(merged, {
-    ...current,
-    frameworkVersion: 'new',
-    ssrRequestThroughput: fixture(),
-  })
-  assert.throws(() =>
-    mergeRequestThroughputArtifact(current, {
-      ...artifact,
-      ssrRequestThroughput: { ...fixture(), iterations: undefined },
-    }),
+test('keeps per-run distributions and validates the total request count', () => {
+  const result = fixture()
+  const artifact = benchmarkArtifacts.find(
+    ([measurement]) => measurement === 'ssrRequestThroughput',
+  )![3]
+  assert.equal(
+    artifact.safeParse({
+      frameworkVersion: '1.0.0',
+      ssrThroughput: { ...result, requests: { value: 5, unit: 'requests' } },
+    }).success,
+    false,
   )
-  const result = merged.ssrRequestThroughput!
-  assert.ok('iterations' in result)
-  assert.deepEqual(result.totalRequests, { value: 4, unit: 'requests' })
-  assert.deepEqual(result.iterations[0].latency, {
+  assert.deepEqual(result.requests, { value: 4, unit: 'requests' })
+  assert.deepEqual(result.iterations.iterations[0].latency, {
     unit: 'ms',
     mean: 4,
     median: 2,
@@ -62,8 +45,7 @@ test('artifact merge validates before merging and preserves unrelated results an
   assert.equal(result.latency.median, 2.125)
   assert.equal('avgLatency' in result, false)
   assert.equal('medianLatency' in result, false)
-  assert.equal('medianLatency' in result.iterations[0], false)
+  assert.equal('medianLatency' in result.iterations.iterations[0], false)
   assert.equal(JSON.stringify(result).includes('throughputSamples'), false)
   assert.equal(JSON.stringify(result).includes('latencySamplesMs'), false)
-  assert.equal(current.frameworkVersion, 'old')
 })

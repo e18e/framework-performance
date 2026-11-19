@@ -14,6 +14,9 @@ export function formatChartValue(
     case 'mb':
       formatted = `${value.toFixed(2)} MB`
       break
+    case 'kib':
+      formatted = `${value.toFixed(2)} KiB`
+      break
     case 'kb':
       formatted = `${value.toFixed(2)} KB`
       break

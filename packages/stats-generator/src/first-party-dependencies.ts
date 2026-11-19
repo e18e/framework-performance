@@ -2,7 +2,7 @@ import { join } from 'node:path'
 import { parse } from 'yaml'
 import { packagesDir } from './constants.ts'
 import { getPackageJsonDeps, readJsonFile } from './utils.ts'
-import type { FirstPartyDependencyStats, PackageJson } from './types.ts'
+import type { PackageJson } from './types.ts'
 
 type DependencySection = 'dependencies' | 'devDependencies'
 
@@ -111,7 +111,7 @@ interface PnpmLockfile {
 export function getFirstPartyDependencyStats(
   manifest: PackageJson,
   lockfileContent: string,
-): FirstPartyDependencyStats {
+) {
   const lockfile = parse(lockfileContent) as PnpmLockfile
   const importer = lockfile.importers?.['.']
   const { packages, snapshots } = lockfile
@@ -178,7 +178,6 @@ export function getFirstPartyDependencyStats(
   }
 
   return {
-    name: 'firstPartyDependencies',
     productionDependencyCount: {
       value: Object.keys(manifest.dependencies ?? {}).length,
       unit: 'count',
@@ -187,7 +186,6 @@ export function getFirstPartyDependencyStats(
       value: Object.keys(manifest.devDependencies ?? {}).length,
       unit: 'count',
     },
-    totalDependencyCount: { value: packageKeys.size, unit: 'count' },
     duplicateDependencyCount: {
       value: [...versionsByName.values()].filter(
         (versions) => versions.size > 1,

@@ -222,11 +222,10 @@ pnpm dlx create-void starter-void --toolchain vite --framework react --starter s
 
 - **Core package:** Measures the direct production and development dependencies
   declared by the framework package itself.
-- **First-party packages:** Measures the framework-maintained packages listed in
-  each starter project's `first-party-dependencies.json` and their resolved
-  dependency graph, including duplicate versions.
-- **Starter project:** Measures the full starter project's direct dependencies,
-  resolved dependency graph, duplicates, and install size.
+- **First-party packages:** Counts the direct dependencies listed in
+  `first-party-dependencies.json` and duplicate versions in their resolved graph.
+- **Starter project:** Counts direct dependencies and duplicate versions in the
+  full resolved graph, and measures install size.
 
 ### Node Modules Size
 
@@ -304,7 +303,7 @@ pnpm dlx create-void starter-void --toolchain vite --framework react --starter s
   production build output, including JavaScript, TypeScript, Vue, and Svelte
   files. Known server, cache, trace, type, and build-tool output is excluded.
 - Void's browser baseline scan uses
-  `.cloudflare/output/v0/workers/default/assets`, which contains only the client
+  `.cloudflare/output/v1/workers/default/assets`, which contains only the client
   output.
 - Baseline is baseline-detector's overall target result: `high`, `low`, or
   `limited`. When the result is not `high`, baseline-detector also reports the

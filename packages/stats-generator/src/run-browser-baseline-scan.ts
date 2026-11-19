@@ -1,4 +1,4 @@
-import { BrowserBaselineStatsSchema } from '@framework-performance/results'
+import { BrowserBaselineBenchmark } from '@framework-performance/results/benchmark-schemas'
 import { access, copyFile, mkdir, mkdtemp, rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { dirname, join } from 'node:path'
@@ -9,10 +9,16 @@ import {
 } from 'baseline-detector'
 import { glob } from 'tinyglobby'
 import { packagesDir } from './constants.ts'
-import { getFrameworkByPackage, parseArgs, writeJsonFile } from './utils.ts'
-import type { BrowserBaselineStats } from './types.ts'
+import {
+  getFrameworkByPackage,
+  benchmarkOutputPath,
+  parseArgs,
+  writeJsonFile,
+} from './utils.ts'
 
-type BaselineStatus = BrowserBaselineStats['baselineStatus']
+type BaselineStatus = ReturnType<
+  typeof BrowserBaselineBenchmark.parse
+>['baselineStatus']
 type BrowserBaselineTarget = {
   status: BaselineStatus
   reason: string | null
@@ -123,13 +129,14 @@ async function main() {
       ...new Set([...featuresByFile.values()].flatMap((ids) => [...ids])),
     ].sort()
     const target = normalizeBaselineTarget(featureIds, detectedTarget)
-    const stats: BrowserBaselineStats = {
+    const stats = BrowserBaselineBenchmark.parse({
+      project: 'starter',
       name: 'browserBaseline',
       baselineStatus: target.status,
       baselineYear: featureIds.length === 0 ? null : detectedBaselineYear,
       baselineReason: target.reason,
       baselineFeatureCount: { value: featureIds.length, unit: 'count' },
-    }
+    })
 
     const label =
       target.status === null
@@ -142,12 +149,11 @@ async function main() {
       `  Baseline target: ${label}${target.reason ? ` (${target.reason})` : ''}`,
     )
 
-    const outputPath = join(
-      packagesDir,
+    const outputPath = benchmarkOutputPath(
       packageName,
       'browser-baseline-stats.json',
     )
-    writeJsonFile(outputPath, BrowserBaselineStatsSchema.parse(stats))
+    writeJsonFile(outputPath, stats)
 
     console.info(`\n✓ Saved browser baseline stats to ${outputPath}`)
   } finally {

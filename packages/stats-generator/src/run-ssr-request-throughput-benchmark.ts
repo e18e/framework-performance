@@ -1,22 +1,15 @@
-import { readProjectResult } from '@framework-performance/results/storage'
+import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
 import { measurementsConfig } from './measurements.ts'
 import { parseRunFrequency } from './benchmark-utils.ts'
-import { RequestThroughputResultSchema } from '@framework-performance/results'
-import { join } from 'node:path'
 import {
   runSSRRequestThroughputBenchmark,
   supportsSSRRequestThroughputBenchmark,
 } from './ssrRequestThroughput/index.ts'
-import { packagesDir } from './constants.ts'
 import {
   getFrameworkByPackage,
   getFrameworkVersion,
-  normalizeCIStats,
   parseArgs,
-  readJsonFile,
-  writeJsonFile,
 } from './utils.ts'
-import type { CIStats } from './types.ts'
 
 async function main() {
   const { packageName, args } = parseArgs(
@@ -42,29 +35,14 @@ async function main() {
   const { framework } = await getFrameworkByPackage(packageName)
 
   const result = await runSSRRequestThroughputBenchmark(packageName, runs)
-  const timestamp = new Date().toISOString()
   const frameworkVersion = await getFrameworkVersion(
     packageName,
     framework.frameworkPackage,
   )
 
-  const existingStats = normalizeCIStats(
-    readJsonFile<CIStats>(join(packagesDir, packageName, 'ci-stats.json')) ??
-      (readProjectResult(packageName) as CIStats | null) ??
-      {},
-  )
-
-  const ciStats: CIStats = {
-    ...existingStats,
-    timingMeasuredAt: timestamp,
-    runner: process.env.RUNNER_LABEL || 'local',
-    frameworkVersion: frameworkVersion ?? existingStats.frameworkVersion,
-    ssrRequestThroughput: result.benchmark,
-  }
-
-  const outputPath = join(packagesDir, result.package, 'ci-stats.json')
-  RequestThroughputResultSchema.parse(ciStats)
-  writeJsonFile(outputPath, ciStats)
+  writeRuntimeArtifact(packageName, frameworkVersion, {
+    ssrThroughput: result.benchmark,
+  })
 
   console.info(
     `\n✓ Saved ${result.displayName} v${frameworkVersion ?? 'unknown'} (${result.package})`,

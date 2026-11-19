@@ -1,7 +1,12 @@
-import type { FrameworkResult } from '@framework-performance/results'
+import type {
+  BenchmarkResult,
+  CoreJsBenchmark,
+  DependencyCountBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
+import type { z } from 'astro/zod'
 import type { LineChartScaleId, LineChartTooltipId } from './line-chart-config'
 
-export type ChartValueFormat = 'count' | 'mb' | 'kb' | 'ms' | 's'
+export type ChartValueFormat = 'count' | 'mb' | 'kb' | 'kib' | 'ms' | 's'
 
 export interface ChartDatum {
   id?: string
@@ -96,13 +101,12 @@ export interface InteractionHistoryDatum extends Record<
   name: string
 }
 
-type DependencyCounts = Pick<
-  FrameworkResult,
-  | 'productionDependencyCount'
-  | 'developmentDependencyCount'
-  | 'totalDependencyCount'
-  | 'duplicateDependencyCount'
->
+type DependencyCount = z.output<typeof DependencyCountBenchmark>['starterProd']
+type DependencyCounts = {
+  productionDependencyCount?: DependencyCount
+  developmentDependencyCount?: DependencyCount
+  duplicateDependencyCount?: DependencyCount
+}
 
 /** Measurement subset accepted by chart preparation; Astro collection records fit structurally. */
 export interface ChartMeasurement {
@@ -115,14 +119,15 @@ export interface ChartMeasurement {
   }
   install?: {
     duration?: { mean?: number }
-    nodeModulesSize?: NonNullable<FrameworkResult['install']>['nodeModulesSize']
+    nodeModulesSize?: z.output<
+      typeof DependencyCountBenchmark
+    >['starterNodeModuleSize']
   }
   frameworkDependencies?: DependencyCounts
   firstPartyDependencies?: DependencyCounts
-  productionDependencyCount?: FrameworkResult['productionDependencyCount']
-  developmentDependencyCount?: FrameworkResult['developmentDependencyCount']
-  totalDependencyCount?: FrameworkResult['totalDependencyCount']
-  duplicateDependencyCount?: FrameworkResult['duplicateDependencyCount']
+  productionDependencyCount?: DependencyCount
+  developmentDependencyCount?: DependencyCount
+  duplicateDependencyCount?: DependencyCount
   clientSideRendered?: {
     firstPaint?: number
     firstContentfulPaint?: number
@@ -134,7 +139,7 @@ export interface ChartMeasurement {
   warmBuild?: {
     medianMs?: number
   }
-  vendoredCoreJsSize?: FrameworkResult['vendoredCoreJsSize']
+  vendoredCoreJsSize?: z.output<typeof CoreJsBenchmark>['totalVendoredSize']
   serverSideRendered?: {
     firstPaint?: number
     firstContentfulPaint?: number
@@ -142,16 +147,18 @@ export interface ChartMeasurement {
   }
   ssrRequestThroughput?: {
     requestThroughput?: number
-    bodySize?: NonNullable<FrameworkResult['ssrRequestThroughput']>['bodySize']
+    bodySize?: NonNullable<BenchmarkResult['ssrThroughput']>['bodySize']
     latency?: number
   }
-  dependencyInstallSize?: FrameworkResult['dependencyInstallSize']
+  dependencyInstallSize?: z.output<
+    typeof DependencyCountBenchmark
+  >['starterDependencyInstallSize']
   ssrLoad?: SSRLoadMeasurements
   ssrRouterLinkLoad?: SSRLoadMeasurements
 }
 
 interface SSRLoadMeasurements {
-  totalRequests?: NonNullable<FrameworkResult['ssrLoad']>['totalRequests']
+  totalRequests?: NonNullable<BenchmarkResult['ssrLoad']>['totalRequests']
   stages?: {
     connections: number
     latencyRanges?: Partial<
@@ -168,8 +175,10 @@ interface SSRLoadMeasurements {
 
 /** Install charts require a completed install benchmark. */
 export type InstallChartMeasurement = ChartMeasurement & {
-  install: {
-    duration: { median: number }
-    nodeModulesSize: NonNullable<FrameworkResult['install']>['nodeModulesSize']
+  install?: {
+    duration?: { median: number }
+    nodeModulesSize?: z.output<
+      typeof DependencyCountBenchmark
+    >['starterNodeModuleSize']
   }
 }

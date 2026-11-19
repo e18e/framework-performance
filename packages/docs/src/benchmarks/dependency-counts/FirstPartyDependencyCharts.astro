@@ -14,7 +14,6 @@ import ComparisonBarChart from '../../components/ComparisonBarChart.astro'
 import ComparisonLineChart from '../../components/ComparisonLineChart.astro'
 
 type DependencyMetric =
-  | 'totalDependencyCount'
   | 'developmentDependencyCount'
   | 'productionDependencyCount'
   | 'duplicateDependencyCount'
@@ -22,7 +21,7 @@ type DependencyMetric =
 function getDependencyChartData(metric: DependencyMetric) {
   return starterStats
     .flatMap((framework) => {
-      const value = framework.firstPartyDependencies[metric]?.value
+      const value = framework.firstPartyDependencies?.[metric]?.value
       if (value == null || !Number.isFinite(value)) return []
 
       return [

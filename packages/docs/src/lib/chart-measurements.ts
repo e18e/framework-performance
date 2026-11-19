@@ -158,20 +158,6 @@ export function prepareFrameworkDependenciesDevDependenciesHistory(
   )
 }
 
-export function prepareFrameworkDependenciesAllDependenciesHistory(
-  records: readonly ChartMeasurement[],
-): VersionLineChartPayload {
-  return history(
-    metricCatalogue['frameworkDependencies.totalDependencyCount'],
-    records.map((record) => ({
-      record,
-      value: finiteValue(
-        record.frameworkDependencies?.totalDependencyCount?.value,
-      ),
-    })),
-  )
-}
-
 export function prepareProdDependenciesHistory(
   records: readonly ChartMeasurement[],
 ): VersionLineChartPayload {
@@ -245,18 +231,6 @@ export function prepareDevDependenciesMonthlyComparison(
     latest,
     (record) => finiteValue(record.developmentDependencyCount?.value),
     now,
-  )
-}
-
-export function prepareAllDependenciesHistory(
-  records: readonly ChartMeasurement[],
-): VersionLineChartPayload {
-  return history(
-    metricCatalogue['totalDependencyCount'],
-    records.map((record) => ({
-      record,
-      value: finiteValue(record.totalDependencyCount?.value),
-    })),
   )
 }
 
@@ -427,7 +401,7 @@ export function prepareInstallTimeHistory(
     metricCatalogue['install.duration'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.install.duration.median, 1000),
+      value: finiteValue(record.install?.duration?.median, 1000),
     })),
   )
 }
@@ -439,7 +413,7 @@ export function prepareInstallTimeComparison(
     metricCatalogue['install.duration'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.install.duration.median, 1000),
+      value: finiteValue(record.install?.duration?.median, 1000),
     })),
   )
 }
@@ -744,7 +718,7 @@ export function prepareNodeModulesSizeHistory(
     metricCatalogue['nodeModulesSize'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.install.nodeModulesSize?.value, 1048576),
+      value: finiteValue(record.install?.nodeModulesSize?.value, 1048576),
     })),
   )
 }
@@ -756,7 +730,7 @@ export function prepareNodeModulesSizeComparison(
     metricCatalogue['nodeModulesSize'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.install.nodeModulesSize?.value, 1048576),
+      value: finiteValue(record.install?.nodeModulesSize?.value, 1048576),
     })),
   )
 }

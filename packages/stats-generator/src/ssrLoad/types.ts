@@ -1,17 +1,15 @@
-import type { z } from 'zod'
 import type {
-  SSRLoadTestsSchema,
-  SSRLoadSweepSchema,
-} from '@framework-performance/results'
-
-export type SSRLoadStageStats = z.infer<typeof SSRLoadSweepSchema>[number]
-export type SSRLoadSweep = z.infer<typeof SSRLoadSweepSchema>
-
-export type SSRLoadTests = z.infer<typeof SSRLoadTestsSchema>
+  SSRLoadBenchmark,
+  SSRLoadStage,
+  SSRLoadRouterLinksBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
+import type { z } from 'zod'
+export type SSRLoadStageStats = z.output<typeof SSRLoadStage>
+export type SSRLoadSweep = SSRLoadStageStats[]
 
 export interface SSRLoadBenchmarkResult {
   name: string
   displayName: string
   package: string
-  tests: SSRLoadTests
+  tests: z.infer<typeof SSRLoadBenchmark | typeof SSRLoadRouterLinksBenchmark>
 }

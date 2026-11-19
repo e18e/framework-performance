@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
-import { InitialLoadResourceTypeSchema } from '@framework-performance/results'
+import { InitialLoadResourceType } from '@framework-performance/results/benchmark-schemas'
 import { parseResourceSummary } from './initialLoad/run-benchmark.ts'
 
-const items = InitialLoadResourceTypeSchema.options.map((resourceType) => ({
+const items = InitialLoadResourceType.options.map((resourceType) => ({
   resourceType,
   requestCount: 1,
   transferSize: 100,

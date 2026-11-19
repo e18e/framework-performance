@@ -1,19 +1,12 @@
-import { readProjectResult } from '@framework-performance/results/storage'
+import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
 import { parseRunFrequency } from './benchmark-utils.ts'
 import { measurementsConfig } from './measurements.ts'
-import { ServerSideRenderedStatsSchema } from '@framework-performance/results'
-import { join } from 'node:path'
 import { runServerSideRenderedBenchmark } from './serverSideRendered/index.ts'
-import { packagesDir } from './constants.ts'
 import {
   getFrameworkByPackage,
   getFrameworkVersion,
-  normalizeCIStats,
   parseArgs,
-  readJsonFile,
-  writeJsonFile,
 } from './utils.ts'
-import type { CIStats } from './types.ts'
 
 async function main() {
   const { packageName, args } = parseArgs(
@@ -35,27 +28,11 @@ async function main() {
   )
 
   const result = await runServerSideRenderedBenchmark(packageName, runs)
-  const timestamp = new Date().toISOString()
-  const runner = process.env.RUNNER_LABEL || 'local'
 
-  const existingStats = normalizeCIStats(
-    readJsonFile<CIStats>(join(packagesDir, packageName, 'ci-stats.json')) ??
-      (readProjectResult(packageName) as CIStats | null) ??
-      {},
-  )
-
-  const ciStats: CIStats = {
-    ...existingStats,
-    timingMeasuredAt: timestamp,
-    runner,
+  writeRuntimeArtifact(packageName, frameworkVersion, {
     browserVersion: result.browserVersion,
-    frameworkVersion: frameworkVersion ?? existingStats?.frameworkVersion,
-    serverSideRendered: result.serverSideRendered,
-  }
-
-  const outputPath = join(packagesDir, packageName, 'ci-stats.json')
-  ServerSideRenderedStatsSchema.parse(ciStats)
-  writeJsonFile(outputPath, ciStats)
+    ssrLighthouse: result.serverSideRendered,
+  })
 
   console.info(
     `\n✓ Saved ${result.displayName} v${frameworkVersion ?? 'unknown'} (${packageName})`,
@@ -64,7 +41,7 @@ async function main() {
   console.info(
     `  FCP:         ${result.serverSideRendered.firstContentfulPaint.mean}ms`,
   )
-  const interaction = result.serverSideRendered.interactionTests
+  const interaction = result.serverSideRendered.interaction
   console.info(`  Interaction: ${interaction.interactionLatency.mean}ms`)
   console.info(`    Input delay:  ${interaction.inputDelay.mean}ms`)
   console.info(`    Processing:   ${interaction.processingDuration.mean}ms`)
