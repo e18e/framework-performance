@@ -3,6 +3,7 @@ import { prepareInteractionBreakdownTable } from '../../lib/prepare-table'
 import StatsTable from '../../components/StatsTable.astro'
 import ViewSwitcher from '../../components/ViewSwitcher.astro'
 import { INTERACTION_PHASES } from '../../lib/interaction-phases'
+import { stackLegendSwatch } from '../../lib/chart-styles'
 import InteractionChartCaption from './InteractionChartCaption.astro'
 import StackedBarChart from '../../components/StackedBarChart.astro'
 
@@ -37,7 +38,11 @@ const chart1Table = prepareInteractionBreakdownTable(chart1)
   defaultValue="chart"
 >
   <StackedBarChart slot="chart" {...chart1}>
-    <InteractionChartCaption slot="caption" />
+    <InteractionChartCaption
+      slot="caption"
+      swatchColor={(_, index, count) => stackLegendSwatch(index, count)}
+      outlined
+    />
   </StackedBarChart>
   <StatsTable slot="table" {...chart1Table} />
 </ViewSwitcher>
