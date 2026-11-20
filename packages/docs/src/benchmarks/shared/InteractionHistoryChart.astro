@@ -1,33 +1,42 @@
 ---
 import StackedAreaChart from '../../components/StackedAreaChart.astro'
-import { INTERACTION_PHASES } from '../../lib/interaction-phases'
-import type { InteractionHistoryDatum } from '../../lib/types'
+import {
+  LIGHTHOUSE_INTERACTION,
+  type InteractionMetric,
+} from '../../lib/interaction-phases'
+import type {
+  InteractionHistoryDatum,
+  InteractionWorkHistoryDatum,
+} from '../../lib/types'
 import InteractionChartCaption from './InteractionChartCaption.astro'
 
 interface Props {
   title: string
-  data: InteractionHistoryDatum[]
+  data: (InteractionHistoryDatum | InteractionWorkHistoryDatum)[]
+  metric?: InteractionMetric
 }
 
-const { title, data } = Astro.props
+const { title, data, metric = LIGHTHOUSE_INTERACTION } = Astro.props
+const valueOf = (datum: Props['data'][number], key: string) =>
+  (datum as unknown as Record<string, number>)[key]!
 ---
 
 <StackedAreaChart
   {title}
   data={data.map((datum) => ({
     name: datum.name,
-    total: datum.interactionLatency,
+    total: valueOf(datum, metric.totalKey),
     values: Object.fromEntries(
-      INTERACTION_PHASES.map(({ key }) => [key, datum[key]]),
+      metric.parts.map(({ key }) => [key, valueOf(datum, key)]),
     ),
   }))}
-  series={INTERACTION_PHASES.map(({ key, label, color }) => ({
+  series={metric.parts.map(({ key, label, color }) => ({
     key,
     label,
     color,
   }))}
   valueFormat="ms"
-  yAxisLabel="Interaction latency (ms)"
+  yAxisLabel={metric.yAxisLabel}
 >
-  <InteractionChartCaption slot="caption" {title} />
+  <InteractionChartCaption slot="caption" {title} {metric} />
 </StackedAreaChart>

@@ -2,7 +2,10 @@
 import { prepareInteractionBreakdownTable } from '../../lib/prepare-table'
 import StatsTable from '../../components/StatsTable.astro'
 import ViewSwitcher from '../../components/ViewSwitcher.astro'
-import { INTERACTION_PHASES } from '../../lib/interaction-phases'
+import {
+  LIGHTHOUSE_INTERACTION,
+  type InteractionMetric,
+} from '../../lib/interaction-phases'
 import InteractionChartCaption from './InteractionChartCaption.astro'
 import StackedBarChart from '../../components/StackedBarChart.astro'
 
@@ -14,10 +17,11 @@ interface InteractionBreakdownDatum {
 interface Props {
   title: string
   data: InteractionBreakdownDatum[]
+  metric?: InteractionMetric
 }
 
-const { title, data } = Astro.props
-const series = INTERACTION_PHASES.map(({ key, label, color }) => ({
+const { title, data, metric = LIGHTHOUSE_INTERACTION } = Astro.props
+const series = metric.parts.map(({ key, label, color }) => ({
   key,
   label,
   color,
@@ -37,7 +41,7 @@ const chart1Table = prepareInteractionBreakdownTable(chart1)
   defaultValue="chart"
 >
   <StackedBarChart slot="chart" {...chart1}>
-    <InteractionChartCaption slot="caption" />
+    <InteractionChartCaption slot="caption" {metric} />
   </StackedBarChart>
   <StatsTable slot="table" {...chart1Table} />
 </ViewSwitcher>

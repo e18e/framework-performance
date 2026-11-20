@@ -4,7 +4,9 @@ import {
   prepareLighthouseServerSideRenderedTestsFcpMsHistory,
   prepareLighthouseServerSideRenderedTestsFirstPaintMsHistory,
   prepareLighthouseServerSideRenderedTestsInteractionHistory,
+  prepareServerSideRenderedInteractionWorkHistory,
 } from '../../lib/prepare-chart'
+import { INTERACTION_WORK } from '../../lib/interaction-phases'
 import VersionLineChart from '../../components/VersionLineChart.astro'
 import InteractionHistoryChart from '../shared/InteractionHistoryChart.astro'
 
@@ -16,6 +18,8 @@ const { versions } = Astro.props
 
 const interactionData =
   prepareLighthouseServerSideRenderedTestsInteractionHistory(versions)
+const interactionWorkData =
+  prepareServerSideRenderedInteractionWorkHistory(versions)
 ---
 
 <VersionLineChart
@@ -24,6 +28,15 @@ const interactionData =
 <VersionLineChart
   {...prepareLighthouseServerSideRenderedTestsFcpMsHistory(versions)}
 />
+{
+  interactionWorkData.length > 0 ? (
+    <InteractionHistoryChart
+      title="Server Interaction Work to Commit by Version"
+      data={interactionWorkData}
+      metric={INTERACTION_WORK}
+    />
+  ) : null
+}
 {
   interactionData.length > 0 ? (
     <InteractionHistoryChart

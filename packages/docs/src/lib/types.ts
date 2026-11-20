@@ -93,6 +93,22 @@ export type InteractionTimings = Partial<
   Record<InteractionPhaseKey | 'interactionLatency', number>
 >
 
+export type InteractionWorkPartKey =
+  'inputDelay' | 'processingDuration' | 'renderingWork'
+
+export type InteractionWorkTimings = Partial<
+  Record<InteractionWorkPartKey | 'workToCommit', number>
+>
+
+/** One framework version's interaction work to commit split into its parts. */
+export interface InteractionWorkHistoryDatum extends Record<
+  InteractionWorkPartKey | 'workToCommit',
+  number
+> {
+  id: string
+  name: string
+}
+
 /** One framework version's interaction latency split into its phases. */
 export interface InteractionHistoryDatum extends Record<
   InteractionPhaseKey | 'interactionLatency',
@@ -133,6 +149,7 @@ export interface ChartMeasurement {
     firstPaint?: number
     firstContentfulPaint?: number
     interactionTests?: InteractionTimings
+    interactionWork?: InteractionWorkTimings
   }
   coldBuild?: {
     medianMs?: number
@@ -145,6 +162,7 @@ export interface ChartMeasurement {
     firstPaint?: number
     firstContentfulPaint?: number
     interactionTests?: InteractionTimings
+    interactionWork?: InteractionWorkTimings
   }
   ssrRequestThroughput?: {
     requestThroughput?: number

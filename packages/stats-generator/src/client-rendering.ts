@@ -35,5 +35,18 @@ export function assembleClientRendering(iterations: RenderedTestSample[]) {
         ]),
       ),
     },
+    interactionWork: Object.fromEntries(
+      (
+        [
+          'workToCommit',
+          'inputDelay',
+          'processingDuration',
+          'renderingWork',
+        ] as const
+      ).map((key) => [
+        key,
+        summarizeMetric(iterations.map((value) => value.interactionWork[key])),
+      ]),
+    ),
   })
 }

@@ -98,6 +98,28 @@ const routerLoad = SSRLoadRouterLinksBenchmark.refine(
   loadArtifactError,
 )
 
+function hasInteractionWork(value: {
+  interactionWork?: unknown
+  iterations: { iterations: { interactionWork?: unknown }[] }
+}) {
+  return (
+    value.interactionWork !== undefined &&
+    value.iterations.iterations.every(
+      (run) => run.interactionWork !== undefined,
+    )
+  )
+}
+
+const interactionWorkError = 'Expected interaction work for every run'
+const csrLighthouse = CSRLighthouseBenchmark.refine(
+  hasInteractionWork,
+  interactionWorkError,
+)
+const ssrLighthouse = SSRLighthouseBenchmark.refine(
+  hasInteractionWork,
+  interactionWorkError,
+)
+
 export const benchmarkArtifacts = [
   [
     'install',
@@ -223,13 +245,13 @@ export const benchmarkArtifacts = [
     'clientSideRendered',
     'client-side-rendered',
     'ci-stats.json',
-    browser.extend({ csrLighthouse: CSRLighthouseBenchmark }),
+    browser.extend({ csrLighthouse }),
   ],
   [
     'serverSideRendered',
     'server-side-rendered',
     'ci-stats.json',
-    browser.extend({ ssrLighthouse: SSRLighthouseBenchmark }),
+    browser.extend({ ssrLighthouse }),
   ],
   [
     'initialLoad',

@@ -1,10 +1,15 @@
-import { INTERACTION_PHASES } from './interaction-phases.ts'
+import {
+  INTERACTION_PHASES,
+  INTERACTION_WORK_PARTS,
+} from './interaction-phases.ts'
 import { metricCatalogue } from './metrics.ts'
 import { monthlyComparison, seriesIdentity } from './monthly-history.ts'
 import type {
   ChartMeasurement,
   InteractionHistoryDatum,
   InteractionTimings,
+  InteractionWorkHistoryDatum,
+  InteractionWorkTimings,
   InstallChartMeasurement,
   MetricDefinition,
   LineComparisonChartPayload,
@@ -378,6 +383,52 @@ export function prepareLighthouseServerSideRenderedTestsInteractionHistory(
   records: readonly ChartMeasurement[],
 ): InteractionHistoryDatum[] {
   return interactionHistory(records, 'serverSideRendered')
+}
+
+const INTERACTION_WORK_KEYS = [
+  'workToCommit',
+  ...INTERACTION_WORK_PARTS.map(({ key }) => key),
+] as const
+
+function hasInteractionWork(
+  timings: InteractionWorkTimings | undefined,
+): timings is Required<InteractionWorkTimings> {
+  return (
+    timings != null &&
+    INTERACTION_WORK_KEYS.every((key) => finiteValue(timings[key]) != null)
+  )
+}
+
+function interactionWorkHistory(
+  records: readonly ChartMeasurement[],
+  testsKey: 'clientSideRendered' | 'serverSideRendered',
+): InteractionWorkHistoryDatum[] {
+  return records.flatMap((record) => {
+    const timings = record[testsKey]?.interactionWork
+    if (!hasInteractionWork(timings)) return []
+
+    const version = record.frameworkVersion ?? 'Unknown'
+    return {
+      id: `${record.package ?? 'unknown'}:${version}`,
+      name: `v${version}`,
+      workToCommit: timings.workToCommit,
+      inputDelay: timings.inputDelay,
+      processingDuration: timings.processingDuration,
+      renderingWork: timings.renderingWork,
+    }
+  })
+}
+
+export function prepareClientSideRenderedInteractionWorkHistory(
+  records: readonly ChartMeasurement[],
+): InteractionWorkHistoryDatum[] {
+  return interactionWorkHistory(records, 'clientSideRendered')
+}
+
+export function prepareServerSideRenderedInteractionWorkHistory(
+  records: readonly ChartMeasurement[],
+): InteractionWorkHistoryDatum[] {
+  return interactionWorkHistory(records, 'serverSideRendered')
 }
 
 export function prepareLighthouseClientSideRenderedTestsFcpMsMonthlyComparison(

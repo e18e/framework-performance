@@ -44,7 +44,8 @@ Test use larger, 16-CPU runners, as described in their sections below.
   disables its screen emulation, with no simulated CPU or network throttling.
   Requests use a local connection to a production server. The Lighthouse flow
   runs only the audits required for the published First Paint, First Contentful
-  Paint, and interaction-latency measurements.
+  Paint, and interaction-latency measurements, and records the interaction's
+  trace for work to commit.
 - **Recorded environment:** Results include runner details and the measured
   framework version; browser results also include the Chrome version used. Any benchmark that runs multiple itterations record mean, median, minimum, and maximum.
 
@@ -385,14 +386,18 @@ Current pinned dependencies are listed in each project's `package.json`:
 - Interaction latency sums the input delay, processing duration, and
   presentation delay from Lighthouse's INP breakdown. It measures this
   controlled interaction, not page-lifetime INP.
+- The same interaction is also scored as
+  [work to commit](/methodology/#interaction-work-to-commit), from the trace
+  Lighthouse records for it. Charts rank frameworks by work to commit and show
+  the Lighthouse breakdown alongside it.
 - CI builds once per framework and test, then keeps one production server running
   for all five measurements. Each measurement launches a fresh Chrome process.
 - Before all measurements, one HTTP request warms `/client-side-rendered`.
   The response is fully consumed with a ten-second timeout. This warms the
   server, not the measured browsers, and is excluded from results.
-- Valid slow results are retained. Paint values and total interaction latency
-  must be finite and greater than zero; individual interaction components may
-  be zero.
+- Valid slow results are retained. Paint values, total interaction latency, and
+  work to commit must be finite and greater than zero; individual interaction
+  components may be zero.
 - Each framework uses its supported production routing and rendering controls.
 - Next.js disables SSR for the measured table and detail content.
 - Astro uses React client-only islands. Its detail link performs a full-document
@@ -414,15 +419,19 @@ Current pinned dependencies are listed in each project's `package.json`:
 - Interaction latency sums the input delay, processing duration, and
   presentation delay from Lighthouse's INP breakdown. It measures this
   controlled interaction, not page-lifetime INP.
+- The same interaction is also scored as
+  [work to commit](/methodology/#interaction-work-to-commit), from the trace
+  Lighthouse records for it. Charts rank frameworks by work to commit and show
+  the Lighthouse breakdown alongside it.
 - CI builds once per framework and test, then keeps one production server running
   for all five measurements. Each measurement launches a fresh Chrome process.
 - Before all measurements, HTTP requests warm `/server-side-rendered` and a
   detail URL with a random UUID. Both responses are fully consumed under one
   ten-second timeout. This warms the server, not the measured browsers, and is
   excluded from results.
-- Valid slow results are retained. Paint values and total interaction latency
-  must be finite and greater than zero; individual interaction components may
-  be zero.
+- Valid slow results are retained. Paint values, total interaction latency, and
+  work to commit must be finite and greater than zero; individual interaction
+  components may be zero.
 - Links use each framework's production navigation component or ordinary
   anchors, allowing default prefetching. The table is loaded and rendered on
   demand without caching or prerendering its output. Static surrounding shells
@@ -431,6 +440,44 @@ Current pinned dependencies are listed in each project's `package.json`:
   plain-link load-test route uses ordinary anchors.
 - Astro's table and detail routes use `export const prerender = false` for
   request-time rendering.
+
+### Interaction Work to Commit
+
+The client and server side rendered tests also score the benchmark's click from
+the Chrome trace that Lighthouse records for the interaction step.
+
+- Work to commit is the sum of three parts:
+  - **Input delay:** from the input's timestamp to the start of the first event
+    callback for the interaction.
+  - **Processing duration:** from the start of the first event callback to the
+    end of the last, across the interaction's pointer and click events.
+  - **Rendering work:** time the renderer main thread is busy, from the end of
+    processing until the interaction's frame commits. This includes framework
+    work scheduled by the event, style, layout, and paint. Overlapping tasks are
+    counted once.
+- Input delay and processing duration match Lighthouse's INP breakdown for
+  client-routed navigations. Rendering work takes the place of presentation
+  delay.
+- Idle main-thread time while waiting for the next frame is excluded. That wait
+  depends on where the click lands within the frame interval rather than on the
+  framework.
+- Work after commit is not measured. This includes raster, draw, presentation,
+  and browser UI frames, such as the frame software-rendered headless Chrome
+  waits for after `pushState`
+  ([#573](https://github.com/e18e/framework-performance/issues/573)).
+- The commit boundary is the Event Timing `commitFinishTime` for the
+  interaction, capped at the end of its Event Timing duration. A client-routed
+  run without a `commitFinishTime` fails the benchmark.
+- Tables and breakdown charts show the run with the median work to commit, so
+  its parts add up to the total. Results also record the mean, median, minimum,
+  and maximum of each part.
+- For full-document navigations (Astro), the document usually unloads before
+  it presents a frame. The Event Timing duration then ends with processing and
+  rendering work is zero. Astro's score stops at unload and does not include
+  loading or rendering the detail page, so it is not directly comparable with
+  the client-routed frameworks.
+- Results recorded before work to commit was measured only have the Lighthouse
+  breakdown, so its version history starts later.
 
 ### Initial Load
 

@@ -177,6 +177,24 @@ export const LighthouseInteractionTimingSummary = z.object({
   presentationDelay: createIterationSummary('ms'),
 })
 
+/**
+ * Interaction scored from the trace: input delay and processing duration, plus renderer main-thread busy time from
+ * the end of processing until the interaction's frame commits. Absent from results recorded before it was measured.
+ */
+export const InteractionWorkIteration = z.object({
+  workToCommit: createValueWithUnit('ms', z.number().positive()),
+  inputDelay: createValueWithUnit('ms', z.number().nonnegative()),
+  processingDuration: createValueWithUnit('ms', z.number().nonnegative()),
+  renderingWork: createValueWithUnit('ms', z.number().nonnegative()),
+})
+
+export const InteractionWorkSummary = z.object({
+  workToCommit: createIterationSummary('ms'),
+  inputDelay: createIterationSummary('ms'),
+  processingDuration: createIterationSummary('ms'),
+  renderingWork: createIterationSummary('ms'),
+})
+
 export const CSRLighthouseBenchmark = BaseBenchmark.extend({
   project: z.literal('app'),
   name: z.literal('csrLighthouse'),
@@ -185,11 +203,13 @@ export const CSRLighthouseBenchmark = BaseBenchmark.extend({
       firstPaint: createValueWithUnit('ms', z.number().positive()),
       firstContentfulPaint: createValueWithUnit('ms', z.number().positive()),
       interaction: LighthouseInteractionTimingIteration,
+      interactionWork: InteractionWorkIteration.optional(),
     }),
   ),
   firstPaint: createIterationSummary('ms'),
   firstContentfulPaint: createIterationSummary('ms'),
   interaction: LighthouseInteractionTimingSummary,
+  interactionWork: InteractionWorkSummary.optional(),
 })
 
 export const SSRLighthouseBenchmark = BaseBenchmark.extend({
@@ -200,11 +220,13 @@ export const SSRLighthouseBenchmark = BaseBenchmark.extend({
       firstPaint: createValueWithUnit('ms', z.number().positive()),
       firstContentfulPaint: createValueWithUnit('ms', z.number().positive()),
       interaction: LighthouseInteractionTimingIteration,
+      interactionWork: InteractionWorkIteration.optional(),
     }),
   ),
   firstPaint: createIterationSummary('ms'),
   firstContentfulPaint: createIterationSummary('ms'),
   interaction: LighthouseInteractionTimingSummary,
+  interactionWork: InteractionWorkSummary.optional(),
 })
 
 export const InitialLoadResourceType = z.enum(InitialLoadResourceOptions)

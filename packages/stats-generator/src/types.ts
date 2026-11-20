@@ -1,3 +1,4 @@
+import type { InteractionWork } from './interaction-work.ts'
 export type {
   FrameworkConfig,
   TestConfig,
@@ -14,6 +15,7 @@ export interface RenderedTestSample {
   firstPaint: number
   firstContentfulPaint: number
   interactionTests: InteractionTiming
+  interactionWork: InteractionWork
 }
 
 export interface TimeStat {

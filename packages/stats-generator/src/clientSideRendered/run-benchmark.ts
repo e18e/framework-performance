@@ -10,6 +10,7 @@ import {
   getNavigationInteractionTimingFromLighthouse,
   prepareInteractionTraceForLighthouse,
 } from '../interaction-timing.ts'
+import { getInteractionWorkFromTrace } from '../interaction-work.ts'
 import type {
   ClientSideRenderedBenchmarkResult,
   ClientSideRenderedRunResult,
@@ -112,6 +113,10 @@ async function runOnce(
 
     const interactionArtifacts =
       flow.createArtifactsJson().gatherSteps[1]?.artifacts
+    // Scored before the Lighthouse normalization below changes Event Timing durations.
+    const interactionWork = getInteractionWorkFromTrace(
+      interactionArtifacts?.Trace,
+    )
     if (fullDocumentNavigation) {
       prepareInteractionTraceForLighthouse(interactionArtifacts?.Trace)
     }
@@ -137,7 +142,7 @@ async function runOnce(
           )
 
     await page.close()
-    return { firstPaint, firstContentfulPaint, interaction }
+    return { firstPaint, firstContentfulPaint, interaction, interactionWork }
   } finally {
     await browser.close()
   }
@@ -192,10 +197,20 @@ export async function runBenchmark(
     )
   }
 
+  const interactionWork = results
+    .map((r) => r.interactionWork)
+    .filter((value) => value !== null)
+  if (interactionWork.length !== results.length) {
+    throw new Error(
+      `Interaction work could not be measured in ${results.length - interactionWork.length} of ${results.length} runs`,
+    )
+  }
+
   const samples = results.map((_, index) => ({
     firstPaint: fp[index],
     firstContentfulPaint: firstContentfulPaint[index],
     interactionTests: interactions[index],
+    interactionWork: interactionWork[index],
   }))
   return {
     name: packageName,

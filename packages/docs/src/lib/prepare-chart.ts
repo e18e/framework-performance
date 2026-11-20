@@ -1,4 +1,7 @@
-import { INTERACTION_PHASES } from './interaction-phases'
+import {
+  INTERACTION_PHASES,
+  INTERACTION_WORK_PARTS,
+} from './interaction-phases'
 import { stackGrays } from './chart-styles'
 import { prepareInitialLoadResources } from './initial-load'
 import { getCollection } from 'astro:content'
@@ -95,6 +98,23 @@ export function getRenderedInteractionBreakdownData(
       interactionLatency: interaction.interactionLatency,
       values: Object.fromEntries(
         INTERACTION_PHASES.map(({ key }) => [key, interaction[key]]),
+      ),
+    }
+  })
+}
+
+export function getRenderedInteractionWorkBreakdownData(
+  testsKey: RenderedTestsKey,
+) {
+  return ssrRequestThroughputStats.flatMap((framework) => {
+    const work = framework[testsKey]?.interactionWork
+    if (work == null) return []
+
+    return {
+      name: framework.name,
+      workToCommit: work.workToCommit,
+      values: Object.fromEntries(
+        INTERACTION_WORK_PARTS.map(({ key }) => [key, work[key]]),
       ),
     }
   })

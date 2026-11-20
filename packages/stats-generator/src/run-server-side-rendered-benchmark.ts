@@ -46,6 +46,9 @@ async function main() {
   console.info(`    Input delay:  ${interaction.inputDelay.mean}ms`)
   console.info(`    Processing:   ${interaction.processingDuration.mean}ms`)
   console.info(`    Presentation: ${interaction.presentationDelay.mean}ms`)
+  const work = result.serverSideRendered.interactionWork
+  console.info(`  Work to commit: ${work?.workToCommit.mean}ms`)
+  console.info(`    Rendering work: ${work?.renderingWork.mean}ms`)
 }
 
 main().catch((error) => {

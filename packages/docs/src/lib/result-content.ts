@@ -27,6 +27,25 @@ function interactionValues(
   }
 }
 
+function formatInteractionWork(
+  value: NonNullable<MetaFrameworkResult['csrLighthouse' | 'ssrLighthouse']>,
+) {
+  const runs = value.iterations.iterations.flatMap((run) =>
+    run.interactionWork ? [run.interactionWork] : [],
+  )
+  if (!value.interactionWork || runs.length !== value.iterations.runs) return
+  const medianRun = runs.sort(
+    (a, b) => a.workToCommit.value - b.workToCommit.value,
+  )[Math.floor(runs.length / 2)]!
+  return {
+    ...value.interactionWork,
+    workToCommit: medianRun.workToCommit.value,
+    inputDelay: medianRun.inputDelay.value,
+    processingDuration: medianRun.processingDuration.value,
+    renderingWork: medianRun.renderingWork.value,
+  }
+}
+
 export function formatThroughput(
   value: NonNullable<BenchmarkResult['ssrThroughput']>,
 ) {
@@ -95,6 +114,7 @@ export function formatLighthouse(
       ...value.interaction,
       ...interactionValues(medianRun.interaction),
     },
+    interactionWork: formatInteractionWork(value),
   }
 }
 
