@@ -10,15 +10,19 @@ const ssrLoad = {
 
 const interactionScenarioLabel = 'first-row-detail-navigation'
 
+/** `in-review` tests only show in local builds and deploy previews, not the production site. */
+export type MeasurementStatus = 'live' | 'in-review'
+
 /** Shared defaults for every framework. Scans run once; benchmarks repeat. */
 export const measurementsConfig = {
-  install: { runs: 5 },
-  build: { runs: 5 },
-  devServer: { runs: 5 },
-  dependencies: null,
-  browserBaseline: null,
-  nodeEngines: null,
+  install: { status: 'live', runs: 5 },
+  build: { status: 'live', runs: 5 },
+  devServer: { status: 'live', runs: 5 },
+  dependencies: { status: 'live' },
+  browserBaseline: { status: 'live' },
+  nodeEngines: { status: 'live' },
   ssrRequestThroughput: {
+    status: 'live',
     runs: 5,
     durationMs: 10_000,
     warmupDurationMs: 250,
@@ -27,23 +31,30 @@ export const measurementsConfig = {
     path: '/ssr-throughput',
   },
   ssrLoad: {
+    status: 'live',
     ...ssrLoad,
     plainLinksPath: '/server-side-rendered-plain-links',
   },
-  ssrRouterLinkLoad: { ...ssrLoad },
+  ssrRouterLinkLoad: { status: 'live', ...ssrLoad },
   clientSideRendered: {
+    status: 'live',
     runs: 5,
     scenario: interactionScenarioLabel,
     path: '/client-side-rendered',
   },
   serverSideRendered: {
+    status: 'live',
     runs: 5,
     scenario: interactionScenarioLabel,
     path: '/server-side-rendered',
   },
   initialLoad: {
+    status: 'live',
     path: '/initial-load',
   },
-} as const
+} as const satisfies Record<
+  string,
+  { status: MeasurementStatus; [setting: string]: unknown }
+>
 
 export type MeasurementName = keyof typeof measurementsConfig
