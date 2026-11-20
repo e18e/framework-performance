@@ -1,10 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { assembleClientRendering } from './client-rendering.ts'
-import {
-  ClientRenderingBenchmarkSchema,
-  ClientSideRenderedStatsSchema,
-} from '@framework-performance/results'
+import { CSRLighthouseBenchmark } from '@framework-performance/results/benchmark-schemas'
 
 test('assembles client rendering from exact raw browser measurements', () => {
   const iterations = [1, 3].map((value) => ({
@@ -19,7 +16,7 @@ test('assembles client rendering from exact raw browser measurements', () => {
   }))
   const result = assembleClientRendering(iterations)
   assert.deepEqual(
-    result.iterations.map(({ firstPaint }) => firstPaint),
+    result.iterations.iterations.map(({ firstPaint }) => firstPaint),
     [
       { value: 1, unit: 'ms' },
       { value: 3, unit: 'ms' },
@@ -27,16 +24,16 @@ test('assembles client rendering from exact raw browser measurements', () => {
   )
   assert.equal(result.firstPaint.mean, 2)
   assert.equal(
-    ClientRenderingBenchmarkSchema.safeParse({
+    CSRLighthouseBenchmark.safeParse({
       ...result,
       iterations: undefined,
     }).success,
     false,
   )
   assert.equal(
-    ClientSideRenderedStatsSchema.safeParse({
-      browserVersion: 'Chrome',
-      clientSideRendered: { ...result, iterations: [] },
+    CSRLighthouseBenchmark.safeParse({
+      ...result,
+      iterations: { runs: 1, iterations: result.iterations.iterations },
     }).success,
     false,
   )

@@ -1,215 +1,43 @@
-import { validateSSRLoadForPersistence } from './ssrLoad/persistence.ts'
-import type { CIStats } from './types.ts'
-import { join } from 'node:path'
 import { z } from 'zod'
+import { benchmarkArtifacts } from './benchmark-artifacts.ts'
 import { getFrameworks } from './get-frameworks.ts'
-import { packagesDir } from './constants.ts'
-import { readJsonFile } from './utils.ts'
-import {
-  CoreJsStatsSchema,
-  FrameworkDependencyScanSchema,
-  FirstPartyDependencyScanSchema,
-  InstallResultSchema,
-  BuildStatsSchema,
-  DevServerStatsSchema,
-  BrowserBaselineStatsSchema,
-  NodeEnginesStatsSchema,
-  SSRRequestThroughputStatsSchema,
-  SSRLoadStatsSchema,
-  SSRRouterLinkLoadStatsSchema,
-  ClientSideRenderedStatsSchema,
-  ServerSideRenderedStatsSchema,
-} from '@framework-performance/results'
-
-type BenchmarkType =
-  | 'dependencies'
-  | 'install'
-  | 'build'
-  | 'devServer'
-  | 'browserBaseline'
-  | 'nodeEngines'
-  | 'ssrRequestThroughput'
-  | 'ssrLoad'
-  | 'ssrRouterLinkLoad'
-  | 'clientSideRendered'
-  | 'serverSideRendered'
-
-interface BenchmarkConfig {
-  type: BenchmarkType
-  file: string
-  schema: z.ZodType
-}
-
-const STARTER_BENCHMARKS: BenchmarkConfig[] = [
-  {
-    type: 'dependencies',
-    file: 'corejs-stats.json',
-    schema: CoreJsStatsSchema,
-  },
-  {
-    type: 'dependencies',
-    file: 'framework-dependency-stats.json',
-    schema: FrameworkDependencyScanSchema,
-  },
-  {
-    type: 'dependencies',
-    file: 'first-party-dependency-stats.json',
-    schema: FirstPartyDependencyScanSchema,
-  },
-
-  { type: 'install', file: 'install-stats.json', schema: InstallResultSchema },
-  { type: 'build', file: 'build-stats.json', schema: BuildStatsSchema },
-  {
-    type: 'devServer',
-    file: 'dev-server-stats.json',
-    schema: DevServerStatsSchema,
-  },
-  {
-    type: 'browserBaseline',
-    file: 'browser-baseline-stats.json',
-    schema: BrowserBaselineStatsSchema,
-  },
-  {
-    type: 'nodeEngines',
-    file: 'node-engines-stats.json',
-    schema: NodeEnginesStatsSchema,
-  },
-]
-
-const APP_BENCHMARKS: BenchmarkConfig[] = [
-  {
-    type: 'ssrRouterLinkLoad',
-    file: 'ci-stats.json',
-    schema: SSRRouterLinkLoadStatsSchema,
-  },
-  {
-    type: 'clientSideRendered',
-    file: 'ci-stats.json',
-    schema: ClientSideRenderedStatsSchema,
-  },
-  {
-    type: 'serverSideRendered',
-    file: 'ci-stats.json',
-    schema: ServerSideRenderedStatsSchema,
-  },
-  {
-    type: 'ssrRequestThroughput',
-    file: 'ci-stats.json',
-    schema: SSRRequestThroughputStatsSchema,
-  },
-  {
-    type: 'ssrLoad',
-    file: 'ci-stats.json',
-    schema: SSRLoadStatsSchema,
-  },
-]
-
-function validateFile(filePath: string, schema: z.ZodType): string[] {
-  const data = readJsonFile(filePath)
-
-  if (!data) {
-    return [`File not found: ${filePath}`]
-  }
-
-  const result = schema.safeParse(data)
-  if (result.success) {
-    if (
-      schema === SSRLoadStatsSchema ||
-      schema === SSRRouterLinkLoadStatsSchema
-    ) {
-      try {
-        validateSSRLoadForPersistence(data as CIStats)
-      } catch (error) {
-        return [error instanceof Error ? error.message : String(error)]
-      }
-    }
-    return []
-  }
-
-  return result.error.issues.map(
-    (issue) => `${issue.path.join('.') || 'root'}: ${issue.message}`,
-  )
-}
+import { benchmarkOutputPath } from './utils.ts'
+import { readFileSync } from 'node:fs'
 
 async function main() {
-  const [target = 'all', filterType] = process.argv.slice(2)
-
-  console.info('Validating stats output...\n')
-
-  const frameworks = await getFrameworks()
-  let hasFailures = false
-
-  for (const framework of frameworks) {
-    // Validate starter
-    if (framework.starter) {
-      const pkg = framework.starter.package
-      if (target !== 'all' && target !== framework.name && target !== pkg)
+  const [target = 'all', filter] = process.argv.slice(2)
+  let failures = 0
+  for (const framework of await getFrameworks()) {
+    for (const project of [framework.starter, framework.app]) {
+      if (
+        !project ||
+        !['all', framework.name, project.package].includes(target)
+      )
         continue
-
-      console.info(`Validating ${framework.displayName} starter (${pkg})...`)
-
-      const errors: string[] = []
-      for (const { type: benchType, file, schema } of STARTER_BENCHMARKS) {
-        if (filterType && filterType !== benchType) continue
-        if (!framework.starter.measurements.includes(benchType)) {
+      for (const [measurement, , file, schema] of benchmarkArtifacts) {
+        if (
+          (filter && filter !== measurement) ||
+          !project.measurements.includes(measurement)
+        )
           continue
+        const path = benchmarkOutputPath(project.package, file)
+        try {
+          schema.parse(JSON.parse(readFileSync(path, 'utf8')))
+        } catch (error) {
+          failures++
+          console.error(
+            path,
+            error instanceof z.ZodError ? error.issues : error,
+          )
         }
-
-        const filePath = join(packagesDir, pkg, file)
-        const fileErrors = validateFile(filePath, schema)
-        errors.push(...fileErrors.map((e) => `[${benchType}] ${e}`))
-      }
-
-      if (errors.length === 0) {
-        console.info('  ✓ Valid\n')
-      } else {
-        console.info('  ✗ Invalid')
-        errors.forEach((e) => console.error(`    ${e}`))
-        console.info('')
-        hasFailures = true
-      }
-    }
-
-    // Validate app
-    if (framework.app) {
-      const pkg = framework.app.package
-      if (target !== 'all' && target !== framework.name && target !== pkg)
-        continue
-
-      console.info(`Validating ${framework.displayName} app (${pkg})...`)
-
-      const errors: string[] = []
-      for (const { type: benchType, file, schema } of APP_BENCHMARKS) {
-        if (filterType && filterType !== benchType) continue
-        if (!framework.app.measurements.includes(benchType)) {
-          continue
-        }
-
-        const filePath = join(packagesDir, pkg, file)
-        const fileErrors = validateFile(filePath, schema)
-        errors.push(...fileErrors.map((e) => `[${benchType}] ${e}`))
-      }
-
-      if (errors.length === 0) {
-        console.info('  ✓ Valid\n')
-      } else {
-        console.info('  ✗ Invalid')
-        errors.forEach((e) => console.error(`    ${e}`))
-        console.info('')
-        hasFailures = true
       }
     }
   }
-
-  if (hasFailures) {
-    console.error('Validation failed!')
-    process.exit(1)
-  }
-
-  console.info('✓ All validations passed!')
+  if (failures) process.exitCode = 1
+  else console.info('All selected benchmark artifacts are valid.')
 }
 
 main().catch((error) => {
-  console.error('Validation failed:', error)
-  process.exit(1)
+  console.error(error)
+  process.exitCode = 1
 })

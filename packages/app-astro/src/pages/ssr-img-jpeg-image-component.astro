@@ -1,0 +1,45 @@
+---
+import { Image } from 'astro:assets'
+import poster1 from '../assets/ssr-images/BTTF1.jpg'
+import poster2 from '../assets/ssr-images/BTTF2.jpg'
+import poster3 from '../assets/ssr-images/BTTF3.jpg'
+import '../../../testdata/src/ssr-images.css'
+
+export const prerender = false
+---
+
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>SSR Image Benchmark</title>
+  </head>
+  <body>
+    <main class="ssr-image-gallery">
+      <Image
+        src={poster1}
+        alt="Back to the Future poster"
+        width={667}
+        height={987}
+        format="jpeg"
+        loading="eager"
+      />
+      <Image
+        src={poster2}
+        alt="Back to the Future Part II poster"
+        width={667}
+        height={1000}
+        format="jpeg"
+        priority
+      />
+      <Image
+        src={poster3}
+        alt="Back to the Future Part III poster"
+        width={667}
+        height={999}
+        format="jpeg"
+        loading="eager"
+      />
+    </main>
+  </body>
+</html>

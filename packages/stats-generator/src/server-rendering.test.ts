@@ -1,10 +1,7 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { assembleServerRendering } from './server-rendering.ts'
-import {
-  ServerRenderingBenchmarkSchema,
-  ServerSideRenderedStatsSchema,
-} from '@framework-performance/results'
+import { SSRLighthouseBenchmark } from '@framework-performance/results/benchmark-schemas'
 
 test('assembles server rendering from exact raw browser measurements', () => {
   const iterations = [1, 3].map((value) => ({
@@ -19,7 +16,7 @@ test('assembles server rendering from exact raw browser measurements', () => {
   }))
   const result = assembleServerRendering(iterations)
   assert.deepEqual(
-    result.iterations.map(({ firstPaint }) => firstPaint),
+    result.iterations.iterations.map(({ firstPaint }) => firstPaint),
     [
       { value: 1, unit: 'ms' },
       { value: 3, unit: 'ms' },
@@ -27,16 +24,16 @@ test('assembles server rendering from exact raw browser measurements', () => {
   )
   assert.equal(result.firstPaint.mean, 2)
   assert.equal(
-    ServerRenderingBenchmarkSchema.safeParse({
+    SSRLighthouseBenchmark.safeParse({
       ...result,
       iterations: undefined,
     }).success,
     false,
   )
   assert.equal(
-    ServerSideRenderedStatsSchema.safeParse({
-      browserVersion: 'Chrome',
-      serverSideRendered: { ...result, iterations: [] },
+    SSRLighthouseBenchmark.safeParse({
+      ...result,
+      iterations: { runs: 1, iterations: result.iterations.iterations },
     }).success,
     false,
   )

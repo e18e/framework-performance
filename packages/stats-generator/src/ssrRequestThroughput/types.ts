@@ -1,5 +1,5 @@
 import type { z } from 'zod'
-import type { RequestThroughputBenchmarkSchema } from '@framework-performance/results'
+import type { SSRThroughputBenchmark } from '@framework-performance/results/benchmark-schemas'
 import type { IncomingMessage, ServerResponse } from './mock-http.ts'
 
 export type WebServerRenderHandler = (request: Request) => Promise<Response>
@@ -17,5 +17,5 @@ export interface SSRRequestThroughputBenchmarkResult {
   name: string
   displayName: string
   package: string
-  benchmark: z.infer<typeof RequestThroughputBenchmarkSchema>
+  benchmark: z.infer<typeof SSRThroughputBenchmark>
 }

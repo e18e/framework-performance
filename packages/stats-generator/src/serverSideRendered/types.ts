@@ -1,5 +1,5 @@
 import type { z } from 'zod'
-import type { ServerRenderingBenchmarkSchema } from '@framework-performance/results'
+import type { SSRLighthouseBenchmark } from '@framework-performance/results/benchmark-schemas'
 import type { InteractionTiming } from '../types.ts'
 export interface ServerSideRenderedRunResult {
   firstPaint: number | null
@@ -12,5 +12,5 @@ export interface ServerSideRenderedBenchmarkResult {
   displayName: string
   package: string
   browserVersion: string
-  serverSideRendered: z.infer<typeof ServerRenderingBenchmarkSchema>
+  serverSideRendered: z.infer<typeof SSRLighthouseBenchmark>
 }

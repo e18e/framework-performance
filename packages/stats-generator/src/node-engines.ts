@@ -7,7 +7,6 @@ import {
   rangeToComparators,
   satisfies,
 } from 'verkit'
-import type { NodeEnginesStats } from './types.ts'
 
 export interface NodeEngineEntry {
   name: string
@@ -56,9 +55,7 @@ function solve(ranges: string[]): Solution {
   return { version: null, unsatisfiableRanges: [...failed].sort() }
 }
 
-export function resolveMinimumNodeVersion(
-  entries: NodeEngineEntry[],
-): NodeEnginesStats {
+export function resolveMinimumNodeVersion(entries: NodeEngineEntry[]) {
   const declared = entries.flatMap(({ name, range }) => {
     const trimmed = range?.trim()
     return trimmed ? [{ name, range: trimmed }] : []
@@ -91,7 +88,6 @@ export function resolveMinimumNodeVersion(
   }
 
   return {
-    name: 'nodeEngines',
     minimumNodeVersion: version,
     imposedBy: [...imposedBy].sort(),
     scannedPackageCount: { value: entries.length, unit: 'count' },

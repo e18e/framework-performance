@@ -1,3 +1,4 @@
+import { InstallBenchmark } from '@framework-performance/results/benchmark-schemas'
 import { measurementsConfig } from './measurements.ts'
 import { summarizeMetric } from './sample-statistics.ts'
 import { execSync } from 'node:child_process'
@@ -8,14 +9,11 @@ import { installDependencies, parseRunFrequency } from './benchmark-utils.ts'
 import { packagesDir } from './constants.ts'
 import {
   getDirectorySize,
+  benchmarkOutputPath,
   writeJsonFile,
   getFrameworkByPackage,
   parseArgs,
 } from './utils.ts'
-import {
-  InstallBenchmarkSchema,
-  InstallResultSchema,
-} from '@framework-performance/results'
 
 function execCommand(command: string, cwd: string): string {
   return execSync(command, {
@@ -127,26 +125,27 @@ async function main() {
     const nodeModulesSize = getDirectorySize(nodeModulesPath)
     console.info(`node_modules size: ${nodeModulesSize} bytes`)
 
-    const stats = InstallResultSchema.parse({
-      frameworkVersion,
-      install: InstallBenchmarkSchema.parse({
-        name: 'install',
+    const installDuration = InstallBenchmark.parse({
+      name: 'install',
+      project: 'starter',
+      iterations: {
         runs: iterations.length,
         iterations: iterations.map(({ duration }) => ({
           duration: { value: duration, unit: 'ms' },
         })),
-        duration: summarizeMetric(iterations.map((run) => run.duration)),
-        nodeModulesSize: { value: nodeModulesSize, unit: 'bytes' },
-      }),
+      },
+      duration: summarizeMetric(iterations.map((run) => run.duration)),
     })
-
-    const outputPath = join(packagesDir, packageName, 'install-stats.json')
-    writeJsonFile(outputPath, stats)
-
+    const outputPath = benchmarkOutputPath(packageName, 'install-stats.json')
+    writeJsonFile(outputPath, {
+      frameworkVersion,
+      installDuration,
+      starterNodeModuleSize: { value: nodeModulesSize, unit: 'bytes' },
+    })
     console.info(`\n✓ Saved install stats to ${outputPath}`)
-    console.info(`  Average: ${stats.install.duration.mean}ms`)
-    console.info(`  Min: ${stats.install.duration.min}ms`)
-    console.info(`  Max: ${stats.install.duration.max}ms`)
+    console.info(`  Average: ${installDuration.duration.mean}ms`)
+    console.info(`  Min: ${installDuration.duration.min}ms`)
+    console.info(`  Max: ${installDuration.duration.max}ms`)
   } finally {
     rmSync(tempDir, { recursive: true, force: true })
   }

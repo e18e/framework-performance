@@ -3,11 +3,8 @@ import { mkdtempSync, mkdirSync, writeFileSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { test } from 'node:test'
-import { InitialLoadResourceTypeSchema } from '@framework-performance/results'
-import {
-  projectResult,
-  readProjectResult,
-} from '@framework-performance/results/storage'
+import { InitialLoadResourceType } from '@framework-performance/results/benchmark-schemas'
+import { readBenchmarkResult } from '@framework-performance/results/storage'
 import { frameworksConfig } from './frameworks.ts'
 import { processCIStats } from './save-ci-stats.ts'
 
@@ -28,7 +25,7 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
   }
   const path = join(directory, 'initial-load-stats-astro', 'ci-stats.json')
   const resources = Object.fromEntries(
-    InitialLoadResourceTypeSchema.options.map((key) => [
+    InitialLoadResourceType.options.map((key) => [
       key,
       {
         requestCount: { value: 0, unit: 'requests' },
@@ -37,10 +34,11 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
     ]),
   )
   const artifact = {
-    frameworkVersion: readProjectResult('app-astro')?.frameworkVersion,
+    frameworkVersion: readBenchmarkResult('astro')?.frameworkVersion,
     browserVersion: 'Chrome/156',
-    initialLoad: {
-      name: 'initialLoad',
+    ssrInitialLoad: {
+      name: 'ssrInitialLoad',
+      project: 'app',
       resources,
     },
   }
@@ -52,15 +50,11 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
     mkdirSync(join(directory, 'initial-load-stats-astro'))
     writeFileSync(path, JSON.stringify(artifact))
     const results = await processCIStats(directory, options)
-    assert.deepEqual(
-      projectResult(results.get('astro')!, 'app')?.initialLoad,
-      artifact.initialLoad,
-    )
-    assert.equal(
-      projectResult(results.get('astro')!, 'app')?.frameworkVersion,
-      artifact.frameworkVersion,
-    )
-    writeFileSync(path, JSON.stringify({ ...artifact, initialLoad: {} }))
+    const result = results.get('astro')
+    assert.ok(result && result.framework !== 'baseline-html')
+    assert.deepEqual(result.ssrInitialLoad, artifact.ssrInitialLoad)
+    assert.equal(result.frameworkVersion, artifact.frameworkVersion)
+    writeFileSync(path, JSON.stringify({ ...artifact, ssrInitialLoad: {} }))
     await assert.rejects(processCIStats(directory, options))
   } finally {
     rmSync(directory, { recursive: true, force: true })

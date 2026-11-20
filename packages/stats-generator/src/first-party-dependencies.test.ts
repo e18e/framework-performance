@@ -4,11 +4,13 @@ import {
   getFirstPartyDependencyStats,
   validateFirstPartyDependencyManifest,
 } from './first-party-dependencies.ts'
-import type { E18eStats } from './types.ts'
-import { getDependencyStatsFromE18e } from './utils.ts'
+import { benchmarkArtifacts } from './benchmark-artifacts.ts'
 
 test('derives starter dependency metrics from e18e output', () => {
-  const stats = getDependencyStatsFromE18e({
+  const [, , , schema] = benchmarkArtifacts.find(
+    ([, , file]) => file === 'e18e-stats.json',
+  )!
+  const stats = schema.parse({
     stats: {
       name: 'fixture',
       version: '1.0.0',
@@ -20,13 +22,15 @@ test('derives starter dependency metrics from e18e output', () => {
       ],
     },
     messages: [],
-  } satisfies E18eStats)
+  })
 
   assert.deepEqual(stats, {
-    productionDependencyCount: { value: 2, unit: 'count' },
-    developmentDependencyCount: { value: 3, unit: 'count' },
-    duplicateDependencyCount: { value: 5, unit: 'count' },
-    dependencyInstallSize: { value: 1234, unit: 'bytes' },
+    dependencyCounts: {
+      starterProd: { value: 2, unit: 'count' },
+      starterDev: { value: 3, unit: 'count' },
+      starterDuplicate: { value: 5, unit: 'count' },
+      starterDependencyInstallSize: { value: 1234, unit: 'bytes' },
+    },
   })
 })
 
@@ -83,8 +87,6 @@ test('counts the first-party graph within the starter lockfile', () => {
     {
       productionDependencyCount: { value: 1, unit: 'count' },
       developmentDependencyCount: { value: 1, unit: 'count' },
-      name: 'firstPartyDependencies',
-      totalDependencyCount: { value: 6, unit: 'count' },
       duplicateDependencyCount: { value: 1, unit: 'count' },
     },
   )

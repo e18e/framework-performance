@@ -20,12 +20,6 @@ export const metricCatalogue = {
     valueFormat: 'count',
     yAxisLabel: 'Dependencies',
   },
-  'frameworkDependencies.totalDependencyCount': {
-    id: 'frameworkDependencies.totalDependencyCount',
-    title: 'Core Package \u00b7 All Dependencies',
-    valueFormat: 'count',
-    yAxisLabel: 'Dependencies',
-  },
   productionDependencyCount: {
     id: 'productionDependencyCount',
     title: 'Starter Project \u00b7 Production Dependencies',
@@ -35,12 +29,6 @@ export const metricCatalogue = {
   developmentDependencyCount: {
     id: 'developmentDependencyCount',
     title: 'Starter Project \u00b7 Development Dependencies',
-    valueFormat: 'count',
-    yAxisLabel: 'Dependencies',
-  },
-  totalDependencyCount: {
-    id: 'totalDependencyCount',
-    title: 'Starter Project \u00b7 All Dependencies',
     valueFormat: 'count',
     yAxisLabel: 'Dependencies',
   },
@@ -109,8 +97,8 @@ export const metricCatalogue = {
   'ssrRequestThroughput.bodySize': {
     id: 'ssrRequestThroughput.bodySize',
     title: 'Body Size',
-    valueFormat: 'kb',
-    yAxisLabel: 'Kilobytes',
+    valueFormat: 'kib',
+    yAxisLabel: 'KiB',
   },
   'ssrRequestThroughput.latency': {
     id: 'ssrRequestThroughput.latency',

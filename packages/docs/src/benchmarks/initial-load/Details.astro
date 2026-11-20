@@ -1,11 +1,15 @@
 ---
-import type { InitialLoadStats } from '@framework-performance/results'
+import type { SSRInitialLoadBenchmark } from '@framework-performance/results/benchmark-schemas'
+import type { z } from 'astro/zod'
 import { Content as Description } from './Description.mdx'
 import StackedAreaChart from '../../components/StackedAreaChart.astro'
 import { initialLoadSeries } from '../../lib/prepare-chart'
 import { prepareInitialLoadResources } from '../../lib/initial-load'
 interface Props {
-  versions: { frameworkVersion?: string; initialLoad?: InitialLoadStats }[]
+  versions: {
+    frameworkVersion?: string
+    initialLoad?: z.output<typeof SSRInitialLoadBenchmark>
+  }[]
 }
 const data = Astro.props.versions.flatMap((version) => {
   const resources = version.initialLoad?.resources

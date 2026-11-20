@@ -1,12 +1,16 @@
-import { CoreJsStatsSchema } from '@framework-performance/results'
+import { CoreJsBenchmark } from '@framework-performance/results/benchmark-schemas'
 import { readFileSync, statSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { glob } from 'tinyglobby'
 import coreJsCompat from 'core-js-compat/compat.js'
 import getModulesListForTargetVersion from 'core-js-compat/get-modules-list-for-target-version.js'
 import { packagesDir } from './constants.ts'
-import { getFrameworkByPackage, parseArgs, writeJsonFile } from './utils.ts'
-import type { CoreJsStats } from './types.ts'
+import {
+  getFrameworkByPackage,
+  benchmarkOutputPath,
+  parseArgs,
+  writeJsonFile,
+} from './utils.ts'
 
 const BROWSER_TARGETS =
   'last 2 Chrome major versions, last 2 Firefox major versions, last 2 Safari major versions, last 2 Edge major versions'
@@ -116,14 +120,15 @@ async function main() {
   const unnecessaryModules = [
     ...new Set(vendoredFiles.flatMap((f) => f.unnecessaryModules)),
   ]
-  const stats: CoreJsStats = {
+  const stats = CoreJsBenchmark.parse({
+    project: 'starter',
     name: 'coreJs',
     totalVendoredSize: { value: totalVendoredBytes, unit: 'bytes' },
     unnecessaryModules,
-  }
+  })
 
-  const outputPath = join(packagesDir, packageName, 'corejs-stats.json')
-  writeJsonFile(outputPath, CoreJsStatsSchema.parse(stats))
+  const outputPath = benchmarkOutputPath(packageName, 'corejs-stats.json')
+  writeJsonFile(outputPath, stats)
 
   console.info(`\n✓ Saved core-js stats to ${outputPath}`)
 }

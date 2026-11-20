@@ -1,8 +1,13 @@
-import { NodeEnginesStatsSchema } from '@framework-performance/results'
+import { MinimumNodeVersionBenchmark } from '@framework-performance/results/benchmark-schemas'
 import { lstatSync, readdirSync, readFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { packagesDir } from './constants.ts'
-import { getFrameworkByPackage, parseArgs, writeJsonFile } from './utils.ts'
+import {
+  getFrameworkByPackage,
+  benchmarkOutputPath,
+  parseArgs,
+  writeJsonFile,
+} from './utils.ts'
 import { resolveMinimumNodeVersion } from './node-engines.ts'
 import type { NodeEngineEntry } from './node-engines.ts'
 
@@ -174,8 +179,20 @@ async function main() {
     }
   }
 
-  const outputPath = join(packagesDir, packageName, 'node-engines-stats.json')
-  writeJsonFile(outputPath, NodeEnginesStatsSchema.parse(stats))
+  const outputPath = benchmarkOutputPath(packageName, 'node-engines-stats.json')
+  writeJsonFile(
+    outputPath,
+    MinimumNodeVersionBenchmark.nullable().parse(
+      stats.minimumNodeVersion === null
+        ? null
+        : {
+            name: 'minimumNodeVersion',
+            project: 'starter',
+            nodeVersion: stats.minimumNodeVersion,
+            imposedBy: stats.imposedBy,
+          },
+    ),
+  )
 
   console.info(`\n✓ Saved Node engines stats to ${outputPath}`)
 }

@@ -1,22 +1,16 @@
-import { readProjectResult } from '@framework-performance/results/storage'
+import { SSRLoadStageOptions } from '@framework-performance/results/benchmark-types'
+import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
 import { getLoadPeakStage } from '@framework-performance/results/selection'
-import { validateSSRLoadForPersistence } from './ssrLoad/persistence.ts'
 import { getSSRLoadKind } from './ssrLoad/config.ts'
-import { join } from 'node:path'
 import {
   runSSRLoadBenchmark,
   supportsSSRLoadBenchmark,
 } from './ssrLoad/index.ts'
-import { packagesDir } from './constants.ts'
 import {
   getFrameworkByPackage,
   getFrameworkVersion,
-  normalizeCIStats,
   parseArgs,
-  readJsonFile,
-  writeJsonFile,
 } from './utils.ts'
-import type { CIStats } from './types.ts'
 
 async function main() {
   const { packageName } = parseArgs(
@@ -42,32 +36,18 @@ async function main() {
     framework.frameworkPackage,
   )
   const result = await runSSRLoadBenchmark(packageName)
-  const timestamp = new Date().toISOString()
-  const runner = process.env.RUNNER_LABEL || 'local'
 
-  const existingStats = normalizeCIStats(
-    readJsonFile<CIStats>(join(packagesDir, packageName, 'ci-stats.json')) ??
-      (readProjectResult(packageName) as CIStats | null) ??
-      {},
-  )
+  writeRuntimeArtifact(packageName, frameworkVersion, {
+    [result.tests.name]: result.tests,
+  })
 
-  const ciStats: CIStats = {
-    ...existingStats,
-    timingMeasuredAt: timestamp,
-    runner,
-    frameworkVersion: frameworkVersion ?? existingStats.frameworkVersion,
-    [getSSRLoadKind()]: result.tests,
-  }
-
-  const outputPath = join(packagesDir, packageName, 'ci-stats.json')
-  validateSSRLoadForPersistence(ciStats)
-  writeJsonFile(outputPath, ciStats)
-
-  const peak = getLoadPeakStage(
-    result.tests.iterations[result.tests.representativeIterationIndex]!,
-  )
+  const sweep =
+    result.tests.iterations.iterations[
+      result.tests.representativeIterationIndex
+    ]!
+  const peak = getLoadPeakStage(SSRLoadStageOptions.map((key) => sweep[key]))
   console.info(
-    `\n✓ Saved ${label} stats for ${packageName}: ${peak.requestThroughput.value} req/s at ${peak.connections} connections`,
+    `\n✓ Saved ${label} stats for ${packageName}: ${peak.requestsPerSecond.value} req/s at ${peak.connections} connections`,
   )
 }
 

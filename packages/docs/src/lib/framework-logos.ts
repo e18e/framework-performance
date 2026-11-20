@@ -6,54 +6,70 @@ export type FrameworkLogo = ThemedValue & {
   wordmark?: boolean
 }
 
+export type BrandVariant = 'solid' | 'segmented'
+
 export interface FrameworkBrand {
   logo: FrameworkLogo
-  color?: ThemedValue
+  color: ThemedValue
+  variant: BrandVariant
 }
 
 export const frameworkBrands: Record<string, FrameworkBrand> = {
-  'baseline-html': { logo: { dark: '/framework-logos/html5.svg' } },
+  'baseline-html': {
+    logo: { dark: '/framework-logos/html5.svg' },
+    color: { dark: 'var(--ft-muted)' },
+    variant: 'segmented',
+  },
   astro: {
     logo: {
       dark: '/framework-logos/astro-gradient.svg',
       light: '/framework-logos/astro-dark.svg',
     },
-    color: { dark: '#BC52EE' },
+    color: { dark: '#A463F2' },
+    variant: 'solid',
   },
   next: {
     logo: {
       dark: '/framework-logos/nextdotjs-light.svg',
       light: '/framework-logos/nextdotjs.svg',
     },
-    color: { dark: '#FFFFFF', light: '#000000' },
+    color: { dark: '#9C6B4E' },
+    variant: 'solid',
   },
   nuxt: {
     logo: { dark: '/framework-logos/nuxt.svg' },
-    color: { dark: '#00DC82' },
+    color: { dark: '#3CA951', light: '#36A44D' },
+    variant: 'solid',
   },
   pracht: {
     logo: { dark: '/framework-logos/pracht.svg' },
-    color: { dark: '#FBBF24' },
+    color: { dark: '#60B9A5', light: '#459F8B' },
+    variant: 'solid',
   },
   'react-router': {
     logo: { dark: '/framework-logos/reactrouter.svg' },
-    color: { dark: '#CA4245' },
+    color: { dark: '#F985B2', light: '#DC6B98' },
+    variant: 'solid',
   },
   solid: {
     logo: { dark: '/framework-logos/solid.svg' },
-    color: { dark: '#306898' },
+    color: { dark: '#4269D0' },
+    variant: 'solid',
   },
   'solid-start': {
     logo: { dark: '/framework-logos/solid-start.svg' },
-    color: { dark: '#15ABFF', light: '#0084CE' },
+    color: { dark: '#88ABE4', light: '#6F91C9' },
+    variant: 'solid',
   },
   sveltekit: {
     logo: { dark: '/framework-logos/svelte.svg' },
-    color: { dark: '#FF3E00' },
+    color: { dark: '#FF725C', light: '#EF644F' },
+    variant: 'solid',
   },
   tanstack: {
     logo: { dark: '/framework-logos/tanstack.svg' },
-    color: { dark: '#FFA05C' },
+    color: { dark: '#DAA004', light: '#BA8807' },
+    variant: 'solid',
   },
   void: {
     logo: {
@@ -61,10 +77,20 @@ export const frameworkBrands: Record<string, FrameworkBrand> = {
       width: 80,
       wordmark: true,
     },
+    color: { dark: '#D45DD8', light: '#B843BD' },
+    variant: 'solid',
   },
   // Not benchmarked, but shown in the Core Web Vitals charts.
-  gatsby: { logo: { dark: '/framework-logos/gatsby.svg' } },
-  wordpress: { logo: { dark: '/framework-logos/wordpress.svg' } },
+  gatsby: {
+    logo: { dark: '/framework-logos/gatsby.svg' },
+    color: { dark: '#DAA004', light: '#BA8807' },
+    variant: 'solid',
+  },
+  wordpress: {
+    logo: { dark: '/framework-logos/wordpress.svg' },
+    color: { dark: '#4269D0' },
+    variant: 'solid',
+  },
 }
 
 const brandKeyByDisplayName = new Map<string, string>([
@@ -97,4 +123,18 @@ export function resolveThemedValue(
   theme: string | undefined,
 ) {
   return theme === 'light' ? (value.light ?? value.dark) : value.dark
+}
+
+/** Resolves a themed colour, expanding `var(--token)` references for canvas/SVG use. */
+export function resolveBrandColor(value: ThemedValue, theme?: string) {
+  const color = resolveThemedValue(value, theme)
+  const match = /^var\((--[\w-]+)(?:\s*,\s*(.+))?\)$/.exec(color.trim())
+  if (!match) return color
+  return (
+    getComputedStyle(document.documentElement)
+      .getPropertyValue(match[1]!)
+      .trim() ||
+    match[2] ||
+    '#697586'
+  )
 }

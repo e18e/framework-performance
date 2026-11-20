@@ -1,4 +1,5 @@
-import type { MetricBase } from '@framework-performance/results'
+import type { IterationSummary } from '@framework-performance/results/benchmark-schemas'
+import type { z } from 'zod'
 import type { TimeStat } from './types.ts'
 
 function round(value: number, decimalPlaces: number): number {
@@ -41,7 +42,7 @@ export function standardDeviation(
 
 export function summarizeMetric(
   values: number[],
-): Pick<MetricBase, 'mean' | 'median' | 'min' | 'max'> {
+): Pick<z.output<typeof IterationSummary>, 'mean' | 'median' | 'min' | 'max'> {
   if (values.length === 0)
     throw new Error('Cannot summarize an empty sample set')
   const mean = values.reduce((sum, value) => sum + value, 0) / values.length

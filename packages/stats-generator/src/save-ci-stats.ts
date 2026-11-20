@@ -1,88 +1,36 @@
 import {
-  readProjectResult,
-  saveProjectResult,
-  mergeProjectResult,
-  resultLocation,
-  type CombinedResult,
+  readBenchmarkResult,
+  saveBenchmarkResult,
 } from '@framework-performance/results/storage'
 import {
-  DependencyScanSchema,
-  CoreJsStatsSchema,
-  NodeEnginesStatsSchema,
-  BrowserBaselineStatsSchema,
-  FrameworkDependencyScanSchema,
-  FirstPartyDependencyScanSchema,
-  ServerSideRenderedStatsSchema,
-  InitialLoadResultSchema,
-  ClientSideRenderedStatsSchema,
-  BuildStatsSchema,
-  DevServerStatsSchema,
-  BaseResultSchema,
-  InstallResultSchema,
-  FrameworkResultSchema,
-  type FrameworkResult,
-} from '@framework-performance/results'
+  BenchmarkResultSchema,
+  DependencyCountBenchmark,
+  type BenchmarkResult,
+} from '@framework-performance/results/benchmark-schemas'
 import { withSummaryVariance } from '@framework-performance/results/comparison'
 import { measurementsConfig } from './measurements.ts'
 import { getSSRLoadPath } from './ssrLoad/config.ts'
-import { validateSSRLoadForPersistence } from './ssrLoad/persistence.ts'
-import {
-  mergeRequestThroughputArtifact,
-  validateRequestThroughputForPersistence,
-} from './request-throughput.ts'
-import { mergeSSRLoadArtifact } from './ssrLoad/merge.ts'
 import { join } from 'node:path'
 import { getFrameworks } from './get-frameworks.ts'
 import { readFileSync } from 'node:fs'
-import { getPublishTimes, withReleasedAt } from './release-dates.ts'
+import { getPublishTimes } from './release-dates.ts'
+import { getPackageJsonDeps } from './utils.ts'
 import {
-  getDependencyCountsFromPackageMetadata,
-  getDependencyStatsFromE18e,
-  getPackageJsonDeps,
-  normalizeCIStats,
-} from './utils.ts'
-import type {
-  CIStats,
-  InstallResult,
-  BuildStats,
-  DevServerStats,
-  CoreJsStats,
-  BrowserBaselineStats,
-  NodeEnginesStats,
-  DependencyStats,
-  FirstPartyDependencyStats,
-  E18eStats,
-  FrameworkConfig,
-  TestConfig,
-} from './types.ts'
+  benchmarkArtifacts,
+  type BenchmarkArtifact,
+} from './benchmark-artifacts.ts'
+import type { FrameworkConfig } from './types.ts'
 
 const publishTimesCache = new Map<string, Promise<Record<string, string>>>()
 
-async function getReleasedAt(
-  frameworkPackage: string,
-  frameworkVersion: string | undefined,
-): Promise<string | undefined> {
-  if (!frameworkVersion || frameworkVersion === 'unknown') return undefined
-
-  try {
-    if (!publishTimesCache.has(frameworkPackage)) {
-      publishTimesCache.set(frameworkPackage, getPublishTimes(frameworkPackage))
-    }
-    const releasedAt = (await publishTimesCache.get(frameworkPackage)!)[
-      frameworkVersion
-    ]
-    if (releasedAt == null) {
-      console.warn(
-        `No publish time found for ${frameworkPackage}@${frameworkVersion}`,
-      )
-    }
-    return releasedAt
-  } catch (error) {
-    throw new Error(
-      `Failed to fetch publish time for ${frameworkPackage}@${frameworkVersion}`,
-      { cause: error },
-    )
+async function getReleasedAt(packageName: string, version: string) {
+  if (!publishTimesCache.has(packageName)) {
+    publishTimesCache.set(packageName, getPublishTimes(packageName))
   }
+  const releasedAt = (await publishTimesCache.get(packageName)!)[version]
+  if (releasedAt == null)
+    throw new Error(`No publish time for ${packageName}@${version}`)
+  return releasedAt
 }
 
 export async function processCIStats(
@@ -97,590 +45,165 @@ export async function processCIStats(
     frameworks?: FrameworkConfig[]
   } = {},
 ) {
-  const timestamp = new Date().toISOString()
+  const timingMeasuredAt = new Date().toISOString()
   const runner = process.env.RUNNER_LABEL || 'local'
-
-  console.info(validateOnly ? 'Validating CI stats...' : 'Saving CI stats...')
-  console.info(`  Artifacts directory: ${artifactsDir}`)
-  console.info(`  Timestamp: ${timestamp}`)
-  console.info(`  Runner: ${runner}\n`)
-
   const frameworks = configuredFrameworks ?? (await getFrameworks())
-
-  function readArtifact<T>(
-    filePath: string,
-    project: TestConfig,
-    measurement: TestConfig['measurements'][number],
-  ): T | null {
-    const required =
-      requireAllArtifacts && project.measurements.includes(measurement)
-    try {
-      const data: unknown = JSON.parse(readFileSync(filePath, 'utf8'))
-      if (data === null || typeof data !== 'object' || Array.isArray(data))
-        throw new Error('Expected a stats object')
-      return data as T
-    } catch (error) {
-      if (
-        !required &&
-        error instanceof Error &&
-        'code' in error &&
-        error.code === 'ENOENT'
-      )
-        return null
-      throw new Error(`Missing or invalid measurement artifact: ${filePath}`, {
-        cause: error,
-      })
-    }
-  }
-
-  const projectStats = new Map<string, FrameworkResult>()
-  const combinedStats = new Map<string, CombinedResult>()
-  function collect(
-    packageName: string,
-    stats: CIStats,
-    existing: CIStats | null,
-  ) {
-    validateSSRLoadForPersistence(stats)
-    validateRequestThroughputForPersistence(stats)
-    const { framework } = resultLocation(packageName)
-    const measuredTests = Object.keys(stats).filter(
-      (key) => stats[key as keyof CIStats] !== existing?.[key as keyof CIStats],
-    )
-    const comparedStats = withSummaryVariance(
-      FrameworkResultSchema.parse(stats),
-      FrameworkResultSchema.nullable().parse(existing),
-      measuredTests,
-    )
-    combinedStats.set(
-      framework,
-      mergeProjectResult(combinedStats.get(framework) ?? null, packageName, {
-        ...comparedStats,
-      }),
-    )
-    projectStats.set(packageName, comparedStats)
-  }
+  const results = new Map<string, BenchmarkResult>()
 
   for (const framework of frameworks) {
-    const { name, displayName } = framework
+    const previous = readBenchmarkResult(framework.name)
+    const fresh: Record<string, unknown> = {}
+    const dependencyCounts: Record<string, unknown> = {}
+    const artifactVersions = new Map<string, string>()
+    const browserVersions = new Set<string>()
+    const projects: Partial<
+      Record<'starter' | 'app', BenchmarkResult['projects']['app']>
+    > = { ...previous?.projects }
+    const measuredConfigurations = new Set<keyof typeof measurementsConfig>()
 
-    // Process starter stats
-    if (framework.starter) {
-      const packageName = framework.starter.package
-      console.info(`Processing ${displayName} starter (${packageName})...`)
-
-      const existingStats = readProjectResult(packageName) as CIStats | null
-
-      let stats: CIStats = {
-        // Partial previews can merge stored measurements; full CI uses fresh artifacts only.
-        ...(!requireAllArtifacts && existingStats
-          ? normalizeCIStats(existingStats)
-          : {}),
-        ...BaseResultSchema.parse({
-          framework: framework.name,
-          packagePath: `packages/${packageName}`,
-          timingMeasuredAt: timestamp,
-          runner,
-        }),
+    for (const project of ['starter', 'app'] as const) {
+      const target = framework[project]
+      if (!target) continue
+      projects[project] = {
+        path: `packages/${target.package}` as BenchmarkResult['projects']['app']['path'],
+        packageJson: getPackageJsonDeps(target.package),
       }
 
-      let frameworkVersion = requireAllArtifacts
-        ? undefined
-        : existingStats?.frameworkVersion
-
-      // Load install stats from artifact
-      const installStatsPath = join(
-        artifactsDir,
-        `install-stats-${name}`,
-        'install-stats.json',
-      )
-      const installStats = readArtifact<InstallResult>(
-        installStatsPath,
-        framework.starter,
-        'install',
-      )
-
-      if (installStats) {
-        InstallResultSchema.parse(installStats)
-        console.info(`  ✓ Found install stats artifact`)
-        stats = {
-          ...stats,
-          frameworkVersion: installStats.frameworkVersion,
-          install: installStats.install,
-        }
-        frameworkVersion = installStats.frameworkVersion
-      } else {
-        console.warn(`No install stats artifact found at ${installStatsPath}`)
-      }
-
-      // Load build stats from artifact
-      const buildStatsPath = join(
-        artifactsDir,
-        `build-stats-${name}`,
-        'build-stats.json',
-      )
-      const buildStats = readArtifact<BuildStats>(
-        buildStatsPath,
-        framework.starter,
-        'build',
-      )
-
-      if (buildStats) {
-        BuildStatsSchema.parse(buildStats)
-        console.info(`  ✓ Found build stats artifact`)
-        stats = {
-          ...stats,
-          coldBuild: buildStats.coldBuild,
-          warmBuild: buildStats.warmBuild,
-        }
-      } else {
-        console.warn(`No build stats artifact found at ${buildStatsPath}`)
-      }
-
-      const devServerStatsPath = join(
-        artifactsDir,
-        `dev-server-stats-${name}`,
-        'dev-server-stats.json',
-      )
-      const devServerStats = readArtifact<DevServerStats>(
-        devServerStatsPath,
-        framework.starter,
-        'devServer',
-      )
-
-      if (devServerStats) {
-        DevServerStatsSchema.parse(devServerStats)
-        console.info(`  ✓ Found dev server stats artifact`)
-        stats = {
-          ...stats,
-          devServer: devServerStats.devServer,
-        }
-      } else {
-        console.warn(
-          `No dev server stats artifact found at ${devServerStatsPath}`,
+      for (const [
+        measurement,
+        folder,
+        filename,
+        schema,
+      ] of benchmarkArtifacts) {
+        if (!target.measurements.includes(measurement)) continue
+        const file = join(
+          artifactsDir,
+          `${folder}-stats-${framework.name}`,
+          filename,
         )
-      }
-
-      // Load core-js stats from artifact
-      const coreJsArtifactPath = join(
-        artifactsDir,
-        `corejs-stats-${name}`,
-        'corejs-stats.json',
-      )
-      const coreJsStats = readArtifact<CoreJsStats>(
-        coreJsArtifactPath,
-        framework.starter,
-        'build',
-      )
-      if (coreJsStats) {
-        console.info(`  ✓ Found core-js stats artifact`)
-        stats = {
-          ...stats,
-          coreJs: CoreJsStatsSchema.parse({ ...coreJsStats, name: 'coreJs' }),
-          vendoredCoreJsSize: coreJsStats.totalVendoredSize,
-          vendoredCoreJsUnnecessaryModules: coreJsStats.unnecessaryModules,
+        let artifact: BenchmarkArtifact
+        try {
+          artifact = schema.parse(JSON.parse(readFileSync(file, 'utf8')))
+        } catch (error) {
+          if (
+            !requireAllArtifacts &&
+            error instanceof Error &&
+            'code' in error &&
+            error.code === 'ENOENT'
+          )
+            continue
+          throw new Error(`Missing or invalid measurement artifact: ${file}`, {
+            cause: error,
+          })
         }
-      } else {
-        console.warn(
-          ` No core-js stats artifact found at ${coreJsArtifactPath}`,
-        )
-      }
 
-      // Load browser baseline stats from artifact
-      const browserBaselineArtifactPath = join(
-        artifactsDir,
-        `browser-baseline-stats-${name}`,
-        'browser-baseline-stats.json',
-      )
-      const browserBaselineStats = readArtifact<BrowserBaselineStats>(
-        browserBaselineArtifactPath,
-        framework.starter,
-        'browserBaseline',
-      )
-      if (browserBaselineStats) {
-        console.info(`  ✓ Found browser baseline stats artifact`)
-        stats = {
-          ...stats,
-          browserBaseline: BrowserBaselineStatsSchema.parse({
-            ...browserBaselineStats,
-            name: 'browserBaseline',
-          }),
+        measuredConfigurations.add(measurement)
+        for (const [key, value] of Object.entries(artifact)) {
+          if (key === 'frameworkVersion')
+            artifactVersions.set(folder, String(value))
+          else if (key === 'browserVersion') browserVersions.add(String(value))
+          else if (key === 'dependencyCounts')
+            Object.assign(dependencyCounts, value)
+          else if (key === 'starterNodeModuleSize')
+            dependencyCounts[key] = value
+          else fresh[key] = value
         }
-      } else {
-        console.warn(
-          `No browser baseline stats artifact found at ${browserBaselineArtifactPath}`,
-        )
       }
-
-      const nodeEnginesArtifactPath = join(
-        artifactsDir,
-        `node-engines-stats-${name}`,
-        'node-engines-stats.json',
-      )
-      const nodeEnginesStats = readArtifact<NodeEnginesStats>(
-        nodeEnginesArtifactPath,
-        framework.starter,
-        'dependencies',
-      )
-      if (nodeEnginesStats) {
-        console.info(`  ✓ Found Node engines stats artifact`)
-        stats.nodeEngines = NodeEnginesStatsSchema.parse({
-          ...nodeEnginesStats,
-          name: 'nodeEngines',
-        })
-        if (nodeEnginesStats.minimumNodeVersion) {
-          stats = {
-            ...stats,
-            minimumNodeVersion: nodeEnginesStats.minimumNodeVersion,
-            minimumNodeVersionImposedBy: nodeEnginesStats.imposedBy,
-          }
-        }
-      } else {
-        console.warn(
-          `No Node engines stats artifact found at ${nodeEnginesArtifactPath}`,
-        )
-      }
-
-      // Load dependency stats from artifacts
-      const e18eArtifactPath = join(
-        artifactsDir,
-        `e18e-stats-${name}`,
-        'e18e-stats.json',
-      )
-      const frameworkDependencyStatsPath = join(
-        artifactsDir,
-        `e18e-stats-${name}`,
-        'framework-dependency-stats.json',
-      )
-      const frameworkDependencies = readArtifact<DependencyStats>(
-        frameworkDependencyStatsPath,
-        framework.starter,
-        'dependencies',
-      )
-      if (frameworkDependencies) {
-        console.info(`  ✓ Found framework dependency stats artifact`)
-        stats = {
-          ...stats,
-          frameworkDependencies: FrameworkDependencyScanSchema.parse({
-            ...frameworkDependencies,
-            name: 'frameworkDependencies',
-          }),
-        }
-      } else {
-        console.warn(
-          `No framework dependency stats artifact found at ${frameworkDependencyStatsPath}`,
-        )
-      }
-
-      const firstPartyDependencyStatsPath = join(
-        artifactsDir,
-        `e18e-stats-${name}`,
-        'first-party-dependency-stats.json',
-      )
-      const firstPartyDependencies = readArtifact<FirstPartyDependencyStats>(
-        firstPartyDependencyStatsPath,
-        framework.starter,
-        'dependencies',
-      )
-      if (firstPartyDependencies) {
-        console.info(`  ✓ Found first-party dependency stats artifact`)
-        stats = {
-          ...stats,
-          firstPartyDependencies: FirstPartyDependencyScanSchema.parse({
-            ...firstPartyDependencies,
-            name: 'firstPartyDependencies',
-          }),
-        }
-      } else {
-        console.warn(
-          `No first-party dependency stats artifact found at ${firstPartyDependencyStatsPath}`,
-        )
-      }
-
-      const e18eStats = readArtifact<E18eStats>(
-        e18eArtifactPath,
-        framework.starter,
-        'dependencies',
-      )
-      if (e18eStats) {
-        console.info(`  ✓ Found e18e stats artifact`)
-        const packageDependencyCounts =
-          getDependencyCountsFromPackageMetadata(packageName)
-        stats = {
-          ...stats,
-          ...DependencyScanSchema.omit({ name: true }).parse({
-            ...getDependencyStatsFromE18e(e18eStats),
-            totalDependencyCount: packageDependencyCounts.totalDependencyCount,
-          }),
-          dependencies: DependencyScanSchema.parse({
-            name: 'dependencies',
-            ...getDependencyStatsFromE18e(e18eStats),
-            totalDependencyCount: packageDependencyCounts.totalDependencyCount,
-          }),
-        }
-      } else {
-        console.warn(`No e18e stats artifact found at ${e18eArtifactPath}`)
-      }
-
-      // check for releasedAt, if not fetch from repository
-      const releasedAt =
-        existingStats?.frameworkVersion === frameworkVersion &&
-        existingStats?.releasedAt
-          ? existingStats?.releasedAt
-          : await getReleasedAt(framework.frameworkPackage, frameworkVersion)
-
-      stats = withReleasedAt(
-        {
-          ...stats,
-          packageJson: getPackageJsonDeps(packageName),
-        },
-        releasedAt,
-      )
-
-      collect(packageName, stats, existingStats)
-
-      console.info('')
     }
 
-    // Process app stats
-    if (framework.app) {
-      const packageName = framework.app.package
-      console.info(`Processing ${displayName} app (${packageName})...`)
-
-      const existingStats = readProjectResult(packageName) as CIStats | null
-
-      let stats: CIStats = {
-        // Partial previews can merge stored measurements; full CI uses fresh artifacts only.
-        ...(!requireAllArtifacts && existingStats
-          ? normalizeCIStats(existingStats)
-          : {}),
-        ...BaseResultSchema.parse({
-          framework: framework.name,
-          packagePath: `packages/${packageName}`,
-          timingMeasuredAt: timestamp,
-          runner,
-        }),
-      }
-
-      let frameworkVersion = requireAllArtifacts
-        ? undefined
-        : existingStats?.frameworkVersion
-
-      // Load SSR request throughput stats from artifact
-      const ssrRequestThroughputStatsPath = join(
-        artifactsDir,
-        `ssr-request-throughput-stats-${name}`,
-        'ci-stats.json',
+    if (measuredConfigurations.size === 0) continue
+    const versions = new Set(artifactVersions.values())
+    if (versions.size > 1) {
+      const details = [...artifactVersions]
+        .map(([artifact, version]) => `${artifact}=${version}`)
+        .join(', ')
+      throw new Error(
+        `Measurement artifacts disagree on framework version for ${framework.name}: ${details}`,
       )
-      const rawSSRRequestThroughputStats = readArtifact<CIStats>(
-        ssrRequestThroughputStatsPath,
-        framework.app,
-        'ssrRequestThroughput',
-      )
-      const ssrRequestThroughputStats = rawSSRRequestThroughputStats
-        ? normalizeCIStats(rawSSRRequestThroughputStats)
-        : null
-
-      if (ssrRequestThroughputStats) {
-        console.info(`  ✓ Found SSR request throughput stats artifact`)
-        stats = mergeRequestThroughputArtifact(stats, ssrRequestThroughputStats)
-        frameworkVersion = stats.frameworkVersion
-      } else {
-        console.warn(
-          `No SSR request throughput stats artifact found at ${ssrRequestThroughputStatsPath}`,
-        )
-      }
-
-      // Load SSR load stats from artifact
-      const ssrLoadStatsPath = join(
-        artifactsDir,
-        `ssr-load-stats-${name}`,
-        'ci-stats.json',
-      )
-      const rawSSRLoadStats = readArtifact<CIStats>(
-        ssrLoadStatsPath,
-        framework.app,
-        'ssrLoad',
-      )
-      const ssrLoadStats = rawSSRLoadStats
-        ? normalizeCIStats(rawSSRLoadStats)
-        : null
-
-      if (ssrLoadStats) {
-        console.info(`  ✓ Found SSR load stats artifact`)
-        stats = mergeSSRLoadArtifact(stats, ssrLoadStats, 'ssrLoad')
-        frameworkVersion = ssrLoadStats.frameworkVersion ?? frameworkVersion
-      } else {
-        console.warn(`No SSR load stats artifact found at ${ssrLoadStatsPath}`)
-      }
-
-      // Load SSR router link load stats from artifact
-      const ssrRouterLinkLoadStatsPath = join(
-        artifactsDir,
-        `ssr-router-link-load-stats-${name}`,
-        'ci-stats.json',
-      )
-      const rawSSRRouterLinkLoadStats = readArtifact<CIStats>(
-        ssrRouterLinkLoadStatsPath,
-        framework.app,
-        'ssrRouterLinkLoad',
-      )
-      const ssrRouterLinkLoadStats = rawSSRRouterLinkLoadStats
-        ? normalizeCIStats(rawSSRRouterLinkLoadStats)
-        : null
-
-      if (ssrRouterLinkLoadStats) {
-        console.info(`  ✓ Found SSR router link load stats artifact`)
-        stats = mergeSSRLoadArtifact(
-          stats,
-          ssrRouterLinkLoadStats,
-          'ssrRouterLinkLoad',
-        )
-        frameworkVersion =
-          ssrRouterLinkLoadStats.frameworkVersion ?? frameworkVersion
-      } else {
-        console.warn(
-          `No SSR router link load stats artifact found at ${ssrRouterLinkLoadStatsPath}`,
-        )
-      }
-
-      // Load client-side rendered stats from artifact
-      const clientSideRenderedStatsArtifactPath = join(
-        artifactsDir,
-        `client-side-rendered-stats-${name}`,
-        'ci-stats.json',
-      )
-      const rawClientSideRenderedStats = readArtifact<CIStats>(
-        clientSideRenderedStatsArtifactPath,
-        framework.app,
-        'clientSideRendered',
-      )
-      const clientSideRenderedStats = rawClientSideRenderedStats
-        ? normalizeCIStats(rawClientSideRenderedStats)
-        : null
-
-      if (clientSideRenderedStats) {
-        ClientSideRenderedStatsSchema.parse(clientSideRenderedStats)
-        console.info(`  ✓ Found client-side rendered stats artifact`)
-        stats = {
-          ...stats,
-          browserVersion:
-            clientSideRenderedStats.browserVersion ?? stats.browserVersion,
-          clientSideRendered: clientSideRenderedStats.clientSideRendered,
-        }
-      } else {
-        console.warn(
-          `No client-side rendered stats artifact found at ${clientSideRenderedStatsArtifactPath}`,
-        )
-      }
-
-      // Load server-side rendered stats from artifact
-      const serverSideRenderedStatsArtifactPath = join(
-        artifactsDir,
-        `server-side-rendered-stats-${name}`,
-        'ci-stats.json',
-      )
-      const rawServerSideRenderedStats = readArtifact<CIStats>(
-        serverSideRenderedStatsArtifactPath,
-        framework.app,
-        'serverSideRendered',
-      )
-      const serverSideRenderedStats = rawServerSideRenderedStats
-        ? {
-            ...normalizeCIStats(rawServerSideRenderedStats),
-            ...ServerSideRenderedStatsSchema.parse(rawServerSideRenderedStats),
-          }
-        : null
-
-      if (serverSideRenderedStats) {
-        console.info(`  ✓ Found server-side rendered stats artifact`)
-        stats = {
-          ...stats,
-          browserVersion:
-            serverSideRenderedStats.browserVersion ?? stats.browserVersion,
-          frameworkVersion: serverSideRenderedStats.frameworkVersion,
-          serverSideRendered: serverSideRenderedStats.serverSideRendered,
-        }
-        frameworkVersion =
-          serverSideRenderedStats.frameworkVersion ?? frameworkVersion
-      } else {
-        console.warn(
-          `No server-side rendered stats artifact found at ${serverSideRenderedStatsArtifactPath}`,
-        )
-      }
-
-      const initialLoadArtifactPath = join(
-        artifactsDir,
-        `initial-load-stats-${name}`,
-        'ci-stats.json',
-      )
-      const initialLoadArtifact = readArtifact<unknown>(
-        initialLoadArtifactPath,
-        framework.app,
-        'initialLoad',
-      )
-      if (initialLoadArtifact) {
-        const initialLoad = InitialLoadResultSchema.parse(initialLoadArtifact)
-        stats = {
-          ...stats,
-          browserVersion: initialLoad.browserVersion,
-          frameworkVersion:
-            initialLoad.frameworkVersion ?? stats.frameworkVersion,
-          initialLoad: initialLoad.initialLoad,
-        }
-        frameworkVersion = initialLoad.frameworkVersion ?? frameworkVersion
-        console.info('  ✓ Found initial load stats artifact')
-      } else {
-        console.warn(
-          `No initial load stats artifact found at ${initialLoadArtifactPath}`,
-        )
-      }
-
-      // check for releasedAt, if not fetch from repository
-      const releasedAt =
-        existingStats?.frameworkVersion === frameworkVersion &&
-        existingStats?.releasedAt
-          ? existingStats?.releasedAt
-          : await getReleasedAt(framework.frameworkPackage, frameworkVersion)
-
-      stats = withReleasedAt(
-        {
-          ...stats,
-          packageJson: getPackageJsonDeps(packageName),
-        },
-        releasedAt,
-      )
-
-      collect(packageName, stats, existingStats)
-
-      console.info('')
     }
+    const measuredBrowserVersions = [...browserVersions].sort().join(', ')
+    if (browserVersions.size > 1) {
+      console.warn(
+        `Different browser versions for ${framework.name}: ${measuredBrowserVersions}`,
+      )
+    }
+    const frameworkVersion = [...versions][0] ?? previous?.frameworkVersion
+    if (!frameworkVersion || frameworkVersion === 'unknown')
+      throw new Error(`No measured version for ${framework.name}`)
+
+    const sameVersion = frameworkVersion === previous?.frameworkVersion
+    const retained = !requireAllArtifacts && sameVersion ? previous : null
+    if (Object.keys(dependencyCounts).length > 0) {
+      const parsed = DependencyCountBenchmark.safeParse({
+        ...(retained?.framework !== 'baseline-html' &&
+          retained?.dependencyCounts),
+        ...dependencyCounts,
+        name: 'dependencyCount',
+        project: 'starter',
+      })
+      if (parsed.success) fresh.dependencyCounts = parsed.data
+      else if (
+        requireAllArtifacts &&
+        framework.starter?.measurements.includes('dependencies')
+      )
+        throw parsed.error
+    }
+
+    const { plainLinksPath: _plainLinksPath, ...ssrLoad } =
+      measurementsConfig.ssrLoad
+    const currentConfiguration = {
+      ...measurementsConfig,
+      ssrLoad: {
+        ...ssrLoad,
+        path: framework.app
+          ? getSSRLoadPath(framework.app.package, 'ssrLoad')
+          : ssrLoad.path,
+      },
+    }
+    const configuration = retained
+      ? { ...retained.configuration }
+      : currentConfiguration
+    if (retained) {
+      for (const measurement of measuredConfigurations) {
+        configuration[measurement] = currentConfiguration[measurement]
+      }
+    }
+    const assembled = BenchmarkResultSchema.parse({
+      ...retained,
+      ...fresh,
+      framework: framework.name,
+      frameworkVersion,
+      frameworkReleasedAt: sameVersion
+        ? previous.frameworkReleasedAt
+        : await getReleasedAt(framework.frameworkPackage, frameworkVersion),
+      browserVersion:
+        measuredBrowserVersions ||
+        (retained?.framework === 'baseline-html'
+          ? undefined
+          : retained?.browserVersion),
+      timingMeasuredAt,
+      runner,
+      projects,
+      configuration,
+    })
+    // A combined browser label cannot establish that each Lighthouse job used the same browser as before.
+    const comparisonBaseline =
+      previous && browserVersions.size > 1
+        ? { ...previous, browserVersion: undefined }
+        : previous
+    results.set(
+      framework.name,
+      withSummaryVariance(assembled, comparisonBaseline, Object.keys(fresh)),
+    )
   }
 
   if (!validateOnly) {
-    const { plainLinksPath: _plainLinksPath, ...ssrLoad } =
-      measurementsConfig.ssrLoad
-    for (const { starter, app } of frameworks) {
-      const configuration = {
-        ...measurementsConfig,
-        ssrLoad: {
-          ...ssrLoad,
-          path: app
-            ? getSSRLoadPath(app.package, 'ssrLoad')
-            : measurementsConfig.ssrLoad.path,
-        },
-      }
-      for (const project of [starter, app]) {
-        if (!project) continue
-        const stats = projectStats.get(project.package)
-        if (stats) saveProjectResult(project.package, stats, configuration)
-      }
-    }
+    for (const result of results.values()) saveBenchmarkResult(result)
   }
-
   console.info(
-    validateOnly ? 'All CI stats are valid; no results written.' : 'Done!',
+    validateOnly ? 'All CI stats are valid' : 'Saved benchmark results',
   )
-  return combinedStats
+  return results
 }
 
 if (import.meta.main) {
@@ -690,6 +213,6 @@ if (import.meta.main) {
     requireAllArtifacts: args.includes('--require-all-artifacts'),
   }).catch((error) => {
     console.error('Failed to process CI stats:', error)
-    process.exit(1)
+    process.exitCode = 1
   })
 }

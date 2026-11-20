@@ -4,7 +4,7 @@ import {
   prepareLighthouseClientSideRenderedTestsInteractionHistory,
   prepareLighthouseServerSideRenderedTestsInteractionHistory,
 } from './chart-measurements.ts'
-import { formatRendered } from './result-content.ts'
+import { formatLighthouse } from './result-content.ts'
 
 const timings = (
   inputDelay: number,
@@ -32,31 +32,34 @@ test('rendered tests take interaction phases from the run with the median total'
     timings(5, 40, 20),
     timings(3, 12, 10),
   ]
-  const formatted = formatRendered({
-    name: 'clientSideRendered',
-    runs: runs.length,
-    iterations: runs.map((interactionTests) => ({
-      firstPaint: { value: 100, unit: 'ms' },
-      firstContentfulPaint: { value: 100, unit: 'ms' },
-      interactionTests: {
-        inputDelay: { value: interactionTests.inputDelay, unit: 'ms' },
-        processingDuration: {
-          value: interactionTests.processingDuration,
-          unit: 'ms',
+  const formatted = formatLighthouse({
+    name: 'csrLighthouse',
+    project: 'app',
+    iterations: {
+      runs: runs.length,
+      iterations: runs.map((interactionTests) => ({
+        firstPaint: { value: 100, unit: 'ms' },
+        firstContentfulPaint: { value: 100, unit: 'ms' },
+        interaction: {
+          inputDelay: { value: interactionTests.inputDelay, unit: 'ms' },
+          processingDuration: {
+            value: interactionTests.processingDuration,
+            unit: 'ms',
+          },
+          presentationDelay: {
+            value: interactionTests.presentationDelay,
+            unit: 'ms',
+          },
+          interactionLatency: {
+            value: interactionTests.interactionLatency,
+            unit: 'ms',
+          },
         },
-        presentationDelay: {
-          value: interactionTests.presentationDelay,
-          unit: 'ms',
-        },
-        interactionLatency: {
-          value: interactionTests.interactionLatency,
-          unit: 'ms',
-        },
-      },
-    })),
+      })),
+    },
     firstPaint: metric(100),
     firstContentfulPaint: metric(100),
-    interactionTests: {
+    interaction: {
       interactionLatency: metric(30),
       inputDelay: metric(2),
       processingDuration: metric(20),

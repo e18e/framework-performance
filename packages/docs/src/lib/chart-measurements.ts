@@ -158,20 +158,6 @@ export function prepareFrameworkDependenciesDevDependenciesHistory(
   )
 }
 
-export function prepareFrameworkDependenciesAllDependenciesHistory(
-  records: readonly ChartMeasurement[],
-): VersionLineChartPayload {
-  return history(
-    metricCatalogue['frameworkDependencies.totalDependencyCount'],
-    records.map((record) => ({
-      record,
-      value: finiteValue(
-        record.frameworkDependencies?.totalDependencyCount?.value,
-      ),
-    })),
-  )
-}
-
 export function prepareProdDependenciesHistory(
   records: readonly ChartMeasurement[],
 ): VersionLineChartPayload {
@@ -245,18 +231,6 @@ export function prepareDevDependenciesMonthlyComparison(
     latest,
     (record) => finiteValue(record.developmentDependencyCount?.value),
     now,
-  )
-}
-
-export function prepareAllDependenciesHistory(
-  records: readonly ChartMeasurement[],
-): VersionLineChartPayload {
-  return history(
-    metricCatalogue['totalDependencyCount'],
-    records.map((record) => ({
-      record,
-      value: finiteValue(record.totalDependencyCount?.value),
-    })),
   )
 }
 
@@ -427,7 +401,7 @@ export function prepareInstallTimeHistory(
     metricCatalogue['install.duration'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.install.duration.median, 1000),
+      value: finiteValue(record.install?.duration?.median, 1000),
     })),
   )
 }
@@ -439,7 +413,7 @@ export function prepareInstallTimeComparison(
     metricCatalogue['install.duration'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.install.duration.median, 1000),
+      value: finiteValue(record.install?.duration?.median, 1000),
     })),
   )
 }
@@ -661,31 +635,31 @@ export function prepareSsrRequestThroughputTestsOpsPerSecMonthlyComparison(
   )
 }
 
-export function prepareSsrRequestThroughputTestsBodySizeKbHistory(
+export function prepareSsrRequestThroughputTestsBodySizeBytesHistory(
   records: readonly ChartMeasurement[],
 ): VersionLineChartPayload {
   return history(
     metricCatalogue['ssrRequestThroughput.bodySize'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.ssrRequestThroughput?.bodySize?.value),
+      value: finiteValue(record.ssrRequestThroughput?.bodySize?.value, 1024),
     })),
   )
 }
 
-export function prepareSsrRequestThroughputTestsBodySizeKbComparison(
+export function prepareSsrRequestThroughputTestsBodySizeBytesComparison(
   records: readonly ChartMeasurement[],
 ): PreparedComparisonChart {
   return comparison(
     metricCatalogue['ssrRequestThroughput.bodySize'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.ssrRequestThroughput?.bodySize?.value),
+      value: finiteValue(record.ssrRequestThroughput?.bodySize?.value, 1024),
     })),
   )
 }
 
-export function prepareSsrRequestThroughputTestsBodySizeKbMonthlyComparison(
+export function prepareSsrRequestThroughputTestsBodySizeBytesMonthlyComparison(
   history: readonly ChartMeasurement[],
   latest: readonly ChartMeasurement[],
   now?: Date,
@@ -694,7 +668,7 @@ export function prepareSsrRequestThroughputTestsBodySizeKbMonthlyComparison(
     metricCatalogue['ssrRequestThroughput.bodySize'],
     history,
     latest,
-    (record) => finiteValue(record.ssrRequestThroughput?.bodySize?.value),
+    (record) => finiteValue(record.ssrRequestThroughput?.bodySize?.value, 1024),
     now,
   )
 }
@@ -744,7 +718,7 @@ export function prepareNodeModulesSizeHistory(
     metricCatalogue['nodeModulesSize'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.install.nodeModulesSize?.value, 1048576),
+      value: finiteValue(record.install?.nodeModulesSize?.value, 1048576),
     })),
   )
 }
@@ -756,7 +730,7 @@ export function prepareNodeModulesSizeComparison(
     metricCatalogue['nodeModulesSize'],
     records.map((record) => ({
       record,
-      value: finiteValue(record.install.nodeModulesSize?.value, 1048576),
+      value: finiteValue(record.install?.nodeModulesSize?.value, 1048576),
     })),
   )
 }

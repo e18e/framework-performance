@@ -3,14 +3,11 @@ import { getFrameworks } from '../get-frameworks.ts'
 import { startBenchmarkServer } from '../benchmark-server.ts'
 import { getHost } from '../serve/common.ts'
 import { runBenchmark } from './run-benchmark.ts'
-import type { InitialLoadResult } from '@framework-performance/results'
 
 const INITIAL_LOAD_HOST = getHost()
 const INITIAL_LOAD_PORT = 3003
 
-export async function runInitialLoadBenchmark(
-  packageName: string,
-): Promise<InitialLoadResult> {
+export async function runInitialLoadBenchmark(packageName: string) {
   const frameworks = (await getFrameworks()).filter(({ app }) =>
     app?.measurements.includes('initialLoad'),
   )
