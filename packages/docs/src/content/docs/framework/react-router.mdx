@@ -3,6 +3,7 @@ title: React Router
 description: React Router version comparison page.
 ---
 
+import InReview from '../../../components/InReview.astro'
 import { Content as DevTimeSetup } from '../../../benchmarks/shared/DevTimeSetup.mdx'
 import { Content as RunTimeSetup } from '../../../benchmarks/shared/RunTimeSetup.mdx'
 import DependencyCountsDetails from '../../../benchmarks/dependency-counts/Details.astro'
@@ -33,54 +34,102 @@ export const reactRouterRuntimeVersions =
 
 <DevTimeSetup />
 
+<InReview test="dependencies">
+
 ### Dependency Counts
 
 <DependencyCountsDetails versions={reactRouterStarterVersions} />
+
+</InReview>
+
+<InReview test="install">
 
 ### Node Modules Size
 
 <NodeModulesSizeDetails versions={reactRouterStarterVersions} />
 
+</InReview>
+
+<InReview test={['build', 'install']}>
+
 ### Build and Install Times
 
 <BuildInstallDetails versions={reactRouterStarterVersions} />
+
+</InReview>
+
+<InReview test="devServer">
 
 ### Dev Server Startup
 
 <DevServerStartupDetails versions={reactRouterStarterVersions} />
 
+</InReview>
+
+<InReview test="build">
+
 ### Core-JS Polyfills
 
 <CoreJsDetails versions={reactRouterStarterVersions} />
+
+</InReview>
+
+<InReview test="browserBaseline">
 
 ### Browser Baseline
 
 <BrowserBaselineDetails versions={reactRouterStarterVersions} />
 
+</InReview>
+
 ## Run Time
 
 <RunTimeSetup />
+
+<InReview test="initialLoad">
 
 ### Initial Load
 
 <InitialLoadDetails versions={reactRouterRuntimeVersions} />
 
+</InReview>
+
+<InReview test="clientSideRendered">
+
 ### Client Side Rendered Tests (Lighthouse)
 
 <LighthouseClientSideRenderedDetails versions={reactRouterRuntimeVersions} />
+
+</InReview>
+
+<InReview test="serverSideRendered">
 
 ### Server Side Rendered Tests (Lighthouse)
 
 <LighthouseServerSideRenderedDetails versions={reactRouterRuntimeVersions} />
 
+</InReview>
+
+<InReview test="ssrRequestThroughput">
+
 ### Server Side Throughput Tests
 
 <SSRThroughputDetails versions={reactRouterRuntimeVersions} />
+
+</InReview>
+
+<InReview test="ssrLoad">
 
 ### SSR Load Test
 
 <SSRLoadDetails versions={reactRouterRuntimeVersions} />
 
+</InReview>
+
+<InReview test="ssrRouterLinkLoad">
+
 ### SSR Router Link Load Test
 
 <SSRRouterLinkLoadDetails versions={reactRouterRuntimeVersions} />
+
+</InReview>

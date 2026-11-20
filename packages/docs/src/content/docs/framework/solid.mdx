@@ -3,6 +3,7 @@ title: Solid 2.0
 description: Solid 2.0 version comparison page.
 ---
 
+import InReview from '../../../components/InReview.astro'
 import { Content as DevTimeSetup } from '../../../benchmarks/shared/DevTimeSetup.mdx'
 import { Content as RunTimeSetup } from '../../../benchmarks/shared/RunTimeSetup.mdx'
 import DependencyCountsDetails from '../../../benchmarks/dependency-counts/Details.astro'
@@ -29,50 +30,94 @@ export const solidRuntimeVersions = getRuntimeVersionStats('app-solid')
 
 <DevTimeSetup />
 
+<InReview test="dependencies">
+
 ### Dependency Counts
 
 <DependencyCountsDetails versions={solidStarterVersions} />
+
+</InReview>
+
+<InReview test="install">
 
 ### Node Modules Size
 
 <NodeModulesSizeDetails versions={solidStarterVersions} />
 
+</InReview>
+
+<InReview test={['build', 'install']}>
+
 ### Build and Install Times
 
 <BuildInstallDetails versions={solidStarterVersions} />
+
+</InReview>
+
+<InReview test="devServer">
 
 ### Dev Server Startup
 
 <DevServerStartupDetails versions={solidStarterVersions} />
 
+</InReview>
+
+<InReview test="build">
+
 ### Core-JS Polyfills
 
 <CoreJsDetails versions={solidStarterVersions} />
+
+</InReview>
+
+<InReview test="browserBaseline">
 
 ### Browser Baseline
 
 <BrowserBaselineDetails versions={solidStarterVersions} />
 
+</InReview>
+
 ## Run Time
 
 <RunTimeSetup />
+
+<InReview test="initialLoad">
 
 ### Initial Load
 
 <InitialLoadDetails versions={solidRuntimeVersions} />
 
+</InReview>
+
+<InReview test="clientSideRendered">
+
 ### Client Side Rendered Tests (Lighthouse)
 
 <LighthouseClientSideRenderedDetails versions={solidRuntimeVersions} />
+
+</InReview>
+
+<InReview test="serverSideRendered">
 
 ### Server Side Rendered Tests (Lighthouse)
 
 <LighthouseServerSideRenderedDetails versions={solidRuntimeVersions} />
 
+</InReview>
+
+<InReview test="ssrRequestThroughput">
+
 ### Server Side Throughput Tests
 
 <SSRThroughputDetails versions={solidRuntimeVersions} />
 
+</InReview>
+
+<InReview test="ssrLoad">
+
 ### SSR Load Test
 
 <SSRLoadDetails versions={solidRuntimeVersions} />
+
+</InReview>

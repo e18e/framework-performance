@@ -1,0 +1,13 @@
+---
+import type { MeasurementName } from '@framework-performance/results/measurements-config'
+import { isMeasurementShown } from '../lib/measurement-status'
+
+interface Props {
+  /** Hidden on production if any of these tests is in review */
+  test: MeasurementName | MeasurementName[]
+}
+
+const tests = [Astro.props.test].flat()
+---
+
+{tests.every(isMeasurementShown) && <slot />}

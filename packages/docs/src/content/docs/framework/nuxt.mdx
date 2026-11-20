@@ -3,6 +3,7 @@ title: Nuxt
 description: Nuxt version comparison page.
 ---
 
+import InReview from '../../../components/InReview.astro'
 import { Content as DevTimeSetup } from '../../../benchmarks/shared/DevTimeSetup.mdx'
 import { Content as RunTimeSetup } from '../../../benchmarks/shared/RunTimeSetup.mdx'
 import DependencyCountsDetails from '../../../benchmarks/dependency-counts/Details.astro'
@@ -30,49 +31,91 @@ export const nuxtRuntimeVersions = getRuntimeVersionStats('app-nuxt')
 
 <DevTimeSetup />
 
+<InReview test="dependencies">
+
 ### Dependency Counts
 
 <DependencyCountsDetails versions={nuxtStarterVersions} />
+
+</InReview>
+
+<InReview test="install">
 
 ### Node Modules Size
 
 <NodeModulesSizeDetails versions={nuxtStarterVersions} />
 
+</InReview>
+
+<InReview test={['build', 'install']}>
+
 ### Build and Install Times
 
 <BuildInstallDetails versions={nuxtStarterVersions} />
+
+</InReview>
+
+<InReview test="devServer">
 
 ### Dev Server Startup
 
 <DevServerStartupDetails versions={nuxtStarterVersions} />
 
+</InReview>
+
+<InReview test="build">
+
 ### Core-JS Polyfills
 
 <CoreJsDetails versions={nuxtStarterVersions} />
+
+</InReview>
+
+<InReview test="browserBaseline">
 
 ### Browser Baseline
 
 <BrowserBaselineDetails versions={nuxtStarterVersions} />
 
+</InReview>
+
 ## Run Time
 
 <RunTimeSetup />
+
+<InReview test="initialLoad">
 
 ### Initial Load
 
 <InitialLoadDetails versions={nuxtRuntimeVersions} />
 
+</InReview>
+
+<InReview test="clientSideRendered">
+
 ### Client Side Rendered Tests (Lighthouse)
 
 <LighthouseClientSideRenderedDetails versions={nuxtRuntimeVersions} />
+
+</InReview>
+
+<InReview test="serverSideRendered">
 
 ### Server Side Rendered Tests (Lighthouse)
 
 <LighthouseServerSideRenderedDetails versions={nuxtRuntimeVersions} />
 
+</InReview>
+
+<InReview test="ssrRequestThroughput">
+
 ### Server Side Throughput Tests
 
 <SSRThroughputDetails versions={nuxtRuntimeVersions} />
+
+</InReview>
+
+<InReview test="ssrLoad">
 
 ### SSR Load Test
 
@@ -83,6 +126,10 @@ measurements are unavailable; new CI runs will populate this series.
 
 </SSRLoadDetails>
 
+</InReview>
+
+<InReview test="ssrRouterLinkLoad">
+
 ### SSR Router Link Load Test
 
 <SSRRouterLinkLoadDetails versions={nuxtRuntimeVersions}>
@@ -91,3 +138,5 @@ Framework router links at `/server-side-rendered`. Historical HTTP load results
 are preserved in this series.
 
 </SSRRouterLinkLoadDetails>
+
+</InReview>

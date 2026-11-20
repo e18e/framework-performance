@@ -3,6 +3,7 @@ title: Void
 description: Void version comparison page.
 ---
 
+import InReview from '../../../components/InReview.astro'
 import { Content as DevTimeSetup } from '../../../benchmarks/shared/DevTimeSetup.mdx'
 import { Content as RunTimeSetup } from '../../../benchmarks/shared/RunTimeSetup.mdx'
 import DependencyCountsDetails from '../../../benchmarks/dependency-counts/Details.astro'
@@ -30,54 +31,102 @@ export const voidRuntimeVersions = getRuntimeVersionStats('app-void')
 
 <DevTimeSetup />
 
+<InReview test="dependencies">
+
 ### Dependency Counts
 
 <DependencyCountsDetails versions={voidStarterVersions} />
+
+</InReview>
+
+<InReview test="install">
 
 ### Node Modules Size
 
 <NodeModulesSizeDetails versions={voidStarterVersions} />
 
+</InReview>
+
+<InReview test={['build', 'install']}>
+
 ### Build and Install Times
 
 <BuildInstallDetails versions={voidStarterVersions} />
+
+</InReview>
+
+<InReview test="devServer">
 
 ### Dev Server Startup
 
 <DevServerStartupDetails versions={voidStarterVersions} />
 
+</InReview>
+
+<InReview test="build">
+
 ### Core-JS Polyfills
 
 <CoreJsDetails versions={voidStarterVersions} />
+
+</InReview>
+
+<InReview test="browserBaseline">
 
 ### Browser Baseline
 
 <BrowserBaselineDetails versions={voidStarterVersions} />
 
+</InReview>
+
 ## Run Time
 
 <RunTimeSetup />
+
+<InReview test="initialLoad">
 
 ### Initial Load
 
 <InitialLoadDetails versions={voidRuntimeVersions} />
 
+</InReview>
+
+<InReview test="clientSideRendered">
+
 ### Client Side Rendered Tests (Lighthouse)
 
 <LighthouseClientSideRenderedDetails versions={voidRuntimeVersions} />
+
+</InReview>
+
+<InReview test="serverSideRendered">
 
 ### Server Side Rendered Tests (Lighthouse)
 
 <LighthouseServerSideRenderedDetails versions={voidRuntimeVersions} />
 
+</InReview>
+
+<InReview test="ssrRequestThroughput">
+
 ### Server Side Throughput Tests
 
 <SSRThroughputDetails versions={voidRuntimeVersions} />
+
+</InReview>
+
+<InReview test="ssrLoad">
 
 ### SSR Load Test
 
 <SSRLoadDetails versions={voidRuntimeVersions} />
 
+</InReview>
+
+<InReview test="ssrRouterLinkLoad">
+
 ### SSR Router Link Load Test
 
 <SSRRouterLinkLoadDetails versions={voidRuntimeVersions} />
+
+</InReview>

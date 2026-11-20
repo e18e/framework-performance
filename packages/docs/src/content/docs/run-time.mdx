@@ -3,6 +3,7 @@ title: Run Time Stats
 description: Framework browser and server runtime metrics.
 ---
 
+import InReview from '../../components/InReview.astro'
 import { Content as RunTimeSetup } from '../../benchmarks/shared/RunTimeSetup.mdx'
 import LighthouseClientSideRenderedCompare from '../../benchmarks/lighthouse-client-side-rendered-tests/Compare.astro'
 import LighthouseServerSideRenderedCompare from '../../benchmarks/lighthouse-server-side-rendered-tests/Compare.astro'
@@ -16,21 +17,39 @@ import { Content as SSRRouterLinkLoadDescription } from '../../benchmarks/ssr-ro
 
 <RunTimeSetup />
 
+<InReview test="clientSideRendered">
+
 ## Client Side Rendered Tests (Lighthouse)
 
 <LighthouseClientSideRenderedCompare />
+
+</InReview>
+
+<InReview test="serverSideRendered">
 
 ## Server Side Rendered Tests (Lighthouse)
 
 <LighthouseServerSideRenderedCompare />
 
+</InReview>
+
+<InReview test="initialLoad">
+
 ## Initial Load
 
 <InitialLoadCompare />
 
+</InReview>
+
+<InReview test="ssrRequestThroughput">
+
 ## Server Side Throughput Tests
 
 <SSRThroughputCompare />
+
+</InReview>
+
+<InReview test="ssrLoad">
 
 ## SSR Load Test
 
@@ -48,6 +67,10 @@ import { Content as SSRRouterLinkLoadDescription } from '../../benchmarks/ssr-ro
 
 <SSRLoadP75Charts />
 
+</InReview>
+
+<InReview test="ssrRouterLinkLoad">
+
 ## SSR Router Link Load Test
 
 <SSRRouterLinkLoadDescription />
@@ -63,3 +86,5 @@ import { Content as SSRRouterLinkLoadDescription } from '../../benchmarks/ssr-ro
 ### P75 Latency
 
 <SSRLoadP75Charts testsKey="ssrRouterLinkLoad" />
+
+</InReview>
