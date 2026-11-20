@@ -142,7 +142,16 @@ const chartPayload = JSON.stringify({
     formatValue,
     getFrameworkLogoSource,
   } from '../lib/chart'
-  import { highlightedGray, primaryGray } from '../lib/chart-styles'
+  import {
+    BAR_FILL_OPACITY,
+    BAR_FOCUS_FILL_OPACITY,
+    BAR_STROKE_WIDTH,
+    primaryGray,
+  } from '../lib/chart-styles'
+  import {
+    getBrandByDisplayName,
+    resolveBrandColor,
+  } from '../lib/framework-logos'
   import type { ChartDatum, ComparisonChartPayload } from '../lib/types'
 
   type Payload = ComparisonChartPayload & {
@@ -254,6 +263,17 @@ const chartPayload = JSON.stringify({
 
     const mutedColor = getCssVar('--ft-muted', '#697586')
     const names = rows.map((d) => d.name)
+    const theme = document.documentElement.dataset.theme
+    const barColors = new Map(
+      rows.map((d) => {
+        const brand = getBrandByDisplayName(d.name)
+        return [
+          d.name,
+          brand ? resolveBrandColor(brand.color, theme) : primaryGray,
+        ] as const
+      }),
+    )
+    const barColor = (d: ChartDatum) => barColors.get(d.name) ?? primaryGray
     const logoLayer = renderLogoLayer(wrapper, names)
 
     const definition = defineChart({
@@ -306,13 +326,16 @@ const chartPayload = JSON.stringify({
               id: 'values',
               x: 'value',
               y: 'name',
-              fill: primaryGray,
+              fill: barColor,
+              fillOpacity: BAR_FILL_OPACITY,
+              stroke: barColor,
+              strokeWidth: BAR_STROKE_WIDTH,
               radius: 8,
               inset: SHARED_BAR_INSET,
               states: [
                 {
                   when: { focus: 'primary' },
-                  style: { fill: highlightedGray },
+                  style: { fillOpacity: BAR_FOCUS_FILL_OPACITY },
                   transition: {
                     type: 'tween',
                     duration: 140,

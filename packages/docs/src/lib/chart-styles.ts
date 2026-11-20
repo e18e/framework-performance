@@ -20,3 +20,18 @@ export function lineChartGrid() {
 export const lineChartLineStyle = { strokeWidth: 3 }
 export const lineChartPointStyle = { r: 4, strokeWidth: 3 }
 export const lineChartLatestPointStyle = { ...lineChartPointStyle, r: 6 }
+
+export const BAR_FILL_OPACITY = 0.3
+export const BAR_FOCUS_FILL_OPACITY = 0.55
+export const BAR_STROKE_WIDTH = 1
+
+export function stackFillOpacity(index: number, count: number) {
+  const min = 0.15
+  const max = 0.75
+  return count <= 1
+    ? BAR_FILL_OPACITY
+    : min + ((max - min) * index) / (count - 1)
+}
+
+export const stackLegendSwatch = (index: number, count: number) =>
+  `color-mix(in srgb, var(--ft-muted) ${Math.round(stackFillOpacity(index, count) * 100)}%, transparent)`

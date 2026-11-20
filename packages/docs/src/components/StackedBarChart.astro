@@ -1,5 +1,6 @@
 ---
 import { SHARED_CHART_HEIGHT, formatValue } from '../lib/chart'
+import { stackLegendSwatch } from '../lib/chart-styles'
 import type { ChartValueFormat } from '../lib/types'
 interface Series {
   key: string
@@ -24,9 +25,11 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
   {
     !Astro.slots.has('caption') && (
       <ul class="legend" aria-label="Chart series">
-        {series.map((item) => (
+        {series.map((item, index) => (
           <li>
-            <span style={`background: ${item.color}`} />
+            <span
+              style={`background: ${stackLegendSwatch(index, series.length)}`}
+            />
             {item.label}
           </li>
         ))}
@@ -114,7 +117,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 2px;
-    border: 1px solid var(--ft-border);
+    border: 1px solid var(--ft-muted);
   }
 </style>
 <script>
@@ -135,6 +138,11 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
     formatValue,
     getFrameworkLogoSource,
   } from '../lib/chart'
+  import { BAR_STROKE_WIDTH, stackFillOpacity } from '../lib/chart-styles'
+  import {
+    getBrandByDisplayName,
+    resolveBrandColor,
+  } from '../lib/framework-logos'
   import type { ChartValueFormat } from '../lib/types'
   interface Segment {
     name: string
@@ -143,6 +151,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
     start: number
     end: number
     color: string
+    opacity: number
     total: number
   }
   interface Payload {
@@ -161,13 +170,27 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
           payload.series.reduce((sum, item) => sum + row.values[item.key]!, 0)
         const rows = payload.data.sort((a, b) => totalFor(a) - totalFor(b))
         if (!rows.length) return
+        const theme = document.documentElement.dataset.theme
+        const muted =
+          getComputedStyle(document.documentElement)
+            .getPropertyValue('--ft-muted')
+            .trim() || '#697586'
+        const textColor =
+          getComputedStyle(document.documentElement)
+            .getPropertyValue('--ft-text')
+            .trim() || '#1f2933'
+        const brandColor = (name: string) => {
+          const brand = getBrandByDisplayName(name)
+          return brand ? resolveBrandColor(brand.color, theme) : muted
+        }
         const segments = rows.flatMap((row) => {
           let offset = 0
           const total = payload.series.reduce(
             (sum, item) => sum + row.values[item.key]!,
             0,
           )
-          return payload.series.map((item) => {
+          const color = brandColor(row.name)
+          return payload.series.map((item, index) => {
             const value = row.values[item.key]!
             const segment = {
               name: row.name,
@@ -175,7 +198,8 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
               value,
               start: offset,
               end: offset + value,
-              color: item.color,
+              color,
+              opacity: stackFillOpacity(index, payload.series.length),
               total,
             }
             offset += value
@@ -202,10 +226,6 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
             return logo
           }),
         )
-        const muted =
-          getComputedStyle(document.documentElement)
-            .getPropertyValue('--ft-muted')
-            .trim() || '#697586'
         const format = (value: number) =>
           formatValue(value, payload.valueFormat, {
             sigFigs: 2,
@@ -222,6 +242,9 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
                   x2: 'end',
                   y: 'name',
                   fill: d.color,
+                  fillOpacity: d.opacity,
+                  stroke: d.color,
+                  strokeWidth: BAR_STROKE_WIDTH,
                   inset: SHARED_BAR_INSET,
                   radius: [
                     d.start === 0 ? 8 : 0,
@@ -237,14 +260,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
               text: (d) => format(d.total),
               anchor: (d) => (d.total / max > 0.85 ? 'end' : 'start'),
               dx: (d) => (d.total / max > 0.85 ? -10 : 10),
-              fill: (d) =>
-                d.total / max > 0.85
-                  ? segments.findLast(
-                      (segment) => segment.name === d.name && segment.value > 0,
-                    )?.color === '#f7df1e'
-                    ? '#203329'
-                    : '#fff'
-                  : muted,
+              fill: (d) => (d.total / max > 0.85 ? textColor : muted),
               fontWeight: 600,
             }),
           ],
@@ -276,7 +292,9 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
                   .map((segment) => ({
                     label: segment.label,
                     value: format(segment.value),
-                    color: segment.color,
+                    color: `color-mix(in srgb, ${segment.color} ${Math.round(
+                      segment.opacity * 100,
+                    )}%, transparent)`,
                   })),
               ],
             }),
