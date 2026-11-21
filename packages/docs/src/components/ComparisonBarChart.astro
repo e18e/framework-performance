@@ -334,7 +334,11 @@ const chartPayload = JSON.stringify({
           ],
       scales: {
         x: {
-          scale: () => scaleLinear().domain([0, max > 0 ? max * 1.15 : 1]),
+          scale: () =>
+            scaleLinear().domain([
+              0,
+              max > 0 ? max * (variance ? 1.15 : 1) : 1,
+            ]),
           axis: variance
             ? {
                 ticks: {

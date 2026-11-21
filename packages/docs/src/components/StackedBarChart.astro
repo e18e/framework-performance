@@ -212,7 +212,7 @@ const { title, series, data, valueFormat = 'kb', ...attrs } = Astro.props
             sigFigs: 2,
           })
         const definition = defineChart({
-          margin: { left: 36, right: 0, top: 12, bottom: 0 },
+          margin: { left: 36, top: 12, bottom: 0 },
           focusRing: false,
           marks: [
             ...segments
@@ -236,26 +236,15 @@ const { title, series, data, valueFormat = 'kb', ...attrs } = Astro.props
               x: 'total',
               y: 'name',
               text: (d) => format(d.total),
-              anchor: (d) => (d.total / max > 0.85 ? 'end' : 'start'),
-              dx: (d) => (d.total / max > 0.85 ? -10 : 10),
-              fill: (d) =>
-                d.total / max > 0.85
-                  ? segments.findLast(
-                      (segment) => segment.name === d.name && segment.value > 0,
-                    )?.color === '#f7df1e'
-                    ? '#203329'
-                    : '#fff'
-                  : muted,
+              anchor: 'start',
+              dx: 10,
+              fill: muted,
               fontWeight: 600,
             }),
           ],
           scales: {
             x: {
-              scale: () =>
-                scaleLinear().domain([
-                  0,
-                  Math.max(1, ...labels.map((d) => d.total)),
-                ]),
+              scale: () => scaleLinear().domain([0, max]),
               axis: false,
             },
             y: {
