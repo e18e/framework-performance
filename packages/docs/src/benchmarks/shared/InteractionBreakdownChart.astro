@@ -40,8 +40,14 @@ const chart1Table = prepareInteractionBreakdownTable(chart1)
   ]}
   defaultValue="chart"
 >
-  <StackedBarChart slot="chart" {...chart1}>
+  <StackedBarChart slot="chart" class="interaction-breakdown-chart" {...chart1}>
     <InteractionChartCaption slot="caption" {metric} />
   </StackedBarChart>
   <StatsTable slot="table" {...chart1Table} />
 </ViewSwitcher>
+
+<style>
+  .interaction-breakdown-chart {
+    padding-bottom: 2rem;
+  }
+</style>

@@ -3,15 +3,17 @@ import { formatValue } from '../lib/chart'
 import type { StackedAreaChartPayload } from '../lib/types'
 import StatsTable from './StatsTable.astro'
 
-type Props = StackedAreaChartPayload
+type Props = StackedAreaChartPayload & { class?: string }
 
 const {
+  class: className,
   title,
   data,
   series,
   valueFormat,
   yAxisLabel,
   totalLabel = 'Total',
+  ...attrs
 } = Astro.props
 const singleMeasurement = data.length === 1 ? data[0] : undefined
 const chartPayload = JSON.stringify({
@@ -28,7 +30,7 @@ function formatTotal(total: number | null) {
 }
 ---
 
-<figure class="stacked-area-chart">
+<figure {...attrs} class:list={['stacked-area-chart', className]}>
   {
     data.length < 2 ? (
       <>

@@ -11,15 +11,16 @@ interface Datum {
   values: Record<string, number>
 }
 interface Props {
+  class?: string
   title: string
   series: Series[]
   data: Datum[]
   valueFormat?: ChartValueFormat
 }
-const { title, series, data, valueFormat = 'kb' } = Astro.props
+const { title, series, data, valueFormat = 'kb', ...attrs } = Astro.props
 ---
 
-<figure>
+<figure {...attrs}>
   <slot name="caption" />
   {
     !Astro.slots.has('caption') && (

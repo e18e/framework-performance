@@ -21,19 +21,19 @@ const data = getRenderedInteractionBreakdownData(testsKey).sort(
 ---
 
 {
+  data.length > 0 ? (
+    <InteractionBreakdownChart
+      title="Interaction Breakdown (Lighthouse)"
+      data={data}
+    />
+  ) : null
+}
+{
   work.length > 0 ? (
     <InteractionBreakdownChart
       title="Interaction Work to Commit"
       data={work}
       metric={INTERACTION_WORK}
-    />
-  ) : null
-}
-{
-  data.length > 0 ? (
-    <InteractionBreakdownChart
-      title="Interaction Breakdown (Lighthouse)"
-      data={data}
     />
   ) : null
 }

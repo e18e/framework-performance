@@ -29,19 +29,19 @@ const interactionWorkData =
   {...prepareLighthouseClientSideRenderedTestsFcpMsHistory(versions)}
 />
 {
+  interactionData.length > 0 ? (
+    <InteractionHistoryChart
+      title="Client Interaction Breakdown by Version (Lighthouse)"
+      data={interactionData}
+    />
+  ) : null
+}
+{
   interactionWorkData.length > 0 ? (
     <InteractionHistoryChart
       title="Client Interaction Work to Commit by Version"
       data={interactionWorkData}
       metric={INTERACTION_WORK}
-    />
-  ) : null
-}
-{
-  interactionData.length > 0 ? (
-    <InteractionHistoryChart
-      title="Client Interaction Breakdown by Version (Lighthouse)"
-      data={interactionData}
     />
   ) : null
 }
