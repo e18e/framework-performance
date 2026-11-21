@@ -15,6 +15,27 @@ export default defineConfig({
         'Track and compare framework performance metrics across popular meta-frameworks.',
       favicon: '/favicon.svg',
       customCss: ['./src/styles/starlight.css'],
+      head: [
+        {
+          tag: 'link',
+          attrs: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'preconnect',
+            href: 'https://fonts.gstatic.com',
+            crossorigin: true,
+          },
+        },
+        {
+          tag: 'link',
+          attrs: {
+            rel: 'stylesheet',
+            href: 'https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Inter+Tight:wght@400;500;600;700;800&display=swap',
+          },
+        },
+      ],
       pagefind: false,
       disable404Route: true,
       sidebar: [

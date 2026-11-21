@@ -30,44 +30,50 @@ function seriesColorVars(
       ))
     }
   </ul>
-  <div
-    class="comparison-line-chart-wrapper"
-    data-comparison-line={chartPayload}
-    style={`--chart-height: ${SHARED_CHART_HEIGHT}px`}
-  >
-    <div class="comparison-line-chart-host"></div>
-    <div class="comparison-line-chart-data sr-only">
-      <table aria-label={tableLabel}>
-        <caption>
-          {
-            scaleConfig.caption
-              ? `${tableLabel}, ${scaleConfig.caption}`
-              : tableLabel
-          }
-        </caption>
-        <thead>
-          <tr>
-            <th scope="col">Framework</th>
-            {xValues.map((x) => <th scope="col">{scaleConfig.formatX(x)}</th>)}
-          </tr>
-        </thead>
-        <tbody>
-          {
-            series.map((s) => (
-              <tr>
-                <th scope="row">{s.name}</th>
-                {s.points.map((point) => (
-                  <td>
-                    {point.value == null
-                      ? '—'
-                      : `${formatValue(point.value, valueFormat)} (v${point.version})`}
-                  </td>
-                ))}
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+  <div class="ft-chart-card">
+    <div
+      class="comparison-line-chart-wrapper"
+      data-comparison-line={chartPayload}
+      style={`--chart-height: ${SHARED_CHART_HEIGHT}px`}
+    >
+      <div class="comparison-line-chart-host"></div>
+      <div class="comparison-line-chart-data sr-only">
+        <table aria-label={tableLabel}>
+          <caption>
+            {
+              scaleConfig.caption
+                ? `${tableLabel}, ${scaleConfig.caption}`
+                : tableLabel
+            }
+          </caption>
+          <thead>
+            <tr>
+              <th scope="col">Framework</th>
+              {
+                xValues.map((x) => (
+                  <th scope="col">{scaleConfig.formatX(x)}</th>
+                ))
+              }
+            </tr>
+          </thead>
+          <tbody>
+            {
+              series.map((s) => (
+                <tr>
+                  <th scope="row">{s.name}</th>
+                  {s.points.map((point) => (
+                    <td>
+                      {point.value == null
+                        ? '—'
+                        : `${formatValue(point.value, valueFormat)} (v${point.version})`}
+                    </td>
+                  ))}
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </figure>

@@ -41,37 +41,39 @@ const chartPayload = JSON.stringify({
 
 <figure class="comparison-chart">
   {description ? <p>{description}</p> : null}
-  <div
-    class="comparison-chart-wrapper"
-    data-comparison={chartPayload}
-    style={`--chart-height: ${SHARED_CHART_HEIGHT}px`}
-  >
-    <div class="comparison-chart-host"></div>
-    <div class="comparison-logo-layer" aria-hidden="true"></div>
-    <div class="comparison-chart-data sr-only">
-      <table aria-label={`${title} data`}>
-        <caption>{title} data</caption>
-        <thead>
-          <tr>
-            <th scope="col">Framework</th>
-            <th scope="col">{yAxisLabel}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            chartData.map((datum) => (
-              <tr>
-                <th scope="row">{datum.name}</th>
-                <td>
-                  {formatValue(datum.value, valueFormat, {
-                    sigFigs: 2,
-                  })}
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+  <div class="ft-chart-card">
+    <div
+      class="comparison-chart-wrapper"
+      data-comparison={chartPayload}
+      style={`--chart-height: ${SHARED_CHART_HEIGHT}px`}
+    >
+      <div class="comparison-chart-host"></div>
+      <div class="comparison-logo-layer" aria-hidden="true"></div>
+      <div class="comparison-chart-data sr-only">
+        <table aria-label={`${title} data`}>
+          <caption>{title} data</caption>
+          <thead>
+            <tr>
+              <th scope="col">Framework</th>
+              <th scope="col">{yAxisLabel}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {
+              chartData.map((datum) => (
+                <tr>
+                  <th scope="row">{datum.name}</th>
+                  <td>
+                    {formatValue(datum.value, valueFormat, {
+                      sigFigs: 2,
+                    })}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </figure>
@@ -142,7 +144,12 @@ const chartPayload = JSON.stringify({
     formatValue,
     getFrameworkLogoSource,
   } from '../lib/chart'
-  import { highlightedGray, primaryGray } from '../lib/chart-styles'
+  import {
+    BAR_FILL_OPACITY,
+    BAR_FOCUS_FILL_OPACITY,
+    BAR_STROKE_WIDTH,
+    primaryGray,
+  } from '../lib/chart-styles'
   import type { ChartDatum, ComparisonChartPayload } from '../lib/types'
 
   type Payload = ComparisonChartPayload & {
@@ -307,12 +314,15 @@ const chartPayload = JSON.stringify({
               x: 'value',
               y: 'name',
               fill: primaryGray,
+              fillOpacity: BAR_FILL_OPACITY,
+              stroke: primaryGray,
+              strokeWidth: BAR_STROKE_WIDTH,
               radius: 8,
               inset: SHARED_BAR_INSET,
               states: [
                 {
                   when: { focus: 'primary' },
-                  style: { fill: highlightedGray },
+                  style: { fillOpacity: BAR_FOCUS_FILL_OPACITY },
                   transition: {
                     type: 'tween',
                     duration: 140,

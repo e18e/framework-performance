@@ -1,5 +1,6 @@
 ---
 import { SHARED_CHART_HEIGHT, formatValue } from '../lib/chart'
+import { barFillColor } from '../lib/chart-styles'
 import type { ChartValueFormat } from '../lib/types'
 interface Series {
   key: string
@@ -26,20 +27,24 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
       <ul class="legend" aria-label="Chart series">
         {series.map((item) => (
           <li>
-            <span style={`background: ${item.color}`} />
+            <span
+              style={`background: ${barFillColor(item.color)}; border-color: ${item.color}`}
+            />
             {item.label}
           </li>
         ))}
       </ul>
     )
   }
-  <div
-    class="stacked-chart"
-    data-stacked={JSON.stringify({ title, series, data, valueFormat })}
-    style={`--chart-height: ${SHARED_CHART_HEIGHT}px`}
-  >
-    <div class="chart-host"></div>
-    <div class="logo-layer" aria-hidden="true"></div>
+  <div class="ft-chart-card">
+    <div
+      class="stacked-chart"
+      data-stacked={JSON.stringify({ title, series, data, valueFormat })}
+      style={`--chart-height: ${SHARED_CHART_HEIGHT}px`}
+    >
+      <div class="chart-host"></div>
+      <div class="logo-layer" aria-hidden="true"></div>
+    </div>
   </div>
   <div class="sr-only">
     <table>
@@ -135,6 +140,11 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
     formatValue,
     getFrameworkLogoSource,
   } from '../lib/chart'
+  import {
+    BAR_FILL_OPACITY,
+    BAR_STROKE_WIDTH,
+    barFillColor,
+  } from '../lib/chart-styles'
   import type { ChartValueFormat } from '../lib/types'
   interface Segment {
     name: string
@@ -206,6 +216,11 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
           getComputedStyle(document.documentElement)
             .getPropertyValue('--ft-muted')
             .trim() || '#697586'
+        // Bars are translucent, so labels drawn inside them use the page text colour.
+        const textColor =
+          getComputedStyle(document.documentElement)
+            .getPropertyValue('--ft-text')
+            .trim() || '#1f2933'
         const format = (value: number) =>
           formatValue(value, payload.valueFormat, {
             sigFigs: 2,
@@ -222,6 +237,9 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
                   x2: 'end',
                   y: 'name',
                   fill: d.color,
+                  fillOpacity: BAR_FILL_OPACITY,
+                  stroke: d.color,
+                  strokeWidth: BAR_STROKE_WIDTH,
                   inset: SHARED_BAR_INSET,
                   radius: [
                     d.start === 0 ? 8 : 0,
@@ -237,14 +255,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
               text: (d) => format(d.total),
               anchor: (d) => (d.total / max > 0.85 ? 'end' : 'start'),
               dx: (d) => (d.total / max > 0.85 ? -10 : 10),
-              fill: (d) =>
-                d.total / max > 0.85
-                  ? segments.findLast(
-                      (segment) => segment.name === d.name && segment.value > 0,
-                    )?.color === '#f7df1e'
-                    ? '#203329'
-                    : '#fff'
-                  : muted,
+              fill: (d) => (d.total / max > 0.85 ? textColor : muted),
               fontWeight: 600,
             }),
           ],
@@ -276,7 +287,7 @@ const { title, series, data, valueFormat = 'kb' } = Astro.props
                   .map((segment) => ({
                     label: segment.label,
                     value: format(segment.value),
-                    color: segment.color,
+                    color: barFillColor(segment.color),
                   })),
               ],
             }),

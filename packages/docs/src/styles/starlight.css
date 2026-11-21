@@ -1,3 +1,42 @@
+/* Typography: DM Mono for body text, Inter Tight for headings (loaded from Google Fonts). */
+:root {
+  --sl-font: 'DM Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --sl-font-mono:
+    'DM Mono', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --font-heading:
+    'Inter Tight', system-ui, -apple-system, 'Segoe UI', sans-serif;
+}
+
+:is(h1, h2, h3, h4, h5, h6),
+.site-title {
+  font-family: var(--font-heading);
+}
+
+/* Colours shared by the astro starlight */
+
+:root {
+  --sl-color-accent-high: rgb(203, 62, 62);
+  --sl-color-text-accent: rgb(203, 62, 62);
+  --sl-color-bg: rgb(17, 16, 16);
+}
+
+/* Colours shared by the benchmark charts. */
+:root {
+  --gray-100: #edeef3;
+  --gray-200: #c1c3c8;
+  --gray-400: #888c96;
+  --gray-500: #676c77;
+  --gray-600: #555962;
+  --gray-700: #353841;
+  --gray-800: #23262f;
+
+  --ft-text: var(--sl-color-text);
+  --ft-muted: var(--sl-color-gray-3);
+  --ft-border: var(--sl-color-gray-5);
+  --ft-bg: var(--sl-color-bg);
+  --ft-chart-grid: var(--sl-color-gray-5);
+}
+
 /* Starlight uses both widths to size the desktop table of contents. */
 :root {
   --sl-content-width: 70rem;
@@ -22,6 +61,46 @@
   --sl-color-bg-nav: var(--sl-color-bg);
   --sl-color-bg-sidebar: var(--sl-color-bg);
 }
+/* Faint grid behind the page content. Header and sidebar keep solid backgrounds. */
+:root {
+  --ft-grid-line: color-mix(in srgb, var(--sl-color-white) 5%, transparent);
+  --ft-grid-size: 32px;
+}
+body {
+  background-image:
+    linear-gradient(to right, var(--ft-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--ft-grid-line) 1px, transparent 1px);
+  background-size: var(--ft-grid-size) var(--ft-grid-size);
+}
+
+/*
+ * PROTOTYPE: grid segments.
+ * Each h2 sits in a solid, full-width band edged top and bottom by a double
+ * line (two 1px lines, 5px apart), so the grid shows only between headings.
+ * Delete this block to remove it.
+ */
+.main-frame {
+  overflow-x: clip; /* the bands bleed sideways; stop horizontal scroll */
+}
+.sl-markdown-content .sl-heading-wrapper.level-h2 {
+  position: relative;
+  margin-block: 3rem 1.5rem;
+  padding-block: 1.25rem;
+}
+.sl-markdown-content .sl-heading-wrapper.level-h2::before {
+  content: '';
+  position: absolute;
+  inset: 0 -100vw;
+  z-index: -1;
+  --ft-line: linear-gradient(var(--ft-border), var(--ft-border));
+  background:
+    var(--ft-line) top 0 left 0 / 100% 1px no-repeat,
+    var(--ft-line) top 6px left 0 / 100% 1px no-repeat,
+    var(--ft-line) bottom 0 left 0 / 100% 1px no-repeat,
+    var(--ft-line) bottom 6px left 0 / 100% 1px no-repeat,
+    var(--sl-color-bg);
+}
+
 /* Remove borders around various UI elements. */
 .header {
   border-bottom: 0;
@@ -49,6 +128,75 @@ mobile-starlight-toc summary {
 /* Align left edge of table of contents with “On this page” heading. */
 .right-sidebar-panel a {
   --pad-inline: 0px;
+}
+
+/*
+ * On wide screens Starlight leaves a big gap to the right of "On this page".
+ * Push it right so its right edge lines up with the header controls.
+ * The column width below is Starlight's own formula for the right sidebar.
+ */
+@media (min-width: 72rem) {
+  .right-sidebar-panel {
+    padding-inline-start: max(
+      var(--sl-sidebar-pad-x),
+      max(
+          var(--sl-sidebar-width),
+          (
+              100vw - var(--ft-left-sidebar-width) - var(--sl-content-width) +
+                var(--sl-sidebar-width)
+            ) /
+            2
+        ) -
+        var(--sl-sidebar-width) + 2 * var(--sl-sidebar-pad-x) -
+        var(--sl-nav-pad-x)
+    );
+  }
+}
+
+/*
+ * Narrower left-hand menu. Starlight uses --sl-sidebar-width for both
+ * sidebars, so only the left one is overridden here to keep the
+ * "On this page" column at its normal width.
+ */
+:root {
+  --ft-left-sidebar-width: 14rem;
+}
+@media (min-width: 50rem) {
+  :root[data-has-sidebar] {
+    --sl-content-inline-start: var(--ft-left-sidebar-width);
+  }
+  .sidebar-pane {
+    width: var(--ft-left-sidebar-width);
+  }
+}
+
+.header {
+  border-bottom: 1px solid var(--sl-color-gray-5);
+}
+
+.sidebar-content a,
+.sidebar-content .group-label {
+  text-transform: uppercase;
+}
+
+/* Tighter spacing between the left-hand menu items (Starlight uses 0.5rem). */
+.sidebar-content .top-level > li + li {
+  margin-top: 0.125rem;
+}
+
+.sidebar-content a[aria-current='page'],
+.sidebar-content a[aria-current='page']:hover,
+.sidebar-content a[aria-current='page']:focus {
+  background-color: transparent;
+  color: var(--sl-color-accent-high);
+  font-weight: 600;
+  border-radius: 6px;
+}
+
+@media (min-width: 50rem) {
+  .sidebar-pane {
+    border-inline-end: 1px solid var(--sl-color-gray-5);
+  }
 }
 
 /* Customize mobile table of contents display. */
@@ -84,21 +232,46 @@ mobile-starlight-toc {
   }
 }
 
-/* Colours shared by the benchmark charts. */
-:root {
-  --gray-100: #edeef3;
-  --gray-200: #c1c3c8;
-  --gray-400: #888c96;
-  --gray-500: #676c77;
-  --gray-600: #555962;
-  --gray-700: #353841;
-  --gray-800: #23262f;
-
-  --ft-text: var(--sl-color-text);
-  --ft-muted: var(--sl-color-gray-3);
-  --ft-border: var(--sl-color-gray-5);
-  --ft-bg: var(--sl-color-bg);
-  --ft-chart-grid: var(--sl-color-gray-5);
+/* Theme picker in the header: same look as the chart view selects. */
+starlight-theme-select label {
+  border: 1px solid var(--sl-color-gray-5);
+  --sl-caret-size: 1rem;
+  border-radius: 2px;
+  color: var(--sl-color-gray-2);
+  transition:
+    border-color 140ms ease-out,
+    color 140ms ease-out;
+}
+starlight-theme-select label:hover {
+  border-color: var(--sl-color-text-accent);
+  color: var(--sl-color-white);
+}
+starlight-theme-select label:hover .caret {
+  color: var(--sl-color-text-accent);
+}
+starlight-theme-select label:has(select:focus-visible) {
+  box-shadow:
+    0 0 0 3px var(--sl-color-bg),
+    0 0 0 4px var(--sl-color-text-accent);
+}
+starlight-theme-select .label-icon {
+  inset-inline-start: 0.65rem;
+}
+starlight-theme-select .caret {
+  inset-inline-end: 0.5rem;
+}
+starlight-theme-select select {
+  margin-inline: 0;
+  padding-block: 0.4rem;
+  padding-inline: calc(var(--sl-label-icon-size) + 1.15rem)
+    calc(var(--sl-caret-size) + 0.85rem);
+  font-family: var(--sl-font-mono);
+  font-size: var(--sl-text-xs);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+starlight-theme-select select:focus-visible {
+  outline: none;
 }
 
 /* Swap paired framework logos with Starlight's theme and keep them aligned. */
@@ -117,4 +290,18 @@ mobile-starlight-toc {
 
 :root[data-theme='light'] .framework-logo--light {
   display: inline-block;
+}
+
+/*
+ * Card behind a chart: the same border, radius, fill and padding as the
+ * version line charts on the framework deep-dive pages.
+ */
+.ft-chart-card {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 1rem 1rem 0.5rem 0.5rem;
+  border: 1px solid var(--ft-border);
+  border-radius: 0.75rem;
+  background: var(--ft-bg);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 4%);
 }

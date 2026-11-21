@@ -20,3 +20,13 @@ export function lineChartGrid() {
 export const lineChartLineStyle = { strokeWidth: 3 }
 export const lineChartPointStyle = { r: 4, strokeWidth: 3 }
 export const lineChartLatestPointStyle = { ...lineChartPointStyle, r: 6 }
+
+/** Bar styling: solid 1px border with a translucent fill of the same colour. */
+export const BAR_FILL_OPACITY = 0.3
+export const BAR_FOCUS_FILL_OPACITY = 0.55
+export const BAR_STROKE_WIDTH = 1
+
+/** A CSS colour for a bar's translucent fill, for legends and tooltips. */
+export function barFillColor(color: string, opacity = BAR_FILL_OPACITY) {
+  return `color-mix(in srgb, ${color} ${Math.round(opacity * 100)}%, transparent)`
+}
