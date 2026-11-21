@@ -388,8 +388,8 @@ Current pinned dependencies are listed in each project's `package.json`:
   controlled interaction, not page-lifetime INP.
 - The same interaction is also scored as
   [work to commit](/methodology/#interaction-work-to-commit), from the trace
-  Lighthouse records for it. Charts rank frameworks by work to commit and show
-  the Lighthouse breakdown alongside it.
+  Lighthouse records for it. Each comparison ranks frameworks by its own
+  metric, lowest first.
 - CI builds once per framework and test, then keeps one production server running
   for all five measurements. Each measurement launches a fresh Chrome process.
 - Before all measurements, one HTTP request warms `/client-side-rendered`.
@@ -421,8 +421,8 @@ Current pinned dependencies are listed in each project's `package.json`:
   controlled interaction, not page-lifetime INP.
 - The same interaction is also scored as
   [work to commit](/methodology/#interaction-work-to-commit), from the trace
-  Lighthouse records for it. Charts rank frameworks by work to commit and show
-  the Lighthouse breakdown alongside it.
+  Lighthouse records for it. Each comparison ranks frameworks by its own
+  metric, lowest first.
 - CI builds once per framework and test, then keeps one production server running
   for all five measurements. Each measurement launches a fresh Chrome process.
 - Before all measurements, HTTP requests warm `/server-side-rendered` and a
