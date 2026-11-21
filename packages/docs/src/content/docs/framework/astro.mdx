@@ -3,7 +3,6 @@ title: Astro
 description: Astro version comparison page.
 ---
 
-import InReview from '../../../components/InReview.astro'
 import { Content as DevTimeSetup } from '../../../benchmarks/shared/DevTimeSetup.mdx'
 import { Content as RunTimeSetup } from '../../../benchmarks/shared/RunTimeSetup.mdx'
 import DependencyCountsDetails from '../../../benchmarks/dependency-counts/Details.astro'
@@ -30,94 +29,50 @@ export const astroRuntimeVersions = getRuntimeVersionStats('app-astro')
 
 <DevTimeSetup />
 
-<InReview test="dependencies">
-
 ### Dependency Counts
 
 <DependencyCountsDetails versions={astroStarterVersions} />
-
-</InReview>
-
-<InReview test="install">
 
 ### Node Modules Size
 
 <NodeModulesSizeDetails versions={astroStarterVersions} />
 
-</InReview>
-
-<InReview test={['build', 'install']}>
-
 ### Build and Install Times
 
 <BuildInstallDetails versions={astroStarterVersions} />
-
-</InReview>
-
-<InReview test="devServer">
 
 ### Dev Server Startup
 
 <DevServerStartupDetails versions={astroStarterVersions} />
 
-</InReview>
-
-<InReview test="build">
-
 ### Core-JS Polyfills
 
 <CoreJsDetails versions={astroStarterVersions} />
-
-</InReview>
-
-<InReview test="browserBaseline">
 
 ### Browser Baseline
 
 <BrowserBaselineDetails versions={astroStarterVersions} />
 
-</InReview>
-
 ## Run Time
 
 <RunTimeSetup />
-
-<InReview test="initialLoad">
 
 ### Initial Load
 
 <InitialLoadDetails versions={astroRuntimeVersions} />
 
-</InReview>
-
-<InReview test="clientSideRendered">
-
 ### Client Side Rendered Tests (Lighthouse)
 
 <LighthouseClientSideRenderedDetails versions={astroRuntimeVersions} />
-
-</InReview>
-
-<InReview test="serverSideRendered">
 
 ### Server Side Rendered Tests (Lighthouse)
 
 <LighthouseServerSideRenderedDetails versions={astroRuntimeVersions} />
 
-</InReview>
-
-<InReview test="ssrRequestThroughput">
-
 ### Server Side Throughput Tests
 
 <SSRThroughputDetails versions={astroRuntimeVersions} />
 
-</InReview>
-
-<InReview test="ssrLoad">
-
 ### SSR Load Test
 
 <SSRLoadDetails versions={astroRuntimeVersions} />
-
-</InReview>

@@ -2,12 +2,24 @@
 import type { MeasurementName } from '@framework-performance/results/measurements-config'
 import { isMeasurementShown } from '../lib/measurement-status'
 
+/**
+ * For a new benchmark, leave the section title visible so its table of contents
+ * link still works. Wrap everything under the title in <InReview test="…">,
+ * using the measurement key or an array of keys for a shared section.
+ * Keep the wrapper for a while after marking the benchmark live so you can
+ * switch it back to in-review if you find an issue with the results.
+ */
 interface Props {
-  /** Hidden on production if any of these tests is in review */
   test: MeasurementName | MeasurementName[]
 }
 
 const tests = [Astro.props.test].flat()
 ---
 
-{tests.every(isMeasurementShown) && <slot />}
+{
+  tests.every(isMeasurementShown) ? (
+    <slot />
+  ) : (
+    <p>This benchmark is in review. Results are coming soon.</p>
+  )
+}

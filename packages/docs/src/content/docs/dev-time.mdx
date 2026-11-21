@@ -3,7 +3,6 @@ title: Dev Time Stats
 description: Framework project footprint and build cost metrics.
 ---
 
-import InReview from '../../components/InReview.astro'
 import { Content as DevTimeSetup } from '../../benchmarks/shared/DevTimeSetup.mdx'
 import { Content as DependencyCountsDescription } from '../../benchmarks/dependency-counts/Description.mdx'
 import FrameworkDependencyResults from '../../benchmarks/dependency-counts/FrameworkResults.astro'
@@ -17,8 +16,6 @@ import BrowserBaselineCompare from '../../benchmarks/browser-baseline/Compare.as
 import MinimumNodeVersionCompare from '../../benchmarks/minimum-node-version/Compare.astro'
 
 <DevTimeSetup />
-
-<InReview test="dependencies">
 
 ## Dependency Counts
 
@@ -36,52 +33,26 @@ import MinimumNodeVersionCompare from '../../benchmarks/minimum-node-version/Com
 
 <StarterDependencyResults />
 
-</InReview>
-
-<InReview test="install">
-
 ## Node Modules Size
 
 <NodeModulesSizeCompare />
-
-</InReview>
-
-<InReview test={['build', 'install']}>
 
 ## Build and Install Times
 
 <BuildInstallCompare />
 
-</InReview>
-
-<InReview test="devServer">
-
 ## Dev Server Startup
 
 <DevServerStartupCompare />
-
-</InReview>
-
-<InReview test="build">
 
 ## Core-JS Polyfills
 
 <CoreJsCompare />
 
-</InReview>
-
-<InReview test="browserBaseline">
-
 ## Browser Baseline
 
 <BrowserBaselineCompare />
 
-</InReview>
-
-<InReview test="nodeEngines">
-
 ## Minimum Node Version
 
 <MinimumNodeVersionCompare />
-
-</InReview>

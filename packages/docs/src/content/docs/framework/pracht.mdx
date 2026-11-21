@@ -3,7 +3,6 @@ title: Pracht
 description: Pracht version comparison page.
 ---
 
-import InReview from '../../../components/InReview.astro'
 import { Content as DevTimeSetup } from '../../../benchmarks/shared/DevTimeSetup.mdx'
 import { Content as RunTimeSetup } from '../../../benchmarks/shared/RunTimeSetup.mdx'
 import DependencyCountsDetails from '../../../benchmarks/dependency-counts/Details.astro'
@@ -38,91 +37,49 @@ prachtStarterVersions.length === 0 && prachtRuntimeVersions.length === 0 ? (
 
 <DevTimeSetup />
 
-<InReview test="dependencies">
-
 ### Dependency Counts
 
 <DependencyCountsDetails versions={prachtStarterVersions} />
-
-</InReview>
-
-<InReview test="install">
 
 ### Node Modules Size
 
 <NodeModulesSizeDetails versions={prachtStarterVersions} />
 
-</InReview>
-
-<InReview test={['build', 'install']}>
-
 ### Build and Install Times
 
 <BuildInstallDetails versions={prachtStarterVersions} />
-
-</InReview>
-
-<InReview test="devServer">
 
 ### Dev Server Startup
 
 <DevServerStartupDetails versions={prachtStarterVersions} />
 
-</InReview>
-
-<InReview test="build">
-
 ### Core-JS Polyfills
 
 <CoreJsDetails versions={prachtStarterVersions} />
-
-</InReview>
-
-<InReview test="browserBaseline">
 
 ### Browser Baseline
 
 <BrowserBaselineDetails versions={prachtStarterVersions} />
 
-</InReview>
-
 ## Run Time
 
 <RunTimeSetup />
-
-<InReview test="initialLoad">
 
 ### Initial Load
 
 <InitialLoadDetails versions={prachtRuntimeVersions} />
 
-</InReview>
-
-<InReview test="clientSideRendered">
-
 ### Client Side Rendered Tests (Lighthouse)
 
 <LighthouseClientSideRenderedDetails versions={prachtRuntimeVersions} />
-
-</InReview>
-
-<InReview test="serverSideRendered">
 
 ### Server Side Rendered Tests (Lighthouse)
 
 <LighthouseServerSideRenderedDetails versions={prachtRuntimeVersions} />
 
-</InReview>
-
-<InReview test="ssrRequestThroughput">
-
 ### Server Side Throughput Tests
 
 <SSRThroughputDetails versions={prachtRuntimeVersions} />
-
-</InReview>
-
-<InReview test="ssrLoad">
 
 ### SSR Load Test
 
@@ -132,10 +89,6 @@ Ordinary anchors at `/server-side-rendered-plain-links`.
 
 </SSRLoadDetails>
 
-</InReview>
-
-<InReview test="ssrRouterLinkLoad">
-
 ### SSR Router Link Load Test
 
 <SSRRouterLinkLoadDetails versions={prachtRuntimeVersions}>
@@ -143,5 +96,3 @@ Ordinary anchors at `/server-side-rendered-plain-links`.
 Pracht router links at `/server-side-rendered`.
 
 </SSRRouterLinkLoadDetails>
-
-</InReview>
