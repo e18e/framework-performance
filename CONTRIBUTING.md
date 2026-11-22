@@ -4,9 +4,9 @@ The Framework Performance project is part of the e18e.dev community. Want to get
 
 ## Where to Start
 
-The Framework Performance project has a few different areas which you can contribute to:
+The Framework Performance project has a few different areas which you can contribute to: See the [Adding a New Benchmark](./CONTRIBUTING.md#adding-a-new-benchmark) section below for details on the process. PRs that add a new benchmark without following the linked instructions will be rejected.
 
-- **Improving Metrics**: Suggest new metrics or improve the way we collect and display existing ones.
+- **Adding New Benchmarks**: Improve or add new benchmarks to measure the meta-frameworks
 
 - **Documentation**: Enhance our documentation site by fixing typos, improving explanations, or adding new sections.
 
@@ -213,9 +213,17 @@ code, and CI workflow. Run `pnpm build:docs` and check formatting for the edited
 files. In the PR description, explain any change that affects comparison with
 previous results.
 
+### Adding a New Benchmark
+
+Open a [New Benchmark issue](https://github.com/e18e/framework-performance/issues/new?template=03-new-benchmark.yml) and get approval before starting work. Use the issue to discuss how the benchmark fits into the roadmap and what it would help us learn.
+
 ### Adding a New Framework
 
-Adding a new framework increases the maintenance burden, so please open an issue to discuss it and get approval before starting work. It takes a lot of time to ensure each framework is set up fairly and consistently to achieve the best outcomes for our benchmarks. We also have to ensure that any meta-framework being added meets our requirements and capabilities. For example, not being in one or two benchmarks is fine, but if the framework in question can't do half of them, it does not belong in these benchmarks. Failing to follow this process will lead to PRs being auto-rejected that add new meta-frameworks
+Our current focus is meta-frameworks. To propose one, open a [New Meta-framework issue](https://github.com/e18e/framework-performance/issues/new?template=01-new-meta-framework.yml) and get approval before starting work.
+
+If your framework falls outside the meta-framework criteria, you can still open a [New Framework issue](https://github.com/e18e/framework-performance/issues/new?template=02-new-framework.yml). We’re preparing the benchmark suite to support these frameworks and will add them in the future.
+
+Each integration adds ongoing maintenance work. It takes a lot of time to ensure each framework is set up fairly and consistently to achieve the best outcomes for our benchmarks. We also have to ensure that any meta-framework being added meets our requirements and capabilities. For example, not being in one or two benchmarks is fine, but if the framework in question can't do half of them, it does not belong in these benchmarks. Failing to follow this process will lead to PRs being auto-rejected that add new meta-frameworks
 
 If your issue is approved and your PR merged, you are expected to help maintain its integration after it is merged. This includes framework and dependency upgrades, fixing build or benchmark failures, being available to validate setup when new benchmarks are added and keeping its setup and methodology documentation current. Please state in your PR that you can provide this ongoing support. All accepted frameworks are tracked equally.
 

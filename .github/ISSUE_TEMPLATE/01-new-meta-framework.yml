@@ -1,0 +1,35 @@
+name: New Meta-framework
+description: Propose a meta-framework to include in the benchmarks.
+labels: ['New Meta-framework']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A meta-framework builds on a UI framework or library and integrates features such as routing, rendering, and builds into an application framework.
+        If your project falls outside that definition, use the [New Framework form](https://github.com/e18e/framework-performance/issues/new?template=02-new-framework.yml).
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Which meta-framework are you proposing?
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: Repository URL
+    validations:
+      required: true
+  - type: input
+    id: documentation
+    attributes:
+      label: Documentation URL
+    validations:
+      required: true
+  - type: textarea
+    id: unsupported-benchmarks
+    attributes:
+      label: Unsupported benchmarks
+      description: 'Which [benchmarks](https://frameworks.e18e.dev/methodology/) would this meta-framework be unable to run, and why? Enter "None" if it can run them all.'
+    validations:
+      required: true

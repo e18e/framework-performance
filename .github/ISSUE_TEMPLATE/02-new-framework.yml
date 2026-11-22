@@ -1,0 +1,30 @@
+name: New Framework
+description: Propose a framework to include in the benchmarks.
+labels: ['New Framework']
+body:
+  - type: textarea
+    id: description
+    attributes:
+      label: Description
+      description: Which framework are you proposing?
+    validations:
+      required: true
+  - type: input
+    id: repository
+    attributes:
+      label: Repository URL
+    validations:
+      required: true
+  - type: input
+    id: documentation
+    attributes:
+      label: Documentation URL
+    validations:
+      required: true
+  - type: textarea
+    id: unsupported-benchmarks
+    attributes:
+      label: Unsupported benchmarks
+      description: 'Which [benchmarks](https://frameworks.e18e.dev/methodology/) would this framework be unable to run, and why? Enter "None" if it can run them all.'
+    validations:
+      required: true

@@ -1,0 +1,25 @@
+name: New Benchmark
+description: Propose a benchmark to add to the suite.
+labels: ['New Benchmark']
+body:
+  - type: textarea
+    id: measurement
+    attributes:
+      label: What would the benchmark test?
+      description: Describe the scenario and the metric you want to measure.
+    validations:
+      required: true
+  - type: textarea
+    id: method
+    attributes:
+      label: How would the benchmark run?
+      description: Describe the setup, the steps to run, and how to collect the measurement.
+    validations:
+      required: true
+  - type: textarea
+    id: rationale
+    attributes:
+      label: Why should we add this benchmark?
+      description: What would it help people understand about the meta-frameworks?
+    validations:
+      required: true
