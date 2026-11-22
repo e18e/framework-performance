@@ -91,7 +91,7 @@ test('accepts results without interaction work but requires it in new artifacts'
   assert.equal(SSRLighthouseBenchmark.safeParse(legacy).success, true)
 
   const artifact = benchmarkArtifacts.find(
-    ([name]) => name === 'serverSideRendered',
+    ([name]) => name === 'ssrLighthouse',
   )![3]
   const parse = (value: unknown) =>
     artifact.safeParse({

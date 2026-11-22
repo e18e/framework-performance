@@ -22,7 +22,10 @@ const result = BenchmarkResultSchema.parse({
     starter: { path: 'packages/starter-astro', packageJson: {} },
     app: { path: 'packages/app-astro', packageJson: {} },
   },
-  configuration: { initialLoad: { path: '/initial-load' }, nodeEngines: null },
+  configuration: {
+    ssrInitialLoad: { path: '/initial-load' },
+    nodeEngines: null,
+  },
 })
 
 test('saving a benchmark result preserves metadata in latest and version history', () => {

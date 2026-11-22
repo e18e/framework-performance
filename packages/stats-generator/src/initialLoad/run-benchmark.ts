@@ -62,7 +62,7 @@ export async function runBenchmark(url: string) {
         onlyAudits: ['resource-summary'],
       },
     })
-    await flow.navigate(`${url}${measurementsConfig.initialLoad.path}`)
+    await flow.navigate(`${url}${measurementsConfig.ssrInitialLoad.path}`)
     const result = await flow.createFlowResult()
     const lhr = result.steps[0]?.lhr
     if (!lhr || lhr.runtimeError) {

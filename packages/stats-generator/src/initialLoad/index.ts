@@ -9,7 +9,7 @@ const INITIAL_LOAD_PORT = 3003
 
 export async function runInitialLoadBenchmark(packageName: string) {
   const frameworks = (await getFrameworks()).filter(({ app }) =>
-    app?.measurements.includes('initialLoad'),
+    app?.measurements.includes('ssrInitialLoad'),
   )
   const framework = frameworks.find(({ app }) => app?.package === packageName)
   const app = framework?.app
@@ -29,7 +29,7 @@ export async function runInitialLoadBenchmark(packageName: string) {
     {
       host: INITIAL_LOAD_HOST,
       port: INITIAL_LOAD_PORT,
-      readinessPath: measurementsConfig.initialLoad.path,
+      readinessPath: measurementsConfig.ssrInitialLoad.path,
     },
   )
 

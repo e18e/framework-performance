@@ -626,12 +626,12 @@
     "devServer": { "runs": 5 },
     "dependencies": null,
     "browserBaseline": null,
-    "ssrRouterLinkLoad": {
+    "ssrLoadRouterLinks": {
       "runs": 1,
       "stageConnections": [1, 5, 10, 25, 50, 100, 200],
       "path": "/server-side-rendered"
     },
-    "clientSideRendered": { "runs": 4, "scenario": "first-row-detail-navigation" },
-    "serverSideRendered": { "runs": 4, "scenario": "first-row-detail-navigation" }
+    "csrLighthouse": { "runs": 4, "scenario": "first-row-detail-navigation" },
+    "ssrLighthouse": { "runs": 4, "scenario": "first-row-detail-navigation" }
   }
 }

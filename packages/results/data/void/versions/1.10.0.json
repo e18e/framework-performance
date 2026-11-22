@@ -3172,7 +3172,7 @@
     "dependencies": null,
     "browserBaseline": null,
     "nodeEngines": null,
-    "ssrRequestThroughput": {
+    "ssrThroughput": {
       "runs": 5,
       "durationMs": 10000,
       "warmupDurationMs": 250,
@@ -3189,7 +3189,7 @@
       "recoveryMs": 5000,
       "path": "/server-side-rendered-plain-links"
     },
-    "ssrRouterLinkLoad": {
+    "ssrLoadRouterLinks": {
       "runs": 3,
       "stageConnections": [1, 5, 10, 25, 50, 100, 200],
       "stageDurationMs": 5000,
@@ -3198,16 +3198,16 @@
       "recoveryMs": 5000,
       "path": "/server-side-rendered"
     },
-    "clientSideRendered": {
+    "csrLighthouse": {
       "runs": 5,
       "scenario": "first-row-detail-navigation",
       "path": "/client-side-rendered"
     },
-    "serverSideRendered": {
+    "ssrLighthouse": {
       "runs": 5,
       "scenario": "first-row-detail-navigation",
       "path": "/server-side-rendered"
     },
-    "initialLoad": { "path": "/initial-load" }
+    "ssrInitialLoad": { "path": "/initial-load" }
   }
 }

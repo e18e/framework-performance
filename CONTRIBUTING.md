@@ -88,7 +88,7 @@ registry for framework names and ordering, and for validating Code Comparison sl
     package: 'app-astro',
     buildScript: 'build',
     buildOutputDir: 'dist',
-    measurements: ['ssrRequestThroughput'],
+    measurements: ['ssrThroughput'],
   },
 },
 ```

@@ -14,7 +14,7 @@ import type {
   WebServerRenderHandler,
 } from './types.ts'
 
-const config = measurementsConfig.ssrRequestThroughput
+const config = measurementsConfig.ssrThroughput
 const HTML_ACCEPT_HEADER = 'text/html,application/xhtml+xml'
 
 interface HandlerConfig {

@@ -16,7 +16,7 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
   const configured = {
     ...framework,
     starter: undefined,
-    app: { ...framework.app!, measurements: ['initialLoad' as const] },
+    app: { ...framework.app!, measurements: ['ssrInitialLoad' as const] },
   }
   const options = {
     validateOnly: true,

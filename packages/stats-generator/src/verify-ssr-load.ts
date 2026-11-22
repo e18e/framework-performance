@@ -15,8 +15,8 @@ for (const framework of await getFrameworks()) {
   if (selected.length && !selected.includes(pkg)) continue
   const stop = await startSSRLoadServer(pkg)
   try {
-    const kinds = app.measurements.includes('ssrRouterLinkLoad')
-      ? (['ssrLoad', 'ssrRouterLinkLoad'] as const)
+    const kinds = app.measurements.includes('ssrLoadRouterLinks')
+      ? (['ssrLoad', 'ssrLoadRouterLinks'] as const)
       : (['ssrLoad'] as const)
     for (const kind of kinds) {
       const path = getSSRLoadPath(pkg, kind)

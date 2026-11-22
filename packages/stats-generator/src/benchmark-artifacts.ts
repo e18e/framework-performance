@@ -43,7 +43,7 @@ function validateLoadArtifact(value: LoadResult) {
   const config =
     value.name === 'ssrLoad'
       ? measurementsConfig.ssrLoad
-      : measurementsConfig.ssrRouterLinkLoad
+      : measurementsConfig.ssrLoadRouterLinks
   const iterations = value.iterations.iterations
   const sweeps = iterations.map((run) =>
     SSRLoadStageOptions.map((key) => run[key]),
@@ -229,32 +229,32 @@ export const benchmarkArtifacts = [
       ),
   ],
   [
-    'ssrRequestThroughput',
+    'ssrThroughput',
     'ssr-request-throughput',
     'ci-stats.json',
     version.extend({ ssrThroughput: throughput }),
   ],
   ['ssrLoad', 'ssr-load', 'ci-stats.json', version.extend({ ssrLoad: load })],
   [
-    'ssrRouterLinkLoad',
+    'ssrLoadRouterLinks',
     'ssr-router-link-load',
     'ci-stats.json',
     version.extend({ ssrLoadRouterLinks: routerLoad }),
   ],
   [
-    'clientSideRendered',
+    'csrLighthouse',
     'client-side-rendered',
     'ci-stats.json',
     browser.extend({ csrLighthouse }),
   ],
   [
-    'serverSideRendered',
+    'ssrLighthouse',
     'server-side-rendered',
     'ci-stats.json',
     browser.extend({ ssrLighthouse }),
   ],
   [
-    'initialLoad',
+    'ssrInitialLoad',
     'initial-load',
     'ci-stats.json',
     browser.extend({ ssrInitialLoad: SSRInitialLoadBenchmark }),

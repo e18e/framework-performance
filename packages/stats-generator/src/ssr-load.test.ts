@@ -94,7 +94,7 @@ test('routes and result keys separate the two load tests', () => {
       '/server-side-rendered-plain-links',
     )
     assert.equal(
-      getSSRLoadPath(pkg, 'ssrRouterLinkLoad'),
+      getSSRLoadPath(pkg, 'ssrLoadRouterLinks'),
       '/server-side-rendered',
     )
   }
@@ -106,20 +106,20 @@ test('routes and result keys separate the two load tests', () => {
     'app-baseline-html',
   ]) {
     assert.equal(getSSRLoadPath(pkg, 'ssrLoad'), '/server-side-rendered')
-    assert.throws(() => getSSRLoadPath(pkg, 'ssrRouterLinkLoad'))
+    assert.throws(() => getSSRLoadPath(pkg, 'ssrLoadRouterLinks'))
   }
 })
 
 const loadArtifact = benchmarkArtifacts.find(([name]) => name === 'ssrLoad')![3]
 const routerArtifact = benchmarkArtifacts.find(
-  ([name]) => name === 'ssrRouterLinkLoad',
+  ([name]) => name === 'ssrLoadRouterLinks',
 )![3]
 
 test('each load artifact keeps only the series measured by its job', () => {
   const ssrLoad = summarizeBenchmarkSweeps([loadSweep()])
   const ssrLoadRouterLinks = summarizeBenchmarkSweeps(
     [loadSweep()],
-    'ssrRouterLinkLoad',
+    'ssrLoadRouterLinks',
   )
   const frameworkVersion = '1.0.0'
   const siblingResults = { frameworkVersion, ssrLoad, ssrLoadRouterLinks }

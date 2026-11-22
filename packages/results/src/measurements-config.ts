@@ -21,7 +21,7 @@ export const measurementsConfig = {
   dependencies: { status: 'live' },
   browserBaseline: { status: 'live' },
   nodeEngines: { status: 'live' },
-  ssrRequestThroughput: {
+  ssrThroughput: {
     status: 'live',
     runs: 5,
     durationMs: 10_000,
@@ -35,20 +35,20 @@ export const measurementsConfig = {
     ...ssrLoad,
     plainLinksPath: '/server-side-rendered-plain-links',
   },
-  ssrRouterLinkLoad: { status: 'live', ...ssrLoad },
-  clientSideRendered: {
+  ssrLoadRouterLinks: { status: 'live', ...ssrLoad },
+  csrLighthouse: {
     status: 'live',
     runs: 5,
     scenario: interactionScenarioLabel,
     path: '/client-side-rendered',
   },
-  serverSideRendered: {
+  ssrLighthouse: {
     status: 'live',
     runs: 5,
     scenario: interactionScenarioLabel,
     path: '/server-side-rendered',
   },
-  initialLoad: {
+  ssrInitialLoad: {
     status: 'live',
     path: '/initial-load',
   },

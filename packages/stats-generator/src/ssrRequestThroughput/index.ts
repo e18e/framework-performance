@@ -20,7 +20,7 @@ import type {
 
 const frameworks: FrameworkConfig[] = frameworksConfig
 const throughputFrameworks = frameworks.filter(({ app }) =>
-  app?.measurements.includes('ssrRequestThroughput'),
+  app?.measurements.includes('ssrThroughput'),
 )
 
 const handlers = new Map<string, () => Promise<ServerRenderHandler>>([
@@ -45,7 +45,7 @@ export function supportsSSRRequestThroughputBenchmark(
 
 export async function runSSRRequestThroughputBenchmark(
   packageName: string,
-  runs: number = measurementsConfig.ssrRequestThroughput.runs,
+  runs: number = measurementsConfig.ssrThroughput.runs,
 ): Promise<SSRRequestThroughputBenchmarkResult> {
   const framework = throughputFrameworks.find(
     ({ app }) => app?.package === packageName,

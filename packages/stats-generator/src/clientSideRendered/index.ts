@@ -69,7 +69,7 @@ async function spawnServer(
 
   await Promise.race([
     waitForServer(
-      `http://${CLIENT_SIDE_RENDERED_HOST}:${CLIENT_SIDE_RENDERED_PORT}${measurementsConfig.clientSideRendered.path}`,
+      `http://${CLIENT_SIDE_RENDERED_HOST}:${CLIENT_SIDE_RENDERED_PORT}${measurementsConfig.csrLighthouse.path}`,
     ),
     exitPromise,
   ])
@@ -81,10 +81,10 @@ async function spawnServer(
 
 export async function runClientSideRenderedBenchmark(
   packageName: string,
-  runs: number = measurementsConfig.clientSideRendered.runs,
+  runs: number = measurementsConfig.csrLighthouse.runs,
 ): Promise<ClientSideRenderedBenchmarkResult> {
   const frameworks = (await getFrameworks()).filter(({ app }) =>
-    app?.measurements.includes('clientSideRendered'),
+    app?.measurements.includes('csrLighthouse'),
   )
   const framework = frameworks.find(({ app }) => app?.package === packageName)
   const app = framework?.app

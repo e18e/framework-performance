@@ -16,10 +16,7 @@ async function main() {
     'Usage: run-ssr-request-throughput-benchmark <package-name> [runs]\nExample: run-ssr-request-throughput-benchmark app-astro 5',
   )
 
-  const runs = parseRunFrequency(
-    args[0],
-    measurementsConfig.ssrRequestThroughput.runs,
-  )
+  const runs = parseRunFrequency(args[0], measurementsConfig.ssrThroughput.runs)
 
   console.info(
     `Running SSR request throughput benchmark for ${packageName} (${runs} runs)...\n`,

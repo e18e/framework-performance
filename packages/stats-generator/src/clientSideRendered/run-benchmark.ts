@@ -16,7 +16,7 @@ import type {
   ClientSideRenderedRunResult,
 } from './types.ts'
 
-const CLIENT_SIDE_RENDERED_PATH = measurementsConfig.clientSideRendered.path
+const CLIENT_SIDE_RENDERED_PATH = measurementsConfig.csrLighthouse.path
 
 function findChromium(): string {
   if (process.env.CHROME_PATH) return process.env.CHROME_PATH

@@ -16,7 +16,7 @@ import type {
 import { assembleServerRendering } from '../server-rendering.ts'
 import { measurementsConfig } from '../measurements.ts'
 
-const SERVER_SIDE_RENDERED_PATH = measurementsConfig.serverSideRendered.path
+const SERVER_SIDE_RENDERED_PATH = measurementsConfig.ssrLighthouse.path
 
 function getBrowserVersion(chromiumPath: string): string | undefined {
   try {

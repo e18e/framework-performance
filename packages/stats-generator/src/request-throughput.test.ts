@@ -23,7 +23,7 @@ function fixture() {
 test('keeps per-run distributions and validates the total request count', () => {
   const result = fixture()
   const artifact = benchmarkArtifacts.find(
-    ([measurement]) => measurement === 'ssrRequestThroughput',
+    ([measurement]) => measurement === 'ssrThroughput',
   )![3]
   assert.equal(
     artifact.safeParse({

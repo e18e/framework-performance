@@ -12,10 +12,7 @@ async function main() {
   const { packageName, args } = parseArgs(
     'Usage: run-server-side-rendered-benchmark <package-name> [runs]\nExample: run-server-side-rendered-benchmark app-astro 5',
   )
-  const runs = parseRunFrequency(
-    args[0],
-    measurementsConfig.serverSideRendered.runs,
-  )
+  const runs = parseRunFrequency(args[0], measurementsConfig.ssrLighthouse.runs)
 
   console.info(
     `Running server side rendered benchmark for ${packageName} (${runs} runs)...\n`,

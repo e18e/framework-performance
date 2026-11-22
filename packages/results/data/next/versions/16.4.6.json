@@ -3567,7 +3567,7 @@
     "dependencies": { "status": "live" },
     "browserBaseline": { "status": "live" },
     "nodeEngines": { "status": "live" },
-    "ssrRequestThroughput": {
+    "ssrThroughput": {
       "status": "live",
       "runs": 5,
       "durationMs": 10000,
@@ -3586,7 +3586,7 @@
       "recoveryMs": 5000,
       "path": "/server-side-rendered-plain-links"
     },
-    "ssrRouterLinkLoad": {
+    "ssrLoadRouterLinks": {
       "status": "live",
       "runs": 3,
       "stageConnections": [1, 5, 10, 25, 50, 100, 200],
@@ -3596,18 +3596,18 @@
       "recoveryMs": 5000,
       "path": "/server-side-rendered"
     },
-    "clientSideRendered": {
+    "csrLighthouse": {
       "status": "live",
       "runs": 5,
       "scenario": "first-row-detail-navigation",
       "path": "/client-side-rendered"
     },
-    "serverSideRendered": {
+    "ssrLighthouse": {
       "status": "live",
       "runs": 5,
       "scenario": "first-row-detail-navigation",
       "path": "/server-side-rendered"
     },
-    "initialLoad": { "status": "live", "path": "/initial-load" }
+    "ssrInitialLoad": { "status": "live", "path": "/initial-load" }
   }
 }
