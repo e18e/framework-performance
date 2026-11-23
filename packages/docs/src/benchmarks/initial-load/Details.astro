@@ -1,4 +1,5 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import type { SSRInitialLoadBenchmark } from '@framework-performance/results/benchmark-schemas'
 import type { z } from 'astro/zod'
 import { Content as Description } from './Description.mdx'
@@ -30,17 +31,20 @@ const withoutJs = data.map((datum) => ({
 ---
 
 <Description />
-<StackedAreaChart
-  title="Initial Load: All Resources by Version"
-  data={data}
-  series={initialLoadSeries}
-  valueFormat="kb"
-  yAxisLabel="Transfer size (KB)"
-/>
-<StackedAreaChart
-  title="Initial Load: Excluding JavaScript by Version"
-  data={withoutJs}
-  series={initialLoadSeries.filter(({ key }) => key !== 'js')}
-  valueFormat="kb"
-  yAxisLabel="Transfer size (KB)"
-/>
+
+<BenchmarkStack>
+  <StackedAreaChart
+    title="Initial Load: All Resources by Version"
+    data={data}
+    series={initialLoadSeries}
+    valueFormat="kb"
+    yAxisLabel="Transfer size (KB)"
+  />
+  <StackedAreaChart
+    title="Initial Load: Excluding JavaScript by Version"
+    data={withoutJs}
+    series={initialLoadSeries.filter(({ key }) => key !== 'js')}
+    valueFormat="kb"
+    yAxisLabel="Transfer size (KB)"
+  />
+</BenchmarkStack>

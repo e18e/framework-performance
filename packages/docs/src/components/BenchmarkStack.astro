@@ -1,0 +1,15 @@
+<div class="benchmark-stack">
+  <slot />
+</div>
+
+<style>
+  .benchmark-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+
+  .benchmark-stack > :global(*) {
+    margin-block: 0;
+  }
+</style>

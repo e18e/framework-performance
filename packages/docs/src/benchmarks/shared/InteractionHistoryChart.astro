@@ -22,7 +22,6 @@ const valueOf = (datum: Props['data'][number], key: string) =>
 ---
 
 <StackedAreaChart
-  class="interaction-history-chart"
   {title}
   data={data.map((datum) => ({
     name: datum.name,
@@ -41,9 +40,3 @@ const valueOf = (datum: Props['data'][number], key: string) =>
 >
   <InteractionChartCaption slot="caption" {title} {metric} />
 </StackedAreaChart>
-
-<style>
-  figure.interaction-history-chart {
-    margin-block: 1.5rem 2.5rem;
-  }
-</style>

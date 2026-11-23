@@ -1,9 +1,12 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import InstallTimeMedianChart from './InstallTimeMedianChart.astro'
 import BuildSizeChart from './BuildSizeChart.astro'
 import BuildSizeProdChart from './BuildSizeProdChart.astro'
 ---
 
-<InstallTimeMedianChart />
-<BuildSizeChart />
-<BuildSizeProdChart />
+<BenchmarkStack>
+  <InstallTimeMedianChart />
+  <BuildSizeChart />
+  <BuildSizeProdChart />
+</BenchmarkStack>

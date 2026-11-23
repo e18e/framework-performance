@@ -1,4 +1,5 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import type { ChartMeasurement } from '../../lib/types'
 import {
   prepareLighthouseServerSideRenderedTestsFcpMsHistory,
@@ -22,26 +23,28 @@ const interactionWorkData =
   prepareServerSideRenderedInteractionWorkHistory(versions)
 ---
 
-<VersionLineChart
-  {...prepareLighthouseServerSideRenderedTestsFirstPaintMsHistory(versions)}
-/>
-<VersionLineChart
-  {...prepareLighthouseServerSideRenderedTestsFcpMsHistory(versions)}
-/>
-{
-  interactionData.length > 0 ? (
-    <InteractionHistoryChart
-      title="Server Interaction Breakdown by Version (Lighthouse)"
-      data={interactionData}
-    />
-  ) : null
-}
-{
-  interactionWorkData.length > 0 ? (
-    <InteractionHistoryChart
-      title="Server Interaction Work to Commit by Version"
-      data={interactionWorkData}
-      metric={INTERACTION_WORK}
-    />
-  ) : null
-}
+<BenchmarkStack>
+  <VersionLineChart
+    {...prepareLighthouseServerSideRenderedTestsFirstPaintMsHistory(versions)}
+  />
+  <VersionLineChart
+    {...prepareLighthouseServerSideRenderedTestsFcpMsHistory(versions)}
+  />
+  {
+    interactionData.length > 0 ? (
+      <InteractionHistoryChart
+        title="Server Interaction Breakdown by Version (Lighthouse)"
+        data={interactionData}
+      />
+    ) : null
+  }
+  {
+    interactionWorkData.length > 0 ? (
+      <InteractionHistoryChart
+        title="Server Interaction Work to Commit by Version"
+        data={interactionWorkData}
+        metric={INTERACTION_WORK}
+      />
+    ) : null
+  }
+</BenchmarkStack>

@@ -1,4 +1,5 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import {
   prepareInitialLoadTable,
   prepareInitialLoadWithoutJavaScriptTable,
@@ -28,27 +29,30 @@ const chart2Table = prepareInitialLoadWithoutJavaScriptTable(chart2)
 ---
 
 <Description />
-<ViewSwitcher
-  title={chart1.title}
-  label={`${chart1.title} view`}
-  options={[
-    { value: 'chart', label: 'Comparison' },
-    { value: 'table', label: 'Table' },
-  ]}
-  defaultValue="chart"
->
-  <StackedBarChart slot="chart" {...chart1} />
-  <StatsTable slot="table" {...chart1Table} />
-</ViewSwitcher>
-<ViewSwitcher
-  title={chart2.title}
-  label={`${chart2.title} view`}
-  options={[
-    { value: 'chart', label: 'Comparison' },
-    { value: 'table', label: 'Table' },
-  ]}
-  defaultValue="chart"
->
-  <StackedBarChart slot="chart" {...chart2} />
-  <StatsTable slot="table" {...chart2Table} />
-</ViewSwitcher>
+
+<BenchmarkStack>
+  <ViewSwitcher
+    title={chart1.title}
+    label={`${chart1.title} view`}
+    options={[
+      { value: 'chart', label: 'Comparison' },
+      { value: 'table', label: 'Table' },
+    ]}
+    defaultValue="chart"
+  >
+    <StackedBarChart slot="chart" {...chart1} />
+    <StatsTable slot="table" {...chart1Table} />
+  </ViewSwitcher>
+  <ViewSwitcher
+    title={chart2.title}
+    label={`${chart2.title} view`}
+    options={[
+      { value: 'chart', label: 'Comparison' },
+      { value: 'table', label: 'Table' },
+    ]}
+    defaultValue="chart"
+  >
+    <StackedBarChart slot="chart" {...chart2} />
+    <StatsTable slot="table" {...chart2Table} />
+  </ViewSwitcher>
+</BenchmarkStack>

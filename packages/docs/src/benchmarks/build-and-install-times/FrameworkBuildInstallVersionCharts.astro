@@ -1,4 +1,5 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import type { InstallChartMeasurement } from '../../lib/types'
 import {
   prepareColdBuildTimeHistory,
@@ -14,6 +15,8 @@ interface Props {
 const { versions } = Astro.props
 ---
 
-<VersionLineChart {...prepareInstallTimeHistory(versions)} />
-<VersionLineChart {...prepareColdBuildTimeHistory(versions)} />
-<VersionLineChart {...prepareWarmBuildTimeHistory(versions)} />
+<BenchmarkStack>
+  <VersionLineChart {...prepareInstallTimeHistory(versions)} />
+  <VersionLineChart {...prepareColdBuildTimeHistory(versions)} />
+  <VersionLineChart {...prepareWarmBuildTimeHistory(versions)} />
+</BenchmarkStack>

@@ -1,4 +1,5 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import CoreWebVitalChart from './CoreWebVitalChart.astro'
 import type { Device } from '../../lib/prepare-chart'
 
@@ -9,8 +10,10 @@ interface Props {
 const { device } = Astro.props
 ---
 
-<CoreWebVitalChart cwv="lcp" device={device} />
-<CoreWebVitalChart cwv="cls" device={device} />
-<CoreWebVitalChart cwv="fcp" device={device} />
-<CoreWebVitalChart cwv="ttfb" device={device} />
-<CoreWebVitalChart cwv="inp" device={device} />
+<BenchmarkStack>
+  <CoreWebVitalChart cwv="lcp" device={device} />
+  <CoreWebVitalChart cwv="cls" device={device} />
+  <CoreWebVitalChart cwv="fcp" device={device} />
+  <CoreWebVitalChart cwv="ttfb" device={device} />
+  <CoreWebVitalChart cwv="inp" device={device} />
+</BenchmarkStack>

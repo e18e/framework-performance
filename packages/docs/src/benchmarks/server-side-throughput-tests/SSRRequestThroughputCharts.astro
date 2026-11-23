@@ -1,9 +1,12 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import SSRRequestThroughputBodySizeChart from './SSRRequestThroughputBodySizeChart.astro'
 import SSRRequestThroughputLatencyChart from './SSRRequestThroughputLatencyChart.astro'
 import SSRRequestThroughputOpsChart from './SSRRequestThroughputOpsChart.astro'
 ---
 
-<SSRRequestThroughputOpsChart />
-<SSRRequestThroughputBodySizeChart />
-<SSRRequestThroughputLatencyChart />
+<BenchmarkStack>
+  <SSRRequestThroughputOpsChart />
+  <SSRRequestThroughputBodySizeChart />
+  <SSRRequestThroughputLatencyChart />
+</BenchmarkStack>

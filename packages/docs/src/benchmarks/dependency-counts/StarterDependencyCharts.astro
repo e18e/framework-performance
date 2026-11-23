@@ -1,4 +1,5 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import { prepareStarterDependenciesTable } from '../../lib/prepare-table'
 import StatsTable from '../../components/StatsTable.astro'
 import ViewSwitcher from '../../components/ViewSwitcher.astro'
@@ -13,16 +14,18 @@ const chart1 = {
 const chart1Table = prepareStarterDependenciesTable(chart1)
 ---
 
-<ViewSwitcher
-  title={chart1.title}
-  label={`${chart1.title} view`}
-  options={[
-    { value: 'chart', label: 'Comparison' },
-    { value: 'table', label: 'Table' },
-  ]}
-  defaultValue="chart"
->
-  <StackedBarChart slot="chart" {...chart1} />
-  <StatsTable slot="table" {...chart1Table} />
-</ViewSwitcher>
-<DuplicateDependencyChart />
+<BenchmarkStack>
+  <ViewSwitcher
+    title={chart1.title}
+    label={`${chart1.title} view`}
+    options={[
+      { value: 'chart', label: 'Comparison' },
+      { value: 'table', label: 'Table' },
+    ]}
+    defaultValue="chart"
+  >
+    <StackedBarChart slot="chart" {...chart1} />
+    <StatsTable slot="table" {...chart1Table} />
+  </ViewSwitcher>
+  <DuplicateDependencyChart />
+</BenchmarkStack>

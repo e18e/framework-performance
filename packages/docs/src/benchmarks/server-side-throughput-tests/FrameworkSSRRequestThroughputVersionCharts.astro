@@ -1,4 +1,5 @@
 ---
+import BenchmarkStack from '../../components/BenchmarkStack.astro'
 import type { ChartMeasurement } from '../../lib/types'
 import {
   prepareSsrRequestThroughputTestsBodySizeBytesHistory,
@@ -14,12 +15,14 @@ interface Props {
 const { versions } = Astro.props
 ---
 
-<VersionLineChart
-  {...prepareSsrRequestThroughputTestsOpsPerSecHistory(versions)}
-/>
-<VersionLineChart
-  {...prepareSsrRequestThroughputTestsBodySizeBytesHistory(versions)}
-/>
-<VersionLineChart
-  {...prepareSsrRequestThroughputTestsLatencyMsHistory(versions)}
-/>
+<BenchmarkStack>
+  <VersionLineChart
+    {...prepareSsrRequestThroughputTestsOpsPerSecHistory(versions)}
+  />
+  <VersionLineChart
+    {...prepareSsrRequestThroughputTestsBodySizeBytesHistory(versions)}
+  />
+  <VersionLineChart
+    {...prepareSsrRequestThroughputTestsLatencyMsHistory(versions)}
+  />
+</BenchmarkStack>
