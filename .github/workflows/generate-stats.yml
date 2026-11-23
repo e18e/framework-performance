@@ -64,16 +64,16 @@ jobs:
     name: Prepare benchmarks
     runs-on: depot-ubuntu-24.04
     outputs:
-      install-matrix: ${{ steps.set-matrix.outputs.install }}
-      build-matrix: ${{ steps.set-matrix.outputs.build }}
-      dev-server-matrix: ${{ steps.set-matrix.outputs.dev-server }}
-      ssr-request-throughput-matrix: ${{ steps.set-matrix.outputs.ssr-request-throughput }}
-      ssr-load-matrix: ${{ steps.set-matrix.outputs.ssr-load }}
-      ssr-router-link-load-matrix: ${{ steps.set-matrix.outputs.ssr-router-link-load }}
-      deps-matrix: ${{ steps.set-matrix.outputs.deps }}
-      client-side-rendered-matrix: ${{ steps.set-matrix.outputs.client-side-rendered }}
-      server-side-rendered-matrix: ${{ steps.set-matrix.outputs.server-side-rendered }}
-      initial-load-matrix: ${{ steps.set-matrix.outputs.initial-load }}
+      install: ${{ steps.set-matrix.outputs.install }}
+      build: ${{ steps.set-matrix.outputs.build }}
+      devServer: ${{ steps.set-matrix.outputs.devServer }}
+      ssrThroughput: ${{ steps.set-matrix.outputs.ssrThroughput }}
+      ssrLoad: ${{ steps.set-matrix.outputs.ssrLoad }}
+      ssrLoadRouterLinks: ${{ steps.set-matrix.outputs.ssrLoadRouterLinks }}
+      dependencies: ${{ steps.set-matrix.outputs.dependencies }}
+      csrLighthouse: ${{ steps.set-matrix.outputs.csrLighthouse }}
+      ssrLighthouse: ${{ steps.set-matrix.outputs.ssrLighthouse }}
+      ssrInitialLoad: ${{ steps.set-matrix.outputs.ssrInitialLoad }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -98,30 +98,30 @@ jobs:
           FRAMEWORKS=$(node packages/stats-generator/src/print-frameworks.ts)
           echo "install=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.starter.measurements | contains(["install"])) | {name, displayName, package: .starter.package, buildScript: .starter.buildScript, buildOutputDir: .starter.buildOutputDir, measurements: .starter.measurements}]')" >> $GITHUB_OUTPUT
           echo "build=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.starter.measurements | contains(["build"])) | {name, displayName, package: .starter.package, buildScript: .starter.buildScript, buildOutputDir: .starter.buildOutputDir, measurements: .starter.measurements}]')" >> $GITHUB_OUTPUT
-          echo "dev-server=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.starter.measurements | contains(["devServer"])) | {name, displayName, package: .starter.package, devServerPort: .starter.devServerPort, measurements: .starter.measurements}]')" >> $GITHUB_OUTPUT
-          echo "ssr-request-throughput=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrThroughput"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
-          echo "ssr-load=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrLoad"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
-          echo "ssr-router-link-load=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrLoadRouterLinks"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
-          echo "deps=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.starter.measurements | contains(["dependencies"])) | {name, displayName, package: .starter.package}]')" >> $GITHUB_OUTPUT
-          echo "client-side-rendered=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["csrLighthouse"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
-          echo "server-side-rendered=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrLighthouse"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
-          echo "initial-load=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrInitialLoad"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
+          echo "devServer=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.starter.measurements | contains(["devServer"])) | {name, displayName, package: .starter.package, devServerPort: .starter.devServerPort, measurements: .starter.measurements}]')" >> $GITHUB_OUTPUT
+          echo "ssrThroughput=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrThroughput"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
+          echo "ssrLoad=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrLoad"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
+          echo "ssrLoadRouterLinks=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrLoadRouterLinks"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
+          echo "dependencies=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.starter.measurements | contains(["dependencies"])) | {name, displayName, package: .starter.package}]')" >> $GITHUB_OUTPUT
+          echo "csrLighthouse=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["csrLighthouse"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
+          echo "ssrLighthouse=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrLighthouse"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
+          echo "ssrInitialLoad=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.app.measurements | contains(["ssrInitialLoad"])) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements: .app.measurements}]')" >> $GITHUB_OUTPUT
 
   measure:
     name: Run
     needs: setup
     uses: ./.github/workflows/measure-framework.yml
     with:
-      install-matrix: ${{ needs.setup.outputs.install-matrix }}
-      build-matrix: ${{ needs.setup.outputs.build-matrix }}
-      dev-server-matrix: ${{ needs.setup.outputs.dev-server-matrix }}
-      ssr-request-throughput-matrix: ${{ needs.setup.outputs.ssr-request-throughput-matrix }}
-      ssr-load-matrix: ${{ needs.setup.outputs.ssr-load-matrix }}
-      ssr-router-link-load-matrix: ${{ needs.setup.outputs.ssr-router-link-load-matrix }}
-      deps-matrix: ${{ needs.setup.outputs.deps-matrix }}
-      client-side-rendered-matrix: ${{ needs.setup.outputs.client-side-rendered-matrix }}
-      server-side-rendered-matrix: ${{ needs.setup.outputs.server-side-rendered-matrix }}
-      initial-load-matrix: ${{ needs.setup.outputs.initial-load-matrix }}
+      install: ${{ needs.setup.outputs.install }}
+      build: ${{ needs.setup.outputs.build }}
+      devServer: ${{ needs.setup.outputs.devServer }}
+      ssrThroughput: ${{ needs.setup.outputs.ssrThroughput }}
+      ssrLoad: ${{ needs.setup.outputs.ssrLoad }}
+      ssrLoadRouterLinks: ${{ needs.setup.outputs.ssrLoadRouterLinks }}
+      dependencies: ${{ needs.setup.outputs.dependencies }}
+      csrLighthouse: ${{ needs.setup.outputs.csrLighthouse }}
+      ssrLighthouse: ${{ needs.setup.outputs.ssrLighthouse }}
+      ssrInitialLoad: ${{ needs.setup.outputs.ssrInitialLoad }}
 
   validate:
     name: Validate results

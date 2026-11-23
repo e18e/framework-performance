@@ -6,63 +6,63 @@ env:
 on:
   workflow_call:
     inputs:
-      install-matrix:
+      install:
         description: 'JSON array of frameworks to measure install time'
         type: string
         required: true
-      build-matrix:
+      build:
         description: 'JSON array of frameworks to measure build time'
         type: string
         required: true
-      dev-server-matrix:
+      devServer:
         description: 'JSON array of frameworks to measure dev server startup time'
         type: string
         required: false
         default: '[]'
-      ssr-request-throughput-matrix:
+      ssrThroughput:
         description: 'JSON array of frameworks to measure SSR request throughput performance'
         type: string
         required: true
-      ssr-load-matrix:
+      ssrLoad:
         description: 'JSON array of frameworks to measure SSR load performance'
         type: string
         required: false
         default: '[]'
-      ssr-router-link-load-matrix:
+      ssrLoadRouterLinks:
         description: 'JSON array of frameworks to measure SSR router link load performance'
         type: string
         required: false
         default: '[]'
-      deps-matrix:
+      dependencies:
         description: 'JSON array of frameworks to run e18e dependency analysis'
         type: string
         required: false
         default: '[]'
-      client-side-rendered-matrix:
+      csrLighthouse:
         description: 'JSON array of frameworks to measure client-side rendered paint and interaction performance'
         type: string
         required: false
         default: '[]'
-      server-side-rendered-matrix:
+      ssrLighthouse:
         description: 'JSON array of frameworks to measure server-side rendered paint and interaction performance'
         type: string
         required: false
         default: '[]'
-      initial-load-matrix:
+      ssrInitialLoad:
         description: 'JSON array of frameworks to measure initial page resource downloads'
         type: string
         required: false
         default: '[]'
 
 jobs:
-  measure-install:
+  install:
     name: ${{ matrix.framework.displayName }} · Install
-    if: inputs.install-matrix != '[]'
+    if: inputs.install != '[]'
     runs-on: depot-ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.install-matrix) }}
+        framework: ${{ fromJson(inputs.install) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -90,14 +90,14 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-build:
+  build:
     name: ${{ matrix.framework.displayName }} · Build
-    if: inputs.build-matrix != '[]'
+    if: inputs.build != '[]'
     runs-on: depot-ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.build-matrix) }}
+        framework: ${{ fromJson(inputs.build) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -150,15 +150,15 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-dev-server:
+  devServer:
     name: ${{ matrix.framework.displayName }} · Dev server
-    if: inputs.dev-server-matrix != '[]'
+    if: inputs.devServer != '[]'
     runs-on: depot-ubuntu-24.04
     timeout-minutes: 30
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.dev-server-matrix) }}
+        framework: ${{ fromJson(inputs.devServer) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -187,14 +187,14 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-ssr-request-throughput:
+  ssrThroughput:
     name: ${{ matrix.framework.displayName }} · SSR throughput
-    if: inputs.ssr-request-throughput-matrix != '[]'
+    if: inputs.ssrThroughput != '[]'
     runs-on: depot-ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.ssr-request-throughput-matrix) }}
+        framework: ${{ fromJson(inputs.ssrThroughput) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -230,14 +230,14 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-dependencies:
+  dependencies:
     name: ${{ matrix.framework.displayName }} · Dependencies
-    if: inputs.deps-matrix != '[]'
+    if: inputs.dependencies != '[]'
     runs-on: depot-ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.deps-matrix) }}
+        framework: ${{ fromJson(inputs.dependencies) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -294,16 +294,16 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-ssr-load:
+  ssrLoad:
     name: ${{ matrix.framework.displayName }} · SSR load
-    if: inputs.ssr-load-matrix != '[]'
+    if: inputs.ssrLoad != '[]'
     runs-on: depot-ubuntu-24.04-16
     env:
       RUNNER_LABEL: 'Depot depot-ubuntu-24.04-16 GitHub Actions runner (16 CPUs, 64 GB RAM, 180 GB disk, 8 GB disk accelerator; server CPUs 0-11; Autocannon CPUs 12-15)'
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.ssr-load-matrix) }}
+        framework: ${{ fromJson(inputs.ssrLoad) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -339,16 +339,16 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-ssr-router-link-load:
-    name: ${{ matrix.framework.displayName }} · SSR router link load
-    if: inputs.ssr-router-link-load-matrix != '[]'
+  ssrLoadRouterLinks:
+    name: ${{ matrix.framework.displayName }} · SSR load (router links)
+    if: inputs.ssrLoadRouterLinks != '[]'
     runs-on: depot-ubuntu-24.04-16
     env:
       RUNNER_LABEL: 'Depot depot-ubuntu-24.04-16 GitHub Actions runner (16 CPUs, 64 GB RAM, 180 GB disk, 8 GB disk accelerator; server CPUs 0-11; Autocannon CPUs 12-15)'
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.ssr-router-link-load-matrix) }}
+        framework: ${{ fromJson(inputs.ssrLoadRouterLinks) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -384,14 +384,14 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-client-side-rendered:
-    name: ${{ matrix.framework.displayName }} · Client rendering
-    if: inputs.client-side-rendered-matrix != '[]'
+  csrLighthouse:
+    name: ${{ matrix.framework.displayName }} · CSR Lighthouse
+    if: inputs.csrLighthouse != '[]'
     runs-on: depot-ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.client-side-rendered-matrix) }}
+        framework: ${{ fromJson(inputs.csrLighthouse) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -430,14 +430,14 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-server-side-rendered:
-    name: ${{ matrix.framework.displayName }} · Server rendering
-    if: inputs.server-side-rendered-matrix != '[]'
+  ssrLighthouse:
+    name: ${{ matrix.framework.displayName }} · SSR Lighthouse
+    if: inputs.ssrLighthouse != '[]'
     runs-on: depot-ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.server-side-rendered-matrix) }}
+        framework: ${{ fromJson(inputs.ssrLighthouse) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
@@ -476,14 +476,14 @@ jobs:
           retention-days: 1
           if-no-files-found: error
 
-  measure-initial-load:
-    name: ${{ matrix.framework.displayName }} · Initial load
-    if: inputs.initial-load-matrix != '[]'
+  ssrInitialLoad:
+    name: ${{ matrix.framework.displayName }} · SSR initial load
+    if: inputs.ssrInitialLoad != '[]'
     runs-on: depot-ubuntu-24.04
     strategy:
       fail-fast: false
       matrix:
-        framework: ${{ fromJson(inputs.initial-load-matrix) }}
+        framework: ${{ fromJson(inputs.ssrInitialLoad) }}
     steps:
       - name: Checkout code
         uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
