@@ -68,6 +68,24 @@ export const frameworksConfig = [
     },
   },
   {
+    name: 'mastro',
+    displayName: 'Mastro',
+    frameworkPackage: '@mastrojs/mastro',
+    starter: {
+      package: 'starter-mastro',
+      buildScript: 'generate',
+      buildOutputDir: 'generated',
+      devServerPort: 3000,
+      measurements: [
+        'install',
+        'build',
+        'devServer',
+        'dependencies',
+        'browserBaseline',
+      ],
+    },
+  },
+  {
     name: 'next',
     displayName: 'Next.js',
     frameworkPackage: 'next',

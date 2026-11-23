@@ -60,6 +60,7 @@ runtime configuration details are described in Framework Specific Notes.
 | Framework      | UI library                           | Bundler / build tool         | Adapter / server    |
 | -------------- | ------------------------------------ | ---------------------------- | ------------------- |
 | Astro          | Astro; React for client-only content | Vite (via Astro)             | Node adapter        |
+| Mastro         | Mastro HTML templates                | No build step                | Not benchmarked     |
 | Next.js        | React                                | Turbopack (via `next build`) | Next.js server      |
 | Nuxt           | Vue                                  | Vite (via Nuxt)              | Nitro               |
 | Pracht         | Preact                               | Vite                         | Node adapter        |
@@ -87,6 +88,7 @@ of a typical new project.
 Current pinned dependencies are listed in each project's `package.json`:
 
 - [Astro](https://github.com/e18e/framework-performance/blob/main/packages/starter-astro/package.json)
+- [Mastro](https://github.com/e18e/framework-performance/blob/main/packages/starter-mastro/package.json)
 - [Next.js](https://github.com/e18e/framework-performance/blob/main/packages/starter-next-js/package.json)
 - [Nuxt](https://github.com/e18e/framework-performance/blob/main/packages/starter-nuxt/package.json)
 - [Pracht](https://github.com/e18e/framework-performance/blob/main/packages/starter-pracht/package.json)
@@ -129,6 +131,10 @@ Installed using the CLI with its default selections:
 Turbopack is the default build tool. Tailwind CSS uses its native Turbopack loader
 without a PostCSS configuration. The starter retains the template's Geist fonts,
 fetched through `next/font/google`, and its page and layout classes.
+
+#### Mastro
+
+Default basic starter from `pnpm create @mastrojs/mastro@latest`
 
 #### Nuxt
 
