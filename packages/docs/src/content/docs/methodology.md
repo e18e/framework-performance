@@ -60,7 +60,7 @@ runtime configuration details are described in Framework Specific Notes.
 | Framework      | UI library                           | Bundler / build tool         | Adapter / server    |
 | -------------- | ------------------------------------ | ---------------------------- | ------------------- |
 | Astro          | Astro; React for client-only content | Vite (via Astro)             | Node adapter        |
-| Mastro         | Mastro HTML templates                | No build step                | Not benchmarked     |
+| Mastro         | Mastro HTML templates                | No build step                | Node adapter        |
 | Next.js        | React                                | Turbopack (via `next build`) | Next.js server      |
 | Nuxt           | Vue                                  | Vite (via Nuxt)              | Nitro               |
 | Pracht         | Preact                               | Vite                         | Node adapter        |
@@ -352,6 +352,7 @@ throughput, and load behavior for comparable production apps.
 Current pinned dependencies are listed in each project's `package.json`:
 
 - [Astro](https://github.com/e18e/framework-performance/blob/main/packages/app-astro/package.json)
+- [Mastro](https://github.com/e18e/framework-performance/blob/main/packages/app-mastro/package.json)
 - [Next.js](https://github.com/e18e/framework-performance/blob/main/packages/app-next-js/package.json)
 - [Nuxt](https://github.com/e18e/framework-performance/blob/main/packages/app-nuxt/package.json)
 - [Pracht](https://github.com/e18e/framework-performance/blob/main/packages/app-pracht/package.json)

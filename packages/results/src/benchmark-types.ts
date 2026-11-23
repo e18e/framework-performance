@@ -19,6 +19,7 @@ export const PackagePathOptions = [
   'packages/starter-astro',
   'packages/app-astro',
   'packages/starter-mastro',
+  'packages/app-mastro',
   'packages/starter-next-js',
   'packages/app-next-js',
   'packages/starter-nuxt',
