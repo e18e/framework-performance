@@ -1,5 +1,4 @@
 import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
-import { parseRunFrequency } from './benchmark-utils.ts'
 import { measurementsConfig } from './measurements.ts'
 import { runServerSideRenderedBenchmark } from './serverSideRendered/index.ts'
 import {
@@ -9,10 +8,10 @@ import {
 } from './utils.ts'
 
 async function main() {
-  const { packageName, args } = parseArgs(
-    'Usage: run-server-side-rendered-benchmark <package-name> [runs]\nExample: run-server-side-rendered-benchmark app-astro 5',
+  const { packageName } = parseArgs(
+    'Usage: run-server-side-rendered-benchmark <package-name>\nExample: run-server-side-rendered-benchmark app-astro',
   )
-  const runs = parseRunFrequency(args[0], measurementsConfig.ssrLighthouse.runs)
+  const runs = measurementsConfig.ssrLighthouse.runs
 
   console.info(
     `Running server side rendered benchmark for ${packageName} (${runs} runs)...\n`,
@@ -24,7 +23,7 @@ async function main() {
     framework.frameworkPackage,
   )
 
-  const result = await runServerSideRenderedBenchmark(packageName, runs)
+  const result = await runServerSideRenderedBenchmark(packageName)
 
   writeRuntimeArtifact(packageName, frameworkVersion, {
     browserVersion: result.browserVersion,

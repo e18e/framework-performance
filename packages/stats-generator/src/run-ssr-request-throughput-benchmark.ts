@@ -1,6 +1,5 @@
 import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
 import { measurementsConfig } from './measurements.ts'
-import { parseRunFrequency } from './benchmark-utils.ts'
 import {
   runSSRRequestThroughputBenchmark,
   supportsSSRRequestThroughputBenchmark,
@@ -12,11 +11,11 @@ import {
 } from './utils.ts'
 
 async function main() {
-  const { packageName, args } = parseArgs(
-    'Usage: run-ssr-request-throughput-benchmark <package-name> [runs]\nExample: run-ssr-request-throughput-benchmark app-astro 5',
+  const { packageName } = parseArgs(
+    'Usage: run-ssr-request-throughput-benchmark <package-name>\nExample: run-ssr-request-throughput-benchmark app-astro',
   )
 
-  const runs = parseRunFrequency(args[0], measurementsConfig.ssrThroughput.runs)
+  const runs = measurementsConfig.ssrThroughput.runs
 
   console.info(
     `Running SSR request throughput benchmark for ${packageName} (${runs} runs)...\n`,
@@ -31,7 +30,7 @@ async function main() {
 
   const { framework } = await getFrameworkByPackage(packageName)
 
-  const result = await runSSRRequestThroughputBenchmark(packageName, runs)
+  const result = await runSSRRequestThroughputBenchmark(packageName)
   const frameworkVersion = await getFrameworkVersion(
     packageName,
     framework.frameworkPackage,

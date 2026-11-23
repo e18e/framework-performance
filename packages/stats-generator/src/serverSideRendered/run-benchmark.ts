@@ -126,9 +126,9 @@ export async function runBenchmark(
   url: string,
   packageName: string,
   displayName: string,
-  runs: number,
   fullDocumentNavigation: boolean,
 ): Promise<ServerSideRenderedBenchmarkResult> {
+  const { runs } = measurementsConfig.ssrLighthouse
   const chromiumPath = findChromium()
   const browserVersion = getBrowserVersion(chromiumPath)
   if (!browserVersion) {

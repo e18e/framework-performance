@@ -1,5 +1,4 @@
 import { measurementsConfig } from '../measurements.ts'
-import { parseRunFrequency } from '../benchmark-utils.ts'
 import type { RequestThroughputIteration } from '../request-throughput.ts'
 import {
   assembleRequestThroughput,
@@ -137,9 +136,8 @@ function getDuplicationFactor(body: string): number {
 
 export async function runBenchmark(
   handlers: HandlerConfig[],
-  runs: number = config.runs,
 ): Promise<SSRRequestThroughputBenchmarkResult[]> {
-  parseRunFrequency(String(runs))
+  const { runs } = config
   const options = {
     time: config.durationMs,
     warmupTime: config.warmupDurationMs,

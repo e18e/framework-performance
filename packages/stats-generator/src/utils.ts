@@ -156,7 +156,6 @@ export async function getFrameworkByPackage(
 
 export function parseArgs(usage: string): {
   packageName: string
-  args: string[]
 } {
   const packageName = process.argv[2]
 
@@ -165,5 +164,5 @@ export function parseArgs(usage: string): {
     process.exit(1)
   }
 
-  return { packageName, args: process.argv.slice(3) }
+  return { packageName }
 }

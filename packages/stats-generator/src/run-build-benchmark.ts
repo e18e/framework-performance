@@ -3,11 +3,7 @@ import { execFileSync } from 'node:child_process'
 import { cpSync, rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { isAbsolute, join, relative, resolve, sep } from 'node:path'
-import {
-  copyTrackedProject,
-  installDependencies,
-  parseRunFrequency,
-} from './benchmark-utils.ts'
+import { copyTrackedProject, installDependencies } from './benchmark-utils.ts'
 import { packagesDir } from './constants.ts'
 import {
   benchmarkOutputPath,
@@ -51,11 +47,11 @@ function getBuildOutputPath(
 }
 
 async function main() {
-  const { packageName, args } = parseArgs(
-    'Usage: run-build-benchmark <package-name> [run-frequency]\nExample: run-build-benchmark starter-astro 5',
+  const { packageName } = parseArgs(
+    'Usage: run-build-benchmark <package-name>\nExample: run-build-benchmark starter-astro',
   )
 
-  const runFrequency = parseRunFrequency(args[0], measurementsConfig.build.runs)
+  const runFrequency = measurementsConfig.build.runs
 
   const { framework, testConfig } = await getFrameworkByPackage(packageName)
 

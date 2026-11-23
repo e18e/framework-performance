@@ -2,11 +2,7 @@ import { measurementsConfig } from './measurements.ts'
 import { rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import {
-  copyTrackedProject,
-  installDependencies,
-  parseRunFrequency,
-} from './benchmark-utils.ts'
+import { copyTrackedProject, installDependencies } from './benchmark-utils.ts'
 import { packagesDir } from './constants.ts'
 import {
   advertisedPorts,
@@ -99,14 +95,11 @@ async function measureStartTime(
 }
 
 async function main() {
-  const { packageName, args } = parseArgs(
-    'Usage: run-dev-server-benchmark <package-name> [run-frequency]\nExample: run-dev-server-benchmark starter-astro 5',
+  const { packageName } = parseArgs(
+    'Usage: run-dev-server-benchmark <package-name>\nExample: run-dev-server-benchmark starter-astro',
   )
 
-  const runFrequency = parseRunFrequency(
-    args[0],
-    measurementsConfig.devServer.runs,
-  )
+  const runFrequency = measurementsConfig.devServer.runs
 
   const { framework, testConfig } = await getFrameworkByPackage(packageName)
   const port = testConfig.devServerPort

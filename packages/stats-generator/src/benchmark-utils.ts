@@ -3,19 +3,6 @@ import { cpSync, mkdirSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
 import { packagesDir } from './constants.ts'
 
-export function parseRunFrequency(
-  value: string | undefined,
-  fallback = 5,
-): number {
-  const runFrequency = value === undefined ? fallback : Number(value)
-
-  if (!Number.isInteger(runFrequency) || runFrequency < 1) {
-    throw new Error(`Run frequency must be a positive integer: ${value}`)
-  }
-
-  return runFrequency
-}
-
 export function installDependencies(
   cwd: string,
   storeDir: string,

@@ -10,7 +10,6 @@ const SERVER_SIDE_RENDERED_PORT = 3002
 
 export async function runServerSideRenderedBenchmark(
   packageName: string,
-  runs: number = measurementsConfig.ssrLighthouse.runs,
 ): Promise<ServerSideRenderedBenchmarkResult> {
   const frameworks = (await getFrameworks()).filter(({ app }) =>
     app?.measurements.includes('ssrLighthouse'),
@@ -45,7 +44,6 @@ export async function runServerSideRenderedBenchmark(
       `http://${SERVER_SIDE_RENDERED_HOST}:${SERVER_SIDE_RENDERED_PORT}`,
       name,
       displayName,
-      runs,
       app.fullDocumentNavigation ?? false,
     )
   } finally {

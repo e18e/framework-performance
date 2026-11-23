@@ -8,15 +8,15 @@ import {
 } from './utils.ts'
 
 async function main() {
-  const { packageName, args } = parseArgs(
-    'Usage: run-framework-dependency-scan <starter-package> [output-path]\nExample: run-framework-dependency-scan starter-astro',
+  const { packageName } = parseArgs(
+    'Usage: run-framework-dependency-scan <starter-package>\nExample: run-framework-dependency-scan starter-astro',
   )
-  const [requestedOutputPath] = args
   const { framework } = await getFrameworkByPackage(packageName)
 
-  const outputPath =
-    requestedOutputPath ??
-    benchmarkOutputPath(packageName, 'framework-dependency-stats.json')
+  const outputPath = benchmarkOutputPath(
+    packageName,
+    'framework-dependency-stats.json',
+  )
   const stats = getFrameworkDependencyCountsFromPackageMetadata(
     packageName,
     framework.frameworkPackage,

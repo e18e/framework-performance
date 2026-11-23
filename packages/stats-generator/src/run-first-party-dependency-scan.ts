@@ -9,14 +9,14 @@ import { packagesDir } from './constants.ts'
 import { benchmarkOutputPath, parseArgs, writeJsonFile } from './utils.ts'
 
 async function main() {
-  const { packageName, args } = parseArgs(
-    'Usage: run-first-party-dependency-scan <starter-package> [output-path]',
+  const { packageName } = parseArgs(
+    'Usage: run-first-party-dependency-scan <starter-package>',
   )
-  const [requestedOutputPath] = args
   const manifest = getFirstPartyDependencyManifest(packageName)
-  const outputPath =
-    requestedOutputPath ??
-    benchmarkOutputPath(packageName, 'first-party-dependency-stats.json')
+  const outputPath = benchmarkOutputPath(
+    packageName,
+    'first-party-dependency-stats.json',
+  )
   const lockfile = await readFile(
     join(packagesDir, packageName, 'pnpm-lock.yaml'),
     'utf-8',

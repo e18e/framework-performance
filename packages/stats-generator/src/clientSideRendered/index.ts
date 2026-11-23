@@ -81,7 +81,6 @@ async function spawnServer(
 
 export async function runClientSideRenderedBenchmark(
   packageName: string,
-  runs: number = measurementsConfig.csrLighthouse.runs,
 ): Promise<ClientSideRenderedBenchmarkResult> {
   const frameworks = (await getFrameworks()).filter(({ app }) =>
     app?.measurements.includes('csrLighthouse'),
@@ -109,7 +108,6 @@ export async function runClientSideRenderedBenchmark(
       `http://${CLIENT_SIDE_RENDERED_HOST}:${CLIENT_SIDE_RENDERED_PORT}`,
       name,
       displayName,
-      runs,
       app.fullDocumentNavigation ?? false,
     )
   } finally {

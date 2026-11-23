@@ -1,4 +1,3 @@
-import { measurementsConfig } from '../measurements.ts'
 import { runBenchmark } from './run-benchmark.ts'
 import { frameworksConfig } from '../frameworks.ts'
 import { buildHandler as buildBaselineHtmlHandler } from './handlers/baseline-html.ts'
@@ -45,7 +44,6 @@ export function supportsSSRRequestThroughputBenchmark(
 
 export async function runSSRRequestThroughputBenchmark(
   packageName: string,
-  runs: number = measurementsConfig.ssrThroughput.runs,
 ): Promise<SSRRequestThroughputBenchmarkResult> {
   const framework = throughputFrameworks.find(
     ({ app }) => app?.package === packageName,
@@ -72,17 +70,14 @@ export async function runSSRRequestThroughputBenchmark(
 
   try {
     const handler = await buildHandler()
-    const results = await runBenchmark(
-      [
-        {
-          name,
-          displayName,
-          package: packageName,
-          handler,
-        },
-      ],
-      runs,
-    )
+    const results = await runBenchmark([
+      {
+        name,
+        displayName,
+        package: packageName,
+        handler,
+      },
+    ])
 
     return results[0]
   } finally {

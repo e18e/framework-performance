@@ -5,7 +5,7 @@ import { execSync } from 'node:child_process'
 import { cpSync, mkdirSync, rmSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { installDependencies, parseRunFrequency } from './benchmark-utils.ts'
+import { installDependencies } from './benchmark-utils.ts'
 import { packagesDir } from './constants.ts'
 import {
   getDirectorySize,
@@ -63,14 +63,11 @@ function getFrameworkVersion(cwd: string, frameworkPackage: string): string {
 }
 
 async function main() {
-  const { packageName, args } = parseArgs(
-    'Usage: run-install-benchmark <package-name> [run-frequency]\nExample: run-install-benchmark starter-astro 5',
+  const { packageName } = parseArgs(
+    'Usage: run-install-benchmark <package-name>\nExample: run-install-benchmark starter-astro',
   )
 
-  const runFrequency = parseRunFrequency(
-    args[0],
-    measurementsConfig.install.runs,
-  )
+  const runFrequency = measurementsConfig.install.runs
 
   const { framework } = await getFrameworkByPackage(packageName)
 
