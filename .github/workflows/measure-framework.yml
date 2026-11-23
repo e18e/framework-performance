@@ -514,7 +514,7 @@ jobs:
         run: google-chrome --version
 
       - name: Run initial load benchmark
-        run: pnpm --filter @framework-performance/stats-generator run:initial-load ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:ssr-initial-load ${{ matrix.framework.package }}
 
       - name: Upload initial load stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

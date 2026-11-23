@@ -1,4 +1,3 @@
-import { measurementsConfig } from '../measurements.ts'
 import puppeteer from 'puppeteer-core'
 import { startFlow } from 'lighthouse'
 import { z } from 'zod'
@@ -62,7 +61,7 @@ export async function runBenchmark(url: string) {
         onlyAudits: ['resource-summary'],
       },
     })
-    await flow.navigate(`${url}${measurementsConfig.ssrInitialLoad.path}`)
+    await flow.navigate(url)
     const result = await flow.createFlowResult()
     const lhr = result.steps[0]?.lhr
     if (!lhr || lhr.runtimeError) {

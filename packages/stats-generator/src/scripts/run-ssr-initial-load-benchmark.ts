@@ -1,14 +1,15 @@
-import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
-import { runInitialLoadBenchmark } from './initialLoad/index.ts'
+import { writeRuntimeArtifact } from '../benchmark-artifacts.ts'
+import { runInitialLoadBenchmark } from '../initialLoad/index.ts'
+import { measurementsConfig } from '../measurements.ts'
 import {
   getFrameworkByPackage,
   getFrameworkVersion,
   parseArgs,
-} from './utils.ts'
+} from '../utils.ts'
 
 async function main() {
   const { packageName } = parseArgs(
-    'Usage: run-initial-load-benchmark <package-name> \nExample: run-initial-load-benchmark app-astro',
+    'Usage: run-ssr-initial-load-benchmark <package-name> \nExample: run-ssr-initial-load-benchmark app-astro',
   )
   const { framework } = await getFrameworkByPackage(packageName)
   const frameworkVersion = await getFrameworkVersion(
@@ -16,7 +17,10 @@ async function main() {
     framework.frameworkPackage,
   )
 
-  const result = await runInitialLoadBenchmark(packageName)
+  const result = await runInitialLoadBenchmark(
+    packageName,
+    measurementsConfig.ssrInitialLoad.path,
+  )
 
   writeRuntimeArtifact(packageName, frameworkVersion, {
     browserVersion: result.browserVersion,
@@ -25,12 +29,6 @@ async function main() {
 
   console.info(
     `\n✓ Saved ${packageName} v${frameworkVersion ?? 'unknown'} (${packageName})`,
-  )
-  console.info(
-    `  Requests: ${result.initialLoad.resources.total.requestCount.value}`,
-  )
-  console.info(
-    `  Transfer: ${result.initialLoad.resources.total.transferSize.value} bytes`,
   )
 }
 
