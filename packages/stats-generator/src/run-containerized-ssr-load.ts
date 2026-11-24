@@ -2,7 +2,7 @@ import { getSSRLoadKind, getSSRLoadPath } from './ssrLoad/config.ts'
 import { spawn } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { cwd, env, exit, getgid, getuid, pid } from 'node:process'
-import { parseArgs } from './utils.ts'
+import { getBenchmarkContext } from './utils.ts'
 
 const RUN_SUFFIX = `${env.GITHUB_RUN_ID ?? 'local'}-${pid}`
 const NETWORK_NAME = `framework-performance-ssr-load-${RUN_SUFFIX}`
@@ -48,7 +48,7 @@ async function ignoreDockerFailure(
 }
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName } = await getBenchmarkContext(
     'Usage: run-containerized-ssr-load <package-name>\nExample: run-containerized-ssr-load app-astro',
   )
   const workspaceDir = env.GITHUB_WORKSPACE ?? cwd()

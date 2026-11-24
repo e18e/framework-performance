@@ -10,9 +10,8 @@ import {
 import { glob } from 'tinyglobby'
 import { packagesDir } from './constants.ts'
 import {
-  getFrameworkByPackage,
   benchmarkOutputPath,
-  parseArgs,
+  getBenchmarkContext,
   writeJsonFile,
 } from './utils.ts'
 
@@ -86,15 +85,14 @@ async function stageBrowserBuildFiles(buildOutputPath: string) {
 }
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, frameworkConfig } = await getBenchmarkContext(
     'Usage: run-browser-baseline-scan <package-name>\nExample: run-browser-baseline-scan starter-astro',
   )
 
-  const { testConfig } = await getFrameworkByPackage(packageName)
   const buildOutputPath = join(
     packagesDir,
     packageName,
-    testConfig.browserBuildOutputDir ?? testConfig.buildOutputDir,
+    frameworkConfig.browserBuildOutputDir ?? frameworkConfig.buildOutputDir,
   )
   const { scanDir, copiedFileCount } =
     await stageBrowserBuildFiles(buildOutputPath)

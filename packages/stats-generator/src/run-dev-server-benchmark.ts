@@ -15,9 +15,8 @@ import {
 import { summarizeSamples } from './sample-statistics.ts'
 import { createDevServerStats } from './dev-server-statistics.ts'
 import {
-  getFrameworkByPackage,
   benchmarkOutputPath,
-  parseArgs,
+  getBenchmarkContext,
   writeJsonFile,
 } from './utils.ts'
 
@@ -95,14 +94,13 @@ async function measureStartTime(
 }
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, framework, frameworkConfig } = await getBenchmarkContext(
     'Usage: run-dev-server-benchmark <package-name>\nExample: run-dev-server-benchmark starter-astro',
   )
 
   const runFrequency = measurementsConfig.devServer.runs
 
-  const { framework, testConfig } = await getFrameworkByPackage(packageName)
-  const port = testConfig.devServerPort
+  const port = frameworkConfig.devServerPort
   if (port === undefined) {
     throw new Error(
       `${packageName} has no devServerPort in packages/stats-generator/src/frameworks.ts`,

@@ -1,26 +1,16 @@
 import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
 import { measurementsConfig } from './measurements.ts'
 import { runClientSideRenderedBenchmark } from './clientSideRendered/index.ts'
-import {
-  getFrameworkByPackage,
-  getFrameworkVersion,
-  parseArgs,
-} from './utils.ts'
+import { getBenchmarkContext } from './utils.ts'
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, frameworkVersion } = await getBenchmarkContext(
     'Usage: run-client-side-rendered-benchmark <package-name>\nExample: run-client-side-rendered-benchmark app-astro',
   )
   const runs = measurementsConfig.csrLighthouse.runs
 
   console.info(
     `Running client-side rendered benchmark for ${packageName} (${runs} runs)...\n`,
-  )
-
-  const { framework } = await getFrameworkByPackage(packageName)
-  const frameworkVersion = await getFrameworkVersion(
-    packageName,
-    framework.frameworkPackage,
   )
 
   const result = await runClientSideRenderedBenchmark(packageName)

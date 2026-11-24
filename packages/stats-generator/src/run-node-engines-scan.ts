@@ -3,9 +3,8 @@ import { lstatSync, readdirSync, readFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
 import { packagesDir } from './constants.ts'
 import {
-  getFrameworkByPackage,
   benchmarkOutputPath,
-  parseArgs,
+  getBenchmarkContext,
   writeJsonFile,
 } from './utils.ts'
 import { resolveMinimumNodeVersion } from './node-engines.ts'
@@ -103,11 +102,9 @@ function collectNestedPackageDirs(nodeModulesDir: string): string[] {
 }
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, framework } = await getBenchmarkContext(
     'Usage: run-node-engines-scan <package-name>\nExample: run-node-engines-scan starter-next-js',
   )
-
-  const { framework } = await getFrameworkByPackage(packageName)
 
   console.info(
     `Scanning installed dependencies for engines.node in ${framework.displayName} (${packageName})...\n`,

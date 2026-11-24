@@ -1,17 +1,15 @@
 import { DependencyCountBenchmark } from '@framework-performance/results/benchmark-schemas'
 import {
   getFrameworkDependencyCountsFromPackageMetadata,
-  getFrameworkByPackage,
-  parseArgs,
+  getBenchmarkContext,
   benchmarkOutputPath,
   writeJsonFile,
 } from './utils.ts'
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, framework } = await getBenchmarkContext(
     'Usage: run-framework-dependency-scan <starter-package>\nExample: run-framework-dependency-scan starter-astro',
   )
-  const { framework } = await getFrameworkByPackage(packageName)
 
   const outputPath = benchmarkOutputPath(
     packageName,

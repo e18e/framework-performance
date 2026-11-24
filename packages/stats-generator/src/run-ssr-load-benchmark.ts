@@ -6,14 +6,10 @@ import {
   runSSRLoadBenchmark,
   supportsSSRLoadBenchmark,
 } from './ssrLoad/index.ts'
-import {
-  getFrameworkByPackage,
-  getFrameworkVersion,
-  parseArgs,
-} from './utils.ts'
+import { getBenchmarkContext } from './utils.ts'
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, frameworkVersion } = await getBenchmarkContext(
     'Usage: run-ssr-load-benchmark <package-name>\nExample: run-ssr-load-benchmark app-astro',
   )
 
@@ -30,11 +26,6 @@ async function main() {
       : 'SSR Router Link Load Test'
   console.info(`Running ${label} for ${packageName}...\n`)
 
-  const { framework } = await getFrameworkByPackage(packageName)
-  const frameworkVersion = await getFrameworkVersion(
-    packageName,
-    framework.frameworkPackage,
-  )
   const result = await runSSRLoadBenchmark(packageName)
 
   writeRuntimeArtifact(packageName, frameworkVersion, {

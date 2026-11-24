@@ -6,9 +6,8 @@ import coreJsCompat from 'core-js-compat/compat.js'
 import getModulesListForTargetVersion from 'core-js-compat/get-modules-list-for-target-version.js'
 import { packagesDir } from './constants.ts'
 import {
-  getFrameworkByPackage,
   benchmarkOutputPath,
-  parseArgs,
+  getBenchmarkContext,
   writeJsonFile,
 } from './utils.ts'
 
@@ -42,11 +41,9 @@ function extractVersion(source: string): string {
 }
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, framework, frameworkConfig } = await getBenchmarkContext(
     'Usage: run-corejs-scan <package-name>\nExample: run-corejs-scan starter-next-js',
   )
-
-  const { framework, testConfig } = await getFrameworkByPackage(packageName)
 
   console.info(
     `Scanning build output for vendored core-js in ${framework.displayName} (${packageName})...\n`,
@@ -55,7 +52,7 @@ async function main() {
   const buildOutputPath = join(
     packagesDir,
     packageName,
-    testConfig.buildOutputDir,
+    frameworkConfig.buildOutputDir,
   )
   const jsFiles = await glob('**/*.{js,mjs}', {
     cwd: buildOutputPath,

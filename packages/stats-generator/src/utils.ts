@@ -1,6 +1,5 @@
 import { execFileSync } from 'node:child_process'
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs'
-import { readFile } from 'node:fs/promises'
 import { join, dirname } from 'node:path'
 import { packagesDir } from './constants.ts'
 import { getFrameworks } from './get-frameworks.ts'
@@ -102,10 +101,10 @@ export function getFrameworkDependencyCountsFromPackageMetadata(
   }
 }
 
-export async function getFrameworkVersion(
+function getFrameworkVersion(
   packageName: string,
   frameworkPackage: string,
-): Promise<string | undefined> {
+): string | undefined {
   if (frameworkPackage === 'node') {
     return process.version.replace(/^v/, '')
   }
@@ -118,7 +117,7 @@ export async function getFrameworkVersion(
       frameworkPackage,
       'package.json',
     )
-    const pkgJson = JSON.parse(await readFile(pkgJsonPath, 'utf-8')) as {
+    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8')) as {
       version?: unknown
     }
 
@@ -136,17 +135,17 @@ export async function getFrameworkVersion(
 }
 
 /** Find the framework and benchmark config for a starter or app package. */
-export async function getFrameworkByPackage(
+async function getFrameworkByPackage(
   packageName: string,
-): Promise<{ framework: FrameworkConfig; testConfig: TestConfig }> {
+): Promise<{ framework: FrameworkConfig; frameworkConfig: TestConfig }> {
   const frameworks = await getFrameworks()
 
   for (const framework of frameworks) {
     if (framework.starter?.package === packageName) {
-      return { framework, testConfig: framework.starter }
+      return { framework, frameworkConfig: framework.starter }
     }
     if (framework.app?.package === packageName) {
-      return { framework, testConfig: framework.app }
+      return { framework, frameworkConfig: framework.app }
     }
   }
 
@@ -154,9 +153,7 @@ export async function getFrameworkByPackage(
   process.exit(1)
 }
 
-export function parseArgs(usage: string): {
-  packageName: string
-} {
+export async function getBenchmarkContext(usage: string) {
   const packageName = process.argv[2]
 
   if (!packageName) {
@@ -164,5 +161,14 @@ export function parseArgs(usage: string): {
     process.exit(1)
   }
 
-  return { packageName }
+  const { framework, frameworkConfig } =
+    await getFrameworkByPackage(packageName)
+  return {
+    packageName,
+    framework,
+    frameworkConfig,
+    get frameworkVersion() {
+      return getFrameworkVersion(packageName, framework.frameworkPackage)
+    },
+  }
 }

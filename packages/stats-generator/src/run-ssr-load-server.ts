@@ -1,10 +1,10 @@
 import { getSSRLoadKind, getSSRLoadPath } from './ssrLoad/config.ts'
 import { DEFAULT_SSR_LOAD_PORT, startSSRLoadServer } from './ssrLoad/index.ts'
 import { getHost, getPort } from './serve/common.ts'
-import { parseArgs } from './utils.ts'
+import { getBenchmarkContext } from './utils.ts'
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName } = await getBenchmarkContext(
     'Usage: run-ssr-load-server <package-name>\nExample: run-ssr-load-server app-astro',
   )
 

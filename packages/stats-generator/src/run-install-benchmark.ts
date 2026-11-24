@@ -11,8 +11,7 @@ import {
   getDirectorySize,
   benchmarkOutputPath,
   writeJsonFile,
-  getFrameworkByPackage,
-  parseArgs,
+  getBenchmarkContext,
 } from './utils.ts'
 
 function execCommand(command: string, cwd: string): string {
@@ -63,13 +62,11 @@ function getFrameworkVersion(cwd: string, frameworkPackage: string): string {
 }
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, framework } = await getBenchmarkContext(
     'Usage: run-install-benchmark <package-name>\nExample: run-install-benchmark starter-astro',
   )
 
   const runFrequency = measurementsConfig.install.runs
-
-  const { framework } = await getFrameworkByPackage(packageName)
 
   console.info(
     `Running install benchmark for ${framework.displayName} (${packageName})...`,

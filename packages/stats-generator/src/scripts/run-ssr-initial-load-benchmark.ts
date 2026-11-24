@@ -1,20 +1,11 @@
 import { writeRuntimeArtifact } from '../benchmark-artifacts.ts'
 import { runInitialLoadBenchmark } from '../initialLoad/index.ts'
 import { measurementsConfig } from '../measurements.ts'
-import {
-  getFrameworkByPackage,
-  getFrameworkVersion,
-  parseArgs,
-} from '../utils.ts'
+import { getBenchmarkContext } from '../utils.ts'
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, frameworkVersion } = await getBenchmarkContext(
     'Usage: run-ssr-initial-load-benchmark <package-name> \nExample: run-ssr-initial-load-benchmark app-astro',
-  )
-  const { framework } = await getFrameworkByPackage(packageName)
-  const frameworkVersion = await getFrameworkVersion(
-    packageName,
-    framework.frameworkPackage,
   )
 
   const result = await runInitialLoadBenchmark(

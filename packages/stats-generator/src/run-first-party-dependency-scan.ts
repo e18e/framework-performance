@@ -6,10 +6,14 @@ import {
   getFirstPartyDependencyStats,
 } from './first-party-dependencies.ts'
 import { packagesDir } from './constants.ts'
-import { benchmarkOutputPath, parseArgs, writeJsonFile } from './utils.ts'
+import {
+  benchmarkOutputPath,
+  getBenchmarkContext,
+  writeJsonFile,
+} from './utils.ts'
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName } = await getBenchmarkContext(
     'Usage: run-first-party-dependency-scan <starter-package>',
   )
   const manifest = getFirstPartyDependencyManifest(packageName)

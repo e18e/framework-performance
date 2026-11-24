@@ -8,8 +8,7 @@ import { packagesDir } from './constants.ts'
 import {
   benchmarkOutputPath,
   writeJsonFile,
-  getFrameworkByPackage,
-  parseArgs,
+  getBenchmarkContext,
 } from './utils.ts'
 import { createBuildStats } from './build-statistics.ts'
 import { summarizeSamples } from './sample-statistics.ts'
@@ -47,13 +46,11 @@ function getBuildOutputPath(
 }
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, framework, frameworkConfig } = await getBenchmarkContext(
     'Usage: run-build-benchmark <package-name>\nExample: run-build-benchmark starter-astro',
   )
 
   const runFrequency = measurementsConfig.build.runs
-
-  const { framework, testConfig } = await getFrameworkByPackage(packageName)
 
   console.info(
     `Running build benchmark for ${framework.displayName} (${packageName})...\n`,
@@ -89,7 +86,7 @@ async function main() {
       console.info('Cold build...')
       const coldBuildTimeMs = measureBuildTime(
         projectDir,
-        testConfig.buildScript,
+        frameworkConfig.buildScript,
       )
       coldBuildTimesMs.push(coldBuildTimeMs)
       console.info(`  Cold build time: ${coldBuildTimeMs}ms`)
@@ -97,7 +94,7 @@ async function main() {
       console.info('\nWarm build...')
       const warmBuildTimeMs = measureBuildTime(
         projectDir,
-        testConfig.buildScript,
+        frameworkConfig.buildScript,
       )
       warmBuildTimesMs.push(warmBuildTimeMs)
       console.info(`  Warm build time: ${warmBuildTimeMs}ms`)
@@ -108,7 +105,7 @@ async function main() {
 
     const finalBuildOutputPath = getBuildOutputPath(
       finalProjectDir,
-      testConfig.buildOutputDir,
+      frameworkConfig.buildOutputDir,
     )
     const coldBuildTime = summarizeSamples(coldBuildTimesMs)
     console.info(`\nAvg cold build time: ${coldBuildTime.avgMs} ms`)
@@ -133,7 +130,7 @@ async function main() {
 
     const buildOutputPath = getBuildOutputPath(
       packageDir,
-      testConfig.buildOutputDir,
+      frameworkConfig.buildOutputDir,
     )
     rmSync(buildOutputPath, { recursive: true, force: true })
     cpSync(finalBuildOutputPath, buildOutputPath, { recursive: true })

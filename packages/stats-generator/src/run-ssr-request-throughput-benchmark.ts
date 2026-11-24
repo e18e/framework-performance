@@ -4,14 +4,10 @@ import {
   runSSRRequestThroughputBenchmark,
   supportsSSRRequestThroughputBenchmark,
 } from './ssrRequestThroughput/index.ts'
-import {
-  getFrameworkByPackage,
-  getFrameworkVersion,
-  parseArgs,
-} from './utils.ts'
+import { getBenchmarkContext } from './utils.ts'
 
 async function main() {
-  const { packageName } = parseArgs(
+  const { packageName, frameworkVersion } = await getBenchmarkContext(
     'Usage: run-ssr-request-throughput-benchmark <package-name>\nExample: run-ssr-request-throughput-benchmark app-astro',
   )
 
@@ -28,13 +24,7 @@ async function main() {
     return
   }
 
-  const { framework } = await getFrameworkByPackage(packageName)
-
   const result = await runSSRRequestThroughputBenchmark(packageName)
-  const frameworkVersion = await getFrameworkVersion(
-    packageName,
-    framework.frameworkPackage,
-  )
 
   writeRuntimeArtifact(packageName, frameworkVersion, {
     ssrThroughput: result.benchmark,
