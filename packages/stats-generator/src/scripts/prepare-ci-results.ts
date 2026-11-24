@@ -4,7 +4,7 @@ import { BenchmarkCIResultSchema } from '@framework-performance/results/benchmar
 import { readBenchmarkResult } from '@framework-performance/results/storage'
 import { frameworksConfig } from '../frameworks.ts'
 import { getPublishTimes } from '../release-dates.ts'
-import { getFrameworkVersion, getPackageJsonDeps } from '../utils.ts'
+import { getPackageJsonDeps } from '../utils.ts'
 
 const outputDirectory = process.argv[2]
 mkdirSync(outputDirectory, { recursive: true })
@@ -16,10 +16,12 @@ for (const framework of frameworksConfig) {
   for (const project of ['starter', 'app'] as const) {
     const target = framework[project]
     if (!target) continue
-    const version = getFrameworkVersion(
-      target.package,
-      framework.frameworkPackage,
-    )
+    const packageJson = getPackageJsonDeps(target.package)
+    const version =
+      framework.frameworkPackage === 'node'
+        ? process.versions.node
+        : (packageJson.dependencies[framework.frameworkPackage] ??
+          packageJson.devDependencies[framework.frameworkPackage])
     if (!version)
       throw new Error(`Missing framework version for ${target.package}`)
     if (frameworkVersion && version !== frameworkVersion)
@@ -29,7 +31,7 @@ for (const framework of frameworksConfig) {
     frameworkVersion = version
     projects[project] = {
       path: `packages/${target.package}`,
-      packageJson: getPackageJsonDeps(target.package),
+      packageJson,
     }
   }
   if (!frameworkVersion)
