@@ -24,7 +24,7 @@
     "run:node-engines": "node src/run-node-engines-scan.ts",
     "validate:ci-stats": "node src/save-ci-stats.ts --validate-only",
     "save:ci-stats": "node src/save-ci-stats.ts",
-    "validate": "node src/validate-stats.ts",
+    "validate": "node src/save-ci-stats.ts --validate-only",
     "validate:first-party-dependencies": "node src/validate-first-party-dependencies.ts",
     "sync:versions": "node src/sync-versions.ts",
     "lint": "eslint .",

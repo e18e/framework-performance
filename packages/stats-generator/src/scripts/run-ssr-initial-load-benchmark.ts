@@ -1,7 +1,10 @@
-import { writeRuntimeArtifact } from '../benchmark-artifacts.ts'
 import { runInitialLoadBenchmark } from '../initialLoad/index.ts'
 import { measurementsConfig } from '../measurements.ts'
-import { getBenchmarkContext } from '../utils.ts'
+import {
+  benchmarkOutputPath,
+  getBenchmarkContext,
+  writeJsonFile,
+} from '../utils.ts'
 
 async function main() {
   const { packageName, frameworkVersion } = await getBenchmarkContext(
@@ -13,13 +16,12 @@ async function main() {
     measurementsConfig.ssrInitialLoad.path,
   )
 
-  writeRuntimeArtifact(packageName, frameworkVersion, {
+  writeJsonFile(benchmarkOutputPath(packageName, 'ssrInitialLoad-stats.json'), {
+    frameworkVersion,
     ssrInitialLoad: result.initialLoad,
   })
 
-  console.info(
-    `\n✓ Saved ${packageName} v${frameworkVersion ?? 'unknown'} (${packageName})`,
-  )
+  console.info(`\n✓ Saved ${packageName} v${frameworkVersion} (${packageName})`)
 }
 
 main().catch((error) => {

@@ -1,4 +1,7 @@
-import { InstallBenchmark } from '@framework-performance/results/benchmark-schemas'
+import {
+  DependencyCountBenchmark,
+  InstallBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
 import { measurementsConfig } from './measurements.ts'
 import { summarizeMetric } from './sample-statistics.ts'
 import { execSync } from 'node:child_process'
@@ -134,7 +137,13 @@ async function main() {
     writeJsonFile(outputPath, {
       frameworkVersion,
       installDuration,
-      starterNodeModuleSize: { value: nodeModulesSize, unit: 'bytes' },
+      dependencyCounts: {
+        starterNodeModuleSize:
+          DependencyCountBenchmark.shape.starterNodeModuleSize.parse({
+            value: nodeModulesSize,
+            unit: 'bytes',
+          }),
+      },
     })
     console.info(`\n✓ Saved install stats to ${outputPath}`)
     console.info(`  Average: ${installDuration.duration.mean}ms`)

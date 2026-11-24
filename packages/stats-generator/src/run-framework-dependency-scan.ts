@@ -20,13 +20,15 @@ async function main() {
     framework.frameworkPackage,
   )
 
-  writeJsonFile(
-    outputPath,
-    DependencyCountBenchmark.pick({ coreDev: true, coreProd: true }).parse({
+  writeJsonFile(outputPath, {
+    dependencyCounts: DependencyCountBenchmark.pick({
+      coreDev: true,
+      coreProd: true,
+    }).parse({
       coreDev: stats.developmentDependencyCount,
       coreProd: stats.productionDependencyCount,
     }),
-  )
+  })
   console.info(`Saved framework dependency stats to ${outputPath}`)
 }
 

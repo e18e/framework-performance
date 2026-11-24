@@ -1,7 +1,10 @@
-import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
 import { measurementsConfig } from './measurements.ts'
 import { runClientSideRenderedBenchmark } from './clientSideRendered/index.ts'
-import { getBenchmarkContext } from './utils.ts'
+import {
+  benchmarkOutputPath,
+  getBenchmarkContext,
+  writeJsonFile,
+} from './utils.ts'
 
 async function main() {
   const { packageName, frameworkVersion } = await getBenchmarkContext(
@@ -15,12 +18,13 @@ async function main() {
 
   const result = await runClientSideRenderedBenchmark(packageName)
 
-  writeRuntimeArtifact(packageName, frameworkVersion, {
+  writeJsonFile(benchmarkOutputPath(packageName, 'csrLighthouse-stats.json'), {
+    frameworkVersion,
     csrLighthouse: result.clientSideRendered,
   })
 
   console.info(
-    `\n✓ Saved ${result.displayName} v${frameworkVersion ?? 'unknown'} (${packageName})`,
+    `\n✓ Saved ${result.displayName} v${frameworkVersion} (${packageName})`,
   )
   console.info(`  First Paint: ${result.clientSideRendered.firstPaint.mean}ms`)
   console.info(

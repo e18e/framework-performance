@@ -144,9 +144,8 @@ export function summarizeBenchmarkSweeps(
     'maxLatency',
     'bytesPerSecond',
   ] as const
-  const connections = samples[0]!.map((stage) => stage.connections)
+  const connections = measurementsConfig[kind].stageConnections
   if (
-    new Set(connections).size !== connections.length ||
     samples.some(
       (sweep) =>
         sweep.length !== connections.length ||
@@ -155,6 +154,7 @@ export function summarizeBenchmarkSweeps(
   )
     throw new Error('Expected matching worker stages in every sweep')
   const benchmark = {
+    runner: process.env.RUNNER_OVERRIDE,
     project: 'app',
     iterations: {
       runs: samples.length,

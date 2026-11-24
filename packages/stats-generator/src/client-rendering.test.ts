@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { assembleClientRendering } from './client-rendering.ts'
 import { CSRLighthouseBenchmark } from '@framework-performance/results/benchmark-schemas'
-import { benchmarkArtifacts } from './benchmark-artifacts.ts'
+import { measuredCSRLighthouse } from './rendered-sample-metrics.ts'
 
 test('assembles client rendering from exact raw browser measurements', () => {
   const iterations = [1, 3].map((value) => ({
@@ -90,14 +90,8 @@ test('accepts results without interaction work but requires it in new artifacts'
   }
   assert.equal(CSRLighthouseBenchmark.safeParse(legacy).success, true)
 
-  const artifact = benchmarkArtifacts.find(
-    ([name]) => name === 'csrLighthouse',
-  )![3]
   const parse = (value: unknown) =>
-    artifact.safeParse({
-      frameworkVersion: '1.0.0',
-      csrLighthouse: value,
-    }).success
+    measuredCSRLighthouse.safeParse(value).success
   assert.equal(parse(result), true)
   assert.equal(parse(legacy), false)
   assert.equal(parse(stored), false)

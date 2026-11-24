@@ -177,11 +177,10 @@ async function main() {
   }
 
   const outputPath = benchmarkOutputPath(packageName, 'node-engines-stats.json')
-  writeJsonFile(
-    outputPath,
-    MinimumNodeVersionBenchmark.nullable().parse(
+  writeJsonFile(outputPath, {
+    minimumNodeVersion: MinimumNodeVersionBenchmark.optional().parse(
       stats.minimumNodeVersion === null
-        ? null
+        ? undefined
         : {
             name: 'minimumNodeVersion',
             project: 'starter',
@@ -189,7 +188,7 @@ async function main() {
             imposedBy: stats.imposedBy,
           },
     ),
-  )
+  })
 
   console.info(`\n✓ Saved Node engines stats to ${outputPath}`)
 }

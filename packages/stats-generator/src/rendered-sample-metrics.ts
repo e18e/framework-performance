@@ -1,3 +1,7 @@
+import {
+  CSRLighthouseBenchmark,
+  SSRLighthouseBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
 import type { RenderedTestSample } from './types.ts'
 
 export function renderedSampleMetrics(sample: RenderedTestSample) {
@@ -20,3 +24,25 @@ export function renderedSampleMetrics(sample: RenderedTestSample) {
     },
   }
 }
+
+function hasInteractionWork(value: {
+  interactionWork?: unknown
+  iterations: { iterations: { interactionWork?: unknown }[] }
+}) {
+  return (
+    value.interactionWork !== undefined &&
+    value.iterations.iterations.every(
+      (run) => run.interactionWork !== undefined,
+    )
+  )
+}
+
+const interactionWorkError = 'Expected interaction work for every run'
+export const measuredCSRLighthouse = CSRLighthouseBenchmark.refine(
+  hasInteractionWork,
+  interactionWorkError,
+)
+export const measuredSSRLighthouse = SSRLighthouseBenchmark.refine(
+  hasInteractionWork,
+  interactionWorkError,
+)

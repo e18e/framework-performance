@@ -151,7 +151,7 @@ async function main() {
       packageName,
       'browser-baseline-stats.json',
     )
-    writeJsonFile(outputPath, stats)
+    writeJsonFile(outputPath, { browserBaseline: stats })
 
     console.info(`\n✓ Saved browser baseline stats to ${outputPath}`)
   } finally {

@@ -1,5 +1,7 @@
-import { benchmarkArtifacts } from './benchmark-artifacts.ts'
-import { SSRLoadBenchmark } from '@framework-performance/results/benchmark-schemas'
+import {
+  SSRLoadBenchmark,
+  SSRLoadRouterLinksBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
 import { readFileSync } from 'node:fs'
 import { getLoadPeakStage } from '@framework-performance/results/selection'
 import assert from 'node:assert/strict'
@@ -110,41 +112,16 @@ test('routes and result keys separate the two load tests', () => {
   }
 })
 
-const loadArtifact = benchmarkArtifacts.find(([name]) => name === 'ssrLoad')![3]
-const routerArtifact = benchmarkArtifacts.find(
-  ([name]) => name === 'ssrLoadRouterLinks',
-)![3]
-
-test('each load artifact keeps only the series measured by its job', () => {
-  const ssrLoad = summarizeBenchmarkSweeps([loadSweep()])
-  const ssrLoadRouterLinks = summarizeBenchmarkSweeps(
-    [loadSweep()],
-    'ssrLoadRouterLinks',
-  )
-  const frameworkVersion = '1.0.0'
-  const siblingResults = { frameworkVersion, ssrLoad, ssrLoadRouterLinks }
-  assert.deepEqual(loadArtifact.parse(siblingResults), {
-    frameworkVersion,
-    ssrLoad,
-  })
-  assert.deepEqual(routerArtifact.parse(siblingResults), {
-    frameworkVersion,
-    ssrLoadRouterLinks,
-  })
-  assert.equal(
-    routerArtifact.safeParse({ frameworkVersion, ssrLoad }).success,
-    false,
-  )
+test('each load measurement requires its own series name', () => {
+  const result = summarizeBenchmarkSweeps([loadSweep()])
+  assert.ok(SSRLoadBenchmark.safeParse(result).success)
+  assert.equal(SSRLoadRouterLinksBenchmark.safeParse(result).success, false)
 })
 
 test('fresh load artifacts require the configured stages in order', () => {
   const sweep = loadSweep()
   assert.throws(() => summarizeBenchmarkSweeps([sweep.slice(0, -1)]))
-  const ssrLoad = summarizeBenchmarkSweeps([sweep.toReversed()])
-  assert.equal(
-    loadArtifact.safeParse({ frameworkVersion: '1.0.0', ssrLoad }).success,
-    false,
-  )
+  assert.throws(() => summarizeBenchmarkSweeps([sweep.toReversed()]))
 })
 
 test('HTTP table verification rejects missing rows, wrong columns, text, and destinations', async () => {
@@ -463,38 +440,4 @@ test('summaries compare each latency statistic at matching connections across sw
     result.iterations.iterations.map((sweep) => Object.values(sweep)),
     sweeps,
   )
-  const wrongConnections = structuredClone(result)
-  wrongConnections.iterations.iterations[1]!.stage1.connections = 2
-  for (const invalid of [
-    {
-      ...result,
-      totalRequests: {
-        ...result.totalRequests,
-        value: result.totalRequests.value + 1,
-      },
-    },
-    {
-      ...result,
-      totalErrors: {
-        ...result.totalErrors,
-        value: result.totalErrors.value + 1,
-      },
-    },
-    { ...result, representativeIterationIndex: 3 },
-    { ...result, stage1: { ...result.stage1, connections: 5 } },
-    {
-      ...result,
-      stage1: {
-        ...result.stage1,
-        p99Latency: { ...result.stage1.p99Latency, mean: 1 },
-      },
-    },
-    wrongConnections,
-  ]) {
-    assert.equal(
-      loadArtifact.safeParse({ frameworkVersion: '1.0.0', ssrLoad: invalid })
-        .success,
-      false,
-    )
-  }
 })

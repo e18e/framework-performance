@@ -125,7 +125,7 @@ async function main() {
   })
 
   const outputPath = benchmarkOutputPath(packageName, 'corejs-stats.json')
-  writeJsonFile(outputPath, stats)
+  writeJsonFile(outputPath, { coreJS: stats })
 
   console.info(`\n✓ Saved core-js stats to ${outputPath}`)
 }

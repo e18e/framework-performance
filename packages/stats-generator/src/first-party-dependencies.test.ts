@@ -4,13 +4,10 @@ import {
   getFirstPartyDependencyStats,
   validateFirstPartyDependencyManifest,
 } from './first-party-dependencies.ts'
-import { benchmarkArtifacts } from './benchmark-artifacts.ts'
+import { e18eStats } from './scripts/format-e18e-stats.ts'
 
 test('derives starter dependency metrics from e18e output', () => {
-  const [, , , schema] = benchmarkArtifacts.find(
-    ([, , file]) => file === 'e18e-stats.json',
-  )!
-  const stats = schema.parse({
+  const stats = e18eStats.parse({
     stats: {
       name: 'fixture',
       version: '1.0.0',

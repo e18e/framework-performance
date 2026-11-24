@@ -3,9 +3,7 @@ import {
   saveBenchmarkResult,
 } from '@framework-performance/results/storage'
 import {
-  BenchmarkCIResultSchema,
   BenchmarkResultSchema,
-  DependencyCountBenchmark,
   type BenchmarkResult,
 } from '@framework-performance/results/benchmark-schemas'
 import { withSummaryVariance } from '@framework-performance/results/comparison'
@@ -13,11 +11,7 @@ import { measurementsConfig } from './measurements.ts'
 import { getSSRLoadPath } from './ssrLoad/config.ts'
 import { join } from 'node:path'
 import { getFrameworks } from './get-frameworks.ts'
-import { readFileSync } from 'node:fs'
-import {
-  benchmarkArtifacts,
-  type BenchmarkArtifact,
-} from './benchmark-artifacts.ts'
+import { globSync, readFileSync } from 'node:fs'
 import type { FrameworkConfig } from './types.ts'
 
 export async function processCIStats(
@@ -37,12 +31,10 @@ export async function processCIStats(
     const previous = readBenchmarkResult(framework.name)
     const fresh: Record<string, unknown> = {}
     const dependencyCounts: Record<string, unknown> = {}
-    const prepared = BenchmarkCIResultSchema.parse(
-      JSON.parse(
-        readFileSync(
-          join(artifactsDir, 'prepared-results', `${framework.name}.json`),
-          'utf8',
-        ),
+    const prepared = JSON.parse(
+      readFileSync(
+        join(artifactsDir, 'prepared-results', `${framework.name}.json`),
+        'utf8',
       ),
     )
     if (prepared.framework !== framework.name)
@@ -50,56 +42,33 @@ export async function processCIStats(
         `Expected prepared result for ${framework.name}, got ${prepared.framework}`,
       )
 
-    for (const project of ['starter', 'app'] as const) {
-      const target = framework[project]
-      if (!target) continue
-      for (const [
-        measurement,
-        folder,
-        filename,
-        schema,
-      ] of benchmarkArtifacts) {
-        if (!target.measurements.includes(measurement)) continue
-        const file = join(
-          artifactsDir,
-          `${folder}-stats-${framework.name}`,
-          filename,
+    for (const file of globSync(`*-stats-${framework.name}/*.json`, {
+      cwd: artifactsDir,
+    })) {
+      const {
+        frameworkVersion,
+        dependencyCounts: counts,
+        ...measurements
+      } = JSON.parse(readFileSync(join(artifactsDir, file), 'utf8'))
+      if (
+        frameworkVersion !== undefined &&
+        frameworkVersion !== prepared.frameworkVersion
+      )
+        throw new Error(
+          `Framework version mismatch in ${file}: expected ${prepared.frameworkVersion}, got ${frameworkVersion}`,
         )
-        let artifact: BenchmarkArtifact
-        try {
-          artifact = schema.parse(JSON.parse(readFileSync(file, 'utf8')))
-        } catch (error) {
-          throw new Error(`Missing or invalid measurement artifact: ${file}`, {
-            cause: error,
-          })
-        }
-
-        for (const [key, value] of Object.entries(artifact)) {
-          if (key === 'frameworkVersion') {
-            if (value !== prepared.frameworkVersion)
-              throw new Error(
-                `Framework version mismatch in ${file}: expected ${prepared.frameworkVersion}, got ${value}`,
-              )
-          } else if (key === 'dependencyCounts')
-            Object.assign(dependencyCounts, value)
-          else if (key === 'starterNodeModuleSize')
-            dependencyCounts[key] = value
-          else fresh[key] = value
-        }
-      }
+      Object.assign(fresh, measurements)
+      Object.assign(dependencyCounts, counts)
     }
-
     if (
-      !framework.app?.measurements.length &&
-      !framework.starter?.measurements.length
-    )
-      continue
-    if (framework.starter?.measurements.includes('dependencies')) {
-      fresh.dependencyCounts = DependencyCountBenchmark.parse({
+      Object.keys(dependencyCounts).length > 0 &&
+      framework.starter?.measurements.includes('dependencies')
+    ) {
+      fresh.dependencyCounts = {
         ...dependencyCounts,
         name: 'dependencyCount',
         project: 'starter',
-      })
+      }
     }
 
     const { plainLinksPath: _plainLinksPath, ...ssrLoad } =
@@ -113,15 +82,12 @@ export async function processCIStats(
           : ssrLoad.path,
       },
     }
-    const assembled = BenchmarkResultSchema.parse({
-      ...prepared,
-      ...fresh,
-      configuration,
-    })
-    results.set(
-      framework.name,
-      withSummaryVariance(assembled, previous, Object.keys(fresh)),
+    const result = withSummaryVariance(
+      { ...prepared, ...fresh, configuration },
+      previous,
+      Object.keys(fresh),
     )
+    results.set(framework.name, BenchmarkResultSchema.parse(result))
   }
 
   if (!validateOnly) {

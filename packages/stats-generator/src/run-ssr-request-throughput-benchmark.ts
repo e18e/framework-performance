@@ -1,10 +1,13 @@
-import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
 import { measurementsConfig } from './measurements.ts'
 import {
   runSSRRequestThroughputBenchmark,
   supportsSSRRequestThroughputBenchmark,
 } from './ssrRequestThroughput/index.ts'
-import { getBenchmarkContext } from './utils.ts'
+import {
+  benchmarkOutputPath,
+  getBenchmarkContext,
+  writeJsonFile,
+} from './utils.ts'
 
 async function main() {
   const { packageName, frameworkVersion } = await getBenchmarkContext(
@@ -26,12 +29,13 @@ async function main() {
 
   const result = await runSSRRequestThroughputBenchmark(packageName)
 
-  writeRuntimeArtifact(packageName, frameworkVersion, {
+  writeJsonFile(benchmarkOutputPath(packageName, 'ssrThroughput-stats.json'), {
+    frameworkVersion,
     ssrThroughput: result.benchmark,
   })
 
   console.info(
-    `\n✓ Saved ${result.displayName} v${frameworkVersion ?? 'unknown'} (${result.package})`,
+    `\n✓ Saved ${result.displayName} v${frameworkVersion} (${result.package})`,
   )
 }
 

@@ -26,9 +26,8 @@ async function main() {
     'utf-8',
   )
   const stats = getFirstPartyDependencyStats(manifest, lockfile)
-  writeJsonFile(
-    outputPath,
-    DependencyCountBenchmark.pick({
+  writeJsonFile(outputPath, {
+    dependencyCounts: DependencyCountBenchmark.pick({
       firstPartyDev: true,
       firstPartyProd: true,
       firstPartyDuplicate: true,
@@ -37,7 +36,7 @@ async function main() {
       firstPartyProd: stats.productionDependencyCount,
       firstPartyDuplicate: stats.duplicateDependencyCount,
     }),
-  )
+  })
   console.info(`Saved first-party dependency stats to ${outputPath}`)
 }
 

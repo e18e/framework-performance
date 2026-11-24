@@ -104,34 +104,24 @@ export function getFrameworkDependencyCountsFromPackageMetadata(
 export function getFrameworkVersion(
   packageName: string,
   frameworkPackage: string,
-): string | undefined {
+): string {
   if (frameworkPackage === 'node') {
     return process.version.replace(/^v/, '')
   }
 
-  try {
-    const pkgJsonPath = join(
-      packagesDir,
-      packageName,
-      'node_modules',
-      frameworkPackage,
-      'package.json',
-    )
-    const pkgJson = JSON.parse(readFileSync(pkgJsonPath, 'utf-8')) as {
-      version?: unknown
-    }
-
-    if (typeof pkgJson.version === 'string') {
-      return pkgJson.version
-    }
-  } catch {
-    // Fall through to the warning below.
-  }
-
-  console.warn(
-    `Could not read version for ${frameworkPackage} in ${packageName}`,
+  const pkgJsonPath = join(
+    packagesDir,
+    packageName,
+    'node_modules',
+    frameworkPackage,
+    'package.json',
   )
-  return undefined
+  const pkg = readJsonFile<{ version?: unknown }>(pkgJsonPath)
+  if (typeof pkg?.version !== 'string' || !pkg.version)
+    throw new Error(
+      `Missing framework version for ${frameworkPackage} in ${packageName}`,
+    )
+  return pkg.version
 }
 
 /** Find the framework and benchmark config for a starter or app package. */

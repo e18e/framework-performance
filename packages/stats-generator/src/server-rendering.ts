@@ -1,10 +1,12 @@
-import { renderedSampleMetrics } from './rendered-sample-metrics.ts'
-import { SSRLighthouseBenchmark } from '@framework-performance/results/benchmark-schemas'
+import {
+  renderedSampleMetrics,
+  measuredSSRLighthouse,
+} from './rendered-sample-metrics.ts'
 import { summarizeMetric } from './sample-statistics.ts'
 import type { RenderedTestSample } from './types.ts'
 
 export function assembleServerRendering(iterations: RenderedTestSample[]) {
-  return SSRLighthouseBenchmark.parse({
+  return measuredSSRLighthouse.parse({
     name: 'ssrLighthouse',
     project: 'app',
     iterations: {

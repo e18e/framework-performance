@@ -1,12 +1,15 @@
 import { SSRLoadStageOptions } from '@framework-performance/results/benchmark-types'
-import { writeRuntimeArtifact } from './benchmark-artifacts.ts'
 import { getLoadPeakStage } from '@framework-performance/results/selection'
 import { getSSRLoadKind } from './ssrLoad/config.ts'
 import {
   runSSRLoadBenchmark,
   supportsSSRLoadBenchmark,
 } from './ssrLoad/index.ts'
-import { getBenchmarkContext } from './utils.ts'
+import {
+  benchmarkOutputPath,
+  getBenchmarkContext,
+  writeJsonFile,
+} from './utils.ts'
 
 async function main() {
   const { packageName, frameworkVersion } = await getBenchmarkContext(
@@ -28,12 +31,14 @@ async function main() {
 
   const result = await runSSRLoadBenchmark(packageName)
 
-  writeRuntimeArtifact(packageName, frameworkVersion, {
-    [result.tests.name]: {
-      ...result.tests,
-      runner: process.env.RUNNER_OVERRIDE,
+  const measurement = result.tests
+  writeJsonFile(
+    benchmarkOutputPath(packageName, `${measurement.name}-stats.json`),
+    {
+      frameworkVersion,
+      [measurement.name]: measurement,
     },
-  })
+  )
 
   const sweep =
     result.tests.iterations.iterations[

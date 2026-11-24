@@ -225,8 +225,8 @@ jobs:
       - name: Upload SSR request throughput stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: ssr-request-throughput-stats-${{ matrix.framework.name }}
-          path: packages/${{ matrix.framework.package }}/ci-stats.json
+          name: ssrThroughput-stats-${{ matrix.framework.name }}
+          path: packages/${{ matrix.framework.package }}/ssrThroughput-stats.json
           retention-days: 1
           if-no-files-found: error
 
@@ -260,7 +260,9 @@ jobs:
 
       - name: Run e18e analysis
         working-directory: ./packages/${{ matrix.framework.package }}
-        run: npx @e18e/cli@0.5.0 analyze --json > e18e-stats.json || true
+        run: |
+          (npx @e18e/cli@0.5.0 analyze --json || true) |
+            node ../stats-generator/src/scripts/format-e18e-stats.ts e18e-stats.json
 
       - name: Collect framework dependency stats
         env:
@@ -334,8 +336,8 @@ jobs:
       - name: Upload SSR load stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: ssr-load-stats-${{ matrix.framework.name }}
-          path: packages/${{ matrix.framework.package }}/ci-stats.json
+          name: ssrLoad-stats-${{ matrix.framework.name }}
+          path: packages/${{ matrix.framework.package }}/ssrLoad-stats.json
           retention-days: 1
           if-no-files-found: error
 
@@ -379,8 +381,8 @@ jobs:
       - name: Upload SSR router link load stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: ssr-router-link-load-stats-${{ matrix.framework.name }}
-          path: packages/${{ matrix.framework.package }}/ci-stats.json
+          name: ssrLoadRouterLinks-stats-${{ matrix.framework.name }}
+          path: packages/${{ matrix.framework.package }}/ssrLoadRouterLinks-stats.json
           retention-days: 1
           if-no-files-found: error
 
@@ -422,8 +424,8 @@ jobs:
       - name: Upload client-side rendered stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: client-side-rendered-stats-${{ matrix.framework.name }}
-          path: packages/${{ matrix.framework.package }}/ci-stats.json
+          name: csrLighthouse-stats-${{ matrix.framework.name }}
+          path: packages/${{ matrix.framework.package }}/csrLighthouse-stats.json
           retention-days: 1
           if-no-files-found: error
 
@@ -465,8 +467,8 @@ jobs:
       - name: Upload server-side rendered stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: server-side-rendered-stats-${{ matrix.framework.name }}
-          path: packages/${{ matrix.framework.package }}/ci-stats.json
+          name: ssrLighthouse-stats-${{ matrix.framework.name }}
+          path: packages/${{ matrix.framework.package }}/ssrLighthouse-stats.json
           retention-days: 1
           if-no-files-found: error
 
@@ -510,7 +512,7 @@ jobs:
       - name: Upload initial load stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: initial-load-stats-${{ matrix.framework.name }}
-          path: packages/${{ matrix.framework.package }}/ci-stats.json
+          name: ssrInitialLoad-stats-${{ matrix.framework.name }}
+          path: packages/${{ matrix.framework.package }}/ssrInitialLoad-stats.json
           retention-days: 1
           if-no-files-found: error

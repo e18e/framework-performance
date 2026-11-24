@@ -8,7 +8,7 @@ import { readBenchmarkResult } from '@framework-performance/results/storage'
 import { frameworksConfig } from './frameworks.ts'
 import { processCIStats } from './save-ci-stats.ts'
 
-test('CI requires, validates, and preserves initial load artifacts', async () => {
+test('CI accepts absent initial load results and validates complete measurements', async () => {
   const directory = mkdtempSync(join(tmpdir(), 'initial-load-ci-'))
   const framework = frameworksConfig.find(
     (framework) => framework.name === 'astro',
@@ -22,7 +22,11 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
     validateOnly: true,
     frameworks: [configured],
   }
-  const path = join(directory, 'initial-load-stats-astro', 'ci-stats.json')
+  const path = join(
+    directory,
+    'ssrInitialLoad-stats-astro',
+    'ssrInitialLoad-stats.json',
+  )
   const resources = Object.fromEntries(
     InitialLoadResourceType.options.map((key) => [
       key,
@@ -55,11 +59,9 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
         browserVersion: 'Google Chrome 156',
       }),
     )
-    await assert.rejects(
-      processCIStats(directory, options),
-      /Missing or invalid measurement artifact/,
-    )
-    mkdirSync(join(directory, 'initial-load-stats-astro'))
+    const empty = await processCIStats(directory, options)
+    assert.equal('ssrInitialLoad' in empty.get('astro')!, false)
+    mkdirSync(join(directory, 'ssrInitialLoad-stats-astro'))
     writeFileSync(path, JSON.stringify(artifact))
     const results = await processCIStats(directory, options)
     const result = results.get('astro')

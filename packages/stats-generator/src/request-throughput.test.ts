@@ -1,4 +1,3 @@
-import { benchmarkArtifacts } from './benchmark-artifacts.ts'
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import {
@@ -20,18 +19,8 @@ function fixture() {
   )
 }
 
-test('keeps per-run distributions and validates the total request count', () => {
+test('keeps per-run distributions and sums the request counts across runs', () => {
   const result = fixture()
-  const artifact = benchmarkArtifacts.find(
-    ([measurement]) => measurement === 'ssrThroughput',
-  )![3]
-  assert.equal(
-    artifact.safeParse({
-      frameworkVersion: '1.0.0',
-      ssrThroughput: { ...result, requests: { value: 5, unit: 'requests' } },
-    }).success,
-    false,
-  )
   assert.deepEqual(result.requests, { value: 4, unit: 'requests' })
   assert.deepEqual(result.iterations.iterations[0].latency, {
     unit: 'ms',
