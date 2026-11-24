@@ -14,6 +14,12 @@ const httpArchiveCWVSchema = z.enum([
   'FCP',
   'TTFB',
   'INP',
+  // Experimental soft navigation metrics now available in CrUX
+  // https://web.dev/blog/crux-experimental-soft-navs
+  'overall_sn',
+  'LCP_sn',
+  'CLS_sn',
+  'INP_sn',
 ])
 
 export type HTTPArchiveCWV = z.infer<typeof httpArchiveCWVSchema>
