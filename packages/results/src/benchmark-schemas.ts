@@ -346,7 +346,7 @@ export const HTMLBaselineBenchmarkResult = z.object({
   frameworkVersion: z.string(),
 
   // For HTML Baseline this is Node Version release date it is using
-  frameworkReleasedAt: z.string(),
+  frameworkReleasedAt: z.string().min(1),
 
   // Benchmarks
   ssrThroughput: SSRThroughputBenchmark.optional(),
@@ -356,10 +356,8 @@ export const HTMLBaselineBenchmarkResult = z.object({
   configuration: z.record(z.string(), z.unknown()),
 })
 
-/**
- * Final Benchmark Result schema for all Meta-frameworks results
- */
-export const MetaFrameworkBenchmarkResults = z.object({
+/** Validates framework metadata and any benchmarks collected during CI. */
+export const MetaFrameworkBenchmarkCIResults = z.object({
   framework: z.enum(
     FrameworkOptions.filter((option) => option !== 'baseline-html'),
   ),
@@ -368,7 +366,7 @@ export const MetaFrameworkBenchmarkResults = z.object({
   runner: z.string(),
   browserVersion: z.string(),
   frameworkVersion: z.string(),
-  frameworkReleasedAt: z.string(),
+  frameworkReleasedAt: z.string().min(1),
 
   // Benchmarks (should always be options to support new benchmarks, removing old ones and frameworks that might not be able to complete one)
   dependencyCounts: DependencyCountBenchmark.optional(),
@@ -384,10 +382,19 @@ export const MetaFrameworkBenchmarkResults = z.object({
   ssrThroughput: SSRThroughputBenchmark.optional(),
   ssrLoad: SSRLoadBenchmark.optional(),
   ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark.optional(),
-
-  // Comes from packages/results/src/measurements-config.ts so leave as flexible type as this can change and is only needed as record
-  configuration: z.record(z.string(), z.unknown()),
 })
+
+// Validates a stored meta-framework result, including the configuration used for the run.
+export const MetaFrameworkBenchmarkResults =
+  MetaFrameworkBenchmarkCIResults.extend({
+    // Comes from packages/results/src/measurements-config.ts so leave as flexible type as this can change and is only needed as record
+    configuration: z.record(z.string(), z.unknown()),
+  })
+
+export const BenchmarkCIResultSchema = z.discriminatedUnion('framework', [
+  HTMLBaselineBenchmarkResult.omit({ configuration: true }),
+  MetaFrameworkBenchmarkCIResults,
+])
 
 export const BenchmarkResultSchema = z.discriminatedUnion('framework', [
   HTMLBaselineBenchmarkResult,

@@ -64,7 +64,6 @@ jobs:
     name: Prepare benchmarks
     runs-on: depot-ubuntu-24.04
     outputs:
-      browserVersion: ${{ steps.chrome.outputs.version }}
       install: ${{ steps.set-matrix.outputs.install }}
       build: ${{ steps.set-matrix.outputs.build }}
       devServer: ${{ steps.set-matrix.outputs.devServer }}
@@ -98,6 +97,18 @@ jobs:
 
       - name: Validate first-party dependency manifests
         run: pnpm --filter @framework-performance/stats-generator validate:first-party-dependencies
+
+      - name: Prepare starting CI results
+        env:
+          BROWSER_VERSION: ${{ steps.chrome.outputs.version }}
+        run: node packages/stats-generator/src/scripts/prepare-ci-results.ts prepared-results
+
+      - name: Upload starting CI results
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: prepared-results
+          path: prepared-results/*.json
+          if-no-files-found: error
 
       - name: Set matrices from TypeScript config
         id: set-matrix
@@ -163,8 +174,6 @@ jobs:
           path: artifacts
 
       - name: Validate all measurement artifacts and assembled results
-        env:
-          BROWSER_VERSION: ${{ needs.setup.outputs.browserVersion }}
         run: pnpm --filter @framework-performance/stats-generator validate:ci-stats "$GITHUB_WORKSPACE/artifacts"
 
   generate-stats:
@@ -200,8 +209,6 @@ jobs:
         run: find artifacts -type f -name "*.json" 2>/dev/null || echo "No artifacts found"
 
       - name: Save CI stats
-        env:
-          BROWSER_VERSION: ${{ needs.setup.outputs.browserVersion }}
         run: pnpm --filter @framework-performance/stats-generator save:ci-stats "$GITHUB_WORKSPACE/artifacts"
 
       - name: Format

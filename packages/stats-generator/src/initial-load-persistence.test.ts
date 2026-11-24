@@ -19,7 +19,6 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
     app: { ...framework.app!, measurements: ['ssrInitialLoad' as const] },
   }
   const options = {
-    browserVersion: 'Google Chrome 156',
     validateOnly: true,
     frameworks: [configured],
   }
@@ -33,8 +32,9 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
       },
     ]),
   )
+  const previous = readBenchmarkResult('astro')!
   const artifact = {
-    frameworkVersion: readBenchmarkResult('astro')?.frameworkVersion,
+    frameworkVersion: previous.frameworkVersion,
     ssrInitialLoad: {
       name: 'ssrInitialLoad',
       project: 'app',
@@ -42,6 +42,19 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
     },
   }
   try {
+    mkdirSync(join(directory, 'prepared-results'))
+    writeFileSync(
+      join(directory, 'prepared-results', 'astro.json'),
+      JSON.stringify({
+        framework: 'astro',
+        frameworkVersion: previous.frameworkVersion,
+        frameworkReleasedAt: previous.frameworkReleasedAt,
+        projects: previous.projects,
+        timingMeasuredAt: previous.timingMeasuredAt,
+        runner: previous.runner,
+        browserVersion: 'Google Chrome 156',
+      }),
+    )
     await assert.rejects(
       processCIStats(directory, options),
       /Missing or invalid measurement artifact/,

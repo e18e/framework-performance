@@ -101,7 +101,7 @@ export function getFrameworkDependencyCountsFromPackageMetadata(
   }
 }
 
-function getFrameworkVersion(
+export function getFrameworkVersion(
   packageName: string,
   frameworkPackage: string,
 ): string | undefined {

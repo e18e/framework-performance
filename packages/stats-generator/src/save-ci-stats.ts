@@ -3,6 +3,7 @@ import {
   saveBenchmarkResult,
 } from '@framework-performance/results/storage'
 import {
+  BenchmarkCIResultSchema,
   BenchmarkResultSchema,
   DependencyCountBenchmark,
   type BenchmarkResult,
@@ -13,40 +14,22 @@ import { getSSRLoadPath } from './ssrLoad/config.ts'
 import { join } from 'node:path'
 import { getFrameworks } from './get-frameworks.ts'
 import { readFileSync } from 'node:fs'
-import { getPublishTimes } from './release-dates.ts'
-import { getPackageJsonDeps } from './utils.ts'
 import {
   benchmarkArtifacts,
   type BenchmarkArtifact,
 } from './benchmark-artifacts.ts'
 import type { FrameworkConfig } from './types.ts'
 
-const publishTimesCache = new Map<string, Promise<Record<string, string>>>()
-
-async function getReleasedAt(packageName: string, version: string) {
-  if (!publishTimesCache.has(packageName)) {
-    publishTimesCache.set(packageName, getPublishTimes(packageName))
-  }
-  const releasedAt = (await publishTimesCache.get(packageName)!)[version]
-  if (releasedAt == null)
-    throw new Error(`No publish time for ${packageName}@${version}`)
-  return releasedAt
-}
-
 export async function processCIStats(
   artifactsDir: string,
   {
     validateOnly = false,
     frameworks: configuredFrameworks,
-    browserVersion = process.env.BROWSER_VERSION,
   }: {
     validateOnly?: boolean
     frameworks?: FrameworkConfig[]
-    browserVersion?: string
   } = {},
 ) {
-  const timingMeasuredAt = new Date().toISOString()
-  const runner = process.env.RUNNER_LABEL || 'local'
   const frameworks = configuredFrameworks ?? (await getFrameworks())
   const results = new Map<string, BenchmarkResult>()
 
@@ -54,19 +37,22 @@ export async function processCIStats(
     const previous = readBenchmarkResult(framework.name)
     const fresh: Record<string, unknown> = {}
     const dependencyCounts: Record<string, unknown> = {}
-    const artifactVersions = new Map<string, string>()
-    const projects: Partial<
-      Record<'starter' | 'app', BenchmarkResult['projects']['app']>
-    > = { ...previous?.projects }
+    const prepared = BenchmarkCIResultSchema.parse(
+      JSON.parse(
+        readFileSync(
+          join(artifactsDir, 'prepared-results', `${framework.name}.json`),
+          'utf8',
+        ),
+      ),
+    )
+    if (prepared.framework !== framework.name)
+      throw new Error(
+        `Expected prepared result for ${framework.name}, got ${prepared.framework}`,
+      )
 
     for (const project of ['starter', 'app'] as const) {
       const target = framework[project]
       if (!target) continue
-      projects[project] = {
-        path: `packages/${target.package}` as BenchmarkResult['projects']['app']['path'],
-        packageJson: getPackageJsonDeps(target.package),
-      }
-
       for (const [
         measurement,
         folder,
@@ -89,9 +75,12 @@ export async function processCIStats(
         }
 
         for (const [key, value] of Object.entries(artifact)) {
-          if (key === 'frameworkVersion')
-            artifactVersions.set(folder, String(value))
-          else if (key === 'dependencyCounts')
+          if (key === 'frameworkVersion') {
+            if (value !== prepared.frameworkVersion)
+              throw new Error(
+                `Framework version mismatch in ${file}: expected ${prepared.frameworkVersion}, got ${value}`,
+              )
+          } else if (key === 'dependencyCounts')
             Object.assign(dependencyCounts, value)
           else if (key === 'starterNodeModuleSize')
             dependencyCounts[key] = value
@@ -105,20 +94,6 @@ export async function processCIStats(
       !framework.starter?.measurements.length
     )
       continue
-    const versions = new Set(artifactVersions.values())
-    if (versions.size > 1) {
-      const details = [...artifactVersions]
-        .map(([artifact, version]) => `${artifact}=${version}`)
-        .join(', ')
-      throw new Error(
-        `Measurement artifacts disagree on framework version for ${framework.name}: ${details}`,
-      )
-    }
-    const frameworkVersion = [...versions][0] ?? previous?.frameworkVersion
-    if (!frameworkVersion || frameworkVersion === 'unknown')
-      throw new Error(`No measured version for ${framework.name}`)
-
-    const sameVersion = frameworkVersion === previous?.frameworkVersion
     if (framework.starter?.measurements.includes('dependencies')) {
       fresh.dependencyCounts = DependencyCountBenchmark.parse({
         ...dependencyCounts,
@@ -139,16 +114,8 @@ export async function processCIStats(
       },
     }
     const assembled = BenchmarkResultSchema.parse({
+      ...prepared,
       ...fresh,
-      framework: framework.name,
-      frameworkVersion,
-      frameworkReleasedAt: sameVersion
-        ? previous.frameworkReleasedAt
-        : await getReleasedAt(framework.frameworkPackage, frameworkVersion),
-      browserVersion,
-      timingMeasuredAt,
-      runner,
-      projects,
       configuration,
     })
     results.set(
