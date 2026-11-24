@@ -13,6 +13,5 @@ export interface ServerSideRenderedBenchmarkResult {
   name: string
   displayName: string
   package: string
-  browserVersion: string
   serverSideRendered: z.infer<typeof SSRLighthouseBenchmark>
 }

@@ -46,8 +46,9 @@ Test use larger, 16-CPU runners, as described in their sections below.
   runs only the audits required for the published First Paint, First Contentful
   Paint, and interaction-latency measurements, and records the interaction's
   trace for work to commit.
-- **Recorded environment:** Results include runner details and the measured
-  framework version; browser results also include the Chrome version used. Any benchmark that runs multiple itterations record mean, median, minimum, and maximum.
+- **Recorded environment:** Results record the default runner and the Chrome version from benchmark setup.
+  The two SSR load benchmarks record their larger runner on the measurement. Results also
+  include the measured framework version and summary statistics for repeated runs.
 
 ### Framework Build Tools and Adapters
 

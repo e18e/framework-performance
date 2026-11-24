@@ -23,7 +23,6 @@ import { isDeepStrictEqual } from 'node:util'
 import { benchmarkOutputPath, readJsonFile, writeJsonFile } from './utils.ts'
 
 const version = z.object({ frameworkVersion: z.string().min(1) })
-const browser = version.extend({ browserVersion: z.string().min(1) })
 
 const throughput = SSRThroughputBenchmark.refine(
   ({ requests, iterations }) =>
@@ -245,19 +244,19 @@ export const benchmarkArtifacts = [
     'csrLighthouse',
     'client-side-rendered',
     'ci-stats.json',
-    browser.extend({ csrLighthouse }),
+    version.extend({ csrLighthouse }),
   ],
   [
     'ssrLighthouse',
     'server-side-rendered',
     'ci-stats.json',
-    browser.extend({ ssrLighthouse }),
+    version.extend({ ssrLighthouse }),
   ],
   [
     'ssrInitialLoad',
     'initial-load',
     'ci-stats.json',
-    browser.extend({ ssrInitialLoad: SSRInitialLoadBenchmark }),
+    version.extend({ ssrInitialLoad: SSRInitialLoadBenchmark }),
   ],
 ] as const satisfies readonly (readonly [
   TestConfig['measurements'][number],
@@ -269,9 +268,7 @@ export const benchmarkArtifacts = [
 export type BenchmarkArtifact = z.output<(typeof benchmarkArtifacts)[number][3]>
 
 const runtimeArtifact = version.extend({
-  browserVersion: z.string().min(1).optional(),
   timingMeasuredAt: z.iso.datetime(),
-  runner: z.string().min(1),
   csrLighthouse: CSRLighthouseBenchmark.optional(),
   ssrLighthouse: SSRLighthouseBenchmark.optional(),
   ssrInitialLoad: SSRInitialLoadBenchmark.optional(),
@@ -295,7 +292,6 @@ export function writeRuntimeArtifact(
         previous.data),
       ...measurement,
       frameworkVersion,
-      runner: process.env.RUNNER_LABEL || 'local',
       timingMeasuredAt: new Date().toISOString(),
     }),
   )

@@ -120,7 +120,7 @@ async function main() {
       '--workdir',
       '/workspace',
       '--env',
-      'RUNNER_LABEL',
+      'RUNNER_OVERRIDE',
       '--env',
       `SSR_LOAD_TARGET_URL=http://${SERVER_NAME}:3003${getSSRLoadPath(packageName, getSSRLoadKind())}`,
       '--env',

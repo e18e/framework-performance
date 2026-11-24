@@ -297,6 +297,7 @@ const SSRLoadStageSummary = z.object({
 })
 
 export const SSRLoadBenchmark = BaseBenchmark.extend({
+  runner: z.string().min(1).optional(),
   project: z.literal('app'),
   name: z.literal('ssrLoad'),
   // Each iteration runs all seven connection stages in order.

@@ -16,7 +16,6 @@ async function main() {
   const result = await runClientSideRenderedBenchmark(packageName)
 
   writeRuntimeArtifact(packageName, frameworkVersion, {
-    browserVersion: result.browserVersion,
     csrLighthouse: result.clientSideRendered,
   })
 

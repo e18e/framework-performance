@@ -96,7 +96,6 @@ test('accepts results without interaction work but requires it in new artifacts'
   const parse = (value: unknown) =>
     artifact.safeParse({
       frameworkVersion: '1.0.0',
-      browserVersion: 'Chrome',
       csrLighthouse: value,
     }).success
   assert.equal(parse(result), true)

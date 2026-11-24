@@ -77,6 +77,8 @@ export function withSummaryVariance<T extends ComparisonMetadata>(
     const summaries = metricSummaries(value)
     const oldValue = previousRecord?.[test]
     const oldSummaries = metricSummaries(oldValue)
+    const runner = record(value)?.runner ?? current.runner
+    const previousRunner = record(oldValue)?.runner ?? previous?.runner
     for (const [path, summary] of summaries) {
       if (!measured.has(test)) continue
       delete summary.variance
@@ -86,8 +88,11 @@ export function withSummaryVariance<T extends ComparisonMetadata>(
         sameVersion &&
         baseline &&
         summary.unit === baseline.unit &&
-        current.runner === previous?.runner &&
-        (!browserTest || current.browserVersion === previous?.browserVersion) &&
+        runner === previousRunner &&
+        (!browserTest ||
+          (Boolean(current.browserVersion) &&
+            !current.browserVersion?.includes(',') &&
+            current.browserVersion === previous?.browserVersion)) &&
         isDeepStrictEqual(benchmarkIdentity(value), benchmarkIdentity(oldValue))
       if (!comparable) continue
       summary.variance = {

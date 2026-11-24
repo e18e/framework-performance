@@ -1,7 +1,6 @@
+import { findChromium } from '../find-chromium.ts'
 import { measurementsConfig } from '../measurements.ts'
 import { assembleClientRendering } from '../client-rendering.ts'
-import { existsSync, readdirSync } from 'node:fs'
-import { execFileSync } from 'node:child_process'
 import puppeteer from 'puppeteer-core'
 import { startFlow } from 'lighthouse'
 import { warmUpServer } from '../server-warmup.ts'
@@ -17,44 +16,6 @@ import type {
 } from './types.ts'
 
 const CLIENT_SIDE_RENDERED_PATH = measurementsConfig.csrLighthouse.path
-
-function findChromium(): string {
-  if (process.env.CHROME_PATH) return process.env.CHROME_PATH
-
-  const browsersPath = process.env.PLAYWRIGHT_BROWSERS_PATH
-  if (browsersPath && existsSync(browsersPath)) {
-    const chromiumDir = readdirSync(browsersPath).find((e) =>
-      e.startsWith('chromium-'),
-    )
-    if (chromiumDir) {
-      const chromePath = `${browsersPath}/${chromiumDir}/chrome-linux/chrome`
-      if (existsSync(chromePath)) return chromePath
-    }
-  }
-
-  const candidates = [
-    '/usr/bin/google-chrome',
-    '/usr/bin/chromium-browser',
-    '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
-  ]
-  for (const candidate of candidates) {
-    if (existsSync(candidate)) return candidate
-  }
-
-  throw new Error(
-    'Could not find Chromium/Chrome. Set the CHROME_PATH env var.',
-  )
-}
-
-function getBrowserVersion(chromiumPath: string): string | undefined {
-  try {
-    return execFileSync(chromiumPath, ['--version'], {
-      encoding: 'utf-8',
-    }).trim()
-  } catch {
-    return undefined
-  }
-}
 
 async function runOnce(
   url: string,
@@ -156,10 +117,6 @@ export async function runBenchmark(
 ): Promise<ClientSideRenderedBenchmarkResult> {
   const { runs } = measurementsConfig.csrLighthouse
   const chromiumPath = findChromium()
-  const browserVersion = getBrowserVersion(chromiumPath)
-  if (!browserVersion) {
-    throw new Error(`Could not read Chrome version from ${chromiumPath}`)
-  }
   const results: ClientSideRenderedRunResult[] = []
 
   console.info('  Warming the server list page before measurements...')
@@ -216,7 +173,6 @@ export async function runBenchmark(
     name: packageName,
     displayName,
     package: packageName,
-    browserVersion,
     clientSideRendered: assembleClientRendering(samples),
   }
 }

@@ -29,7 +29,10 @@ async function main() {
   const result = await runSSRLoadBenchmark(packageName)
 
   writeRuntimeArtifact(packageName, frameworkVersion, {
-    [result.tests.name]: result.tests,
+    [result.tests.name]: {
+      ...result.tests,
+      runner: process.env.RUNNER_OVERRIDE,
+    },
   })
 
   const sweep =

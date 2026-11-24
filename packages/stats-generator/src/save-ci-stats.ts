@@ -37,12 +37,12 @@ export async function processCIStats(
   artifactsDir: string,
   {
     validateOnly = false,
-    requireAllArtifacts = false,
     frameworks: configuredFrameworks,
+    browserVersion = process.env.BROWSER_VERSION,
   }: {
     validateOnly?: boolean
-    requireAllArtifacts?: boolean
     frameworks?: FrameworkConfig[]
+    browserVersion?: string
   } = {},
 ) {
   const timingMeasuredAt = new Date().toISOString()
@@ -55,11 +55,9 @@ export async function processCIStats(
     const fresh: Record<string, unknown> = {}
     const dependencyCounts: Record<string, unknown> = {}
     const artifactVersions = new Map<string, string>()
-    const browserVersions = new Set<string>()
     const projects: Partial<
       Record<'starter' | 'app', BenchmarkResult['projects']['app']>
     > = { ...previous?.projects }
-    const measuredConfigurations = new Set<keyof typeof measurementsConfig>()
 
     for (const project of ['starter', 'app'] as const) {
       const target = framework[project]
@@ -85,23 +83,14 @@ export async function processCIStats(
         try {
           artifact = schema.parse(JSON.parse(readFileSync(file, 'utf8')))
         } catch (error) {
-          if (
-            !requireAllArtifacts &&
-            error instanceof Error &&
-            'code' in error &&
-            error.code === 'ENOENT'
-          )
-            continue
           throw new Error(`Missing or invalid measurement artifact: ${file}`, {
             cause: error,
           })
         }
 
-        measuredConfigurations.add(measurement)
         for (const [key, value] of Object.entries(artifact)) {
           if (key === 'frameworkVersion')
             artifactVersions.set(folder, String(value))
-          else if (key === 'browserVersion') browserVersions.add(String(value))
           else if (key === 'dependencyCounts')
             Object.assign(dependencyCounts, value)
           else if (key === 'starterNodeModuleSize')
@@ -111,7 +100,11 @@ export async function processCIStats(
       }
     }
 
-    if (measuredConfigurations.size === 0) continue
+    if (
+      !framework.app?.measurements.length &&
+      !framework.starter?.measurements.length
+    )
+      continue
     const versions = new Set(artifactVersions.values())
     if (versions.size > 1) {
       const details = [...artifactVersions]
@@ -121,37 +114,22 @@ export async function processCIStats(
         `Measurement artifacts disagree on framework version for ${framework.name}: ${details}`,
       )
     }
-    const measuredBrowserVersions = [...browserVersions].sort().join(', ')
-    if (browserVersions.size > 1) {
-      console.warn(
-        `Different browser versions for ${framework.name}: ${measuredBrowserVersions}`,
-      )
-    }
     const frameworkVersion = [...versions][0] ?? previous?.frameworkVersion
     if (!frameworkVersion || frameworkVersion === 'unknown')
       throw new Error(`No measured version for ${framework.name}`)
 
     const sameVersion = frameworkVersion === previous?.frameworkVersion
-    const retained = !requireAllArtifacts && sameVersion ? previous : null
-    if (Object.keys(dependencyCounts).length > 0) {
-      const parsed = DependencyCountBenchmark.safeParse({
-        ...(retained?.framework !== 'baseline-html' &&
-          retained?.dependencyCounts),
+    if (framework.starter?.measurements.includes('dependencies')) {
+      fresh.dependencyCounts = DependencyCountBenchmark.parse({
         ...dependencyCounts,
         name: 'dependencyCount',
         project: 'starter',
       })
-      if (parsed.success) fresh.dependencyCounts = parsed.data
-      else if (
-        requireAllArtifacts &&
-        framework.starter?.measurements.includes('dependencies')
-      )
-        throw parsed.error
     }
 
     const { plainLinksPath: _plainLinksPath, ...ssrLoad } =
       measurementsConfig.ssrLoad
-    const currentConfiguration = {
+    const configuration = {
       ...measurementsConfig,
       ssrLoad: {
         ...ssrLoad,
@@ -160,40 +138,22 @@ export async function processCIStats(
           : ssrLoad.path,
       },
     }
-    const configuration = retained
-      ? { ...retained.configuration }
-      : currentConfiguration
-    if (retained) {
-      for (const measurement of measuredConfigurations) {
-        configuration[measurement] = currentConfiguration[measurement]
-      }
-    }
     const assembled = BenchmarkResultSchema.parse({
-      ...retained,
       ...fresh,
       framework: framework.name,
       frameworkVersion,
       frameworkReleasedAt: sameVersion
         ? previous.frameworkReleasedAt
         : await getReleasedAt(framework.frameworkPackage, frameworkVersion),
-      browserVersion:
-        measuredBrowserVersions ||
-        (retained?.framework === 'baseline-html'
-          ? undefined
-          : retained?.browserVersion),
+      browserVersion,
       timingMeasuredAt,
       runner,
       projects,
       configuration,
     })
-    // A combined browser label cannot establish that each Lighthouse job used the same browser as before.
-    const comparisonBaseline =
-      previous && browserVersions.size > 1
-        ? { ...previous, browserVersion: undefined }
-        : previous
     results.set(
       framework.name,
-      withSummaryVariance(assembled, comparisonBaseline, Object.keys(fresh)),
+      withSummaryVariance(assembled, previous, Object.keys(fresh)),
     )
   }
 
@@ -210,7 +170,6 @@ if (import.meta.main) {
   const args = process.argv.slice(2)
   processCIStats(args.find((arg) => !arg.startsWith('--')) ?? 'artifacts', {
     validateOnly: args.includes('--validate-only'),
-    requireAllArtifacts: args.includes('--require-all-artifacts'),
   }).catch((error) => {
     console.error('Failed to process CI stats:', error)
     process.exitCode = 1

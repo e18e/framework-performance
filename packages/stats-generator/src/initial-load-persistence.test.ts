@@ -19,8 +19,8 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
     app: { ...framework.app!, measurements: ['ssrInitialLoad' as const] },
   }
   const options = {
+    browserVersion: 'Google Chrome 156',
     validateOnly: true,
-    requireAllArtifacts: true,
     frameworks: [configured],
   }
   const path = join(directory, 'initial-load-stats-astro', 'ci-stats.json')
@@ -35,7 +35,6 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
   )
   const artifact = {
     frameworkVersion: readBenchmarkResult('astro')?.frameworkVersion,
-    browserVersion: 'Chrome/156',
     ssrInitialLoad: {
       name: 'ssrInitialLoad',
       project: 'app',
@@ -52,6 +51,7 @@ test('CI requires, validates, and preserves initial load artifacts', async () =>
     const results = await processCIStats(directory, options)
     const result = results.get('astro')
     assert.ok(result && result.framework !== 'baseline-html')
+    assert.equal(result.browserVersion, 'Google Chrome 156')
     assert.deepEqual(result.ssrInitialLoad, artifact.ssrInitialLoad)
     assert.equal(result.frameworkVersion, artifact.frameworkVersion)
     writeFileSync(path, JSON.stringify({ ...artifact, ssrInitialLoad: {} }))

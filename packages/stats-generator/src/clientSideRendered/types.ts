@@ -14,6 +14,5 @@ export interface ClientSideRenderedBenchmarkResult {
   name: string
   displayName: string
   package: string
-  browserVersion: string
   clientSideRendered: z.infer<typeof CSRLighthouseBenchmark>
 }

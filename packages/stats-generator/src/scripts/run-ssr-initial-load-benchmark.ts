@@ -14,7 +14,6 @@ async function main() {
   )
 
   writeRuntimeArtifact(packageName, frameworkVersion, {
-    browserVersion: result.browserVersion,
     ssrInitialLoad: result.initialLoad,
   })
 

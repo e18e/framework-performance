@@ -70,7 +70,6 @@ export async function runBenchmark(url: string) {
       )
     }
     return {
-      browserVersion: await browser.version(),
       initialLoad: parseResourceSummary(
         lhr.audits['resource-summary']?.details,
       ),

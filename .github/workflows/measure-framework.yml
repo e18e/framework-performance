@@ -1,7 +1,7 @@
 name: Framework benchmarks
 
 env:
-  RUNNER_LABEL: 'Depot depot-ubuntu-24.04 GitHub Actions runner (2 CPUs, 8 GB RAM, 100 GB disk, 2 GB disk accelerator)'
+  CHROME_PATH: /usr/bin/google-chrome
 
 on:
   workflow_call:
@@ -299,7 +299,7 @@ jobs:
     if: inputs.ssrLoad != '[]'
     runs-on: depot-ubuntu-24.04-16
     env:
-      RUNNER_LABEL: 'Depot depot-ubuntu-24.04-16 GitHub Actions runner (16 CPUs, 64 GB RAM, 180 GB disk, 8 GB disk accelerator; server CPUs 0-11; Autocannon CPUs 12-15)'
+      RUNNER_OVERRIDE: 'Depot depot-ubuntu-24.04-16 GitHub Actions runner (16 CPUs, 64 GB RAM, 180 GB disk, 8 GB disk accelerator; server CPUs 0-11; Autocannon CPUs 12-15)'
     strategy:
       fail-fast: false
       matrix:
@@ -344,7 +344,7 @@ jobs:
     if: inputs.ssrLoadRouterLinks != '[]'
     runs-on: depot-ubuntu-24.04-16
     env:
-      RUNNER_LABEL: 'Depot depot-ubuntu-24.04-16 GitHub Actions runner (16 CPUs, 64 GB RAM, 180 GB disk, 8 GB disk accelerator; server CPUs 0-11; Autocannon CPUs 12-15)'
+      RUNNER_OVERRIDE: 'Depot depot-ubuntu-24.04-16 GitHub Actions runner (16 CPUs, 64 GB RAM, 180 GB disk, 8 GB disk accelerator; server CPUs 0-11; Autocannon CPUs 12-15)'
     strategy:
       fail-fast: false
       matrix:
@@ -416,9 +416,6 @@ jobs:
         working-directory: ./packages/${{ matrix.framework.package }}
         run: pnpm build
 
-      - name: Verify runner Chrome
-        run: google-chrome --version
-
       - name: Run client-side rendered benchmark
         run: pnpm --filter @framework-performance/stats-generator run:client-side-rendered ${{ matrix.framework.package }}
 
@@ -461,9 +458,6 @@ jobs:
       - name: Build app
         working-directory: ./packages/${{ matrix.framework.package }}
         run: pnpm build
-
-      - name: Verify runner Chrome
-        run: google-chrome --version
 
       - name: Run server-side rendered benchmark
         run: pnpm --filter @framework-performance/stats-generator run:server-side-rendered ${{ matrix.framework.package }}
@@ -509,9 +503,6 @@ jobs:
         env:
           COMPRESS_PUBLIC_ASSETS: 'true'
         run: pnpm build
-
-      - name: Verify runner Chrome
-        run: google-chrome --version
 
       - name: Run initial load benchmark
         run: pnpm --filter @framework-performance/stats-generator run:ssr-initial-load ${{ matrix.framework.package }}

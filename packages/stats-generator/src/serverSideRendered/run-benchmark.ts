@@ -1,7 +1,6 @@
-import { execFileSync } from 'node:child_process'
+import { findChromium } from '../find-chromium.ts'
 import puppeteer from 'puppeteer-core'
 import { startFlow } from 'lighthouse'
-import { findChromium } from '../find-chromium.ts'
 import { warmUpServer } from '../server-warmup.ts'
 import {
   getInteractionTimingFromLighthouse,
@@ -17,16 +16,6 @@ import { assembleServerRendering } from '../server-rendering.ts'
 import { measurementsConfig } from '../measurements.ts'
 
 const SERVER_SIDE_RENDERED_PATH = measurementsConfig.ssrLighthouse.path
-
-function getBrowserVersion(chromiumPath: string): string | undefined {
-  try {
-    return execFileSync(chromiumPath, ['--version'], {
-      encoding: 'utf-8',
-    }).trim()
-  } catch {
-    return undefined
-  }
-}
 
 async function runOnce(
   url: string,
@@ -130,10 +119,6 @@ export async function runBenchmark(
 ): Promise<ServerSideRenderedBenchmarkResult> {
   const { runs } = measurementsConfig.ssrLighthouse
   const chromiumPath = findChromium()
-  const browserVersion = getBrowserVersion(chromiumPath)
-  if (!browserVersion) {
-    throw new Error(`Could not read Chrome version from ${chromiumPath}`)
-  }
   const results: ServerSideRenderedRunResult[] = []
 
   console.info(
@@ -192,7 +177,6 @@ export async function runBenchmark(
     name: packageName,
     displayName,
     package: packageName,
-    browserVersion,
     serverSideRendered: assembleServerRendering(samples),
   }
 }
