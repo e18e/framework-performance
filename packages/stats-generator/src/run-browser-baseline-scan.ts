@@ -85,14 +85,14 @@ async function stageBrowserBuildFiles(buildOutputPath: string) {
 }
 
 async function main() {
-  const { packageName, frameworkConfig } = await getBenchmarkContext(
+  const { packageName, projectConfig } = await getBenchmarkContext(
     'Usage: run-browser-baseline-scan <package-name>\nExample: run-browser-baseline-scan starter-astro',
   )
 
   const buildOutputPath = join(
     packagesDir,
     packageName,
-    frameworkConfig.browserBuildOutputDir ?? frameworkConfig.buildOutputDir,
+    projectConfig.browserBuildOutputDir ?? projectConfig.buildOutputDir,
   )
   const { scanDir, copiedFileCount } =
     await stageBrowserBuildFiles(buildOutputPath)

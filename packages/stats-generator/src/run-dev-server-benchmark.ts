@@ -94,13 +94,13 @@ async function measureStartTime(
 }
 
 async function main() {
-  const { packageName, framework, frameworkConfig } = await getBenchmarkContext(
+  const { packageName, framework, projectConfig } = await getBenchmarkContext(
     'Usage: run-dev-server-benchmark <package-name>\nExample: run-dev-server-benchmark starter-astro',
   )
 
   const runFrequency = measurementsConfig.devServer.runs
 
-  const port = frameworkConfig.devServerPort
+  const port = projectConfig.devServerPort
   if (port === undefined) {
     throw new Error(
       `${packageName} has no devServerPort in packages/stats-generator/src/frameworks.ts`,

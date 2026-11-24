@@ -46,7 +46,7 @@ function getBuildOutputPath(
 }
 
 async function main() {
-  const { packageName, framework, frameworkConfig } = await getBenchmarkContext(
+  const { packageName, framework, projectConfig } = await getBenchmarkContext(
     'Usage: run-build-benchmark <package-name>\nExample: run-build-benchmark starter-astro',
   )
 
@@ -86,7 +86,7 @@ async function main() {
       console.info('Cold build...')
       const coldBuildTimeMs = measureBuildTime(
         projectDir,
-        frameworkConfig.buildScript,
+        projectConfig.buildScript,
       )
       coldBuildTimesMs.push(coldBuildTimeMs)
       console.info(`  Cold build time: ${coldBuildTimeMs}ms`)
@@ -94,7 +94,7 @@ async function main() {
       console.info('\nWarm build...')
       const warmBuildTimeMs = measureBuildTime(
         projectDir,
-        frameworkConfig.buildScript,
+        projectConfig.buildScript,
       )
       warmBuildTimesMs.push(warmBuildTimeMs)
       console.info(`  Warm build time: ${warmBuildTimeMs}ms`)
@@ -105,7 +105,7 @@ async function main() {
 
     const finalBuildOutputPath = getBuildOutputPath(
       finalProjectDir,
-      frameworkConfig.buildOutputDir,
+      projectConfig.buildOutputDir,
     )
     const coldBuildTime = summarizeSamples(coldBuildTimesMs)
     console.info(`\nAvg cold build time: ${coldBuildTime.avgMs} ms`)
@@ -130,7 +130,7 @@ async function main() {
 
     const buildOutputPath = getBuildOutputPath(
       packageDir,
-      frameworkConfig.buildOutputDir,
+      projectConfig.buildOutputDir,
     )
     rmSync(buildOutputPath, { recursive: true, force: true })
     cpSync(finalBuildOutputPath, buildOutputPath, { recursive: true })

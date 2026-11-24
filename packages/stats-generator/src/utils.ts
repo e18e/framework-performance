@@ -137,15 +137,15 @@ function getFrameworkVersion(
 /** Find the framework and benchmark config for a starter or app package. */
 async function getFrameworkByPackage(
   packageName: string,
-): Promise<{ framework: FrameworkConfig; frameworkConfig: TestConfig }> {
+): Promise<{ framework: FrameworkConfig; projectConfig: TestConfig }> {
   const frameworks = await getFrameworks()
 
   for (const framework of frameworks) {
     if (framework.starter?.package === packageName) {
-      return { framework, frameworkConfig: framework.starter }
+      return { framework, projectConfig: framework.starter }
     }
     if (framework.app?.package === packageName) {
-      return { framework, frameworkConfig: framework.app }
+      return { framework, projectConfig: framework.app }
     }
   }
 
@@ -161,12 +161,11 @@ export async function getBenchmarkContext(usage: string) {
     process.exit(1)
   }
 
-  const { framework, frameworkConfig } =
-    await getFrameworkByPackage(packageName)
+  const { framework, projectConfig } = await getFrameworkByPackage(packageName)
   return {
     packageName,
     framework,
-    frameworkConfig,
+    projectConfig,
     get frameworkVersion() {
       return getFrameworkVersion(packageName, framework.frameworkPackage)
     },

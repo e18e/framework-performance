@@ -41,7 +41,7 @@ function extractVersion(source: string): string {
 }
 
 async function main() {
-  const { packageName, framework, frameworkConfig } = await getBenchmarkContext(
+  const { packageName, framework, projectConfig } = await getBenchmarkContext(
     'Usage: run-corejs-scan <package-name>\nExample: run-corejs-scan starter-next-js',
   )
 
@@ -52,7 +52,7 @@ async function main() {
   const buildOutputPath = join(
     packagesDir,
     packageName,
-    frameworkConfig.buildOutputDir,
+    projectConfig.buildOutputDir,
   )
   const jsFiles = await glob('**/*.{js,mjs}', {
     cwd: buildOutputPath,
