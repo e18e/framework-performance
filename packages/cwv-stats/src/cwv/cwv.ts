@@ -12,13 +12,15 @@ import {
 } from '../httparchive/httparchive.ts'
 
 // httparchive allows us to pull FID but does not include any metrics at this current time so we can ignore it.
+// we are also excluding experimental soft navigation metrics until we know what to do with them.
+type CWVExclude = 'FID' | 'overall_sn' | 'LCP_sn' | 'CLS_sn' | 'INP_sn'
 type FrameworkCWV = {
   id: FrameworkPackage
   name: FrameworkName
   package: FrameworkPackage
   date: string
 } & {
-  [cwv in Lowercase<Exclude<HTTPArchiveCWV, 'FID'>>]: {
+  [cwv in Lowercase<Exclude<HTTPArchiveCWV, CWVExclude>>]: {
     mobile: number
     desktop: number
   }
