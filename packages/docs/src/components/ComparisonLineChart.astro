@@ -9,27 +9,11 @@ const { title, description, xValues, scale, series, valueFormat } = Astro.props
 const chartPayload = JSON.stringify(Astro.props)
 const scaleConfig = lineChartScales[scale]
 const tableLabel = `${title} by ${scaleConfig.label.toLowerCase()}`
-
-function seriesColorVars(
-  color: LineComparisonChartPayload['series'][number]['color'],
-) {
-  return `--series-dark: ${color.dark}; --series-light: ${color.light ?? color.dark}`
-}
 ---
 
 <figure class="comparison-line-chart">
   {description ? <p>{description}</p> : null}
 
-  <ul class="comparison-line-chart-legend" aria-hidden="true">
-    {
-      series.map((s) => (
-        <li data-variant={s.variant} style={seriesColorVars(s.color)}>
-          <span class="comparison-line-chart-swatch" />
-          {s.name}
-        </li>
-      ))
-    }
-  </ul>
   <div
     class="comparison-line-chart-wrapper"
     data-comparison-line={chartPayload}
@@ -82,45 +66,44 @@ function seriesColorVars(
     color: var(--ft-muted);
   }
 
-  .comparison-line-chart-legend {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.35rem 1rem;
-    margin: 0.75rem 0 0;
-    padding: 0;
-    list-style: none;
-    color: var(--ft-muted);
-  }
-
-  .comparison-line-chart-legend li {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.4rem;
+  /* Starlight spaces out sibling content elements */
+  .comparison-line-chart-wrapper :global(.ts-chart__interactive-legend),
+  .comparison-line-chart-wrapper :global([data-chart-legend-key]) {
     margin: 0;
   }
 
-  .comparison-line-chart-legend li {
-    --series-color: var(--series-dark, var(--ft-muted));
+  /* The chart's legend sets inline styles, so these need !important */
+  .comparison-line-chart-wrapper :global([data-chart-legend-key]) {
+    justify-content: flex-start !important;
+    padding: 0 !important;
+    border: none !important;
+    background: none !important;
+    color: var(--ft-muted) !important;
+    font-family: inherit !important;
+    font-weight: 400 !important;
   }
 
-  :global(:root[data-theme='light']) .comparison-line-chart-legend li {
-    --series-color: var(--series-light, var(--ft-muted));
+  .comparison-line-chart-wrapper :global([data-chart-legend-key]:hover),
+  .comparison-line-chart-wrapper
+    :global([data-chart-legend-key]:focus-visible) {
+    color: var(--ft-text, #1f2933) !important;
   }
 
-  .comparison-line-chart-swatch {
-    flex-shrink: 0;
-    width: 10px;
-    height: 10px;
-    background: var(--series-color);
-    border-radius: 2px;
+  .comparison-line-chart-wrapper
+    :global([data-chart-legend-key][data-visible='false']) {
+    opacity: 0.6;
   }
 
-  .comparison-line-chart-legend
-    li[data-variant='segmented']
-    .comparison-line-chart-swatch {
-    box-sizing: border-box;
-    background: none;
-    border: 2px dashed var(--series-color);
+  .comparison-line-chart-wrapper :global([data-chart-legend-swatch]) {
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 2px !important;
+  }
+
+  .comparison-line-chart-wrapper
+    :global([data-variant='segmented'] [data-chart-legend-swatch]) {
+    border-style: dashed !important;
+    background: none !important;
   }
 
   .comparison-line-chart-wrapper {
@@ -161,8 +144,11 @@ function seriesColorVars(
     type ChartHost,
   } from '@tanstack/charts'
   import { d3Curve } from '@tanstack/charts/d3/shape'
+  import { controlledSignal } from '@tanstack/charts/interaction/signal'
+  import { interactiveColorLegend } from '@tanstack/charts/legend'
   import { decorative } from '@tanstack/charts/mark/decorative'
   import { scaleLinear } from '@tanstack/charts/scales/linear'
+  import { scaleOrdinal } from '@tanstack/charts/scales/ordinal'
   import { tooltip } from '@tanstack/charts/tooltip'
   import { curveMonotoneX } from 'd3-shape'
   import { SHARED_CHART_HEIGHT, formatValue } from '../lib/chart'
@@ -174,7 +160,7 @@ function seriesColorVars(
   } from '../lib/line-chart-config'
   import type { LineComparisonChartPayload } from '../lib/types'
 
-  type Row = LineChartRow & { stroke: string }
+  type Row = LineChartRow
   type Series = LineComparisonChartPayload['series'][number]
 
   const SEGMENTED_DASHARRAY = '5 4'
@@ -188,6 +174,7 @@ function seriesColorVars(
     transition: { type: 'tween', duration: 120, easing: 'ease-out' },
   } as const
   const hosts = new WeakMap<HTMLElement, ChartHost<Row, number, number>>()
+  const visibleSeries = new WeakMap<HTMLElement, readonly string[]>()
 
   function getCssVar(name: string, fallback: string) {
     return (
@@ -237,7 +224,6 @@ function seriesColorVars(
             xPos: scale.getX(point.x, payload.xValues),
             y: point.value == null ? null : scale.getY(point.value),
             name: s.name,
-            stroke: s.stroke,
           })),
         )
     const solidRows = toRows('solid')
@@ -261,8 +247,7 @@ function seriesColorVars(
     const solidLine = {
       x: 'xPos',
       y: 'y',
-      z: 'name',
-      stroke: (row: Row) => row.stroke,
+      color: 'name',
       strokeWidth: 2,
       curve: CURVE,
     } as const
@@ -323,8 +308,9 @@ function seriesColorVars(
       }),
     ]
 
+    const visible = visibleSeries.get(wrapper) ?? styled.map((s) => s.name)
+
     const definition = defineChart({
-      margin: { top: 12 },
       focus: tooltipConfig.focus,
       focusRing: false,
       marks: [
@@ -374,6 +360,20 @@ function seriesColorVars(
           },
         },
       },
+      color: {
+        scale: scaleOrdinal<string, string>()
+          .domain(styled.map((s) => s.name))
+          .range(styled.map((s) => s.stroke)),
+        legend: interactiveColorLegend({
+          visible: controlledSignal(visible, (next) => {
+            visibleSeries.set(wrapper, next)
+            initChart(wrapper)
+          }),
+          hover: 'series',
+          placement: 'top',
+          ariaLabel: `${payload.title} series`,
+        }),
+      },
       tooltip: {
         use: tooltip,
         ...tooltipConfig.position,
@@ -406,6 +406,14 @@ function seriesColorVars(
         ),
       )
     }
+
+    // The legend can't style segmented series differently on its own
+    const variants = new Map(styled.map((s) => [s.name, s.variant]))
+    wrapper
+      .querySelectorAll<HTMLElement>('[data-chart-legend-value]')
+      .forEach((button) => {
+        button.dataset.variant = variants.get(button.dataset.chartLegendValue!)
+      })
   }
 
   function initCharts() {
