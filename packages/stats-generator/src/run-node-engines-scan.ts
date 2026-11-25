@@ -5,6 +5,7 @@ import { packagesDir } from './constants.ts'
 import {
   benchmarkOutputPath,
   getBenchmarkContext,
+  requireMeasurements,
   writeJsonFile,
 } from './utils.ts'
 import { resolveMinimumNodeVersion } from './node-engines.ts'
@@ -102,9 +103,10 @@ function collectNestedPackageDirs(nodeModulesDir: string): string[] {
 }
 
 async function main() {
-  const { packageName, framework } = await getBenchmarkContext(
-    'Usage: run-node-engines-scan <package-name>\nExample: run-node-engines-scan starter-next-js',
-  )
+  const { packageName, framework } = await getBenchmarkContext({
+    project: 'starter',
+  })
+  requireMeasurements(framework, ['minimumNodeVersion'])
 
   console.info(
     `Scanning installed dependencies for engines.node in ${framework.displayName} (${packageName})...\n`,

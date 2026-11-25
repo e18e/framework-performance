@@ -3,7 +3,7 @@ import { spawn } from 'node:child_process'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { packagesDir } from '../constants.ts'
-import { getFrameworks } from '../get-frameworks.ts'
+import type { FrameworkConfig, TestConfig } from '../types.ts'
 import { getHost } from '../serve/common.ts'
 import { runBenchmark } from './run-benchmark.ts'
 import type { ClientSideRenderedBenchmarkResult } from './types.ts'
@@ -80,27 +80,17 @@ async function spawnServer(
 }
 
 export async function runClientSideRenderedBenchmark(
-  packageName: string,
+  framework: FrameworkConfig,
+  app: TestConfig,
 ): Promise<ClientSideRenderedBenchmarkResult> {
-  const frameworks = (await getFrameworks()).filter(({ measurements }) =>
-    measurements.includes('csrLighthouse'),
-  )
-  const framework = frameworks.find(({ app }) => app?.package === packageName)
-  const app = framework?.app
-
-  if (!framework || !app) {
-    throw new Error(
-      `Unknown client-side rendered package: ${packageName}. Available: ${frameworks.map(({ app }) => app?.package).join(', ')}`,
-    )
-  }
   if (!app.serveScript) {
-    throw new Error(`Serve script is not configured for ${packageName}`)
+    throw new Error(`Serve script is not configured for ${app.package}`)
   }
 
   const name = `${app.benchmarkName ?? framework.name}-client-side-rendered`
   const displayName = `${framework.displayName} Client Side Rendered`
   console.info(`Starting server for ${displayName}...`)
-  const killServer = await spawnServer(packageName, app.serveScript)
+  const killServer = await spawnServer(app.package, app.serveScript)
 
   try {
     console.info(`Running client-side rendered benchmark for ${displayName}...`)

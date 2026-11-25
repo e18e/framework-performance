@@ -2,40 +2,14 @@ import { spawn } from 'node:child_process'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { packagesDir } from '../constants.ts'
-import { frameworksConfig } from '../frameworks.ts'
-import type { FrameworkConfig } from '../types.ts'
+import type { FrameworkConfig, TestConfig } from '../types.ts'
 import { getHost, getPort } from '../serve/common.ts'
 import { runLoadTest } from './run-load-test.ts'
 import type { SSRLoadBenchmarkResult } from './types.ts'
 
-import { getSSRLoadKind, getSSRLoadPath } from './config.ts'
 import { verifySSRLoadTable } from './verify-table.ts'
 
 export const DEFAULT_SSR_LOAD_PORT = 3003
-
-const frameworks: FrameworkConfig[] = frameworksConfig
-
-export function supportsSSRLoadBenchmark(packageName: string): boolean {
-  return frameworks.some(
-    ({ app, measurements }) =>
-      app?.package === packageName && measurements.includes('ssrLoad'),
-  )
-}
-
-function requireFrameworkConfig(packageName: string) {
-  const eligible = frameworks.filter(({ measurements }) =>
-    measurements.includes('ssrLoad'),
-  )
-  const framework = eligible.find(({ app }) => app?.package === packageName)
-  const app = framework?.app
-
-  if (!framework || !app) {
-    throw new Error(
-      `Unknown SSR load package: ${packageName}. Available: ${eligible.map(({ app }) => app?.package).join(', ')}`,
-    )
-  }
-  return { framework, app }
-}
 
 async function waitForServer(url: string, timeoutMs = 30_000): Promise<void> {
   const deadline = Date.now() + timeoutMs
@@ -55,14 +29,13 @@ async function waitForServer(url: string, timeoutMs = 30_000): Promise<void> {
 }
 
 export async function startSSRLoadServer(
-  packageName: string,
+  app: TestConfig,
+  path: string,
 ): Promise<() => void> {
-  const { app } = requireFrameworkConfig(packageName)
   if (!app.serveScript) {
-    throw new Error(`Serve script is not configured for ${packageName}`)
+    throw new Error(`Serve script is not configured for ${app.package}`)
   }
-  const path = getSSRLoadPath(packageName, getSSRLoadKind())
-  return spawnServer(packageName, app.serveScript, path)
+  return spawnServer(app.package, app.serveScript, path)
 }
 
 async function spawnServer(
@@ -121,13 +94,13 @@ async function spawnServer(
 }
 
 export async function runSSRLoadBenchmark(
-  packageName: string,
+  framework: FrameworkConfig,
+  app: TestConfig,
+  measuredPath: string,
 ): Promise<SSRLoadBenchmarkResult> {
-  const { framework, app } = requireFrameworkConfig(packageName)
   const name = `${app.benchmarkName ?? framework.name}-ssr-load`
   const displayName = `${framework.displayName} SSR Load`
 
-  const measuredPath = getSSRLoadPath(packageName, getSSRLoadKind())
   const remoteUrl = process.env.SSR_LOAD_TARGET_URL
   if (remoteUrl) {
     const url = new URL(remoteUrl)
@@ -142,7 +115,7 @@ export async function runSSRLoadBenchmark(
     return {
       name,
       displayName,
-      package: packageName,
+      package: app.package,
       tests: await runLoadTest(url.toString()),
     }
   }
@@ -151,7 +124,7 @@ export async function runSSRLoadBenchmark(
   const port = getPort(DEFAULT_SSR_LOAD_PORT)
   const url = `http://${host}:${port}${measuredPath}`
   console.info(`Starting server for ${displayName}...`)
-  const killServer = await startSSRLoadServer(packageName)
+  const killServer = await startSSRLoadServer(app, measuredPath)
 
   try {
     verifySSRLoadTable(await (await fetch(url)).text())
@@ -159,7 +132,7 @@ export async function runSSRLoadBenchmark(
     return {
       name,
       displayName,
-      package: packageName,
+      package: app.package,
       tests: await runLoadTest(url),
     }
   } finally {

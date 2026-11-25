@@ -3,16 +3,18 @@ import { measurementsConfig } from '../measurements.ts'
 import {
   benchmarkOutputPath,
   getBenchmarkContext,
+  requireMeasurements,
   writeJsonFile,
 } from '../utils.ts'
 
 async function main() {
-  const { packageName, frameworkVersion } = await getBenchmarkContext(
-    'Usage: run-ssr-initial-load-benchmark <package-name> \nExample: run-ssr-initial-load-benchmark app-astro',
-  )
+  const { packageName, framework, projectConfig, frameworkVersion } =
+    await getBenchmarkContext({ project: 'app' })
+  requireMeasurements(framework, ['ssrInitialLoad'])
 
   const result = await runInitialLoadBenchmark(
-    packageName,
+    framework,
+    projectConfig,
     measurementsConfig.ssrInitialLoad.path,
   )
 

@@ -9,6 +9,7 @@ import {
   benchmarkOutputPath,
   writeJsonFile,
   getBenchmarkContext,
+  requireMeasurements,
 } from './utils.ts'
 import { createBuildStats } from './build-statistics.ts'
 import { summarizeSamples } from './sample-statistics.ts'
@@ -46,9 +47,10 @@ function getBuildOutputPath(
 }
 
 async function main() {
-  const { packageName, framework, projectConfig } = await getBenchmarkContext(
-    'Usage: run-build-benchmark <package-name>\nExample: run-build-benchmark starter-astro',
-  )
+  const { packageName, framework, projectConfig } = await getBenchmarkContext({
+    project: 'starter',
+  })
+  requireMeasurements(framework, ['buildDuration', 'coreJS', 'browserBaseline'])
 
   const runFrequency = measurementsConfig.build.runs
 

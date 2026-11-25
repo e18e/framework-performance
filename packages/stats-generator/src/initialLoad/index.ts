@@ -1,4 +1,4 @@
-import { getFrameworks } from '../get-frameworks.ts'
+import type { FrameworkConfig, TestConfig } from '../types.ts'
 import { startBenchmarkServer } from '../benchmark-server.ts'
 import { getHost } from '../serve/common.ts'
 import { runBenchmark } from './run-benchmark.ts'
@@ -7,27 +7,17 @@ const INITIAL_LOAD_HOST = getHost()
 const INITIAL_LOAD_PORT = 3003
 
 export async function runInitialLoadBenchmark(
-  packageName: string,
+  framework: FrameworkConfig,
+  app: TestConfig,
   path: string,
 ) {
-  const frameworks = (await getFrameworks()).filter(({ measurements }) =>
-    measurements.includes('ssrInitialLoad'),
-  )
-  const framework = frameworks.find(({ app }) => app?.package === packageName)
-  const app = framework?.app
-
-  if (!framework || !app) {
-    throw new Error(
-      `Unknown initial load package: ${packageName}. Available: ${frameworks.map(({ app }) => app?.package).join(', ')}`,
-    )
-  }
   if (!app.serveScript) {
-    throw new Error(`Serve script is not configured for ${packageName}`)
+    throw new Error(`Serve script is not configured for ${app.package}`)
   }
 
   console.info(`Starting server for ${framework.displayName}...`)
   const killServer = await startBenchmarkServer(
-    { package: packageName, serveScript: app.serveScript },
+    { package: app.package, serveScript: app.serveScript },
     {
       host: INITIAL_LOAD_HOST,
       port: INITIAL_LOAD_PORT,
