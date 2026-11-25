@@ -126,6 +126,7 @@ const { title, series, data, valueFormat = 'kb', ...attrs } = Astro.props
     type ChartHost,
     type ChartRenderContext,
   } from '@tanstack/charts'
+  import { decorative } from '@tanstack/charts/mark/decorative'
   import { scaleBand } from '@tanstack/charts/scales/band'
   import { scaleLinear } from '@tanstack/charts/scales/linear'
   import { tooltip } from '@tanstack/charts/tooltip'
@@ -214,32 +215,43 @@ const { title, series, data, valueFormat = 'kb', ...attrs } = Astro.props
           margin: { left: 36, top: 12, bottom: 0 },
           focusRing: false,
           marks: [
+            rect(labels, {
+              x1: () => 0,
+              x2: 'total',
+              y: 'name',
+              fill: 'transparent',
+              inset: SHARED_BAR_INSET,
+            }),
             ...segments
               .filter((d) => d.value > 0)
               .map((d) =>
-                rect([d], {
-                  x1: 'start',
-                  x2: 'end',
-                  y: 'name',
-                  fill: d.color,
-                  inset: SHARED_BAR_INSET,
-                  radius: [
-                    d.start === 0 ? 8 : 0,
-                    d.end === d.total ? 8 : 0,
-                    d.end === d.total ? 8 : 0,
-                    d.start === 0 ? 8 : 0,
-                  ],
-                }),
+                decorative(
+                  rect([d], {
+                    x1: 'start',
+                    x2: 'end',
+                    y: 'name',
+                    fill: d.color,
+                    inset: SHARED_BAR_INSET,
+                    radius: [
+                      d.start === 0 ? 8 : 0,
+                      d.end === d.total ? 8 : 0,
+                      d.end === d.total ? 8 : 0,
+                      d.start === 0 ? 8 : 0,
+                    ],
+                  }),
+                ),
               ),
-            text(labels, {
-              x: 'total',
-              y: 'name',
-              text: (d) => format(d.total),
-              anchor: 'start',
-              dx: 10,
-              fill: muted,
-              fontWeight: 600,
-            }),
+            decorative(
+              text(labels, {
+                x: 'total',
+                y: 'name',
+                text: (d) => format(d.total),
+                anchor: 'start',
+                dx: 10,
+                fill: muted,
+                fontWeight: 600,
+              }),
+            ),
           ],
           scales: {
             x: {
