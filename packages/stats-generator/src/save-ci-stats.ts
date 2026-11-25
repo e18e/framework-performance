@@ -11,8 +11,15 @@ import { measurementsConfig } from './measurements.ts'
 import { getSSRLoadPath } from './ssrLoad/config.ts'
 import { join } from 'node:path'
 import { getFrameworks } from './get-frameworks.ts'
-import { globSync, readFileSync } from 'node:fs'
+import { globSync } from 'node:fs'
+import { readJsonFile } from './utils.ts'
 import type { FrameworkConfig } from './types.ts'
+
+function readArtifact<T = Record<string, unknown>>(file: string) {
+  const artifact = readJsonFile<T>(file)
+  if (artifact === null) throw new Error(`Invalid artifact: ${file}`)
+  return artifact
+}
 
 export async function processCIStats(
   artifactsDir: string,
@@ -31,15 +38,13 @@ export async function processCIStats(
     const previous = readBenchmarkResult(framework.name)
     const fresh: Record<string, unknown> = {}
     const dependencyCounts: Record<string, unknown> = {}
-    const prepared = JSON.parse(
-      readFileSync(
-        join(artifactsDir, 'prepared-results', `${framework.name}.json`),
-        'utf8',
-      ),
+    const preparedFile = join('prepared-results', `${framework.name}.json`)
+    const prepared = readArtifact<Omit<BenchmarkResult, 'configuration'>>(
+      join(artifactsDir, preparedFile),
     )
     if (prepared.framework !== framework.name)
       throw new Error(
-        `Expected prepared result for ${framework.name}, got ${prepared.framework}`,
+        `Expected ${framework.name} in ${preparedFile}, got ${prepared.framework}`,
       )
 
     for (const file of globSync(`*-stats-${framework.name}/*.json`, {
@@ -49,7 +54,7 @@ export async function processCIStats(
         frameworkVersion,
         dependencyCounts: counts,
         ...measurements
-      } = JSON.parse(readFileSync(join(artifactsDir, file), 'utf8'))
+      } = readArtifact(join(artifactsDir, file))
       if (
         frameworkVersion !== undefined &&
         frameworkVersion !== prepared.frameworkVersion

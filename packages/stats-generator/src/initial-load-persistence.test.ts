@@ -71,6 +71,11 @@ test('CI accepts absent initial load results and validates complete measurements
     assert.equal(result.frameworkVersion, artifact.frameworkVersion)
     writeFileSync(path, JSON.stringify({ ...artifact, ssrInitialLoad: {} }))
     await assert.rejects(processCIStats(directory, options))
+    writeFileSync(path, '{')
+    await assert.rejects(
+      processCIStats(directory, options),
+      /Invalid artifact: .*ssrInitialLoad-stats\.json/,
+    )
   } finally {
     rmSync(directory, { recursive: true, force: true })
   }
