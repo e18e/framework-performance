@@ -41,6 +41,23 @@ export type PackagePath = (typeof PackagePathOptions)[number]
 export const FrameworkProjectOptions = ['starter', 'app'] as const
 export type FrameworkProject = (typeof FrameworkProjectOptions)[number]
 
+export const MeasurementKeyOptions = [
+  'dependencyCounts',
+  'buildDuration',
+  'installDuration',
+  'devServerStartUpDuration',
+  'coreJS',
+  'browserBaseline',
+  'minimumNodeVersion',
+  'csrLighthouse',
+  'ssrLighthouse',
+  'ssrInitialLoad',
+  'ssrThroughput',
+  'ssrLoad',
+  'ssrLoadRouterLinks',
+] as const
+export type MeasurementKey = (typeof MeasurementKeyOptions)[number]
+
 export const BenchmarkUnitOptions = [
   'ms',
   'ops/s',

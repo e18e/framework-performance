@@ -8,7 +8,7 @@ import { readBenchmarkResult } from '@framework-performance/results/storage'
 import { frameworksConfig } from './frameworks.ts'
 import { processCIStats } from './save-ci-stats.ts'
 
-test('CI accepts absent initial load results and validates complete measurements', async () => {
+test('CI requires configured initial load results and validates complete measurements', async () => {
   const directory = mkdtempSync(join(tmpdir(), 'initial-load-ci-'))
   const framework = frameworksConfig.find(
     (framework) => framework.name === 'astro',
@@ -16,7 +16,7 @@ test('CI accepts absent initial load results and validates complete measurements
   const configured = {
     ...framework,
     starter: undefined,
-    app: { ...framework.app!, measurements: ['ssrInitialLoad' as const] },
+    measurements: ['ssrInitialLoad' as const],
   }
   const options = {
     validateOnly: true,
@@ -59,8 +59,10 @@ test('CI accepts absent initial load results and validates complete measurements
         browserVersion: 'Google Chrome 156',
       }),
     )
-    const empty = await processCIStats(directory, options)
-    assert.equal('ssrInitialLoad' in empty.get('astro')!, false)
+    await assert.rejects(
+      processCIStats(directory, options),
+      /Missing ssrInitialLoad for astro/,
+    )
     mkdirSync(join(directory, 'ssrInitialLoad-stats-astro'))
     writeFileSync(path, JSON.stringify(artifact))
     const results = await processCIStats(directory, options)

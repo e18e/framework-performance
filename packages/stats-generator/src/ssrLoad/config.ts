@@ -12,8 +12,9 @@ export function getSSRLoadKind(): SSRLoadKind {
 }
 export function getSSRLoadPath(packageName: string, kind: SSRLoadKind): string {
   const frameworks: FrameworkConfig[] = frameworksConfig
-  const app = frameworks.find(({ app }) => app?.package === packageName)?.app
-  const supportsRouterLinks = app?.measurements.includes('ssrLoadRouterLinks')
+  const framework = frameworks.find(({ app }) => app?.package === packageName)
+  const supportsRouterLinks =
+    framework?.measurements.includes('ssrLoadRouterLinks')
   if (kind === 'ssrLoadRouterLinks' && !supportsRouterLinks)
     throw new Error(`Router link load is not supported for ${packageName}`)
   return kind === 'ssrLoad' && supportsRouterLinks

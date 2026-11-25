@@ -82,8 +82,8 @@ async function spawnServer(
 export async function runClientSideRenderedBenchmark(
   packageName: string,
 ): Promise<ClientSideRenderedBenchmarkResult> {
-  const frameworks = (await getFrameworks()).filter(({ app }) =>
-    app?.measurements.includes('csrLighthouse'),
+  const frameworks = (await getFrameworks()).filter(({ measurements }) =>
+    measurements.includes('csrLighthouse'),
   )
   const framework = frameworks.find(({ app }) => app?.package === packageName)
   const app = framework?.app

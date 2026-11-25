@@ -10,8 +10,8 @@ export async function runInitialLoadBenchmark(
   packageName: string,
   path: string,
 ) {
-  const frameworks = (await getFrameworks()).filter(({ app }) =>
-    app?.measurements.includes('ssrInitialLoad'),
+  const frameworks = (await getFrameworks()).filter(({ measurements }) =>
+    measurements.includes('ssrInitialLoad'),
   )
   const framework = frameworks.find(({ app }) => app?.package === packageName)
   const app = framework?.app

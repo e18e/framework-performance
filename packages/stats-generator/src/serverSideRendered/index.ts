@@ -11,8 +11,8 @@ const SERVER_SIDE_RENDERED_PORT = 3002
 export async function runServerSideRenderedBenchmark(
   packageName: string,
 ): Promise<ServerSideRenderedBenchmarkResult> {
-  const frameworks = (await getFrameworks()).filter(({ app }) =>
-    app?.measurements.includes('ssrLighthouse'),
+  const frameworks = (await getFrameworks()).filter(({ measurements }) =>
+    measurements.includes('ssrLighthouse'),
   )
   const framework = frameworks.find(({ app }) => app?.package === packageName)
   const app = framework?.app

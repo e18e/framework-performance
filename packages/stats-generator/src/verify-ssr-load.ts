@@ -9,13 +9,13 @@ process.env.PORT = '3003'
 process.env.SSR_LOAD_KIND = 'ssrLoad'
 const selected = process.argv.slice(2)
 for (const framework of await getFrameworks()) {
-  const { app } = framework
-  if (!app?.measurements.includes('ssrLoad')) continue
+  const { app, measurements } = framework
+  if (!app || !measurements.includes('ssrLoad')) continue
   const pkg = app.package
   if (selected.length && !selected.includes(pkg)) continue
   const stop = await startSSRLoadServer(pkg)
   try {
-    const kinds = app.measurements.includes('ssrLoadRouterLinks')
+    const kinds = measurements.includes('ssrLoadRouterLinks')
       ? (['ssrLoad', 'ssrLoadRouterLinks'] as const)
       : (['ssrLoad'] as const)
     for (const kind of kinds) {

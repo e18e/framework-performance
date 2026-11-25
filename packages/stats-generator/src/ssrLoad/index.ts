@@ -17,14 +17,14 @@ const frameworks: FrameworkConfig[] = frameworksConfig
 
 export function supportsSSRLoadBenchmark(packageName: string): boolean {
   return frameworks.some(
-    ({ app }) =>
-      app?.package === packageName && app.measurements.includes('ssrLoad'),
+    ({ app, measurements }) =>
+      app?.package === packageName && measurements.includes('ssrLoad'),
   )
 }
 
 function requireFrameworkConfig(packageName: string) {
-  const eligible = frameworks.filter(({ app }) =>
-    app?.measurements.includes('ssrLoad'),
+  const eligible = frameworks.filter(({ measurements }) =>
+    measurements.includes('ssrLoad'),
   )
   const framework = eligible.find(({ app }) => app?.package === packageName)
   const app = framework?.app

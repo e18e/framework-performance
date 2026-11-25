@@ -66,14 +66,18 @@ export async function processCIStats(
       Object.assign(dependencyCounts, counts)
     }
     if (
-      Object.keys(dependencyCounts).length > 0 &&
-      framework.starter?.measurements.includes('dependencies')
+      framework.measurements.includes('dependencyCounts') &&
+      Object.keys(dependencyCounts).length
     ) {
       fresh.dependencyCounts = {
         ...dependencyCounts,
         name: 'dependencyCount',
         project: 'starter',
       }
+    }
+    for (const key of framework.measurements) {
+      if (!Object.hasOwn(fresh, key))
+        throw new Error(`Missing ${key} for ${framework.name}`)
     }
 
     const { plainLinksPath: _plainLinksPath, ...ssrLoad } =

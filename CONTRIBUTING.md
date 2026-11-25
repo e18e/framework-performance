@@ -78,17 +78,16 @@ registry for framework names and ordering, and for validating Code Comparison sl
   name: 'astro',
   displayName: 'Astro',
   frameworkPackage: 'astro',
+  measurements: ['installDuration', 'buildDuration', 'dependencyCounts', 'ssrThroughput'],
   starter: {
     package: 'starter-astro',
     buildScript: 'build',
     buildOutputDir: 'dist',
-    measurements: ['install', 'build', 'dependencies'],
   },
   app: {
     package: 'app-astro',
     buildScript: 'build',
     buildOutputDir: 'dist',
-    measurements: ['ssrThroughput'],
   },
 },
 ```
@@ -240,11 +239,11 @@ If approved, follow these steps:
      name: 'my-framework',
      displayName: 'My Framework',
      frameworkPackage: 'my-framework',
+     measurements: ['installDuration', 'buildDuration', 'dependencyCounts'],
      starter: {
        package: 'starter-my-framework',
        buildScript: 'build',
        buildOutputDir: 'dist',
-       measurements: ['install', 'build', 'dependencies'],
      },
    },
    ```

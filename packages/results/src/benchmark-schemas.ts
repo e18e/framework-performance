@@ -5,6 +5,7 @@ import {
   FrameworkOptions,
   FrameworkProjectOptions,
   InitialLoadResourceOptions,
+  type MeasurementKey,
   PackagePathOptions,
 } from './benchmark-types.ts'
 
@@ -159,7 +160,7 @@ export const BrowserBaselineBenchmark = BaseBenchmark.extend({
 export const MinimumNodeVersionBenchmark = BaseBenchmark.extend({
   project: z.literal('starter'),
   name: z.literal('minimumNodeVersion'),
-  nodeVersion: z.string(),
+  nodeVersion: z.string().nullable(),
   imposedBy: z.array(z.string()),
 })
 
@@ -356,18 +357,7 @@ export const HTMLBaselineBenchmarkResult = z.object({
   configuration: z.record(z.string(), z.unknown()),
 })
 
-/** Validates framework metadata and any benchmarks collected during CI. */
-export const MetaFrameworkBenchmarkCIResults = z.object({
-  framework: z.enum(
-    FrameworkOptions.filter((option) => option !== 'baseline-html'),
-  ),
-  timingMeasuredAt: z.iso.datetime(),
-  projects: z.record(z.enum(FrameworkProjectOptions), Project),
-  runner: z.string(),
-  browserVersion: z.string(),
-  frameworkVersion: z.string(),
-  frameworkReleasedAt: z.string().min(1),
-
+const BenchmarkResults = z.object({
   // Benchmarks (should always be options to support new benchmarks, removing old ones and frameworks that might not be able to complete one)
   dependencyCounts: DependencyCountBenchmark.optional(),
   buildDuration: BuildBenchmark.optional(),
@@ -382,6 +372,19 @@ export const MetaFrameworkBenchmarkCIResults = z.object({
   ssrThroughput: SSRThroughputBenchmark.optional(),
   ssrLoad: SSRLoadBenchmark.optional(),
   ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark.optional(),
+} satisfies Record<MeasurementKey, z.ZodOptional>)
+
+/** Validates framework metadata and any benchmarks collected during CI. */
+export const MetaFrameworkBenchmarkCIResults = BenchmarkResults.extend({
+  framework: z.enum(
+    FrameworkOptions.filter((option) => option !== 'baseline-html'),
+  ),
+  timingMeasuredAt: z.iso.datetime(),
+  projects: z.record(z.enum(FrameworkProjectOptions), Project),
+  runner: z.string(),
+  browserVersion: z.string(),
+  frameworkVersion: z.string(),
+  frameworkReleasedAt: z.string().min(1),
 })
 
 // Validates a stored meta-framework result, including the configuration used for the run.

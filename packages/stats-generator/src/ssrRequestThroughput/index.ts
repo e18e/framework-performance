@@ -18,8 +18,8 @@ import type {
 } from './types.ts'
 
 const frameworks: FrameworkConfig[] = frameworksConfig
-const throughputFrameworks = frameworks.filter(({ app }) =>
-  app?.measurements.includes('ssrThroughput'),
+const throughputFrameworks = frameworks.filter(({ measurements }) =>
+  measurements.includes('ssrThroughput'),
 )
 
 const handlers = new Map<string, () => Promise<ServerRenderHandler>>([
