@@ -1,37 +1,4 @@
 {
-  "framework": "astro",
-  "timingMeasuredAt": "2026-11-25T05:01:02.916Z",
-  "projects": {
-    "starter": {
-      "path": "packages/starter-astro",
-      "packageJson": {
-        "dependencies": { "astro": "7.4.12" },
-        "devDependencies": { "@astrojs/check": "0.9.12", "typescript": "6.0.3" }
-      }
-    },
-    "app": {
-      "path": "packages/app-astro",
-      "packageJson": {
-        "dependencies": {
-          "@astrojs/node": "11.1.9",
-          "@astrojs/react": "7.1.1",
-          "astro": "7.4.12",
-          "react": "19.3.1",
-          "react-dom": "19.3.1"
-        },
-        "devDependencies": {
-          "@astrojs/check": "0.9.12",
-          "@types/react": "19.3.0",
-          "@types/react-dom": "19.3.0",
-          "typescript": "6.0.3"
-        }
-      }
-    }
-  },
-  "runner": "Depot depot-ubuntu-24.04 GitHub Actions runner (2 CPUs, 8 GB RAM, 100 GB disk, 2 GB disk accelerator)",
-  "browserVersion": "Google Chrome 158.0.8127.36 ",
-  "frameworkVersion": "7.4.12",
-  "frameworkReleasedAt": "2026-10-15T14:49:24.327Z",
   "dependencyCounts": {
     "project": "starter",
     "name": "dependencyCount",
@@ -43,7 +10,7 @@
     "starterProd": { "value": 1, "unit": "count" },
     "firstPartyDuplicate": { "value": 27, "unit": "count" },
     "starterDuplicate": { "value": 27, "unit": "count" },
-    "starterNodeModuleSize": { "value": 223719424, "unit": "bytes" },
+    "starterNodeModuleSize": { "value": 223723520, "unit": "bytes" },
     "starterDependencyInstallSize": { "value": 189176282, "unit": "bytes" }
   },
   "buildDuration": {
@@ -53,53 +20,53 @@
       "runs": 5,
       "iterations": [
         {
-          "coldDuration": { "value": 845, "unit": "ms" },
-          "warmDuration": { "value": 854, "unit": "ms" }
+          "coldDuration": { "value": 886, "unit": "ms" },
+          "warmDuration": { "value": 866, "unit": "ms" }
         },
         {
-          "coldDuration": { "value": 854, "unit": "ms" },
-          "warmDuration": { "value": 824, "unit": "ms" }
+          "coldDuration": { "value": 894, "unit": "ms" },
+          "warmDuration": { "value": 846, "unit": "ms" }
         },
         {
-          "coldDuration": { "value": 853, "unit": "ms" },
-          "warmDuration": { "value": 829, "unit": "ms" }
+          "coldDuration": { "value": 868, "unit": "ms" },
+          "warmDuration": { "value": 841, "unit": "ms" }
         },
         {
-          "coldDuration": { "value": 854, "unit": "ms" },
-          "warmDuration": { "value": 792, "unit": "ms" }
+          "coldDuration": { "value": 891, "unit": "ms" },
+          "warmDuration": { "value": 827, "unit": "ms" }
         },
         {
-          "coldDuration": { "value": 840, "unit": "ms" },
-          "warmDuration": { "value": 824, "unit": "ms" }
+          "coldDuration": { "value": 886, "unit": "ms" },
+          "warmDuration": { "value": 847, "unit": "ms" }
         }
       ]
     },
     "coldDuration": {
       "unit": "ms",
-      "mean": 849.2,
-      "median": 853,
-      "min": 840,
-      "max": 854,
+      "mean": 885,
+      "median": 886,
+      "min": 868,
+      "max": 894,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": -0.2115158636897714, "valueChange": -1.7999999999999545 },
-        "median": { "percentChange": 0, "valueChange": 0 },
-        "min": { "percentChange": 1.083032490974729, "valueChange": 9 },
-        "max": { "percentChange": -2.5114155251141552, "valueChange": -22 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": 4.215732454074417, "valueChange": 35.799999999999955 },
+        "median": { "percentChange": 3.8686987104337636, "valueChange": 33 },
+        "min": { "percentChange": 3.3333333333333335, "valueChange": 28 },
+        "max": { "percentChange": 4.683840749414521, "valueChange": 40 }
       }
     },
     "warmDuration": {
       "unit": "ms",
-      "mean": 824.6,
-      "median": 824,
-      "min": 792,
-      "max": 854,
+      "mean": 845.4,
+      "median": 846,
+      "min": 827,
+      "max": 866,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": -2.41420118343195, "valueChange": -20.399999999999977 },
-        "median": { "percentChange": 1.8541409147095178, "valueChange": 15 },
-        "min": { "percentChange": 0.38022813688212925, "valueChange": 3 },
-        "max": { "percentChange": -12.678936605316974, "valueChange": -124 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": 2.5224351200582045, "valueChange": 20.799999999999955 },
+        "median": { "percentChange": 2.669902912621359, "valueChange": 22 },
+        "min": { "percentChange": 4.41919191919192, "valueChange": 35 },
+        "max": { "percentChange": 1.405152224824356, "valueChange": 12 }
       }
     }
   },
@@ -109,25 +76,25 @@
     "iterations": {
       "runs": 5,
       "iterations": [
-        { "duration": { "value": 1667, "unit": "ms" } },
-        { "duration": { "value": 2706, "unit": "ms" } },
-        { "duration": { "value": 3391, "unit": "ms" } },
-        { "duration": { "value": 3464, "unit": "ms" } },
-        { "duration": { "value": 3017, "unit": "ms" } }
+        { "duration": { "value": 1786, "unit": "ms" } },
+        { "duration": { "value": 3221, "unit": "ms" } },
+        { "duration": { "value": 3314, "unit": "ms" } },
+        { "duration": { "value": 3814, "unit": "ms" } },
+        { "duration": { "value": 3954, "unit": "ms" } }
       ]
     },
     "duration": {
       "unit": "ms",
-      "mean": 2849,
-      "median": 3017,
-      "min": 1667,
-      "max": 3464,
+      "mean": 3217.8,
+      "median": 3314,
+      "min": 1786,
+      "max": 3954,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": 0.014041985536758091, "valueChange": 0.40000000000009095 },
-        "median": { "percentChange": -1.4052287581699348, "valueChange": -43 },
-        "min": { "percentChange": 3.8629283489096577, "valueChange": 62 },
-        "max": { "percentChange": -3.6707452725250276, "valueChange": -132 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": 12.944892944892953, "valueChange": 368.8000000000002 },
+        "median": { "percentChange": 9.84421610871727, "valueChange": 297 },
+        "min": { "percentChange": 7.138572285542892, "valueChange": 119 },
+        "max": { "percentChange": 14.145496535796767, "valueChange": 490 }
       }
     }
   },
@@ -137,25 +104,25 @@
     "iterations": {
       "runs": 5,
       "iterations": [
-        { "duration": { "value": 1275, "unit": "ms" } },
-        { "duration": { "value": 1263, "unit": "ms" } },
-        { "duration": { "value": 1232, "unit": "ms" } },
-        { "duration": { "value": 1206, "unit": "ms" } },
-        { "duration": { "value": 1355, "unit": "ms" } }
+        { "duration": { "value": 1389, "unit": "ms" } },
+        { "duration": { "value": 1350, "unit": "ms" } },
+        { "duration": { "value": 1377, "unit": "ms" } },
+        { "duration": { "value": 1423, "unit": "ms" } },
+        { "duration": { "value": 1337, "unit": "ms" } }
       ]
     },
     "duration": {
       "unit": "ms",
-      "mean": 1266.2,
-      "median": 1263,
-      "min": 1206,
-      "max": 1355,
+      "mean": 1375.2,
+      "median": 1377,
+      "min": 1337,
+      "max": 1423,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": -4.017586416009703, "valueChange": -53 },
-        "median": { "percentChange": -3.881278538812785, "valueChange": -51 },
-        "min": { "percentChange": -6.293706293706294, "valueChange": -81 },
-        "max": { "percentChange": -1.6690856313497822, "valueChange": -23 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": 8.608434686463434, "valueChange": 109 },
+        "median": { "percentChange": 9.026128266033254, "valueChange": 114 },
+        "min": { "percentChange": 10.862354892205639, "valueChange": 131 },
+        "max": { "percentChange": 5.018450184501845, "valueChange": 68 }
       }
     }
   },
@@ -186,82 +153,82 @@
       "runs": 5,
       "iterations": [
         {
-          "firstPaint": { "value": 108, "unit": "ms" },
-          "firstContentfulPaint": { "value": 107.868, "unit": "ms" },
+          "firstPaint": { "value": 112, "unit": "ms" },
+          "firstContentfulPaint": { "value": 112.24, "unit": "ms" },
           "interaction": {
-            "interactionLatency": { "value": 33.451, "unit": "ms" },
-            "inputDelay": { "value": 1.885, "unit": "ms" },
-            "processingDuration": { "value": 1.101, "unit": "ms" },
-            "presentationDelay": { "value": 30.465, "unit": "ms" }
-          },
-          "interactionWork": {
-            "workToCommit": { "value": 4.149, "unit": "ms" },
-            "inputDelay": { "value": 1.885, "unit": "ms" },
-            "processingDuration": { "value": 1.101, "unit": "ms" },
-            "renderingWork": { "value": 1.163, "unit": "ms" }
-          }
-        },
-        {
-          "firstPaint": { "value": 102, "unit": "ms" },
-          "firstContentfulPaint": { "value": 102.436, "unit": "ms" },
-          "interaction": {
-            "interactionLatency": { "value": 0.9810000000000001, "unit": "ms" },
-            "inputDelay": { "value": 0.515, "unit": "ms" },
-            "processingDuration": { "value": 0.466, "unit": "ms" },
+            "interactionLatency": { "value": 2.17, "unit": "ms" },
+            "inputDelay": { "value": 1.72, "unit": "ms" },
+            "processingDuration": { "value": 0.45, "unit": "ms" },
             "presentationDelay": { "value": 0, "unit": "ms" }
           },
           "interactionWork": {
-            "workToCommit": { "value": 2.747, "unit": "ms" },
-            "inputDelay": { "value": 1.717, "unit": "ms" },
-            "processingDuration": { "value": 1.03, "unit": "ms" },
+            "workToCommit": { "value": 2.331, "unit": "ms" },
+            "inputDelay": { "value": 1.373, "unit": "ms" },
+            "processingDuration": { "value": 0.958, "unit": "ms" },
             "renderingWork": { "value": 0, "unit": "ms" }
           }
         },
         {
-          "firstPaint": { "value": 103, "unit": "ms" },
-          "firstContentfulPaint": { "value": 103.083, "unit": "ms" },
+          "firstPaint": { "value": 94, "unit": "ms" },
+          "firstContentfulPaint": { "value": 94.09, "unit": "ms" },
           "interaction": {
-            "interactionLatency": { "value": 24.69, "unit": "ms" },
-            "inputDelay": { "value": 2.335, "unit": "ms" },
-            "processingDuration": { "value": 1.25, "unit": "ms" },
-            "presentationDelay": { "value": 21.105, "unit": "ms" }
+            "interactionLatency": { "value": 2.12, "unit": "ms" },
+            "inputDelay": { "value": 1.843, "unit": "ms" },
+            "processingDuration": { "value": 0.277, "unit": "ms" },
+            "presentationDelay": { "value": 0, "unit": "ms" }
           },
           "interactionWork": {
-            "workToCommit": { "value": 4.559, "unit": "ms" },
-            "inputDelay": { "value": 2.335, "unit": "ms" },
-            "processingDuration": { "value": 1.25, "unit": "ms" },
-            "renderingWork": { "value": 0.974, "unit": "ms" }
+            "workToCommit": { "value": 2.321, "unit": "ms" },
+            "inputDelay": { "value": 1.536, "unit": "ms" },
+            "processingDuration": { "value": 0.785, "unit": "ms" },
+            "renderingWork": { "value": 0, "unit": "ms" }
+          }
+        },
+        {
+          "firstPaint": { "value": 91, "unit": "ms" },
+          "firstContentfulPaint": { "value": 91.028, "unit": "ms" },
+          "interaction": {
+            "interactionLatency": { "value": 2.0789999999999997, "unit": "ms" },
+            "inputDelay": { "value": 1.799, "unit": "ms" },
+            "processingDuration": { "value": 0.28, "unit": "ms" },
+            "presentationDelay": { "value": 0, "unit": "ms" }
+          },
+          "interactionWork": {
+            "workToCommit": { "value": 2.27, "unit": "ms" },
+            "inputDelay": { "value": 1.438, "unit": "ms" },
+            "processingDuration": { "value": 0.832, "unit": "ms" },
+            "renderingWork": { "value": 0, "unit": "ms" }
           }
         },
         {
           "firstPaint": { "value": 95, "unit": "ms" },
-          "firstContentfulPaint": { "value": 94.579, "unit": "ms" },
+          "firstContentfulPaint": { "value": 95.304, "unit": "ms" },
           "interaction": {
-            "interactionLatency": { "value": 2.072, "unit": "ms" },
-            "inputDelay": { "value": 1.772, "unit": "ms" },
-            "processingDuration": { "value": 0.3, "unit": "ms" },
+            "interactionLatency": { "value": 2.226, "unit": "ms" },
+            "inputDelay": { "value": 1.815, "unit": "ms" },
+            "processingDuration": { "value": 0.411, "unit": "ms" },
             "presentationDelay": { "value": 0, "unit": "ms" }
           },
           "interactionWork": {
-            "workToCommit": { "value": 2.284, "unit": "ms" },
-            "inputDelay": { "value": 1.475, "unit": "ms" },
-            "processingDuration": { "value": 0.809, "unit": "ms" },
+            "workToCommit": { "value": 2.389, "unit": "ms" },
+            "inputDelay": { "value": 1.468, "unit": "ms" },
+            "processingDuration": { "value": 0.921, "unit": "ms" },
             "renderingWork": { "value": 0, "unit": "ms" }
           }
         },
         {
-          "firstPaint": { "value": 103, "unit": "ms" },
-          "firstContentfulPaint": { "value": 103.115, "unit": "ms" },
+          "firstPaint": { "value": 102, "unit": "ms" },
+          "firstContentfulPaint": { "value": 102.189, "unit": "ms" },
           "interaction": {
-            "interactionLatency": { "value": 2.341, "unit": "ms" },
-            "inputDelay": { "value": 2.031, "unit": "ms" },
-            "processingDuration": { "value": 0.31, "unit": "ms" },
+            "interactionLatency": { "value": 2.167, "unit": "ms" },
+            "inputDelay": { "value": 1.893, "unit": "ms" },
+            "processingDuration": { "value": 0.274, "unit": "ms" },
             "presentationDelay": { "value": 0, "unit": "ms" }
           },
           "interactionWork": {
-            "workToCommit": { "value": 2.508, "unit": "ms" },
-            "inputDelay": { "value": 1.69, "unit": "ms" },
-            "processingDuration": { "value": 0.818, "unit": "ms" },
+            "workToCommit": { "value": 2.364, "unit": "ms" },
+            "inputDelay": { "value": 1.299, "unit": "ms" },
+            "processingDuration": { "value": 1.065, "unit": "ms" },
             "renderingWork": { "value": 0, "unit": "ms" }
           }
         }
@@ -269,145 +236,145 @@
     },
     "firstPaint": {
       "unit": "ms",
-      "mean": 102.2,
-      "median": 103,
-      "min": 95,
-      "max": 108,
+      "mean": 98.8,
+      "median": 95,
+      "min": 91,
+      "max": 112,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": 14.06250000000001, "valueChange": 12.600000000000009 },
-        "median": { "percentChange": 13.186813186813188, "valueChange": 12 },
-        "min": { "percentChange": 14.457831325301203, "valueChange": 12 },
-        "max": { "percentChange": 14.893617021276595, "valueChange": 14 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": -3.32681017612525, "valueChange": -3.4000000000000057 },
+        "median": { "percentChange": -7.766990291262135, "valueChange": -8 },
+        "min": { "percentChange": -4.2105263157894735, "valueChange": -4 },
+        "max": { "percentChange": 3.7037037037037033, "valueChange": 4 }
       }
     },
     "firstContentfulPaint": {
       "unit": "ms",
-      "mean": 102.2162,
-      "median": 103.083,
-      "min": 94.579,
-      "max": 107.868,
+      "mean": 98.9702,
+      "median": 95.304,
+      "min": 91.028,
+      "max": 112.24,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": 14.067085813508665, "valueChange": 12.605599999999995 },
-        "median": { "percentChange": 13.092847974196092, "valueChange": 11.933999999999997 },
-        "min": { "percentChange": 14.487174831438898, "valueChange": 11.96799999999999 },
-        "max": { "percentChange": 14.709260283295752, "valueChange": 13.831999999999994 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": -3.1756218681578803, "valueChange": -3.245999999999995 },
+        "median": { "percentChange": -7.546346148249465, "valueChange": -7.778999999999996 },
+        "min": { "percentChange": -3.754533247338191, "valueChange": -3.5509999999999877 },
+        "max": { "percentChange": 4.053101939407424, "valueChange": 4.372 }
       }
     },
     "interaction": {
       "interactionLatency": {
         "unit": "ms",
-        "mean": 12.707,
-        "median": 2.341,
-        "min": 0.9810000000000001,
-        "max": 33.451,
+        "mean": 2.1523999999999996,
+        "median": 2.167,
+        "min": 2.0789999999999997,
+        "max": 2.226,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 566.4743522500788, "valueChange": 10.800400000000002 },
-          "median": { "percentChange": 10.268487988695242, "valueChange": 0.21799999999999997 },
-          "min": { "percentChange": 47.74096385542172, "valueChange": 0.31700000000000017 },
-          "max": { "percentChange": 1285.708367854184, "valueChange": 31.037 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -83.06130479263399, "valueChange": -10.5546 },
+          "median": { "percentChange": -7.43272105937635, "valueChange": -0.17400000000000038 },
+          "min": { "percentChange": 111.9266055045871, "valueChange": 1.0979999999999996 },
+          "max": { "percentChange": -93.34549041882157, "valueChange": -31.225 }
         }
       },
       "inputDelay": {
         "unit": "ms",
-        "mean": 1.7076,
-        "median": 1.885,
-        "min": 0.515,
-        "max": 2.335,
+        "mean": 1.814,
+        "median": 1.815,
+        "min": 1.72,
+        "max": 1.893,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 6.898710404407167, "valueChange": 0.11020000000000008 },
-          "median": { "percentChange": 1.3986013986013999, "valueChange": 0.026000000000000023 },
-          "min": { "percentChange": 77.58620689655174, "valueChange": 0.22500000000000003 },
-          "max": { "percentChange": 11.669057867049247, "valueChange": 0.24399999999999977 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 6.230967439681427, "valueChange": 0.10640000000000005 },
+          "median": { "percentChange": -3.713527851458889, "valueChange": -0.07000000000000006 },
+          "min": { "percentChange": 233.98058252427188, "valueChange": 1.205 },
+          "max": { "percentChange": -18.929336188436828, "valueChange": -0.44199999999999995 }
         }
       },
       "processingDuration": {
         "unit": "ms",
-        "mean": 0.6854,
-        "median": 0.466,
-        "min": 0.3,
-        "max": 1.25,
+        "mean": 0.33840000000000003,
+        "median": 0.28,
+        "min": 0.274,
+        "max": 0.45,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 121.66882276843465, "valueChange": 0.3762 },
-          "median": { "percentChange": 55.33333333333334, "valueChange": 0.16600000000000004 },
-          "min": { "percentChange": 13.636363636363628, "valueChange": 0.035999999999999976 },
-          "max": { "percentChange": 234.22459893048128, "valueChange": 0.876 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -50.62737087831922, "valueChange": -0.347 },
+          "median": { "percentChange": -39.91416309012875, "valueChange": -0.186 },
+          "min": { "percentChange": -8.666666666666655, "valueChange": -0.025999999999999968 },
+          "max": { "percentChange": -64, "valueChange": -0.8 }
         }
       },
       "presentationDelay": {
         "unit": "ms",
-        "mean": 10.314,
+        "mean": 0,
         "median": 0,
         "min": 0,
-        "max": 30.465,
+        "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0, "valueChange": 10.314 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -100, "valueChange": -10.314 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": 0, "valueChange": 30.465 }
+          "max": { "percentChange": -100, "valueChange": -30.465 }
         }
       }
     },
     "interactionWork": {
       "workToCommit": {
         "unit": "ms",
-        "mean": 3.2494,
-        "median": 2.747,
-        "min": 2.284,
-        "max": 4.559,
+        "mean": 2.335,
+        "median": 2.331,
+        "min": 2.27,
+        "max": 2.389,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 9.62148303083463, "valueChange": 0.2852000000000001 },
-          "median": { "percentChange": 11.30470016207455, "valueChange": 0.2789999999999999 },
-          "min": { "percentChange": 3.2083145051965536, "valueChange": 0.07099999999999973 },
-          "max": { "percentChange": -12.829827915869984, "valueChange": -0.6710000000000003 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -28.140579799347577, "valueChange": -0.9144000000000001 },
+          "median": { "percentChange": -15.143793228977065, "valueChange": -0.4159999999999999 },
+          "min": { "percentChange": -0.6129597197898333, "valueChange": -0.01399999999999979 },
+          "max": { "percentChange": -47.59815749067779, "valueChange": -2.1700000000000004 }
         }
       },
       "inputDelay": {
         "unit": "ms",
-        "mean": 1.8204,
-        "median": 1.717,
-        "min": 1.475,
-        "max": 2.335,
+        "mean": 1.4227999999999998,
+        "median": 1.438,
+        "min": 1.299,
+        "max": 1.536,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 21.586962329682084, "valueChange": 0.32320000000000015 },
-          "median": { "percentChange": 11.638491547464243, "valueChange": 0.17900000000000005 },
-          "min": { "percentChange": 13.723978411719365, "valueChange": 0.17800000000000016 },
-          "max": { "percentChange": 42.204628501827045, "valueChange": 0.6930000000000001 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -21.841353548670632, "valueChange": -0.3976000000000002 },
+          "median": { "percentChange": -16.24927198602214, "valueChange": -0.27900000000000014 },
+          "min": { "percentChange": -11.93220338983052, "valueChange": -0.17600000000000016 },
+          "max": { "percentChange": -34.21841541755889, "valueChange": -0.7989999999999999 }
         }
       },
       "processingDuration": {
         "unit": "ms",
-        "mean": 1.0016,
-        "median": 1.03,
-        "min": 0.809,
-        "max": 1.25,
+        "mean": 0.9122,
+        "median": 0.921,
+        "min": 0.785,
+        "max": 1.065,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -31.72460804362645, "valueChange": -0.46540000000000004 },
-          "median": { "percentChange": 18.66359447004609, "valueChange": 0.16200000000000003 },
-          "min": { "percentChange": 2.534854245880864, "valueChange": 0.020000000000000018 },
-          "max": { "percentChange": -68.21764556318331, "valueChange": -2.683 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -8.925718849840258, "valueChange": -0.08940000000000003 },
+          "median": { "percentChange": -10.582524271844658, "valueChange": -0.10899999999999999 },
+          "min": { "percentChange": -2.966625463535231, "valueChange": -0.02400000000000002 },
+          "max": { "percentChange": -14.800000000000004, "valueChange": -0.18500000000000005 }
         }
       },
       "renderingWork": {
         "unit": "ms",
-        "mean": 0.4274,
+        "mean": 0,
         "median": 0,
         "min": 0,
-        "max": 1.163,
+        "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0, "valueChange": 0.4274 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -100, "valueChange": -0.4274 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": 0, "valueChange": 1.163 }
+          "max": { "percentChange": -100, "valueChange": -1.163 }
         }
       }
     }
@@ -419,82 +386,82 @@
       "runs": 5,
       "iterations": [
         {
+          "firstPaint": { "value": 72, "unit": "ms" },
+          "firstContentfulPaint": { "value": 71.936, "unit": "ms" },
+          "interaction": {
+            "interactionLatency": { "value": 1.078, "unit": "ms" },
+            "inputDelay": { "value": 0.636, "unit": "ms" },
+            "processingDuration": { "value": 0.442, "unit": "ms" },
+            "presentationDelay": { "value": 0, "unit": "ms" }
+          },
+          "interactionWork": {
+            "workToCommit": { "value": 1.26, "unit": "ms" },
+            "inputDelay": { "value": 0.518, "unit": "ms" },
+            "processingDuration": { "value": 0.742, "unit": "ms" },
+            "renderingWork": { "value": 0, "unit": "ms" }
+          }
+        },
+        {
+          "firstPaint": { "value": 69, "unit": "ms" },
+          "firstContentfulPaint": { "value": 69.404, "unit": "ms" },
+          "interaction": {
+            "interactionLatency": { "value": 0.905, "unit": "ms" },
+            "inputDelay": { "value": 0.65, "unit": "ms" },
+            "processingDuration": { "value": 0.255, "unit": "ms" },
+            "presentationDelay": { "value": 0, "unit": "ms" }
+          },
+          "interactionWork": {
+            "workToCommit": { "value": 1.086, "unit": "ms" },
+            "inputDelay": { "value": 0.548, "unit": "ms" },
+            "processingDuration": { "value": 0.538, "unit": "ms" },
+            "renderingWork": { "value": 0, "unit": "ms" }
+          }
+        },
+        {
           "firstPaint": { "value": 60, "unit": "ms" },
-          "firstContentfulPaint": { "value": 60.287, "unit": "ms" },
+          "firstContentfulPaint": { "value": 60.007, "unit": "ms" },
           "interaction": {
-            "interactionLatency": { "value": 0.963, "unit": "ms" },
-            "inputDelay": { "value": 0.696, "unit": "ms" },
-            "processingDuration": { "value": 0.267, "unit": "ms" },
+            "interactionLatency": { "value": 2.58, "unit": "ms" },
+            "inputDelay": { "value": 0.554, "unit": "ms" },
+            "processingDuration": { "value": 2.026, "unit": "ms" },
             "presentationDelay": { "value": 0, "unit": "ms" }
           },
           "interactionWork": {
-            "workToCommit": { "value": 1.135, "unit": "ms" },
-            "inputDelay": { "value": 0.603, "unit": "ms" },
-            "processingDuration": { "value": 0.532, "unit": "ms" },
+            "workToCommit": { "value": 2.747, "unit": "ms" },
+            "inputDelay": { "value": 0.447, "unit": "ms" },
+            "processingDuration": { "value": 2.3, "unit": "ms" },
             "renderingWork": { "value": 0, "unit": "ms" }
           }
         },
         {
-          "firstPaint": { "value": 52, "unit": "ms" },
-          "firstContentfulPaint": { "value": 52.483, "unit": "ms" },
+          "firstPaint": { "value": 57, "unit": "ms" },
+          "firstContentfulPaint": { "value": 56.755, "unit": "ms" },
           "interaction": {
-            "interactionLatency": { "value": 0.788, "unit": "ms" },
-            "inputDelay": { "value": 0.555, "unit": "ms" },
-            "processingDuration": { "value": 0.233, "unit": "ms" },
-            "presentationDelay": { "value": 0, "unit": "ms" }
+            "interactionLatency": { "value": 12.245999999999999, "unit": "ms" },
+            "inputDelay": { "value": 0.578, "unit": "ms" },
+            "processingDuration": { "value": 0.709, "unit": "ms" },
+            "presentationDelay": { "value": 10.959, "unit": "ms" }
           },
           "interactionWork": {
-            "workToCommit": { "value": 0.941, "unit": "ms" },
-            "inputDelay": { "value": 0.429, "unit": "ms" },
-            "processingDuration": { "value": 0.512, "unit": "ms" },
-            "renderingWork": { "value": 0, "unit": "ms" }
+            "workToCommit": { "value": 2.147, "unit": "ms" },
+            "inputDelay": { "value": 0.578, "unit": "ms" },
+            "processingDuration": { "value": 0.709, "unit": "ms" },
+            "renderingWork": { "value": 0.86, "unit": "ms" }
           }
         },
         {
-          "firstPaint": { "value": 53, "unit": "ms" },
-          "firstContentfulPaint": { "value": 52.675, "unit": "ms" },
+          "firstPaint": { "value": 56, "unit": "ms" },
+          "firstContentfulPaint": { "value": 55.956, "unit": "ms" },
           "interaction": {
-            "interactionLatency": { "value": 2.766, "unit": "ms" },
-            "inputDelay": { "value": 0.574, "unit": "ms" },
-            "processingDuration": { "value": 2.192, "unit": "ms" },
+            "interactionLatency": { "value": 0.939, "unit": "ms" },
+            "inputDelay": { "value": 0.708, "unit": "ms" },
+            "processingDuration": { "value": 0.231, "unit": "ms" },
             "presentationDelay": { "value": 0, "unit": "ms" }
           },
           "interactionWork": {
-            "workToCommit": { "value": 2.934, "unit": "ms" },
-            "inputDelay": { "value": 0.399, "unit": "ms" },
-            "processingDuration": { "value": 2.535, "unit": "ms" },
-            "renderingWork": { "value": 0, "unit": "ms" }
-          }
-        },
-        {
-          "firstPaint": { "value": 49, "unit": "ms" },
-          "firstContentfulPaint": { "value": 49.008, "unit": "ms" },
-          "interaction": {
-            "interactionLatency": { "value": 0.992, "unit": "ms" },
-            "inputDelay": { "value": 0.703, "unit": "ms" },
-            "processingDuration": { "value": 0.289, "unit": "ms" },
-            "presentationDelay": { "value": 0, "unit": "ms" }
-          },
-          "interactionWork": {
-            "workToCommit": { "value": 1.146, "unit": "ms" },
-            "inputDelay": { "value": 0.571, "unit": "ms" },
-            "processingDuration": { "value": 0.575, "unit": "ms" },
-            "renderingWork": { "value": 0, "unit": "ms" }
-          }
-        },
-        {
-          "firstPaint": { "value": 53, "unit": "ms" },
-          "firstContentfulPaint": { "value": 52.654, "unit": "ms" },
-          "interaction": {
-            "interactionLatency": { "value": 2.951, "unit": "ms" },
-            "inputDelay": { "value": 0.557, "unit": "ms" },
-            "processingDuration": { "value": 2.394, "unit": "ms" },
-            "presentationDelay": { "value": 0, "unit": "ms" }
-          },
-          "interactionWork": {
-            "workToCommit": { "value": 3.121, "unit": "ms" },
-            "inputDelay": { "value": 0.434, "unit": "ms" },
-            "processingDuration": { "value": 2.687, "unit": "ms" },
+            "workToCommit": { "value": 1.094, "unit": "ms" },
+            "inputDelay": { "value": 0.576, "unit": "ms" },
+            "processingDuration": { "value": 0.518, "unit": "ms" },
             "renderingWork": { "value": 0, "unit": "ms" }
           }
         }
@@ -502,145 +469,145 @@
     },
     "firstPaint": {
       "unit": "ms",
-      "mean": 53.4,
-      "median": 53,
-      "min": 49,
-      "max": 60,
+      "mean": 62.8,
+      "median": 60,
+      "min": 56,
+      "max": 72,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": -13.311688311688316, "valueChange": -8.200000000000003 },
-        "median": { "percentChange": -10.16949152542373, "valueChange": -6 },
-        "min": { "percentChange": -10.909090909090908, "valueChange": -6 },
-        "max": { "percentChange": -16.666666666666664, "valueChange": -12 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": 17.602996254681646, "valueChange": 9.399999999999999 },
+        "median": { "percentChange": 13.20754716981132, "valueChange": 7 },
+        "min": { "percentChange": 14.285714285714285, "valueChange": 7 },
+        "max": { "percentChange": 20, "valueChange": 12 }
       }
     },
     "firstContentfulPaint": {
       "unit": "ms",
-      "mean": 53.421400000000006,
-      "median": 52.654,
-      "min": 49.008,
-      "max": 60.287,
+      "mean": 62.81160000000001,
+      "median": 60.007,
+      "min": 55.956,
+      "max": 71.936,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": -13.153727854130686, "valueChange": -8.091199999999994 },
-        "median": { "percentChange": -10.817906200775722, "valueChange": -6.386999999999993 },
-        "min": { "percentChange": -10.248333455424504, "valueChange": -5.5959999999999965 },
-        "max": { "percentChange": -16.63624547139025, "valueChange": -12.030999999999999 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": 17.57759998801979, "valueChange": 9.390200000000007 },
+        "median": { "percentChange": 13.964751016067146, "valueChange": 7.352999999999994 },
+        "min": { "percentChange": 14.177277179236041, "valueChange": 6.948 },
+        "max": { "percentChange": 19.322573689186736, "valueChange": 11.649000000000008 }
       }
     },
     "interaction": {
       "interactionLatency": {
         "unit": "ms",
-        "mean": 1.6919999999999997,
-        "median": 0.992,
-        "min": 0.788,
-        "max": 2.951,
+        "mean": 3.5495999999999994,
+        "median": 1.078,
+        "min": 0.905,
+        "max": 12.245999999999999,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -11.274252753015222, "valueChange": -0.2150000000000003 },
-          "median": { "percentChange": -15.717926932880207, "valueChange": -0.18500000000000005 },
-          "min": { "percentChange": -2.475247524752464, "valueChange": -0.019999999999999907 },
-          "max": { "percentChange": -13.384208981508658, "valueChange": -0.45599999999999996 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 109.7872340425532, "valueChange": 1.8575999999999997 },
+          "median": { "percentChange": 8.669354838709685, "valueChange": 0.08600000000000008 },
+          "min": { "percentChange": 14.847715736040607, "valueChange": 0.11699999999999999 },
+          "max": { "percentChange": 314.97797356828187, "valueChange": 9.294999999999998 }
         }
       },
       "inputDelay": {
         "unit": "ms",
-        "mean": 0.6169999999999999,
-        "median": 0.574,
-        "min": 0.555,
-        "max": 0.703,
+        "mean": 0.6252000000000001,
+        "median": 0.636,
+        "min": 0.554,
+        "max": 0.708,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -15.618161925601761, "valueChange": -0.11420000000000008 },
-          "median": { "percentChange": -13.55421686746989, "valueChange": -0.09000000000000008 },
-          "min": { "percentChange": -4.639175257731944, "valueChange": -0.026999999999999913 },
-          "max": { "percentChange": -25.292242295430395, "valueChange": -0.238 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 1.3290113452188346, "valueChange": 0.008200000000000207 },
+          "median": { "percentChange": 10.801393728223006, "valueChange": 0.062000000000000055 },
+          "min": { "percentChange": -0.18018018018018034, "valueChange": -0.0010000000000000009 },
+          "max": { "percentChange": 0.7112375533428172, "valueChange": 0.0050000000000000044 }
         }
       },
       "processingDuration": {
         "unit": "ms",
-        "mean": 1.075,
-        "median": 0.289,
-        "min": 0.233,
-        "max": 2.394,
+        "mean": 0.7325999999999999,
+        "median": 0.442,
+        "min": 0.231,
+        "max": 2.026,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -8.572886545330839, "valueChange": -0.1008 },
-          "median": { "percentChange": 13.333333333333321, "valueChange": 0.033999999999999975 },
-          "min": { "percentChange": 3.0973451327433654, "valueChange": 0.007000000000000006 },
-          "max": { "percentChange": -7.5318655851680125, "valueChange": -0.19499999999999984 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -31.85116279069768, "valueChange": -0.34240000000000004 },
+          "median": { "percentChange": 52.941176470588246, "valueChange": 0.15300000000000002 },
+          "min": { "percentChange": -0.858369098712447, "valueChange": -0.0020000000000000018 },
+          "max": { "percentChange": -15.371762740183806, "valueChange": -0.3680000000000003 }
         }
       },
       "presentationDelay": {
         "unit": "ms",
-        "mean": 0,
+        "mean": 2.1917999999999997,
         "median": 0,
         "min": 0,
-        "max": 0,
+        "max": 10.959,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0, "valueChange": 0 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 0, "valueChange": 2.1917999999999997 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": 0, "valueChange": 0 }
+          "max": { "percentChange": 0, "valueChange": 10.959 }
         }
       }
     },
     "interactionWork": {
       "workToCommit": {
         "unit": "ms",
-        "mean": 1.8554,
-        "median": 1.146,
-        "min": 0.941,
-        "max": 3.121,
+        "mean": 1.6667999999999998,
+        "median": 1.26,
+        "min": 1.086,
+        "max": 2.747,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -10.763755290496354, "valueChange": -0.22380000000000022 },
-          "median": { "percentChange": -14.413741598207622, "valueChange": -0.19300000000000006 },
-          "min": { "percentChange": -3.586065573770495, "valueChange": -0.03500000000000003 },
-          "max": { "percentChange": -13.11247216035635, "valueChange": -0.4710000000000001 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -10.164924005605267, "valueChange": -0.1886000000000001 },
+          "median": { "percentChange": 9.9476439790576, "valueChange": 0.1140000000000001 },
+          "min": { "percentChange": 15.409139213602566, "valueChange": 0.14500000000000013 },
+          "max": { "percentChange": -11.983338673502086, "valueChange": -0.3740000000000001 }
         }
       },
       "inputDelay": {
         "unit": "ms",
-        "mean": 0.48719999999999997,
-        "median": 0.434,
-        "min": 0.399,
-        "max": 0.603,
+        "mean": 0.5334000000000001,
+        "median": 0.548,
+        "min": 0.447,
+        "max": 0.578,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -17.619208657423062, "valueChange": -0.10419999999999996 },
-          "median": { "percentChange": -20.07366482504605, "valueChange": -0.10900000000000004 },
-          "min": { "percentChange": -16.874999999999993, "valueChange": -0.08099999999999996 },
-          "max": { "percentChange": -29.225352112676056, "valueChange": -0.249 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 9.482758620689683, "valueChange": 0.04620000000000013 },
+          "median": { "percentChange": 26.26728110599079, "valueChange": 0.11400000000000005 },
+          "min": { "percentChange": 12.03007518796992, "valueChange": 0.04799999999999999 },
+          "max": { "percentChange": -4.145936981757881, "valueChange": -0.025000000000000022 }
         }
       },
       "processingDuration": {
         "unit": "ms",
-        "mean": 1.3681999999999999,
-        "median": 0.575,
-        "min": 0.512,
-        "max": 2.687,
+        "mean": 0.9613999999999999,
+        "median": 0.709,
+        "min": 0.518,
+        "max": 2.3,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -8.038714881032407, "valueChange": -0.11960000000000015 },
-          "median": { "percentChange": 6.679035250463807, "valueChange": 0.03599999999999992 },
-          "min": { "percentChange": 5.133470225872695, "valueChange": 0.025000000000000022 },
-          "max": { "percentChange": -10.52281052281053, "valueChange": -0.3160000000000003 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -29.732495249232567, "valueChange": -0.40679999999999994 },
+          "median": { "percentChange": 23.30434782608696, "valueChange": 0.134 },
+          "min": { "percentChange": 1.171875000000001, "valueChange": 0.006000000000000005 },
+          "max": { "percentChange": -14.402679568291777, "valueChange": -0.387 }
         }
       },
       "renderingWork": {
         "unit": "ms",
-        "mean": 0,
+        "mean": 0.172,
         "median": 0,
         "min": 0,
-        "max": 0,
+        "max": 0.86,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0, "valueChange": 0 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 0, "valueChange": 0.172 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": 0, "valueChange": 0 }
+          "max": { "percentChange": 0, "valueChange": 0.86 }
         }
       }
     }
@@ -696,119 +663,119 @@
         {
           "requestThroughput": {
             "unit": "ops/s",
-            "mean": 739.6740317091048,
-            "median": 762.6124662733943,
-            "min": 68.79803909077056,
-            "max": 4194.525305564209
+            "mean": 737.9702958210462,
+            "median": 755.2476500083485,
+            "min": 68.30793325604517,
+            "max": 4147.983457839871
           },
           "latency": {
             "unit": "ms",
-            "mean": 1.4524714533042864,
-            "median": 1.3112820000001193,
-            "min": 0.23840600000039558,
-            "max": 14.535298000000012
+            "mean": 1.476695768310691,
+            "median": 1.3240689999997812,
+            "min": 0.241081000000122,
+            "max": 14.639588000000003
           },
-          "requests": { "value": 6885, "unit": "requests" }
+          "requests": { "value": 6772, "unit": "requests" }
         },
         {
           "requestThroughput": {
             "unit": "ops/s",
-            "mean": 751.8982374174597,
-            "median": 772.7333316679488,
-            "min": 51.4942418881233,
-            "max": 4685.486704973261
+            "mean": 766.5930678388611,
+            "median": 775.1541394007977,
+            "min": 47.287116828352346,
+            "max": 4945.329383668331
           },
           "latency": {
             "unit": "ms",
-            "mean": 1.4566323272647712,
-            "median": 1.2941075000007913,
-            "min": 0.2134249999980966,
-            "max": 19.419647000000623
+            "mean": 1.3632332505452616,
+            "median": 1.290066000000479,
+            "min": 0.20221099999980652,
+            "max": 21.147409000001062
           },
-          "requests": { "value": 6866, "unit": "requests" }
+          "requests": { "value": 7336, "unit": "requests" }
         },
         {
           "requestThroughput": {
             "unit": "ops/s",
-            "mean": 767.9641747037379,
-            "median": 790.0753889955132,
-            "min": 39.9248343129365,
-            "max": 5112.343753973207
+            "mean": 764.6968848957067,
+            "median": 785.1333431223551,
+            "min": 65.15592660263533,
+            "max": 4815.28564273373
           },
           "latency": {
             "unit": "ms",
-            "mean": 1.4356921877954563,
-            "median": 1.2657019999969634,
-            "min": 0.19560500000079628,
-            "max": 25.047066999999515
+            "mean": 1.4361868433146447,
+            "median": 1.2736689999983355,
+            "min": 0.20767200000045705,
+            "max": 15.347797999998875
           },
-          "requests": { "value": 6981, "unit": "requests" }
+          "requests": { "value": 6963, "unit": "requests" }
         },
         {
           "requestThroughput": {
             "unit": "ops/s",
-            "mean": 782.0224533202725,
-            "median": 790.3495162658656,
-            "min": 105.64744770563658,
-            "max": 5021.845025840365
+            "mean": 769.5124659228575,
+            "median": 788.1736126011717,
+            "min": 74.09891642188904,
+            "max": 5067.113924044281
           },
           "latency": {
             "unit": "ms",
-            "mean": 1.2979408025957193,
-            "median": 1.2652630000011413,
-            "min": 0.19913000000087777,
-            "max": 9.465443999994022
+            "mean": 1.4225165718350208,
+            "median": 1.2687560000013036,
+            "min": 0.1973509999952512,
+            "max": 13.495474000003014
           },
-          "requests": { "value": 7705, "unit": "requests" }
+          "requests": { "value": 7030, "unit": "requests" }
         },
         {
           "requestThroughput": {
             "unit": "ops/s",
-            "mean": 785.6100837595574,
-            "median": 792.0299609205524,
-            "min": 73.98131794164688,
-            "max": 5137.399756540689
+            "mean": 777.8274667413781,
+            "median": 790.8895846961674,
+            "min": 77.1672161873025,
+            "max": 5135.790295495111
           },
           "latency": {
             "unit": "ms",
-            "mean": 1.3155359548803254,
-            "median": 1.2625784999981988,
-            "min": 0.1946509999979753,
-            "max": 13.516926000003878
+            "mean": 1.4068131825854893,
+            "median": 1.2643989999996847,
+            "min": 0.1947119999967981,
+            "max": 12.95887099999527
           },
-          "requests": { "value": 7602, "unit": "requests" }
+          "requests": { "value": 7109, "unit": "requests" }
         }
       ]
     },
     "requestThroughput": {
       "unit": "ops/s",
-      "mean": 765.4337961820264,
-      "median": 767.9641747037379,
-      "min": 739.6740317091048,
-      "max": 785.6100837595574,
+      "mean": 763.3200362439699,
+      "median": 766.5930678388611,
+      "min": 737.9702958210462,
+      "max": 777.8274667413781,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": 3.086886203434991, "valueChange": 22.920539285805262 },
-        "median": { "percentChange": 3.3316359494786076, "valueChange": 24.760829816007117 },
-        "min": { "percentChange": 1.8071961297684105, "valueChange": 13.13007427972991 },
-        "max": { "percentChange": 3.0763983774285952, "valueChange": 23.44716758651009 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": -0.2761518956440064, "valueChange": -2.113759938056546 },
+        "median": { "percentChange": -0.17853786804647562, "valueChange": -1.371106864876765 },
+        "min": { "percentChange": -0.2303360419618843, "valueChange": -1.7037358880586453 },
+        "max": { "percentChange": -0.9906462733949857, "valueChange": -7.78261701817928 }
       }
     },
     "latency": {
       "unit": "ms",
-      "mean": 1.3916545451681117,
-      "median": 1.4356921877954563,
-      "min": 1.2979408025957193,
-      "max": 1.4566323272647712,
+      "mean": 1.4210891233182215,
+      "median": 1.4225165718350208,
+      "min": 1.3632332505452616,
+      "max": 1.476695768310691,
       "variance": {
-        "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-        "mean": { "percentChange": -2.6010952559062614, "valueChange": -0.03716495626729999 },
-        "median": { "percentChange": -0.6073462653763048, "valueChange": -0.00877290479450954 },
-        "min": { "percentChange": -4.206818983387917, "valueChange": -0.05699990280859901 },
-        "max": { "percentChange": -2.5544084611327693, "valueChange": -0.03818370726438203 }
+        "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+        "mean": { "percentChange": 2.115077930245545, "valueChange": 0.029434578150109747 },
+        "median": { "percentChange": -0.9177187194050971, "valueChange": -0.013175615960435483 },
+        "min": { "percentChange": 5.0304642414327, "valueChange": 0.06529244794954225 },
+        "max": { "percentChange": 1.3773854026427086, "valueChange": 0.020063441045919728 }
       }
     },
-    "requests": { "value": 36039, "unit": "requests" },
+    "requests": { "value": 35210, "unit": "requests" },
     "bodySize": { "value": 99212, "unit": "bytes" },
     "duplicationFactor": { "value": 1, "unit": "ratio" }
   },
@@ -823,210 +790,10 @@
           "stage1": {
             "connections": 1,
             "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 2586, "unit": "requests" },
+            "requests": { "value": 2629, "unit": "requests" },
             "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 517.21, "unit": "requests" },
-            "bytesPerSecond": { "value": 97956659.2, "unit": "bytes" },
-            "avgLatency": { "value": 1.09, "unit": "ms" },
-            "p50Latency": { "value": 1, "unit": "ms" },
-            "p75Latency": { "value": 1, "unit": "ms" },
-            "p90Latency": { "value": 1, "unit": "ms" },
-            "p99Latency": { "value": 3, "unit": "ms" },
-            "maxLatency": { "value": 8, "unit": "ms" }
-          },
-          "stage2": {
-            "connections": 5,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 5965, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1193, "unit": "requests" },
-            "bytesPerSecond": { "value": 225955020.8, "unit": "bytes" },
-            "avgLatency": { "value": 3.93, "unit": "ms" },
-            "p50Latency": { "value": 4, "unit": "ms" },
-            "p75Latency": { "value": 4, "unit": "ms" },
-            "p90Latency": { "value": 4, "unit": "ms" },
-            "p99Latency": { "value": 6, "unit": "ms" },
-            "maxLatency": { "value": 10, "unit": "ms" }
-          },
-          "stage3": {
-            "connections": 10,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 6995, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1399, "unit": "requests" },
-            "bytesPerSecond": { "value": 264948940.8, "unit": "bytes" },
-            "avgLatency": { "value": 6.82, "unit": "ms" },
-            "p50Latency": { "value": 7, "unit": "ms" },
-            "p75Latency": { "value": 7, "unit": "ms" },
-            "p90Latency": { "value": 8, "unit": "ms" },
-            "p99Latency": { "value": 11, "unit": "ms" },
-            "maxLatency": { "value": 17, "unit": "ms" }
-          },
-          "stage4": {
-            "connections": 25,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 7591, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1518.2, "unit": "requests" },
-            "bytesPerSecond": { "value": 287545753.61, "unit": "bytes" },
-            "avgLatency": { "value": 15.97, "unit": "ms" },
-            "p50Latency": { "value": 16, "unit": "ms" },
-            "p75Latency": { "value": 17, "unit": "ms" },
-            "p90Latency": { "value": 18, "unit": "ms" },
-            "p99Latency": { "value": 25, "unit": "ms" },
-            "maxLatency": { "value": 56, "unit": "ms" }
-          },
-          "stage5": {
-            "connections": 50,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 7630, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1526, "unit": "requests" },
-            "bytesPerSecond": { "value": 289000652.8, "unit": "bytes" },
-            "avgLatency": { "value": 32.12, "unit": "ms" },
-            "p50Latency": { "value": 31, "unit": "ms" },
-            "p75Latency": { "value": 32, "unit": "ms" },
-            "p90Latency": { "value": 33, "unit": "ms" },
-            "p99Latency": { "value": 52, "unit": "ms" },
-            "maxLatency": { "value": 158, "unit": "ms" }
-          },
-          "stage6": {
-            "connections": 100,
-            "duration": { "value": 5010, "unit": "ms" },
-            "requests": { "value": 7644, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1528.8, "unit": "requests" },
-            "bytesPerSecond": { "value": 289538048, "unit": "bytes" },
-            "avgLatency": { "value": 64.53, "unit": "ms" },
-            "p50Latency": { "value": 62, "unit": "ms" },
-            "p75Latency": { "value": 63, "unit": "ms" },
-            "p90Latency": { "value": 65, "unit": "ms" },
-            "p99Latency": { "value": 103, "unit": "ms" },
-            "maxLatency": { "value": 1618, "unit": "ms" }
-          },
-          "stage7": {
-            "connections": 200,
-            "duration": { "value": 5010, "unit": "ms" },
-            "requests": { "value": 7857, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1571.4, "unit": "requests" },
-            "bytesPerSecond": { "value": 297612083.2, "unit": "bytes" },
-            "avgLatency": { "value": 111.64, "unit": "ms" },
-            "p50Latency": { "value": 81, "unit": "ms" },
-            "p75Latency": { "value": 97, "unit": "ms" },
-            "p90Latency": { "value": 105, "unit": "ms" },
-            "p99Latency": { "value": 1531, "unit": "ms" },
-            "maxLatency": { "value": 4946, "unit": "ms" }
-          }
-        },
-        {
-          "stage1": {
-            "connections": 1,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 2635, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 527, "unit": "requests" },
-            "bytesPerSecond": { "value": 99804774.4, "unit": "bytes" },
-            "avgLatency": { "value": 1.09, "unit": "ms" },
-            "p50Latency": { "value": 1, "unit": "ms" },
-            "p75Latency": { "value": 1, "unit": "ms" },
-            "p90Latency": { "value": 1, "unit": "ms" },
-            "p99Latency": { "value": 3, "unit": "ms" },
-            "maxLatency": { "value": 15, "unit": "ms" }
-          },
-          "stage2": {
-            "connections": 5,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 6041, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1208.2, "unit": "requests" },
-            "bytesPerSecond": { "value": 228812390.4, "unit": "bytes" },
-            "avgLatency": { "value": 3.76, "unit": "ms" },
-            "p50Latency": { "value": 4, "unit": "ms" },
-            "p75Latency": { "value": 4, "unit": "ms" },
-            "p90Latency": { "value": 4, "unit": "ms" },
-            "p99Latency": { "value": 6, "unit": "ms" },
-            "maxLatency": { "value": 10, "unit": "ms" }
-          },
-          "stage3": {
-            "connections": 10,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 7097, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1419.4, "unit": "requests" },
-            "bytesPerSecond": { "value": 268828672, "unit": "bytes" },
-            "avgLatency": { "value": 6.37, "unit": "ms" },
-            "p50Latency": { "value": 6, "unit": "ms" },
-            "p75Latency": { "value": 7, "unit": "ms" },
-            "p90Latency": { "value": 8, "unit": "ms" },
-            "p99Latency": { "value": 11, "unit": "ms" },
-            "maxLatency": { "value": 15, "unit": "ms" }
-          },
-          "stage4": {
-            "connections": 25,
-            "duration": { "value": 5010, "unit": "ms" },
-            "requests": { "value": 7636, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1527.2, "unit": "requests" },
-            "bytesPerSecond": { "value": 289275904, "unit": "bytes" },
-            "avgLatency": { "value": 15.85, "unit": "ms" },
-            "p50Latency": { "value": 15, "unit": "ms" },
-            "p75Latency": { "value": 17, "unit": "ms" },
-            "p90Latency": { "value": 18, "unit": "ms" },
-            "p99Latency": { "value": 26, "unit": "ms" },
-            "maxLatency": { "value": 55, "unit": "ms" }
-          },
-          "stage5": {
-            "connections": 50,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 7850, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1570, "unit": "requests" },
-            "bytesPerSecond": { "value": 297349939.2, "unit": "bytes" },
-            "avgLatency": { "value": 31.24, "unit": "ms" },
-            "p50Latency": { "value": 31, "unit": "ms" },
-            "p75Latency": { "value": 32, "unit": "ms" },
-            "p90Latency": { "value": 33, "unit": "ms" },
-            "p99Latency": { "value": 45, "unit": "ms" },
-            "maxLatency": { "value": 282, "unit": "ms" }
-          },
-          "stage6": {
-            "connections": 100,
-            "duration": { "value": 5010, "unit": "ms" },
-            "requests": { "value": 7794, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1558.8, "unit": "requests" },
-            "bytesPerSecond": { "value": 295252787.2, "unit": "bytes" },
-            "avgLatency": { "value": 63.27, "unit": "ms" },
-            "p50Latency": { "value": 62, "unit": "ms" },
-            "p75Latency": { "value": 63, "unit": "ms" },
-            "p90Latency": { "value": 64, "unit": "ms" },
-            "p99Latency": { "value": 74, "unit": "ms" },
-            "maxLatency": { "value": 1556, "unit": "ms" }
-          },
-          "stage7": {
-            "connections": 200,
-            "duration": { "value": 5010, "unit": "ms" },
-            "requests": { "value": 7489, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1497.8, "unit": "requests" },
-            "bytesPerSecond": { "value": 283731558.4, "unit": "bytes" },
-            "avgLatency": { "value": 114.5, "unit": "ms" },
-            "p50Latency": { "value": 83, "unit": "ms" },
-            "p75Latency": { "value": 99, "unit": "ms" },
-            "p90Latency": { "value": 110, "unit": "ms" },
-            "p99Latency": { "value": 1618, "unit": "ms" },
-            "maxLatency": { "value": 4944, "unit": "ms" }
-          }
-        },
-        {
-          "stage1": {
-            "connections": 1,
-            "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 2657, "unit": "requests" },
-            "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 531.4, "unit": "requests" },
-            "bytesPerSecond": { "value": 100643635.2, "unit": "bytes" },
+            "requestsPerSecond": { "value": 525.8, "unit": "requests" },
+            "bytesPerSecond": { "value": 99581952, "unit": "bytes" },
             "avgLatency": { "value": 1.07, "unit": "ms" },
             "p50Latency": { "value": 1, "unit": "ms" },
             "p75Latency": { "value": 1, "unit": "ms" },
@@ -1037,107 +804,307 @@
           "stage2": {
             "connections": 5,
             "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 5982, "unit": "requests" },
+            "requests": { "value": 5882, "unit": "requests" },
             "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1196.41, "unit": "requests" },
-            "bytesPerSecond": { "value": 226557952, "unit": "bytes" },
-            "avgLatency": { "value": 3.9, "unit": "ms" },
+            "requestsPerSecond": { "value": 1176.41, "unit": "requests" },
+            "bytesPerSecond": { "value": 222809292.8, "unit": "bytes" },
+            "avgLatency": { "value": 3.95, "unit": "ms" },
             "p50Latency": { "value": 4, "unit": "ms" },
             "p75Latency": { "value": 4, "unit": "ms" },
             "p90Latency": { "value": 4, "unit": "ms" },
-            "p99Latency": { "value": 6, "unit": "ms" },
-            "maxLatency": { "value": 9, "unit": "ms" }
+            "p99Latency": { "value": 7, "unit": "ms" },
+            "maxLatency": { "value": 11, "unit": "ms" }
           },
           "stage3": {
             "connections": 10,
             "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 7025, "unit": "requests" },
+            "requests": { "value": 6971, "unit": "requests" },
             "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1405, "unit": "requests" },
-            "bytesPerSecond": { "value": 266063052.8, "unit": "bytes" },
-            "avgLatency": { "value": 6.57, "unit": "ms" },
-            "p50Latency": { "value": 6, "unit": "ms" },
+            "requestsPerSecond": { "value": 1394.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 264005222.4, "unit": "bytes" },
+            "avgLatency": { "value": 6.7, "unit": "ms" },
+            "p50Latency": { "value": 7, "unit": "ms" },
             "p75Latency": { "value": 7, "unit": "ms" },
-            "p90Latency": { "value": 7, "unit": "ms" },
+            "p90Latency": { "value": 8, "unit": "ms" },
             "p99Latency": { "value": 11, "unit": "ms" },
-            "maxLatency": { "value": 18, "unit": "ms" }
+            "maxLatency": { "value": 17, "unit": "ms" }
           },
           "stage4": {
             "connections": 25,
             "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 7739, "unit": "requests" },
+            "requests": { "value": 7831, "unit": "requests" },
             "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1547.8, "unit": "requests" },
-            "bytesPerSecond": { "value": 293103206.4, "unit": "bytes" },
-            "avgLatency": { "value": 15.62, "unit": "ms" },
+            "requestsPerSecond": { "value": 1566.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 296615936, "unit": "bytes" },
+            "avgLatency": { "value": 15.44, "unit": "ms" },
             "p50Latency": { "value": 15, "unit": "ms" },
             "p75Latency": { "value": 16, "unit": "ms" },
             "p90Latency": { "value": 17, "unit": "ms" },
-            "p99Latency": { "value": 25, "unit": "ms" },
-            "maxLatency": { "value": 47, "unit": "ms" }
+            "p99Latency": { "value": 22, "unit": "ms" },
+            "maxLatency": { "value": 69, "unit": "ms" }
           },
           "stage5": {
             "connections": 50,
             "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 8086, "unit": "requests" },
+            "requests": { "value": 7857, "unit": "requests" },
             "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1617.2, "unit": "requests" },
-            "bytesPerSecond": { "value": 306315264, "unit": "bytes" },
-            "avgLatency": { "value": 30.28, "unit": "ms" },
-            "p50Latency": { "value": 30, "unit": "ms" },
+            "requestsPerSecond": { "value": 1571.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 297612083.2, "unit": "bytes" },
+            "avgLatency": { "value": 31.23, "unit": "ms" },
+            "p50Latency": { "value": 31, "unit": "ms" },
             "p75Latency": { "value": 31, "unit": "ms" },
-            "p90Latency": { "value": 31, "unit": "ms" },
-            "p99Latency": { "value": 45, "unit": "ms" },
-            "maxLatency": { "value": 253, "unit": "ms" }
+            "p90Latency": { "value": 32, "unit": "ms" },
+            "p99Latency": { "value": 51, "unit": "ms" },
+            "maxLatency": { "value": 132, "unit": "ms" }
           },
           "stage6": {
             "connections": 100,
             "duration": { "value": 5000, "unit": "ms" },
-            "requests": { "value": 7965, "unit": "requests" },
+            "requests": { "value": 7803, "unit": "requests" },
             "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1593, "unit": "requests" },
-            "bytesPerSecond": { "value": 301753958.4, "unit": "bytes" },
-            "avgLatency": { "value": 61.88, "unit": "ms" },
-            "p50Latency": { "value": 60, "unit": "ms" },
-            "p75Latency": { "value": 62, "unit": "ms" },
-            "p90Latency": { "value": 63, "unit": "ms" },
-            "p99Latency": { "value": 78, "unit": "ms" },
-            "maxLatency": { "value": 1502, "unit": "ms" }
+            "requestsPerSecond": { "value": 1560.6, "unit": "requests" },
+            "bytesPerSecond": { "value": 295567360, "unit": "bytes" },
+            "avgLatency": { "value": 63.19, "unit": "ms" },
+            "p50Latency": { "value": 62, "unit": "ms" },
+            "p75Latency": { "value": 63, "unit": "ms" },
+            "p90Latency": { "value": 66, "unit": "ms" },
+            "p99Latency": { "value": 83, "unit": "ms" },
+            "maxLatency": { "value": 1490, "unit": "ms" }
           },
           "stage7": {
             "connections": 200,
             "duration": { "value": 5010, "unit": "ms" },
-            "requests": { "value": 7535, "unit": "requests" },
+            "requests": { "value": 7361, "unit": "requests" },
             "errors": { "value": 0, "unit": "errors" },
-            "requestsPerSecond": { "value": 1507, "unit": "requests" },
-            "bytesPerSecond": { "value": 285383065.61, "unit": "bytes" },
-            "avgLatency": { "value": 113.94, "unit": "ms" },
-            "p50Latency": { "value": 81, "unit": "ms" },
-            "p75Latency": { "value": 96, "unit": "ms" },
-            "p90Latency": { "value": 110, "unit": "ms" },
-            "p99Latency": { "value": 1631, "unit": "ms" },
-            "maxLatency": { "value": 4981, "unit": "ms" }
+            "requestsPerSecond": { "value": 1472.2, "unit": "requests" },
+            "bytesPerSecond": { "value": 278842572.8, "unit": "bytes" },
+            "avgLatency": { "value": 115.77, "unit": "ms" },
+            "p50Latency": { "value": 86, "unit": "ms" },
+            "p75Latency": { "value": 99, "unit": "ms" },
+            "p90Latency": { "value": 118, "unit": "ms" },
+            "p99Latency": { "value": 1547, "unit": "ms" },
+            "maxLatency": { "value": 4950, "unit": "ms" }
+          }
+        },
+        {
+          "stage1": {
+            "connections": 1,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 2565, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 513, "unit": "requests" },
+            "bytesPerSecond": { "value": 97157120, "unit": "bytes" },
+            "avgLatency": { "value": 1.12, "unit": "ms" },
+            "p50Latency": { "value": 1, "unit": "ms" },
+            "p75Latency": { "value": 1, "unit": "ms" },
+            "p90Latency": { "value": 1, "unit": "ms" },
+            "p99Latency": { "value": 3, "unit": "ms" },
+            "maxLatency": { "value": 12, "unit": "ms" }
+          },
+          "stage2": {
+            "connections": 5,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 5680, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1136, "unit": "requests" },
+            "bytesPerSecond": { "value": 215128473.6, "unit": "bytes" },
+            "avgLatency": { "value": 4.04, "unit": "ms" },
+            "p50Latency": { "value": 4, "unit": "ms" },
+            "p75Latency": { "value": 4, "unit": "ms" },
+            "p90Latency": { "value": 4, "unit": "ms" },
+            "p99Latency": { "value": 7, "unit": "ms" },
+            "maxLatency": { "value": 11, "unit": "ms" }
+          },
+          "stage3": {
+            "connections": 10,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 6642, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1328.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 251566489.6, "unit": "bytes" },
+            "avgLatency": { "value": 7.05, "unit": "ms" },
+            "p50Latency": { "value": 7, "unit": "ms" },
+            "p75Latency": { "value": 7, "unit": "ms" },
+            "p90Latency": { "value": 9, "unit": "ms" },
+            "p99Latency": { "value": 12, "unit": "ms" },
+            "maxLatency": { "value": 16, "unit": "ms" }
+          },
+          "stage4": {
+            "connections": 25,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 7520, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1504, "unit": "requests" },
+            "bytesPerSecond": { "value": 284767027.2, "unit": "bytes" },
+            "avgLatency": { "value": 16.09, "unit": "ms" },
+            "p50Latency": { "value": 16, "unit": "ms" },
+            "p75Latency": { "value": 17, "unit": "ms" },
+            "p90Latency": { "value": 18, "unit": "ms" },
+            "p99Latency": { "value": 22, "unit": "ms" },
+            "maxLatency": { "value": 50, "unit": "ms" }
+          },
+          "stage5": {
+            "connections": 50,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 6462, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1292.41, "unit": "requests" },
+            "bytesPerSecond": { "value": 244750745.6, "unit": "bytes" },
+            "avgLatency": { "value": 38.01, "unit": "ms" },
+            "p50Latency": { "value": 37, "unit": "ms" },
+            "p75Latency": { "value": 40, "unit": "ms" },
+            "p90Latency": { "value": 45, "unit": "ms" },
+            "p99Latency": { "value": 53, "unit": "ms" },
+            "maxLatency": { "value": 408, "unit": "ms" }
+          },
+          "stage6": {
+            "connections": 100,
+            "duration": { "value": 5010, "unit": "ms" },
+            "requests": { "value": 7262, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1452.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 275041484.8, "unit": "bytes" },
+            "avgLatency": { "value": 67.9, "unit": "ms" },
+            "p50Latency": { "value": 64, "unit": "ms" },
+            "p75Latency": { "value": 67, "unit": "ms" },
+            "p90Latency": { "value": 69, "unit": "ms" },
+            "p99Latency": { "value": 136, "unit": "ms" },
+            "maxLatency": { "value": 1658, "unit": "ms" }
+          },
+          "stage7": {
+            "connections": 200,
+            "duration": { "value": 5010, "unit": "ms" },
+            "requests": { "value": 7100, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1420, "unit": "requests" },
+            "bytesPerSecond": { "value": 268907315.2, "unit": "bytes" },
+            "avgLatency": { "value": 117.27, "unit": "ms" },
+            "p50Latency": { "value": 86, "unit": "ms" },
+            "p75Latency": { "value": 101, "unit": "ms" },
+            "p90Latency": { "value": 109, "unit": "ms" },
+            "p99Latency": { "value": 1670, "unit": "ms" },
+            "maxLatency": { "value": 4968, "unit": "ms" }
+          }
+        },
+        {
+          "stage1": {
+            "connections": 1,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 2648, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 529.6, "unit": "requests" },
+            "bytesPerSecond": { "value": 100302848, "unit": "bytes" },
+            "avgLatency": { "value": 1.08, "unit": "ms" },
+            "p50Latency": { "value": 1, "unit": "ms" },
+            "p75Latency": { "value": 1, "unit": "ms" },
+            "p90Latency": { "value": 1, "unit": "ms" },
+            "p99Latency": { "value": 3, "unit": "ms" },
+            "maxLatency": { "value": 6, "unit": "ms" }
+          },
+          "stage2": {
+            "connections": 5,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 5730, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1146, "unit": "requests" },
+            "bytesPerSecond": { "value": 217042124.8, "unit": "bytes" },
+            "avgLatency": { "value": 4.02, "unit": "ms" },
+            "p50Latency": { "value": 4, "unit": "ms" },
+            "p75Latency": { "value": 4, "unit": "ms" },
+            "p90Latency": { "value": 4, "unit": "ms" },
+            "p99Latency": { "value": 7, "unit": "ms" },
+            "maxLatency": { "value": 10, "unit": "ms" }
+          },
+          "stage3": {
+            "connections": 10,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 6857, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1371.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 259745382.4, "unit": "bytes" },
+            "avgLatency": { "value": 6.87, "unit": "ms" },
+            "p50Latency": { "value": 7, "unit": "ms" },
+            "p75Latency": { "value": 7, "unit": "ms" },
+            "p90Latency": { "value": 8, "unit": "ms" },
+            "p99Latency": { "value": 13, "unit": "ms" },
+            "maxLatency": { "value": 19, "unit": "ms" }
+          },
+          "stage4": {
+            "connections": 25,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 7443, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1488.6, "unit": "requests" },
+            "bytesPerSecond": { "value": 281975193.61, "unit": "bytes" },
+            "avgLatency": { "value": 16.3, "unit": "ms" },
+            "p50Latency": { "value": 16, "unit": "ms" },
+            "p75Latency": { "value": 17, "unit": "ms" },
+            "p90Latency": { "value": 18, "unit": "ms" },
+            "p99Latency": { "value": 27, "unit": "ms" },
+            "maxLatency": { "value": 60, "unit": "ms" }
+          },
+          "stage5": {
+            "connections": 50,
+            "duration": { "value": 5000, "unit": "ms" },
+            "requests": { "value": 7465, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1493, "unit": "requests" },
+            "bytesPerSecond": { "value": 282722304, "unit": "bytes" },
+            "avgLatency": { "value": 32.89, "unit": "ms" },
+            "p50Latency": { "value": 32, "unit": "ms" },
+            "p75Latency": { "value": 34, "unit": "ms" },
+            "p90Latency": { "value": 35, "unit": "ms" },
+            "p99Latency": { "value": 55, "unit": "ms" },
+            "maxLatency": { "value": 348, "unit": "ms" }
+          },
+          "stage6": {
+            "connections": 100,
+            "duration": { "value": 5010, "unit": "ms" },
+            "requests": { "value": 7405, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1481, "unit": "requests" },
+            "bytesPerSecond": { "value": 280454758.4, "unit": "bytes" },
+            "avgLatency": { "value": 66.62, "unit": "ms" },
+            "p50Latency": { "value": 64, "unit": "ms" },
+            "p75Latency": { "value": 66, "unit": "ms" },
+            "p90Latency": { "value": 75, "unit": "ms" },
+            "p99Latency": { "value": 104, "unit": "ms" },
+            "maxLatency": { "value": 1516, "unit": "ms" }
+          },
+          "stage7": {
+            "connections": 200,
+            "duration": { "value": 5010, "unit": "ms" },
+            "requests": { "value": 7457, "unit": "requests" },
+            "errors": { "value": 0, "unit": "errors" },
+            "requestsPerSecond": { "value": 1491.4, "unit": "requests" },
+            "bytesPerSecond": { "value": 282420838.4, "unit": "bytes" },
+            "avgLatency": { "value": 114.79, "unit": "ms" },
+            "p50Latency": { "value": 80, "unit": "ms" },
+            "p75Latency": { "value": 103, "unit": "ms" },
+            "p90Latency": { "value": 112, "unit": "ms" },
+            "p99Latency": { "value": 1561, "unit": "ms" },
+            "maxLatency": { "value": 4979, "unit": "ms" }
           }
         }
       ]
     },
-    "representativeIterationIndex": 0,
-    "totalRequests": { "value": 139799, "unit": "requests" },
+    "representativeIterationIndex": 1,
+    "totalRequests": { "value": 134570, "unit": "requests" },
     "totalErrors": { "value": 0, "unit": "errors" },
     "stage1": {
       "connections": 1,
       "requests": {
         "unit": "requests",
-        "mean": 2626,
-        "median": 2635,
-        "min": 2586,
-        "max": 2657,
+        "mean": 2614,
+        "median": 2629,
+        "min": 2565,
+        "max": 2648,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -2.6686434395848777, "valueChange": -72 },
-          "median": { "percentChange": -2.9823269513991164, "valueChange": -81 },
-          "min": { "percentChange": -2.1566401816118046, "valueChange": -57 },
-          "max": { "percentChange": -2.8519195612431445, "valueChange": -78 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -0.456968773800457, "valueChange": -12 },
+          "median": { "percentChange": -0.22770398481973433, "valueChange": -6 },
+          "min": { "percentChange": -0.8120649651972157, "valueChange": -21 },
+          "max": { "percentChange": -0.3387278885961611, "valueChange": -9 }
         }
       },
       "errors": {
@@ -1147,7 +1114,7 @@
         "min": 0,
         "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1156,44 +1123,44 @@
       },
       "requestsPerSecond": {
         "unit": "requests",
-        "mean": 525.2033333333334,
-        "median": 527,
-        "min": 517.21,
-        "max": 531.4,
+        "mean": 522.8000000000001,
+        "median": 525.8,
+        "min": 513,
+        "max": 529.6,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -2.6686269543677104, "valueChange": -14.399999999999977 },
-          "median": { "percentChange": -2.9841129581561523, "valueChange": -16.210000000000036 },
-          "min": { "percentChange": -2.154748391978809, "valueChange": -11.389999999999986 },
-          "max": { "percentChange": -2.8519195612431485, "valueChange": -15.600000000000023 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -0.4576005483590433, "valueChange": -2.4033333333333076 },
+          "median": { "percentChange": -0.22770398481974297, "valueChange": -1.2000000000000455 },
+          "min": { "percentChange": -0.8139827149513806, "valueChange": -4.210000000000036 },
+          "max": { "percentChange": -0.33872788859615255, "valueChange": -1.7999999999999545 }
         }
       },
       "bytesPerSecond": {
         "unit": "bytes",
-        "mean": 99468356.26666667,
-        "median": 99804774.4,
-        "min": 97956659.2,
-        "max": 100643635.2,
+        "mean": 99013973.33333333,
+        "median": 99581952,
+        "min": 97157120,
+        "max": 100302848,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -2.6719107368060953, "valueChange": -2730666.6666666567 },
-          "median": { "percentChange": -3.006177950449005, "valueChange": -3093299.199999988 },
-          "min": { "percentChange": -2.1472995090016336, "valueChange": -2149580.799999997 },
-          "max": { "percentChange": -2.8468400075915734, "valueChange": -2949120 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -0.45681154327630913, "valueChange": -454382.9333333373 },
+          "median": { "percentChange": -0.22325825727231535, "valueChange": -222822.40000000596 },
+          "min": { "percentChange": -0.8162173011306647, "valueChange": -799539.200000003 },
+          "max": { "percentChange": -0.33860780100280297, "valueChange": -340787.200000003 }
         }
       },
       "avgLatency": {
         "unit": "ms",
-        "mean": 1.0833333333333333,
-        "median": 1.09,
+        "mean": 1.09,
+        "median": 1.08,
         "min": 1.07,
-        "max": 1.09,
+        "max": 1.12,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 2.5236593059936863, "valueChange": 0.026666666666666616 },
-          "median": { "percentChange": 2.8301886792452855, "valueChange": 0.030000000000000027 },
-          "min": { "percentChange": 2.8846153846153872, "valueChange": 0.030000000000000027 },
-          "max": { "percentChange": 1.8691588785046744, "valueChange": 0.020000000000000018 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 0.6153846153846296, "valueChange": 0.006666666666666821 },
+          "median": { "percentChange": -0.9174311926605512, "valueChange": -0.010000000000000009 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 2.7522935779816535, "valueChange": 0.030000000000000027 }
         }
       },
       "p50Latency": {
@@ -1203,7 +1170,7 @@
         "min": 1,
         "max": 1,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1217,7 +1184,7 @@
         "min": 1,
         "max": 1,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1231,7 +1198,7 @@
         "min": 1,
         "max": 1,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1245,25 +1212,25 @@
         "min": 3,
         "max": 3,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 12.500000000000005, "valueChange": 0.3333333333333335 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": 50, "valueChange": 1 },
+          "min": { "percentChange": 0, "valueChange": 0 },
           "max": { "percentChange": 0, "valueChange": 0 }
         }
       },
       "maxLatency": {
         "unit": "ms",
-        "mean": 10,
-        "median": 8,
-        "min": 7,
-        "max": 15,
+        "mean": 8.333333333333334,
+        "median": 7,
+        "min": 6,
+        "max": 12,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 36.36363636363637, "valueChange": 2.666666666666667 },
-          "median": { "percentChange": 14.285714285714285, "valueChange": 1 },
-          "min": { "percentChange": 75, "valueChange": 3 },
-          "max": { "percentChange": 36.36363636363637, "valueChange": 4 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -16.66666666666666, "valueChange": -1.666666666666666 },
+          "median": { "percentChange": -12.5, "valueChange": -1 },
+          "min": { "percentChange": -14.285714285714285, "valueChange": -1 },
+          "max": { "percentChange": -20, "valueChange": -3 }
         }
       }
     },
@@ -1271,16 +1238,16 @@
       "connections": 5,
       "requests": {
         "unit": "requests",
-        "mean": 5996,
-        "median": 5982,
-        "min": 5965,
-        "max": 6041,
+        "mean": 5764,
+        "median": 5730,
+        "min": 5680,
+        "max": 5882,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.7941760423560555, "valueChange": -48 },
-          "median": { "percentChange": -1.3522427440633245, "valueChange": -82 },
-          "min": { "percentChange": -0.6495669553630913, "valueChange": -39 },
-          "max": { "percentChange": -0.379287598944591, "valueChange": -23 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -3.8692461641094065, "valueChange": -232 },
+          "median": { "percentChange": -4.212637913741224, "valueChange": -252 },
+          "min": { "percentChange": -4.777870913663034, "valueChange": -285 },
+          "max": { "percentChange": -2.632014567124648, "valueChange": -159 }
         }
       },
       "errors": {
@@ -1290,7 +1257,7 @@
         "min": 0,
         "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1299,44 +1266,44 @@
       },
       "requestsPerSecond": {
         "unit": "requests",
-        "mean": 1199.2033333333331,
-        "median": 1196.41,
-        "min": 1193,
-        "max": 1208.2,
+        "mean": 1152.8033333333333,
+        "median": 1146,
+        "min": 1136,
+        "max": 1176.41,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.7939002867858046, "valueChange": -9.596666666666806 },
-          "median": { "percentChange": -1.351418205804739, "valueChange": -16.389999999999873 },
-          "min": { "percentChange": -0.6495669553630875, "valueChange": -7.7999999999999545 },
-          "max": { "percentChange": -0.3792875989445835, "valueChange": -4.599999999999909 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -3.8692354090632284, "valueChange": -46.399999999999864 },
+          "median": { "percentChange": -4.213438536956401, "valueChange": -50.41000000000008 },
+          "min": { "percentChange": -4.777870913663034, "valueChange": -57 },
+          "max": { "percentChange": -2.631186889587813, "valueChange": -31.789999999999964 }
         }
       },
       "bytesPerSecond": {
         "unit": "bytes",
-        "mean": 227108454.4,
-        "median": 226557952,
-        "min": 225955020.8,
-        "max": 228812390.4,
+        "mean": 218326630.4,
+        "median": 217042124.8,
+        "min": 215128473.6,
+        "max": 222809292.8,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.797725147426468, "valueChange": -1826269.8666666448 },
-          "median": { "percentChange": -1.358214917536949, "valueChange": -3119513.599999994 },
-          "min": { "percentChange": -0.6454959368336014, "valueChange": -1468006.3999999762 },
-          "max": { "percentChange": -0.38801711840227987, "valueChange": -891289.599999994 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -3.8667974836959655, "valueChange": -8781824 },
+          "median": { "percentChange": -4.20017356089094, "valueChange": -9515827.199999988 },
+          "min": { "percentChange": -4.791461221648595, "valueChange": -10826547.200000018 },
+          "max": { "percentChange": -2.6235893910752104, "valueChange": -6003097.599999994 }
         }
       },
       "avgLatency": {
         "unit": "ms",
-        "mean": 3.8633333333333333,
-        "median": 3.9,
-        "min": 3.76,
-        "max": 3.93,
+        "mean": 4.003333333333333,
+        "median": 4.02,
+        "min": 3.95,
+        "max": 4.04,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0, "valueChange": 0 },
-          "median": { "percentChange": 1.5625000000000013, "valueChange": 0.06000000000000005 },
-          "min": { "percentChange": -1.5706806282722525, "valueChange": -0.06000000000000005 },
-          "max": { "percentChange": 0, "valueChange": 0 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 3.6238136324417516, "valueChange": 0.13999999999999968 },
+          "median": { "percentChange": 3.076923076923068, "valueChange": 0.11999999999999966 },
+          "min": { "percentChange": 5.053191489361713, "valueChange": 0.1900000000000004 },
+          "max": { "percentChange": 2.7989821882951618, "valueChange": 0.10999999999999988 }
         }
       },
       "p50Latency": {
@@ -1346,7 +1313,7 @@
         "min": 4,
         "max": 4,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1360,7 +1327,7 @@
         "min": 4,
         "max": 4,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1374,7 +1341,7 @@
         "min": 4,
         "max": 4,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1383,30 +1350,30 @@
       },
       "p99Latency": {
         "unit": "ms",
-        "mean": 6,
-        "median": 6,
-        "min": 6,
-        "max": 6,
+        "mean": 7,
+        "median": 7,
+        "min": 7,
+        "max": 7,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -5.263157894736838, "valueChange": -0.33333333333333304 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": -14.285714285714285, "valueChange": -1 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 16.666666666666664, "valueChange": 1 },
+          "median": { "percentChange": 16.666666666666664, "valueChange": 1 },
+          "min": { "percentChange": 16.666666666666664, "valueChange": 1 },
+          "max": { "percentChange": 16.666666666666664, "valueChange": 1 }
         }
       },
       "maxLatency": {
         "unit": "ms",
-        "mean": 9.666666666666666,
-        "median": 10,
-        "min": 9,
-        "max": 10,
+        "mean": 10.666666666666666,
+        "median": 11,
+        "min": 10,
+        "max": 11,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 3.5714285714285587, "valueChange": 0.33333333333333215 },
-          "median": { "percentChange": 11.11111111111111, "valueChange": 1 },
-          "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": 0, "valueChange": 0 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 10.344827586206899, "valueChange": 1 },
+          "median": { "percentChange": 10, "valueChange": 1 },
+          "min": { "percentChange": 11.11111111111111, "valueChange": 1 },
+          "max": { "percentChange": 10, "valueChange": 1 }
         }
       }
     },
@@ -1414,16 +1381,16 @@
       "connections": 10,
       "requests": {
         "unit": "requests",
-        "mean": 7039,
-        "median": 7025,
-        "min": 6995,
-        "max": 7097,
+        "mean": 6823.333333333333,
+        "median": 6857,
+        "min": 6642,
+        "max": 6971,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.6290207290922087, "valueChange": 44 },
-          "median": { "percentChange": 0.44323706033743204, "valueChange": 31 },
-          "min": { "percentChange": 0.05721642111285939, "valueChange": 4 },
-          "max": { "percentChange": 1.3857142857142857, "valueChange": 97 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -3.063882180233939, "valueChange": -215.66666666666697 },
+          "median": { "percentChange": -2.391459074733096, "valueChange": -168 },
+          "min": { "percentChange": -5.0464617583988565, "valueChange": -353 },
+          "max": { "percentChange": -1.7753980555164153, "valueChange": -126 }
         }
       },
       "errors": {
@@ -1433,7 +1400,7 @@
         "min": 0,
         "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1442,57 +1409,57 @@
       },
       "requestsPerSecond": {
         "unit": "requests",
-        "mean": 1407.8,
-        "median": 1405,
-        "min": 1399,
-        "max": 1419.4,
+        "mean": 1364.6666666666667,
+        "median": 1371.4,
+        "min": 1328.4,
+        "max": 1394.2,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.6290207290922054, "valueChange": 8.799999999999955 },
-          "median": { "percentChange": 0.4432370603374354, "valueChange": 6.2000000000000455 },
-          "min": { "percentChange": 0.05721642111285614, "valueChange": 0.7999999999999545 },
-          "max": { "percentChange": 1.3857142857142921, "valueChange": 19.40000000000009 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -3.063882180233926, "valueChange": -43.13333333333321 },
+          "median": { "percentChange": -2.3914590747330893, "valueChange": -33.59999999999991 },
+          "min": { "percentChange": -5.04646175839885, "valueChange": -70.59999999999991 },
+          "max": { "percentChange": -1.7753980555164184, "valueChange": -25.200000000000045 }
         }
       },
       "bytesPerSecond": {
         "unit": "bytes",
-        "mean": 266613555.20000002,
-        "median": 266063052.8,
-        "min": 264948940.8,
-        "max": 268828672,
+        "mean": 258439031.46666667,
+        "median": 259745382.4,
+        "min": 251566489.6,
+        "max": 264005222.4,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.621640339016585, "valueChange": 1647138.1333333254 },
-          "median": { "percentChange": 0.4304373639422148, "valueChange": 1140326.400000006 },
-          "min": { "percentChange": 0.039592200336542704, "valueChange": 104857.60000002384 },
-          "max": { "percentChange": 1.394107178168877, "valueChange": 3696230.400000006 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -3.066057060452622, "valueChange": -8174523.733333349 },
+          "median": { "percentChange": -2.3745012069560096, "valueChange": -6317670.400000006 },
+          "min": { "percentChange": -5.050954783813205, "valueChange": -13382451.200000018 },
+          "max": { "percentChange": -1.7942467089224745, "valueChange": -4823449.599999994 }
         }
       },
       "avgLatency": {
         "unit": "ms",
-        "mean": 6.586666666666667,
-        "median": 6.57,
-        "min": 6.37,
-        "max": 6.82,
+        "mean": 6.873333333333334,
+        "median": 6.87,
+        "min": 6.7,
+        "max": 7.05,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.05058168942842134, "valueChange": -0.0033333333333329662 },
-          "median": { "percentChange": 0.30534351145038874, "valueChange": 0.020000000000000462 },
-          "min": { "percentChange": -1.9999999999999982, "valueChange": -0.1299999999999999 },
-          "max": { "percentChange": 1.4880952380952461, "valueChange": 0.10000000000000053 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 4.352226720647779, "valueChange": 0.28666666666666707 },
+          "median": { "percentChange": 4.566210045662097, "valueChange": 0.2999999999999998 },
+          "min": { "percentChange": 5.180533751962325, "valueChange": 0.33000000000000007 },
+          "max": { "percentChange": 3.372434017595301, "valueChange": 0.22999999999999954 }
         }
       },
       "p50Latency": {
         "unit": "ms",
-        "mean": 6.333333333333333,
-        "median": 6,
-        "min": 6,
+        "mean": 7,
+        "median": 7,
+        "min": 7,
         "max": 7,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0, "valueChange": 0 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": 0, "valueChange": 0 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 10.526315789473689, "valueChange": 0.666666666666667 },
+          "median": { "percentChange": 16.666666666666664, "valueChange": 1 },
+          "min": { "percentChange": 16.666666666666664, "valueChange": 1 },
           "max": { "percentChange": 0, "valueChange": 0 }
         }
       },
@@ -1503,7 +1470,7 @@
         "min": 7,
         "max": 7,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1512,44 +1479,44 @@
       },
       "p90Latency": {
         "unit": "ms",
-        "mean": 7.666666666666667,
+        "mean": 8.333333333333334,
         "median": 8,
-        "min": 7,
-        "max": 8,
+        "min": 8,
+        "max": 9,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0, "valueChange": 0 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 8.695652173913047, "valueChange": 0.666666666666667 },
           "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": 0, "valueChange": 0 }
+          "min": { "percentChange": 14.285714285714285, "valueChange": 1 },
+          "max": { "percentChange": 12.5, "valueChange": 1 }
         }
       },
       "p99Latency": {
         "unit": "ms",
-        "mean": 11,
-        "median": 11,
+        "mean": 12,
+        "median": 12,
         "min": 11,
-        "max": 11,
+        "max": 13,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -5.714285714285709, "valueChange": -0.6666666666666661 },
-          "median": { "percentChange": -8.333333333333332, "valueChange": -1 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 9.090909090909092, "valueChange": 1 },
+          "median": { "percentChange": 9.090909090909092, "valueChange": 1 },
           "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": -8.333333333333332, "valueChange": -1 }
+          "max": { "percentChange": 18.181818181818183, "valueChange": 2 }
         }
       },
       "maxLatency": {
         "unit": "ms",
-        "mean": 16.666666666666668,
+        "mean": 17.333333333333332,
         "median": 17,
-        "min": 15,
-        "max": 18,
+        "min": 16,
+        "max": 19,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -7.407407407407401, "valueChange": -1.3333333333333321 },
-          "median": { "percentChange": -5.555555555555555, "valueChange": -1 },
-          "min": { "percentChange": -11.76470588235294, "valueChange": -2 },
-          "max": { "percentChange": -5.263157894736842, "valueChange": -1 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 3.9999999999999853, "valueChange": 0.6666666666666643 },
+          "median": { "percentChange": 0, "valueChange": 0 },
+          "min": { "percentChange": 6.666666666666667, "valueChange": 1 },
+          "max": { "percentChange": 5.555555555555555, "valueChange": 1 }
         }
       }
     },
@@ -1557,16 +1524,16 @@
       "connections": 25,
       "requests": {
         "unit": "requests",
-        "mean": 7655.333333333333,
-        "median": 7636,
-        "min": 7591,
-        "max": 7739,
+        "mean": 7598,
+        "median": 7520,
+        "min": 7443,
+        "max": 7831,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.5222331803953595, "valueChange": -118.33333333333394 },
-          "median": { "percentChange": -2.002053388090349, "valueChange": -156 },
-          "min": { "percentChange": -1.4667705088265834, "valueChange": -113 },
-          "max": { "percentChange": -1.099041533546326, "valueChange": -86 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -0.7489332056082866, "valueChange": -57.33333333333303 },
+          "median": { "percentChange": -1.5191199580932426, "valueChange": -116 },
+          "min": { "percentChange": -1.9496772493742591, "valueChange": -148 },
+          "max": { "percentChange": 1.1887840806305723, "valueChange": 92 }
         }
       },
       "errors": {
@@ -1576,7 +1543,7 @@
         "min": 0,
         "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1585,58 +1552,58 @@
       },
       "requestsPerSecond": {
         "unit": "requests",
-        "mean": 1531.0666666666666,
-        "median": 1527.2,
-        "min": 1518.2,
-        "max": 1547.8,
+        "mean": 1519.5999999999997,
+        "median": 1504,
+        "min": 1488.6,
+        "max": 1566.2,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.5222331803953568, "valueChange": -23.666666666666742 },
-          "median": { "percentChange": -2.002053388090352, "valueChange": -31.200000000000045 },
-          "min": { "percentChange": -1.466770508826578, "valueChange": -22.59999999999991 },
-          "max": { "percentChange": -1.0990415335463288, "valueChange": -17.200000000000045 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -0.7489332056083073, "valueChange": -11.466666666666924 },
+          "median": { "percentChange": -1.5191199580932453, "valueChange": -23.200000000000045 },
+          "min": { "percentChange": -1.9496772493742678, "valueChange": -29.600000000000136 },
+          "max": { "percentChange": 1.1887840806305783, "valueChange": 18.40000000000009 }
         }
       },
       "bytesPerSecond": {
         "unit": "bytes",
-        "mean": 289974954.67,
-        "median": 289275904,
-        "min": 287545753.61,
-        "max": 293103206.4,
+        "mean": 287786052.27000004,
+        "median": 284767027.2,
+        "min": 281975193.61,
+        "max": 296615936,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.513577682131551, "valueChange": -4456448 },
-          "median": { "percentChange": -1.9895194988354281, "valueChange": -5872025.610000014 },
-          "min": { "percentChange": -1.4553948398035113, "valueChange": -4246732.789999962 },
-          "max": { "percentChange": -1.0968597965502072, "valueChange": -3250585.600000024 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -0.7548591230890996, "valueChange": -2188902.399999976 },
+          "median": { "percentChange": -1.5586769370185816, "valueChange": -4508876.800000012 },
+          "min": { "percentChange": -1.9372777827751833, "valueChange": -5570560 },
+          "max": { "percentChange": 1.198461676057606, "valueChange": 3512729.600000024 }
         }
       },
       "avgLatency": {
         "unit": "ms",
-        "mean": 15.813333333333333,
-        "median": 15.85,
-        "min": 15.62,
-        "max": 15.97,
+        "mean": 15.943333333333333,
+        "median": 16.09,
+        "min": 15.44,
+        "max": 16.3,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 1.9119226638023525, "valueChange": 0.2966666666666651 },
-          "median": { "percentChange": 2.3901808785529663, "valueChange": 0.3699999999999992 },
-          "min": { "percentChange": 1.4285714285714213, "valueChange": 0.21999999999999886 },
-          "max": { "percentChange": 1.9144862795150015, "valueChange": 0.3000000000000007 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 0.8220910623946087, "valueChange": 0.13000000000000078 },
+          "median": { "percentChange": 1.514195583596216, "valueChange": 0.2400000000000002 },
+          "min": { "percentChange": -1.1523687580025592, "valueChange": -0.17999999999999972 },
+          "max": { "percentChange": 2.0663744520976834, "valueChange": 0.33000000000000007 }
         }
       },
       "p50Latency": {
         "unit": "ms",
-        "mean": 15.333333333333334,
-        "median": 15,
+        "mean": 15.666666666666666,
+        "median": 16,
         "min": 15,
         "max": 16,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 2.2222222222222263, "valueChange": 0.3333333333333339 },
-          "median": { "percentChange": 0, "valueChange": 0 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 2.173913043478253, "valueChange": 0.33333333333333215 },
+          "median": { "percentChange": 6.666666666666667, "valueChange": 1 },
           "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": 6.666666666666667, "valueChange": 1 }
+          "max": { "percentChange": 0, "valueChange": 0 }
         }
       },
       "p75Latency": {
@@ -1646,11 +1613,11 @@
         "min": 16,
         "max": 17,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 4.166666666666674, "valueChange": 0.6666666666666679 },
-          "median": { "percentChange": 6.25, "valueChange": 1 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": 6.25, "valueChange": 1 }
+          "max": { "percentChange": 0, "valueChange": 0 }
         }
       },
       "p90Latency": {
@@ -1660,39 +1627,39 @@
         "min": 17,
         "max": 18,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 1.9230769230769367, "valueChange": 0.3333333333333357 },
-          "median": { "percentChange": 5.88235294117647, "valueChange": 1 },
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 0, "valueChange": 0 },
+          "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
           "max": { "percentChange": 0, "valueChange": 0 }
         }
       },
       "p99Latency": {
         "unit": "ms",
-        "mean": 25.333333333333332,
-        "median": 25,
-        "min": 25,
-        "max": 26,
+        "mean": 23.666666666666668,
+        "median": 22,
+        "min": 22,
+        "max": 27,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 2.7027027027026933, "valueChange": 0.6666666666666643 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": 4.166666666666666, "valueChange": 1 },
-          "max": { "percentChange": 4, "valueChange": 1 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -6.578947368421044, "valueChange": -1.6666666666666643 },
+          "median": { "percentChange": -12, "valueChange": -3 },
+          "min": { "percentChange": -12, "valueChange": -3 },
+          "max": { "percentChange": 3.8461538461538463, "valueChange": 1 }
         }
       },
       "maxLatency": {
         "unit": "ms",
-        "mean": 52.666666666666664,
-        "median": 55,
-        "min": 47,
-        "max": 56,
+        "mean": 59.666666666666664,
+        "median": 60,
+        "min": 50,
+        "max": 69,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -24.401913875598094, "valueChange": -17.000000000000007 },
-          "median": { "percentChange": -26.666666666666668, "valueChange": -20 },
-          "min": { "percentChange": -14.545454545454545, "valueChange": -8 },
-          "max": { "percentChange": -29.11392405063291, "valueChange": -23 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 13.29113924050633, "valueChange": 7 },
+          "median": { "percentChange": 9.090909090909092, "valueChange": 5 },
+          "min": { "percentChange": 6.382978723404255, "valueChange": 3 },
+          "max": { "percentChange": 23.214285714285715, "valueChange": 13 }
         }
       }
     },
@@ -1700,16 +1667,16 @@
       "connections": 50,
       "requests": {
         "unit": "requests",
-        "mean": 7855.333333333333,
-        "median": 7850,
-        "min": 7630,
-        "max": 8086,
+        "mean": 7261.333333333333,
+        "median": 7465,
+        "min": 6462,
+        "max": 7857,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.5890387570428548, "valueChange": 46 },
-          "median": { "percentChange": 0.8478931140801645, "valueChange": 66 },
-          "min": { "percentChange": -1.4848289218850872, "valueChange": -115 },
-          "max": { "percentChange": 2.3673882769970884, "valueChange": 187 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -7.561741491979972, "valueChange": -594 },
+          "median": { "percentChange": -4.904458598726115, "valueChange": -385 },
+          "min": { "percentChange": -15.307994757536042, "valueChange": -1168 },
+          "max": { "percentChange": -2.8320554044026713, "valueChange": -229 }
         }
       },
       "errors": {
@@ -1719,7 +1686,7 @@
         "min": 0,
         "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1728,114 +1695,114 @@
       },
       "requestsPerSecond": {
         "unit": "requests",
-        "mean": 1571.0666666666666,
-        "median": 1570,
-        "min": 1526,
-        "max": 1617.2,
+        "mean": 1452.2700000000002,
+        "median": 1493,
+        "min": 1292.41,
+        "max": 1571.4,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.5890387570428429, "valueChange": 9.199999999999818 },
-          "median": { "percentChange": 0.8478931140801674, "valueChange": 13.200000000000045 },
-          "min": { "percentChange": -1.4848289218850872, "valueChange": -23 },
-          "max": { "percentChange": 2.367388276997094, "valueChange": 37.40000000000009 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -7.5615293219044215, "valueChange": -118.7966666666664 },
+          "median": { "percentChange": -4.904458598726115, "valueChange": -77 },
+          "min": { "percentChange": -15.30733944954128, "valueChange": -233.58999999999992 },
+          "max": { "percentChange": -2.8320554044026682, "valueChange": -45.799999999999955 }
         }
       },
       "bytesPerSecond": {
         "unit": "bytes",
-        "mean": 297555285.3333333,
-        "median": 297349939.2,
-        "min": 289000652.8,
-        "max": 306315264,
+        "mean": 275028377.59999996,
+        "median": 282722304,
+        "min": 244750745.6,
+        "max": 297612083.2,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.6011994445921567, "valueChange": 1778210.1333333254 },
-          "median": { "percentChange": 0.8535609495865484, "valueChange": 2516582.399999976 },
-          "min": { "percentChange": -1.487802698597075, "valueChange": -4364697.599999964 },
-          "max": { "percentChange": 2.401191832442388, "valueChange": 7182745.600000024 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -7.570662946920202, "valueChange": -22526907.73333335 },
+          "median": { "percentChange": -4.919333509653527, "valueChange": -14627635.199999988 },
+          "min": { "percentChange": -15.311351988752332, "valueChange": -44249907.20000002 },
+          "max": { "percentChange": -2.8412494651262343, "valueChange": -8703180.800000012 }
         }
       },
       "avgLatency": {
         "unit": "ms",
-        "mean": 31.213333333333335,
-        "median": 31.24,
-        "min": 30.28,
-        "max": 32.12,
+        "mean": 34.04333333333333,
+        "median": 32.89,
+        "min": 31.23,
+        "max": 38.01,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.5628119358606749, "valueChange": -0.17666666666666586 },
-          "median": { "percentChange": -0.8568708346556748, "valueChange": -0.2700000000000031 },
-          "min": { "percentChange": -2.479871175523348, "valueChange": -0.7699999999999996 },
-          "max": { "percentChange": 1.6134134767478583, "valueChange": 0.509999999999998 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 9.066638188808184, "valueChange": 2.8299999999999947 },
+          "median": { "percentChange": 5.281690140845077, "valueChange": 1.6500000000000021 },
+          "min": { "percentChange": 3.1373844121532337, "valueChange": 0.9499999999999993 },
+          "max": { "percentChange": 18.337484433374847, "valueChange": 5.890000000000001 }
         }
       },
       "p50Latency": {
         "unit": "ms",
-        "mean": 30.666666666666668,
-        "median": 31,
-        "min": 30,
-        "max": 31,
+        "mean": 33.333333333333336,
+        "median": 32,
+        "min": 31,
+        "max": 37,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -2.127659574468078, "valueChange": -0.6666666666666643 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": -3.225806451612903, "valueChange": -1 },
-          "max": { "percentChange": -3.125, "valueChange": -1 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 8.695652173913047, "valueChange": 2.666666666666668 },
+          "median": { "percentChange": 3.225806451612903, "valueChange": 1 },
+          "min": { "percentChange": 3.3333333333333335, "valueChange": 1 },
+          "max": { "percentChange": 19.35483870967742, "valueChange": 6 }
         }
       },
       "p75Latency": {
         "unit": "ms",
-        "mean": 31.666666666666668,
-        "median": 32,
+        "mean": 35,
+        "median": 34,
         "min": 31,
-        "max": 32,
+        "max": 40,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.041666666666663, "valueChange": -0.33333333333333215 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": -3.125, "valueChange": -1 },
-          "max": { "percentChange": 0, "valueChange": 0 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 10.52631578947368, "valueChange": 3.333333333333332 },
+          "median": { "percentChange": 6.25, "valueChange": 2 },
+          "min": { "percentChange": 0, "valueChange": 0 },
+          "max": { "percentChange": 25, "valueChange": 8 }
         }
       },
       "p90Latency": {
         "unit": "ms",
-        "mean": 32.333333333333336,
-        "median": 33,
-        "min": 31,
-        "max": 33,
+        "mean": 37.333333333333336,
+        "median": 35,
+        "min": 32,
+        "max": 45,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.0204081632652917, "valueChange": -0.3333333333333286 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": -3.125, "valueChange": -1 },
-          "max": { "percentChange": 0, "valueChange": 0 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 15.463917525773194, "valueChange": 5 },
+          "median": { "percentChange": 6.0606060606060606, "valueChange": 2 },
+          "min": { "percentChange": 3.225806451612903, "valueChange": 1 },
+          "max": { "percentChange": 36.36363636363637, "valueChange": 12 }
         }
       },
       "p99Latency": {
         "unit": "ms",
-        "mean": 47.333333333333336,
-        "median": 45,
-        "min": 45,
-        "max": 52,
+        "mean": 53,
+        "median": 53,
+        "min": 51,
+        "max": 55,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -7.792207792207792, "valueChange": -4 },
-          "median": { "percentChange": -10, "valueChange": -5 },
-          "min": { "percentChange": -8.16326530612245, "valueChange": -4 },
-          "max": { "percentChange": -5.454545454545454, "valueChange": -3 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 11.971830985915487, "valueChange": 5.666666666666664 },
+          "median": { "percentChange": 17.77777777777778, "valueChange": 8 },
+          "min": { "percentChange": 13.333333333333334, "valueChange": 6 },
+          "max": { "percentChange": 5.769230769230769, "valueChange": 3 }
         }
       },
       "maxLatency": {
         "unit": "ms",
-        "mean": 231,
-        "median": 253,
-        "min": 158,
-        "max": 282,
+        "mean": 296,
+        "median": 348,
+        "min": 132,
+        "max": 408,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.841359773371109, "valueChange": -4.333333333333343 },
-          "median": { "percentChange": -11.846689895470384, "valueChange": -34 },
-          "min": { "percentChange": 36.206896551724135, "valueChange": 42 },
-          "max": { "percentChange": -6.9306930693069315, "valueChange": -21 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 28.13852813852814, "valueChange": 65 },
+          "median": { "percentChange": 37.54940711462451, "valueChange": 95 },
+          "min": { "percentChange": -16.455696202531644, "valueChange": -26 },
+          "max": { "percentChange": 44.680851063829785, "valueChange": 126 }
         }
       }
     },
@@ -1843,16 +1810,16 @@
       "connections": 100,
       "requests": {
         "unit": "requests",
-        "mean": 7801,
-        "median": 7794,
-        "min": 7644,
-        "max": 7965,
+        "mean": 7490,
+        "median": 7405,
+        "min": 7262,
+        "max": 7803,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 1.6152142764100559, "valueChange": 124 },
-          "median": { "percentChange": 0.9324009324009324, "valueChange": 72 },
-          "min": { "percentChange": 1.2182203389830508, "valueChange": 92 },
-          "max": { "percentChange": 2.681449013793993, "valueChange": 208 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -3.98666837584925, "valueChange": -311 },
+          "median": { "percentChange": -4.991018732358224, "valueChange": -389 },
+          "min": { "percentChange": -4.99738356881214, "valueChange": -382 },
+          "max": { "percentChange": -2.0338983050847457, "valueChange": -162 }
         }
       },
       "errors": {
@@ -1862,7 +1829,7 @@
         "min": 0,
         "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -1871,114 +1838,114 @@
       },
       "requestsPerSecond": {
         "unit": "requests",
-        "mean": 1560.2,
-        "median": 1558.8,
-        "min": 1528.8,
-        "max": 1593,
+        "mean": 1498,
+        "median": 1481,
+        "min": 1452.4,
+        "max": 1560.6,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 1.615214276410038, "valueChange": 24.799999999999727 },
-          "median": { "percentChange": 0.9324009324009236, "valueChange": 14.399999999999864 },
-          "min": { "percentChange": 1.2182203389830417, "valueChange": 18.399999999999864 },
-          "max": { "percentChange": 2.6814490137939866, "valueChange": 41.59999999999991 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -3.9866683758492525, "valueChange": -62.200000000000045 },
+          "median": { "percentChange": -4.991018732358222, "valueChange": -77.79999999999995 },
+          "min": { "percentChange": -4.997383568812132, "valueChange": -76.39999999999986 },
+          "max": { "percentChange": -2.0338983050847514, "valueChange": -32.40000000000009 }
         }
       },
       "bytesPerSecond": {
         "unit": "bytes",
-        "mean": 295514931.2,
-        "median": 295252787.2,
-        "min": 289538048,
-        "max": 301753958.4,
+        "mean": 283687867.7333333,
+        "median": 280454758.4,
+        "min": 275041484.8,
+        "max": 295567360,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 1.6104317496162348, "valueChange": 4683639.459999979 },
-          "median": { "percentChange": 0.9319831491618786, "valueChange": 2726297.589999974 },
-          "min": { "percentChange": 1.1910215300045808, "valueChange": 3407872 },
-          "max": { "percentChange": 2.694263534733259, "valueChange": 7916748.789999962 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -4.002188119104656, "valueChange": -11827063.466666698 },
+          "median": { "percentChange": -5.011986149338546, "valueChange": -14798028.800000012 },
+          "min": { "percentChange": -5.006790402897234, "valueChange": -14496563.199999988 },
+          "max": { "percentChange": -2.050212839892269, "valueChange": -6186598.399999976 }
         }
       },
       "avgLatency": {
         "unit": "ms",
-        "mean": 63.22666666666667,
-        "median": 63.27,
-        "min": 61.88,
-        "max": 64.53,
+        "mean": 65.90333333333334,
+        "median": 66.62,
+        "min": 63.19,
+        "max": 67.9,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.5927367055771726, "valueChange": -1.0233333333333334 },
-          "median": { "percentChange": -0.9083790133124483, "valueChange": -0.5799999999999983 },
-          "min": { "percentChange": -2.6737967914438436, "valueChange": -1.6999999999999957 },
-          "max": { "percentChange": -1.2094304960195839, "valueChange": -0.789999999999992 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 4.23344580345846, "valueChange": 2.6766666666666694 },
+          "median": { "percentChange": 5.294768452663192, "valueChange": 3.3500000000000014 },
+          "min": { "percentChange": 2.117000646412403, "valueChange": 1.3099999999999952 },
+          "max": { "percentChange": 5.222377188904392, "valueChange": 3.3700000000000045 }
         }
       },
       "p50Latency": {
         "unit": "ms",
-        "mean": 61.333333333333336,
-        "median": 62,
-        "min": 60,
-        "max": 62,
+        "mean": 63.333333333333336,
+        "median": 64,
+        "min": 62,
+        "max": 64,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.60427807486631, "valueChange": -1 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": -3.225806451612903, "valueChange": -2 },
-          "max": { "percentChange": -1.5873015873015872, "valueChange": -1 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 3.260869565217391, "valueChange": 2 },
+          "median": { "percentChange": 3.225806451612903, "valueChange": 2 },
+          "min": { "percentChange": 3.3333333333333335, "valueChange": 2 },
+          "max": { "percentChange": 3.225806451612903, "valueChange": 2 }
         }
       },
       "p75Latency": {
         "unit": "ms",
-        "mean": 62.666666666666664,
-        "median": 63,
-        "min": 62,
-        "max": 63,
+        "mean": 65.33333333333333,
+        "median": 66,
+        "min": 63,
+        "max": 67,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.052631578947376, "valueChange": -0.6666666666666714 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": 0, "valueChange": 0 },
-          "max": { "percentChange": -3.076923076923077, "valueChange": -2 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 4.255319148936167, "valueChange": 2.6666666666666643 },
+          "median": { "percentChange": 4.761904761904762, "valueChange": 3 },
+          "min": { "percentChange": 1.6129032258064515, "valueChange": 1 },
+          "max": { "percentChange": 6.349206349206349, "valueChange": 4 }
         }
       },
       "p90Latency": {
         "unit": "ms",
-        "mean": 64,
-        "median": 64,
-        "min": 63,
-        "max": 65,
+        "mean": 70,
+        "median": 69,
+        "min": 66,
+        "max": 75,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -2.040816326530605, "valueChange": -1.3333333333333286 },
-          "median": { "percentChange": -1.5384615384615385, "valueChange": -1 },
-          "min": { "percentChange": -1.5625, "valueChange": -1 },
-          "max": { "percentChange": -2.9850746268656714, "valueChange": -2 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 9.375, "valueChange": 6 },
+          "median": { "percentChange": 7.8125, "valueChange": 5 },
+          "min": { "percentChange": 4.761904761904762, "valueChange": 3 },
+          "max": { "percentChange": 15.384615384615385, "valueChange": 10 }
         }
       },
       "p99Latency": {
         "unit": "ms",
-        "mean": 85,
-        "median": 78,
-        "min": 74,
-        "max": 103,
+        "mean": 107.66666666666667,
+        "median": 104,
+        "min": 83,
+        "max": 136,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -11.458333333333332, "valueChange": -11 },
-          "median": { "percentChange": -21.21212121212121, "valueChange": -21 },
-          "min": { "percentChange": -15.909090909090908, "valueChange": -14 },
-          "max": { "percentChange": 1.9801980198019802, "valueChange": 2 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 26.66666666666667, "valueChange": 22.66666666666667 },
+          "median": { "percentChange": 33.33333333333333, "valueChange": 26 },
+          "min": { "percentChange": 12.162162162162163, "valueChange": 9 },
+          "max": { "percentChange": 32.038834951456316, "valueChange": 33 }
         }
       },
       "maxLatency": {
         "unit": "ms",
-        "mean": 1558.6666666666667,
-        "median": 1556,
-        "min": 1502,
-        "max": 1618,
+        "mean": 1554.6666666666667,
+        "median": 1516,
+        "min": 1490,
+        "max": 1658,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.48946584379654284, "valueChange": -7.666666666666515 },
-          "median": { "percentChange": -0.3203074951953876, "valueChange": -5 },
-          "min": { "percentChange": -0.7926023778071334, "valueChange": -12 },
-          "max": { "percentChange": -0.3694581280788177, "valueChange": -6 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -0.25662959794696316, "valueChange": -4 },
+          "median": { "percentChange": -2.570694087403599, "valueChange": -40 },
+          "min": { "percentChange": -0.7989347536617843, "valueChange": -12 },
+          "max": { "percentChange": 2.4721878862793574, "valueChange": 40 }
         }
       }
     },
@@ -1986,16 +1953,16 @@
       "connections": 200,
       "requests": {
         "unit": "requests",
-        "mean": 7627,
-        "median": 7535,
-        "min": 7489,
-        "max": 7857,
+        "mean": 7306,
+        "median": 7361,
+        "min": 7100,
+        "max": 7457,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.3772757183592933, "valueChange": 28.66666666666697 },
-          "median": { "percentChange": -0.9464966478243723, "valueChange": -72 },
-          "min": { "percentChange": -1.148363252375924, "valueChange": -87 },
-          "max": { "percentChange": 3.2186022070415135, "valueChange": 245 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -4.208732135833224, "valueChange": -321 },
+          "median": { "percentChange": -2.3092236230922363, "valueChange": -174 },
+          "min": { "percentChange": -5.194284951261851, "valueChange": -389 },
+          "max": { "percentChange": -5.091001654575538, "valueChange": -400 }
         }
       },
       "errors": {
@@ -2005,7 +1972,7 @@
         "min": 0,
         "max": 0,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
           "mean": { "percentChange": 0, "valueChange": 0 },
           "median": { "percentChange": 0, "valueChange": 0 },
           "min": { "percentChange": 0, "valueChange": 0 },
@@ -2014,118 +1981,151 @@
       },
       "requestsPerSecond": {
         "unit": "requests",
-        "mean": 1525.3999999999999,
-        "median": 1507,
-        "min": 1497.8,
-        "max": 1571.4,
+        "mean": 1461.2,
+        "median": 1472.2,
+        "min": 1420,
+        "max": 1491.4,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.3772757183592753, "valueChange": 5.733333333333121 },
-          "median": { "percentChange": -0.9464966478243781, "valueChange": -14.400000000000091 },
-          "min": { "percentChange": -1.14836325237593, "valueChange": -17.40000000000009 },
-          "max": { "percentChange": 3.2186022070415135, "valueChange": 49 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -4.208732135833213, "valueChange": -64.19999999999982 },
+          "median": { "percentChange": -2.309223623092233, "valueChange": -34.799999999999955 },
+          "min": { "percentChange": -5.1942849512618485, "valueChange": -77.79999999999995 },
+          "max": { "percentChange": -5.091001654575537, "valueChange": -80 }
         }
       },
       "bytesPerSecond": {
         "unit": "bytes",
-        "mean": 288908902.4033333,
-        "median": 285383065.61,
-        "min": 283731558.4,
-        "max": 297612083.2,
+        "mean": 276723575.46666664,
+        "median": 278842572.8,
+        "min": 268907315.2,
+        "max": 282420838.4,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.37645344424107335, "valueChange": 1083528.5333333611 },
-          "median": { "percentChange": -0.9687983227374627, "valueChange": -2791833.589999974 },
-          "min": { "percentChange": -1.1281629670229412, "valueChange": -3237478.4000000358 },
-          "max": { "percentChange": 3.2184744031843966, "valueChange": 9279897.589999974 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -4.217705593459095, "valueChange": -12185326.936666667 },
+          "median": { "percentChange": -2.2918293333277653, "valueChange": -6540492.810000002 },
+          "min": { "percentChange": -5.224742458539286, "valueChange": -14824243.199999988 },
+          "max": { "percentChange": -5.104377697524887, "valueChange": -15191244.800000012 }
         }
       },
       "avgLatency": {
         "unit": "ms",
-        "mean": 113.36,
-        "median": 113.94,
-        "min": 111.64,
-        "max": 114.5,
+        "mean": 115.94333333333333,
+        "median": 115.77,
+        "min": 114.79,
+        "max": 117.27,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.610807493351251, "valueChange": -0.6966666666666583 },
-          "median": { "percentChange": 0.043902010712088116, "valueChange": 0.04999999999999716 },
-          "min": { "percentChange": -1.9669827889005929, "valueChange": -2.239999999999995 },
-          "max": { "percentChange": 0.08741258741258244, "valueChange": 0.09999999999999432 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 2.2788755586920684, "valueChange": 2.5833333333333286 },
+          "median": { "percentChange": 1.6061084781463915, "valueChange": 1.8299999999999983 },
+          "min": { "percentChange": 2.821569329989256, "valueChange": 3.1500000000000057 },
+          "max": { "percentChange": 2.419213973799123, "valueChange": 2.769999999999996 }
         }
       },
       "p50Latency": {
         "unit": "ms",
-        "mean": 81.66666666666667,
-        "median": 81,
-        "min": 81,
-        "max": 83,
+        "mean": 84,
+        "median": 86,
+        "min": 80,
+        "max": 86,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 0.8230452674897177, "valueChange": 0.6666666666666714 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": 1.25, "valueChange": 1 },
-          "max": { "percentChange": 1.2195121951219512, "valueChange": 1 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 2.857142857142851, "valueChange": 2.3333333333333286 },
+          "median": { "percentChange": 6.172839506172839, "valueChange": 5 },
+          "min": { "percentChange": -1.2345679012345678, "valueChange": -1 },
+          "max": { "percentChange": 3.614457831325301, "valueChange": 3 }
         }
       },
       "p75Latency": {
         "unit": "ms",
-        "mean": 97.33333333333333,
-        "median": 97,
-        "min": 96,
-        "max": 99,
+        "mean": 101,
+        "median": 101,
+        "min": 99,
+        "max": 103,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -1.3513513513513609, "valueChange": -1.3333333333333428 },
-          "median": { "percentChange": -2.0202020202020203, "valueChange": -2 },
-          "min": { "percentChange": -2.0408163265306123, "valueChange": -2 },
-          "max": { "percentChange": 0, "valueChange": 0 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 3.767123287671238, "valueChange": 3.6666666666666714 },
+          "median": { "percentChange": 4.123711340206185, "valueChange": 4 },
+          "min": { "percentChange": 3.125, "valueChange": 3 },
+          "max": { "percentChange": 4.040404040404041, "valueChange": 4 }
         }
       },
       "p90Latency": {
         "unit": "ms",
-        "mean": 108.33333333333333,
-        "median": 110,
-        "min": 105,
-        "max": 110,
+        "mean": 113,
+        "median": 112,
+        "min": 109,
+        "max": 118,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.9146341463414636, "valueChange": -1 },
-          "median": { "percentChange": 0, "valueChange": 0 },
-          "min": { "percentChange": -1.8691588785046727, "valueChange": -2 },
-          "max": { "percentChange": -0.9009009009009009, "valueChange": -1 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 4.307692307692312, "valueChange": 4.666666666666671 },
+          "median": { "percentChange": 1.8181818181818181, "valueChange": 2 },
+          "min": { "percentChange": 3.8095238095238098, "valueChange": 4 },
+          "max": { "percentChange": 7.2727272727272725, "valueChange": 8 }
         }
       },
       "p99Latency": {
         "unit": "ms",
-        "mean": 1593.3333333333333,
-        "median": 1618,
-        "min": 1531,
-        "max": 1631,
+        "mean": 1592.6666666666667,
+        "median": 1561,
+        "min": 1547,
+        "max": 1670,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": 3.2174476354998824, "valueChange": 49.666666666666515 },
-          "median": { "percentChange": 4.185447520927238, "valueChange": 65 },
-          "min": { "percentChange": 1.1896893588896233, "valueChange": 18 },
-          "max": { "percentChange": 4.217252396166135, "valueChange": 66 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": -0.04184100418409091, "valueChange": -0.6666666666665151 },
+          "median": { "percentChange": -3.522867737948084, "valueChange": -57 },
+          "min": { "percentChange": 1.0450685826257349, "valueChange": 16 },
+          "max": { "percentChange": 2.391171060698958, "valueChange": 39 }
         }
       },
       "maxLatency": {
         "unit": "ms",
-        "mean": 4957,
-        "median": 4946,
-        "min": 4944,
-        "max": 4981,
+        "mean": 4965.666666666667,
+        "median": 4968,
+        "min": 4950,
+        "max": 4979,
         "variance": {
-          "comparedToMeasuredAt": "2026-11-25T00:45:25.726Z",
-          "mean": { "percentChange": -0.32841823056299657, "valueChange": -16.33333333333303 },
-          "median": { "percentChange": -0.5629272215520708, "valueChange": -28 },
-          "min": { "percentChange": -0.22199798183652875, "valueChange": -11 },
-          "max": { "percentChange": -0.20036064916850332, "valueChange": -10 }
+          "comparedToMeasuredAt": "2026-11-25T05:01:02.916Z",
+          "mean": { "percentChange": 0.1748369309394184, "valueChange": 8.66666666666697 },
+          "median": { "percentChange": 0.44480388192478765, "valueChange": 22 },
+          "min": { "percentChange": 0.12135922330097086, "valueChange": 6 },
+          "max": { "percentChange": -0.04015257980325236, "valueChange": -2 }
         }
       }
     }
   },
+  "framework": "astro",
+  "timingMeasuredAt": "2026-11-25T08:56:19.845Z",
+  "projects": {
+    "starter": {
+      "path": "packages/starter-astro",
+      "packageJson": {
+        "dependencies": { "astro": "7.4.12" },
+        "devDependencies": { "@astrojs/check": "0.9.12", "typescript": "6.0.3" }
+      }
+    },
+    "app": {
+      "path": "packages/app-astro",
+      "packageJson": {
+        "dependencies": {
+          "@astrojs/node": "11.1.9",
+          "@astrojs/react": "7.1.1",
+          "astro": "7.4.12",
+          "react": "19.3.1",
+          "react-dom": "19.3.1"
+        },
+        "devDependencies": {
+          "@astrojs/check": "0.9.12",
+          "@types/react": "19.3.0",
+          "@types/react-dom": "19.3.0",
+          "typescript": "6.0.3"
+        }
+      }
+    }
+  },
+  "runner": "Depot depot-ubuntu-24.04 GitHub Actions runner (2 CPUs, 8 GB RAM, 100 GB disk, 2 GB disk accelerator)",
+  "browserVersion": "Google Chrome 158.0.8127.36 ",
+  "frameworkVersion": "7.4.12",
+  "frameworkReleasedAt": "2026-10-15T14:49:24.327Z",
   "configuration": {
     "install": { "status": "live", "runs": 5 },
     "build": { "status": "live", "runs": 5 },
