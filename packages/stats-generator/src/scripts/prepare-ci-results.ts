@@ -41,6 +41,10 @@ for (const framework of frameworksConfig) {
     previous?.frameworkVersion === frameworkVersion
       ? previous.frameworkReleasedAt
       : (await getPublishTimes(framework.frameworkPackage))[frameworkVersion]
+  if (!frameworkReleasedAt)
+    throw new Error(
+      `No publish time for ${framework.frameworkPackage}@${frameworkVersion}`,
+    )
 
   const result = BenchmarkCIResultSchema.parse({
     framework: framework.name,
