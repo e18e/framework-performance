@@ -7,13 +7,13 @@ import {
   type BenchmarkResult,
 } from '@framework-performance/results/benchmark-schemas'
 import { withSummaryVariance } from '@framework-performance/results/comparison'
-import { measurementsConfig } from './measurements.ts'
-import { getSSRLoadPath } from './benchmarks/ssr-load/config.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
+import { getSSRLoadPath } from '../benchmarks/ssr-load/config.ts'
 import { join } from 'node:path'
-import { getFrameworks } from './get-frameworks.ts'
+import { frameworksConfig } from '@framework-performance/results/frameworks-config'
 import { globSync } from 'node:fs'
-import { readJsonFile } from './utils.ts'
-import type { FrameworkConfig } from './types.ts'
+import { readJsonFile } from '../utils/files.ts'
+import type { FrameworkConfig } from '../types.ts'
 
 function readArtifact<T = Record<string, unknown>>(file: string) {
   const artifact = readJsonFile<T>(file)
@@ -31,7 +31,7 @@ export async function processCIStats(
     frameworks?: FrameworkConfig[]
   } = {},
 ) {
-  const frameworks = configuredFrameworks ?? (await getFrameworks())
+  const frameworks: FrameworkConfig[] = configuredFrameworks ?? frameworksConfig
   const results = new Map<string, BenchmarkResult>()
 
   for (const framework of frameworks) {

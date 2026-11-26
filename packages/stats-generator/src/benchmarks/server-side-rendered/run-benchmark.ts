@@ -1,19 +1,19 @@
-import { findChromium } from '../../find-chromium.ts'
+import { findChromium } from '../../utils/find-chromium.ts'
 import puppeteer from 'puppeteer-core'
 import { startFlow } from 'lighthouse'
-import { warmUpServer } from '../../server-warmup.ts'
+import { warmUpServer } from '../../app-servers/server-warmup.ts'
 import {
   getInteractionTimingFromLighthouse,
   getNavigationInteractionTimingFromLighthouse,
   prepareInteractionTraceForLighthouse,
-} from '../../interaction-timing.ts'
-import { getInteractionWorkFromTrace } from '../../interaction-work.ts'
+} from '../shared/interaction-timing.ts'
+import { getInteractionWorkFromTrace } from '../shared/interaction-work.ts'
 import type {
   ServerSideRenderedBenchmarkResult,
   ServerSideRenderedRunResult,
 } from './types.ts'
 import { assembleServerRendering } from './server-rendering.ts'
-import { measurementsConfig } from '../../measurements.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 
 const SERVER_SIDE_RENDERED_PATH = measurementsConfig.ssrLighthouse.path
 

@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-import { packagesDir } from '../../../constants.ts'
+import { packagesDir } from '../../../utils/paths.ts'
 import type { ServerRenderHandler } from '../types.ts'
 
 export async function buildHandler(): Promise<ServerRenderHandler> {

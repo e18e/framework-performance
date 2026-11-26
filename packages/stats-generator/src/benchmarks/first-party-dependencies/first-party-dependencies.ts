@@ -1,7 +1,8 @@
 import { join } from 'node:path'
 import { parse } from 'yaml'
-import { packagesDir } from '../../constants.ts'
-import { getPackageJsonDeps, readJsonFile } from '../../utils.ts'
+import { packagesDir } from '../../utils/paths.ts'
+import { getPackageJsonDeps } from '../../utils/package-metadata.ts'
+import { readJsonFile } from '../../utils/files.ts'
 import type { PackageJson } from '../../types.ts'
 
 type DependencySection = 'dependencies' | 'devDependencies'

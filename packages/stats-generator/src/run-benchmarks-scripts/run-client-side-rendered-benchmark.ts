@@ -1,11 +1,11 @@
-import { measurementsConfig } from '../measurements.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 import { runClientSideRenderedBenchmark } from '../benchmarks/client-side-rendered/index.ts'
+import { benchmarkOutputPath } from '../utils/paths.ts'
 import {
-  benchmarkOutputPath,
   getBenchmarkContext,
   requireMeasurements,
-  writeJsonFile,
-} from '../utils.ts'
+} from '../utils/benchmark-context.ts'
+import { writeJsonFile } from '../utils/files.ts'
 
 async function main() {
   const { packageName, framework, projectConfig, frameworkVersion } =

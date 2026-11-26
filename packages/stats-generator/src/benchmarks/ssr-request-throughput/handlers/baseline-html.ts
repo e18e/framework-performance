@@ -1,5 +1,5 @@
 import { testData } from '../../../../../testdata/src/ssr.ts'
-import { renderSSRThroughputHtml } from '../../../baseline-html.ts'
+import { renderSSRThroughputHtml } from '../../shared/baseline-html.ts'
 import type { NodeServerRenderHandler, ServerRenderHandler } from '../types.ts'
 
 export async function buildHandler(): Promise<ServerRenderHandler> {

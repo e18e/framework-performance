@@ -1,8 +1,8 @@
 import {
   renderedSampleMetrics,
   measuredCSRLighthouse,
-} from '../../rendered-sample-metrics.ts'
-import { summarizeMetric } from '../../sample-statistics.ts'
+} from '../shared/rendered-sample-metrics.ts'
+import { summarizeMetric } from '../shared/sample-statistics.ts'
 import type { RenderedTestSample } from '../../types.ts'
 
 export function assembleClientRendering(iterations: RenderedTestSample[]) {

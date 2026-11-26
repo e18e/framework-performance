@@ -1,4 +1,4 @@
-import type { InteractionWork } from './interaction-work.ts'
+import type { InteractionWork } from './benchmarks/shared/interaction-work.ts'
 export type {
   FrameworkConfig,
   TestConfig,

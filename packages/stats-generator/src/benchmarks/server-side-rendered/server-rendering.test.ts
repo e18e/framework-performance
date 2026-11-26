@@ -2,7 +2,7 @@ import { test } from 'node:test'
 import assert from 'node:assert/strict'
 import { assembleServerRendering } from './server-rendering.ts'
 import { SSRLighthouseBenchmark } from '@framework-performance/results/benchmark-schemas'
-import { measuredSSRLighthouse } from '../../rendered-sample-metrics.ts'
+import { measuredSSRLighthouse } from '../shared/rendered-sample-metrics.ts'
 
 test('assembles server rendering from exact raw browser measurements', () => {
   const iterations = [1, 3].map((value) => ({

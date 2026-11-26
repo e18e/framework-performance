@@ -1,6 +1,6 @@
 import type { IterationSummary } from '@framework-performance/results/benchmark-schemas'
 import type { z } from 'zod'
-import type { TimeStat } from './types.ts'
+import type { TimeStat } from '../../types.ts'
 
 function round(value: number, decimalPlaces: number): number {
   const factor = 10 ** decimalPlaces

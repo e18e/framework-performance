@@ -5,7 +5,10 @@ import {
 import { spawn } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { cwd, env, exit, getgid, getuid, pid } from 'node:process'
-import { getBenchmarkContext, requireMeasurements } from '../utils.ts'
+import {
+  getBenchmarkContext,
+  requireMeasurements,
+} from '../utils/benchmark-context.ts'
 
 const RUN_SUFFIX = `${env.GITHUB_RUN_ID ?? 'local'}-${pid}`
 const NETWORK_NAME = `framework-performance-ssr-load-${RUN_SUFFIX}`

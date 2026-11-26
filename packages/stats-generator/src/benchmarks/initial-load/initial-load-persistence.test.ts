@@ -5,8 +5,8 @@ import { join } from 'node:path'
 import { test } from 'node:test'
 import { InitialLoadResourceType } from '@framework-performance/results/benchmark-schemas'
 import { readBenchmarkResult } from '@framework-performance/results/storage'
-import { frameworksConfig } from '../../frameworks.ts'
-import { processCIStats } from '../../save-ci-stats.ts'
+import { frameworksConfig } from '@framework-performance/results/frameworks-config'
+import { processCIStats } from '../../scripts/save-ci-stats.ts'
 
 test('CI requires configured initial load results and validates complete measurements', async () => {
   const directory = mkdtempSync(join(tmpdir(), 'initial-load-ci-'))

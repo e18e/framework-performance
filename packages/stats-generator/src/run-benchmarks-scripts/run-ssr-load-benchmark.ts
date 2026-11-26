@@ -5,12 +5,12 @@ import {
   getSSRLoadPath,
 } from '../benchmarks/ssr-load/config.ts'
 import { runSSRLoadBenchmark } from '../benchmarks/ssr-load/index.ts'
+import { benchmarkOutputPath } from '../utils/paths.ts'
 import {
-  benchmarkOutputPath,
   getBenchmarkContext,
   requireMeasurements,
-  writeJsonFile,
-} from '../utils.ts'
+} from '../utils/benchmark-context.ts'
+import { writeJsonFile } from '../utils/files.ts'
 
 async function main() {
   const { packageName, framework, projectConfig, frameworkVersion } =

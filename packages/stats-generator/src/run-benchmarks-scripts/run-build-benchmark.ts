@@ -1,5 +1,8 @@
 import { runBuildBenchmark } from '../benchmarks/build/run-benchmark.ts'
-import { getBenchmarkContext, requireMeasurements } from '../utils.ts'
+import {
+  getBenchmarkContext,
+  requireMeasurements,
+} from '../utils/benchmark-context.ts'
 
 async function main() {
   const { packageName, framework, projectConfig } = await getBenchmarkContext({

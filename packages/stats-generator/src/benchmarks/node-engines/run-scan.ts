@@ -1,8 +1,9 @@
 import { MinimumNodeVersionBenchmark } from '@framework-performance/results/benchmark-schemas'
 import { lstatSync, readdirSync, readFileSync } from 'node:fs'
 import { join, relative } from 'node:path'
-import { packagesDir } from '../../constants.ts'
-import { benchmarkOutputPath, writeJsonFile } from '../../utils.ts'
+import { packagesDir } from '../../utils/paths.ts'
+import { benchmarkOutputPath } from '../../utils/paths.ts'
+import { writeJsonFile } from '../../utils/files.ts'
 import { resolveMinimumNodeVersion } from './node-engines.ts'
 import type { NodeEngineEntry } from './node-engines.ts'
 

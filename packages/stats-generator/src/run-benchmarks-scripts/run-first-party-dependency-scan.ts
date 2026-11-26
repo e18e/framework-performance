@@ -1,5 +1,8 @@
 import { runFirstPartyDependencyScan } from '../benchmarks/first-party-dependencies/run-scan.ts'
-import { getBenchmarkContext, requireMeasurements } from '../utils.ts'
+import {
+  getBenchmarkContext,
+  requireMeasurements,
+} from '../utils/benchmark-context.ts'
 
 async function main() {
   const { packageName, framework } = await getBenchmarkContext({

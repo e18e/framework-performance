@@ -1,4 +1,4 @@
-import { frameworksConfig } from '../../frameworks.ts'
+import { frameworksConfig } from '@framework-performance/results/frameworks-config'
 import {
   SSRLoadBenchmark,
   SSRLoadRouterLinksBenchmark,
@@ -9,7 +9,7 @@ import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { getSSRLoadPath } from './config.ts'
 import { verifySSRLoadTable } from './verify-table.ts'
-import { renderBaselineHtml } from '../../baseline-html.ts'
+import { renderBaselineHtml } from '../shared/baseline-html.ts'
 import {
   measureLoadStage,
   runLoadTest,
@@ -17,7 +17,7 @@ import {
 } from './run-load-test.ts'
 import type { SSRLoadStageStats } from './types.ts'
 import { testData } from '../../../../testdata/src/ssr.ts'
-import { measurementsConfig } from '../../measurements.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 
 function loadStage(
   overrides: Partial<Parameters<typeof measureLoadStage>[0]> = {},

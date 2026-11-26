@@ -1,7 +1,7 @@
 import { readFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { getFrameworks } from './get-frameworks.ts'
-import { packagesDir } from './constants.ts'
+import { frameworksConfig } from '@framework-performance/results/frameworks-config'
+import { packagesDir } from '../utils/paths.ts'
 
 interface VersionMismatch {
   frameworkPackage: string
@@ -41,10 +41,9 @@ function extractVersion(
 }
 
 async function checkVersions(): Promise<VersionMismatch[]> {
-  const frameworks = await getFrameworks()
   const mismatches: VersionMismatch[] = []
 
-  const pairs = frameworks.filter((f) => f.starter && f.app)
+  const pairs = frameworksConfig.filter((f) => f.starter && f.app)
   console.info(`Checking ${pairs.length} framework package pair(s)...\n`)
 
   for (const framework of pairs) {

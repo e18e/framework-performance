@@ -1,15 +1,15 @@
-import { findChromium } from '../../find-chromium.ts'
-import { measurementsConfig } from '../../measurements.ts'
+import { findChromium } from '../../utils/find-chromium.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 import { assembleClientRendering } from './client-rendering.ts'
 import puppeteer from 'puppeteer-core'
 import { startFlow } from 'lighthouse'
-import { warmUpServer } from '../../server-warmup.ts'
+import { warmUpServer } from '../../app-servers/server-warmup.ts'
 import {
   getInteractionTimingFromLighthouse,
   getNavigationInteractionTimingFromLighthouse,
   prepareInteractionTraceForLighthouse,
-} from '../../interaction-timing.ts'
-import { getInteractionWorkFromTrace } from '../../interaction-work.ts'
+} from '../shared/interaction-timing.ts'
+import { getInteractionWorkFromTrace } from '../shared/interaction-work.ts'
 import type {
   ClientSideRenderedBenchmarkResult,
   ClientSideRenderedRunResult,

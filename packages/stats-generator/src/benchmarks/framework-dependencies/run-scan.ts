@@ -1,9 +1,7 @@
 import { DependencyCountBenchmark } from '@framework-performance/results/benchmark-schemas'
-import {
-  getFrameworkDependencyCountsFromPackageMetadata,
-  benchmarkOutputPath,
-  writeJsonFile,
-} from '../../utils.ts'
+import { getFrameworkDependencyCountsFromPackageMetadata } from '../../utils/package-metadata.ts'
+import { benchmarkOutputPath } from '../../utils/paths.ts'
+import { writeJsonFile } from '../../utils/files.ts'
 
 import type { FrameworkConfig } from '../../types.ts'
 

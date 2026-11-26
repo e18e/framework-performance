@@ -1,6 +1,6 @@
 import type { z } from 'zod'
 import { SSRThroughputBenchmark } from '@framework-performance/results/benchmark-schemas'
-import { summarizeMetric } from '../../sample-statistics.ts'
+import { summarizeMetric } from '../shared/sample-statistics.ts'
 
 export type RequestThroughputIteration = z.infer<
   typeof SSRThroughputBenchmark

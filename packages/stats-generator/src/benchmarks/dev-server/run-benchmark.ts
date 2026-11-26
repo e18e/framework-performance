@@ -1,12 +1,9 @@
-import { measurementsConfig } from '../../measurements.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 import { rmSync } from 'node:fs'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
-import {
-  copyTrackedProject,
-  installDependencies,
-} from '../../benchmark-utils.ts'
-import { packagesDir } from '../../constants.ts'
+import { copyTrackedProject, installDependencies } from '../../utils/project.ts'
+import { packagesDir } from '../../utils/paths.ts'
 import {
   advertisedPorts,
   isPortListening,
@@ -15,9 +12,10 @@ import {
   waitForPortFree,
   type DevServerHandle,
 } from './dev-server.ts'
-import { summarizeSamples } from '../../sample-statistics.ts'
+import { summarizeSamples } from '../shared/sample-statistics.ts'
 import { createDevServerStats } from './dev-server-statistics.ts'
-import { benchmarkOutputPath, writeJsonFile } from '../../utils.ts'
+import { benchmarkOutputPath } from '../../utils/paths.ts'
+import { writeJsonFile } from '../../utils/files.ts'
 
 import type { FrameworkConfig, TestConfig } from '../../types.ts'
 
@@ -104,7 +102,7 @@ export async function runDevServerBenchmark(
   const port = projectConfig.devServerPort
   if (port === undefined) {
     throw new Error(
-      `${packageName} has no devServerPort in packages/stats-generator/src/frameworks.ts`,
+      `${packageName} has no devServerPort in packages/results/src/frameworks-config.ts`,
     )
   }
 

@@ -6,8 +6,11 @@ import {
   DEFAULT_SSR_LOAD_PORT,
   startSSRLoadServer,
 } from '../benchmarks/ssr-load/index.ts'
-import { getHost, getPort } from '../serve/common.ts'
-import { getBenchmarkContext, requireMeasurements } from '../utils.ts'
+import { getHost, getPort } from '../app-servers/common.ts'
+import {
+  getBenchmarkContext,
+  requireMeasurements,
+} from '../utils/benchmark-context.ts'
 
 async function main() {
   const { packageName, framework, projectConfig } = await getBenchmarkContext({

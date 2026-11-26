@@ -1,6 +1,6 @@
 import { createServer } from 'node:http'
 import { testData } from '../../../testdata/src/ssr.ts'
-import { renderBaselineHtml } from '../baseline-html.ts'
+import { renderBaselineHtml } from '../benchmarks/shared/baseline-html.ts'
 import { getHost, getPort, registerShutdown } from './common.ts'
 
 const HOST = getHost()

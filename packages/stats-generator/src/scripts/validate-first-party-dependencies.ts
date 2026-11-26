@@ -1,14 +1,14 @@
 import { join } from 'node:path'
-import { packagesDir } from './constants.ts'
-import { validateFirstPartyDependencyManifest } from './benchmarks/first-party-dependencies/first-party-dependencies.ts'
-import { getFrameworks } from './get-frameworks.ts'
-import { getPackageJsonDeps, readJsonFile } from './utils.ts'
+import { packagesDir } from '../utils/paths.ts'
+import { validateFirstPartyDependencyManifest } from '../benchmarks/first-party-dependencies/first-party-dependencies.ts'
+import { frameworksConfig } from '@framework-performance/results/frameworks-config'
+import { getPackageJsonDeps } from '../utils/package-metadata.ts'
+import { readJsonFile } from '../utils/files.ts'
 
 async function main() {
-  const frameworks = await getFrameworks()
   const failures: string[] = []
 
-  for (const framework of frameworks) {
+  for (const framework of frameworksConfig) {
     if (!framework.starter) continue
 
     const packageName = framework.starter.package

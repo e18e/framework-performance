@@ -1,4 +1,4 @@
-import type { TableEntry } from '../../testdata/src/ssr.ts'
+import type { TableEntry } from '../../../../testdata/src/ssr.ts'
 
 export function renderSSRThroughputHtml(entries: TableEntry[]): string {
   const rows = entries

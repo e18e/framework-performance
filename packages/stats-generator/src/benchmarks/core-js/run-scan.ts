@@ -4,8 +4,9 @@ import { join, relative } from 'node:path'
 import { glob } from 'tinyglobby'
 import coreJsCompat from 'core-js-compat/compat.js'
 import getModulesListForTargetVersion from 'core-js-compat/get-modules-list-for-target-version.js'
-import { packagesDir } from '../../constants.ts'
-import { benchmarkOutputPath, writeJsonFile } from '../../utils.ts'
+import { packagesDir } from '../../utils/paths.ts'
+import { benchmarkOutputPath } from '../../utils/paths.ts'
+import { writeJsonFile } from '../../utils/files.ts'
 
 import type { FrameworkConfig, TestConfig } from '../../types.ts'
 

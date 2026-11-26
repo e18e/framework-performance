@@ -2,9 +2,9 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { BenchmarkCIResultSchema } from '@framework-performance/results/benchmark-schemas'
 import { readBenchmarkResult } from '@framework-performance/results/storage'
-import { frameworksConfig } from '../frameworks.ts'
-import { getPublishTimes } from '../release-dates.ts'
-import { getPackageJsonDeps } from '../utils.ts'
+import { frameworksConfig } from '@framework-performance/results/frameworks-config'
+import { getPublishTimes } from '../utils/release-dates.ts'
+import { getPackageJsonDeps } from '../utils/package-metadata.ts'
 
 const outputDirectory = process.argv[2]
 mkdirSync(outputDirectory, { recursive: true })

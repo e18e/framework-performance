@@ -1,7 +1,7 @@
 import { execFileSync } from 'node:child_process'
 import { cpSync, mkdirSync } from 'node:fs'
 import { dirname, join, relative } from 'node:path'
-import { packagesDir } from './constants.ts'
+import { packagesDir } from './paths.ts'
 
 export function installDependencies(
   cwd: string,

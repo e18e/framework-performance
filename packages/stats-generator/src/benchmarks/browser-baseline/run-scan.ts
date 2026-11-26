@@ -8,8 +8,9 @@ import {
   detectFeatures,
 } from 'baseline-detector'
 import { glob } from 'tinyglobby'
-import { packagesDir } from '../../constants.ts'
-import { benchmarkOutputPath, writeJsonFile } from '../../utils.ts'
+import { packagesDir } from '../../utils/paths.ts'
+import { benchmarkOutputPath } from '../../utils/paths.ts'
+import { writeJsonFile } from '../../utils/files.ts'
 
 import type { TestConfig } from '../../types.ts'
 

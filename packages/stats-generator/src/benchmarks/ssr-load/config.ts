@@ -1,5 +1,5 @@
 import type { FrameworkConfig } from '../../types.ts'
-import { measurementsConfig } from '../../measurements.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 
 export type SSRLoadKind = 'ssrLoad' | 'ssrLoadRouterLinks'
 

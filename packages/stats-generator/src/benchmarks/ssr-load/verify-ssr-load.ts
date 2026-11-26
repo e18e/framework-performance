@@ -1,4 +1,7 @@
-import { getFrameworks } from '../../get-frameworks.ts'
+import {
+  frameworksConfig,
+  type FrameworkConfig,
+} from '@framework-performance/results/frameworks-config'
 import { startSSRLoadServer } from './index.ts'
 import { getSSRLoadPath } from './config.ts'
 import { verifySSRLoadTable } from './verify-table.ts'
@@ -8,7 +11,8 @@ process.env.HOST = '127.0.0.1'
 process.env.PORT = '3003'
 process.env.SSR_LOAD_KIND = 'ssrLoad'
 const selected = process.argv.slice(2)
-for (const framework of await getFrameworks()) {
+const frameworks: FrameworkConfig[] = frameworksConfig
+for (const framework of frameworks) {
   const { app, measurements } = framework
   if (!app || !measurements.includes('ssrLoad')) continue
   if (selected.length && !selected.includes(framework.name)) continue

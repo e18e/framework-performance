@@ -117,7 +117,7 @@ jobs:
       - name: Set matrices from TypeScript config
         id: set-matrix
         run: |
-          FRAMEWORKS=$(node packages/stats-generator/src/print-frameworks.ts)
+          FRAMEWORKS=$(node packages/stats-generator/src/scripts/print-frameworks.ts)
           echo "install=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.measurements | (index("installDuration") != null or index("dependencyCounts") != null)) | {name, displayName, package: .starter.package, buildScript: .starter.buildScript, buildOutputDir: .starter.buildOutputDir, measurements}]')" >> $GITHUB_OUTPUT
           echo "build=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.measurements | (index("buildDuration") != null or index("coreJS") != null or index("browserBaseline") != null)) | {name, displayName, package: .starter.package, buildScript: .starter.buildScript, buildOutputDir: .starter.buildOutputDir, measurements}]')" >> $GITHUB_OUTPUT
           echo "devServer=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.starter) | select(.measurements | index("devServerStartUpDuration") != null) | {name, displayName, package: .starter.package, devServerPort: .starter.devServerPort, measurements}]')" >> $GITHUB_OUTPUT

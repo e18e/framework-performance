@@ -2,7 +2,7 @@ import {
   CSRLighthouseBenchmark,
   SSRLighthouseBenchmark,
 } from '@framework-performance/results/benchmark-schemas'
-import type { RenderedTestSample } from './types.ts'
+import type { RenderedTestSample } from '../../types.ts'
 
 export function renderedSampleMetrics(sample: RenderedTestSample) {
   const timing = sample.interactionTests

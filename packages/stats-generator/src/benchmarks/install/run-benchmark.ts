@@ -2,19 +2,16 @@ import {
   DependencyCountBenchmark,
   InstallBenchmark,
 } from '@framework-performance/results/benchmark-schemas'
-import { measurementsConfig } from '../../measurements.ts'
-import { summarizeMetric } from '../../sample-statistics.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
+import { summarizeMetric } from '../shared/sample-statistics.ts'
 import { execSync } from 'node:child_process'
 import { cpSync, mkdirSync, rmSync } from 'node:fs'
 import { basename, join } from 'node:path'
 import { tmpdir } from 'node:os'
-import { installDependencies } from '../../benchmark-utils.ts'
-import { packagesDir } from '../../constants.ts'
-import {
-  getDirectorySize,
-  benchmarkOutputPath,
-  writeJsonFile,
-} from '../../utils.ts'
+import { installDependencies } from '../../utils/project.ts'
+import { packagesDir } from '../../utils/paths.ts'
+import { getDirectorySize, writeJsonFile } from '../../utils/files.ts'
+import { benchmarkOutputPath } from '../../utils/paths.ts'
 
 import type { FrameworkConfig } from '../../types.ts'
 

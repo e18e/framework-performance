@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { z } from 'zod'
 import { DependencyCountBenchmark } from '@framework-performance/results/benchmark-schemas'
-import { writeJsonFile } from '../utils.ts'
+import { writeJsonFile } from '../utils/files.ts'
 
 export const e18eStats = z
   .object({

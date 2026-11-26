@@ -69,7 +69,7 @@ flowchart LR
 - [`frameworks-config.ts`](./packages/results/src/frameworks-config.ts) selects which measurements run for each starter and app.
 - Put benchmark settings in [`measurements-config.ts`](./packages/results/src/measurements-config.ts). For example, `install: { runs: 5 }` runs five install measurements per job for each enabled starter. Entries like `dependencies: null` have no configurable repeat count here.
 
-Edit the TypeScript config. [`print-frameworks.ts`](./packages/stats-generator/src/print-frameworks.ts)
+Edit the TypeScript config. [`print-frameworks.ts`](./packages/stats-generator/src/scripts/print-frameworks.ts)
 prints it as JSON so CI can build its benchmark matrices. Astro imports the same
 registry for framework names and ordering, and for validating Code Comparison slugs.
 

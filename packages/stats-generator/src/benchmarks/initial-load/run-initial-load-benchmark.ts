@@ -1,9 +1,9 @@
 import type { FrameworkConfig, TestConfig } from '../../types.ts'
-import { startBenchmarkServer } from '../../benchmark-server.ts'
-import { getHost } from '../../serve/common.ts'
+import { startBenchmarkServer } from '../../app-servers/benchmark-server.ts'
+import { getHost } from '../../app-servers/common.ts'
 import puppeteer from 'puppeteer-core'
 
-import { findChromium } from '../../find-chromium.ts'
+import { findChromium } from '../../utils/find-chromium.ts'
 import { parseResourceSummary } from './parse-resource-summary.ts'
 import { startFlow } from 'lighthouse'
 

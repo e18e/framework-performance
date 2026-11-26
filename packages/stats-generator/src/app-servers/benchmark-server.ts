@@ -3,7 +3,7 @@ import { once } from 'node:events'
 import { join } from 'node:path'
 import { setTimeout as sleep } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
-import { packagesDir } from './constants.ts'
+import { packagesDir } from '../utils/paths.ts'
 
 export async function waitForBenchmarkServer(
   url: string,
@@ -33,7 +33,7 @@ export async function startBenchmarkServer(
 ): Promise<() => Promise<void>> {
   const { host, port, readinessPath, timeoutMs = 30_000 } = options
   const scriptPath = fileURLToPath(
-    new URL(`./serve/${config.serveScript}`, import.meta.url),
+    new URL(`./${config.serveScript}`, import.meta.url),
   )
   const proc = spawn(
     process.execPath,

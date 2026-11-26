@@ -1,9 +1,9 @@
 import { spawn } from 'node:child_process'
 import { join } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { packagesDir } from '../../constants.ts'
+import { packagesDir } from '../../utils/paths.ts'
 import type { FrameworkConfig, TestConfig } from '../../types.ts'
-import { getHost, getPort } from '../../serve/common.ts'
+import { getHost, getPort } from '../../app-servers/common.ts'
 import { runLoadTest } from './run-load-test.ts'
 import type { SSRLoadBenchmarkResult } from './types.ts'
 
@@ -47,7 +47,7 @@ async function spawnServer(
   const port = getPort(DEFAULT_SSR_LOAD_PORT)
   const appDir = join(packagesDir, packageName)
   const scriptPath = fileURLToPath(
-    new URL(`../../serve/${serveScript}`, import.meta.url),
+    new URL(`../../app-servers/${serveScript}`, import.meta.url),
   )
 
   const proc = spawn('node', [scriptPath, appDir], {

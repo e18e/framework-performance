@@ -1,5 +1,5 @@
 import { SSRLoadStageOptions } from '@framework-performance/results/benchmark-types'
-import { measurementsConfig } from '../../measurements.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 import {
   getLoadPeakStage,
   selectRepresentativeIteration,
@@ -8,7 +8,7 @@ import {
   SSRLoadBenchmark,
   SSRLoadRouterLinksBenchmark,
 } from '@framework-performance/results/benchmark-schemas'
-import { summarizeMetric } from '../../sample-statistics.ts'
+import { summarizeMetric } from '../shared/sample-statistics.ts'
 import { getSSRLoadKind, type SSRLoadKind } from './config.ts'
 import { setTimeout as delay } from 'node:timers/promises'
 import autocannon from 'autocannon'

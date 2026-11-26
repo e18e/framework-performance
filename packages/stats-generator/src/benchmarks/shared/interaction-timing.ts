@@ -1,6 +1,6 @@
 import { NavigationInsights } from 'lighthouse/core/computed/navigation-insights.js'
 import type { Artifacts, Result } from 'lighthouse'
-import type { InteractionTiming } from './types.ts'
+import type { InteractionTiming } from '../../types.ts'
 
 interface LighthouseAudit {
   details?: unknown

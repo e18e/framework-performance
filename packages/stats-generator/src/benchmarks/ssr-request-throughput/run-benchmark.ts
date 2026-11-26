@@ -1,4 +1,4 @@
-import { measurementsConfig } from '../../measurements.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 import type { RequestThroughputIteration } from './request-throughput.ts'
 import {
   assembleRequestThroughput,

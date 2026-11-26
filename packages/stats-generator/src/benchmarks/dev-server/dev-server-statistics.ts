@@ -1,4 +1,4 @@
-import { summarizeMetric } from '../../sample-statistics.ts'
+import { summarizeMetric } from '../shared/sample-statistics.ts'
 import { DevServerStartupBenchmark } from '@framework-performance/results/benchmark-schemas'
 
 export function createDevServerStats(samples: number[]) {

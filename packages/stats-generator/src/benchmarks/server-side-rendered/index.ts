@@ -1,7 +1,7 @@
-import { measurementsConfig } from '../../measurements.ts'
+import { measurementsConfig } from '@framework-performance/results/measurements-config'
 import type { FrameworkConfig, TestConfig } from '../../types.ts'
-import { startBenchmarkServer } from '../../benchmark-server.ts'
-import { getHost } from '../../serve/common.ts'
+import { startBenchmarkServer } from '../../app-servers/benchmark-server.ts'
+import { getHost } from '../../app-servers/common.ts'
 import { runBenchmark } from './run-benchmark.ts'
 import type { ServerSideRenderedBenchmarkResult } from './types.ts'
 
