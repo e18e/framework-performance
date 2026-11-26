@@ -20,11 +20,14 @@ async function main() {
   const webpResult = await runInitialLoadBenchmark(
     framework,
     projectConfig,
-    measurementsConfig.ssrInitialLoadFrameworkImages.paths.webp
+    measurementsConfig.ssrInitialLoadFrameworkImages.paths.webp,
   )
 
   writeJsonFile(
-    benchmarkOutputPath(packageName, 'ssrInitialLoadFrameworkImages-stats.json'),
+    benchmarkOutputPath(
+      packageName,
+      'ssrInitialLoadFrameworkImages-stats.json',
+    ),
     {
       frameworkVersion,
       ssrInitialLoadFrameworkImages: {

@@ -66,5 +66,3 @@ export async function runInitialLoadBenchmark(
   const url = `http://${INITIAL_LOAD_HOST}:${INITIAL_LOAD_PORT}${path}`
   return measureInitialLoad(url).finally(killServer)
 }
-
-
