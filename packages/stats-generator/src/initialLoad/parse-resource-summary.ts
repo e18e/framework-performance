@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import {
   InitialLoadResourceType,
-  SSRInitialLoadBenchmark,
+  InitialLoadResources,
 } from '@framework-performance/results/benchmark-schemas'
 
 const ResourceRowsSchema = z.array(
@@ -33,9 +33,5 @@ export function parseResourceSummary(details: unknown) {
   }
   // Do not include third-party when calculating totals.
   // https://developer.chrome.com/docs/lighthouse/performance/resource-summary
-  return SSRInitialLoadBenchmark.parse({
-    name: 'ssrInitialLoad',
-    project: 'app',
-    resources,
-  })
+  return InitialLoadResources.parse(resources)
 }

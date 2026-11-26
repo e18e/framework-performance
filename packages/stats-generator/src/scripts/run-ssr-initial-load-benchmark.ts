@@ -12,7 +12,7 @@ async function main() {
     await getBenchmarkContext({ project: 'app' })
   requireMeasurements(framework, ['ssrInitialLoad'])
 
-  const result = await runInitialLoadBenchmark(
+  const resources = await runInitialLoadBenchmark(
     framework,
     projectConfig,
     measurementsConfig.ssrInitialLoad.path,
@@ -23,7 +23,7 @@ async function main() {
     ssrInitialLoad: {
       name: 'ssrInitialLoad',
       project: 'app',
-      resources: result.initialLoad,
+      resources,
     },
   })
 

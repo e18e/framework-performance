@@ -58,11 +58,7 @@ export async function runInitialLoadBenchmark(
         `Initial load failed: ${lhr?.runtimeError?.message ?? 'Missing Lighthouse result'}`,
       )
     }
-    return {
-      initialLoad: parseResourceSummary(
-        lhr.audits['resource-summary']?.details,
-      ),
-    }
+    return parseResourceSummary(lhr.audits['resource-summary']?.details)
   } finally {
     await browser.close()
     killServer()

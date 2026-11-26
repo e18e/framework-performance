@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 import { InitialLoadResourceType } from '@framework-performance/results/benchmark-schemas'
-import { parseResourceSummary } from './initialLoad/run-benchmark.ts'
+import { parseResourceSummary } from './initialLoad/parse-resource-summary.ts'
 
 const items = InitialLoadResourceType.options.map((resourceType) => ({
   resourceType,
@@ -11,7 +11,7 @@ const items = InitialLoadResourceType.options.map((resourceType) => ({
 
 test('initial load retains Lighthouse totals without adding third-party again', () => {
   const result = parseResourceSummary({ type: 'table', items })
-  assert.deepEqual(result.resources.total, {
+  assert.deepEqual(result.total, {
     requestCount: { value: 1, unit: 'requests' },
     transferSize: { value: 100, unit: 'bytes' },
   })

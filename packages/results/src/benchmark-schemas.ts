@@ -231,7 +231,7 @@ export const SSRLighthouseBenchmark = BaseBenchmark.extend({
 })
 
 export const InitialLoadResourceType = z.enum(InitialLoadResourceOptions)
-const InitialLoadResources = z.record(
+export const InitialLoadResources = z.record(
   InitialLoadResourceType,
   z.object({
     requestCount: createValueWithUnit(
