@@ -53,14 +53,14 @@ export const measurementsConfig = {
     path: '/initial-load',
   },
   ssrInitialLoadImages: {
-    status: 'live',
+    status: 'in-review',
     paths: {
       jpeg: '/ssr-img-jpeg',
       webp: '/ssr-img-webp',
     },
   },
   ssrInitialLoadFrameworkImages: {
-    status: 'live',
+    status: 'in-review',
     paths: {
       jpeg: '/ssr-img-jpeg-image-component',
       webp: '/ssr-img-webp-image-component',
