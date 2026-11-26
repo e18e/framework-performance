@@ -8,7 +8,7 @@ import {
 } from '@framework-performance/results/benchmark-schemas'
 import { withSummaryVariance } from '@framework-performance/results/comparison'
 import { measurementsConfig } from './measurements.ts'
-import { getSSRLoadPath } from './ssrLoad/config.ts'
+import { getSSRLoadPath } from './benchmarks/ssr-load/config.ts'
 import { join } from 'node:path'
 import { getFrameworks } from './get-frameworks.ts'
 import { globSync } from 'node:fs'

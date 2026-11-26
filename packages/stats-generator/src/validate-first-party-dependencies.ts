@@ -1,6 +1,6 @@
 import { join } from 'node:path'
 import { packagesDir } from './constants.ts'
-import { validateFirstPartyDependencyManifest } from './first-party-dependencies.ts'
+import { validateFirstPartyDependencyManifest } from './benchmarks/first-party-dependencies/first-party-dependencies.ts'
 import { getFrameworks } from './get-frameworks.ts'
 import { getPackageJsonDeps, readJsonFile } from './utils.ts'
 

@@ -1,0 +1,448 @@
+import { frameworksConfig } from '../../frameworks.ts'
+import {
+  SSRLoadBenchmark,
+  SSRLoadRouterLinksBenchmark,
+} from '@framework-performance/results/benchmark-schemas'
+import { readFileSync } from 'node:fs'
+import { getLoadPeakStage } from '@framework-performance/results/selection'
+import assert from 'node:assert/strict'
+import { test } from 'node:test'
+import { getSSRLoadPath } from './config.ts'
+import { verifySSRLoadTable } from './verify-table.ts'
+import { renderBaselineHtml } from '../../baseline-html.ts'
+import {
+  measureLoadStage,
+  runLoadTest,
+  summarizeBenchmarkSweeps,
+} from './run-load-test.ts'
+import type { SSRLoadStageStats } from './types.ts'
+import { testData } from '../../../../testdata/src/ssr.ts'
+import { measurementsConfig } from '../../measurements.ts'
+
+function loadStage(
+  overrides: Partial<Parameters<typeof measureLoadStage>[0]> = {},
+): SSRLoadStageStats {
+  return measureLoadStage({
+    connections: 1,
+    duration: 5000,
+    requests: 500,
+    errors: 0,
+    requestsPerSecond: 100,
+    avgLatency: 10,
+    p50Latency: 9,
+    p75Latency: 12,
+    p90Latency: 15,
+    p99Latency: 20,
+    maxLatency: 30,
+    bytesPerSecond: 1000,
+    ...overrides,
+  })
+}
+
+function loadSweep(stages: SSRLoadStageStats[] = []) {
+  return measurementsConfig.ssrLoad.stageConnections.map(
+    (connections, index) =>
+      stages[index] ??
+      loadStage({ connections, requests: 0, requestsPerSecond: 0 }),
+  )
+}
+
+test('load peak excludes failing stages while preserving their diagnostics', () => {
+  const stages = [
+    loadStage({ connections: 1, requestsPerSecond: 500, errors: 1 }),
+    loadStage({ connections: 5, requestsPerSecond: 200, p99Latency: 25 }),
+    loadStage({ connections: 10, requestsPerSecond: 100 }),
+    loadStage({ connections: 25, requestsPerSecond: 1000, errors: 10 }),
+  ]
+  const result = getLoadPeakStage(stages)
+  assert.equal(result.connections, 5)
+  assert.equal(result.requestsPerSecond.value, 200)
+  assert.equal(result.p99Latency.value, 25)
+  assert.equal(stages.length, 4)
+  assert.equal(stages[3]!.errors.value, 10)
+})
+
+test('load peak picks the fastest clean stage and keeps the first on ties', () => {
+  const result = getLoadPeakStage([
+    loadStage(),
+    loadStage({ connections: 5, requestsPerSecond: 200 }),
+    loadStage({ connections: 10, requestsPerSecond: 200 }),
+  ])
+  assert.equal(result.connections, 5)
+  assert.equal(result.requestsPerSecond.value, 200)
+})
+
+test('load peak fails explicitly when no stage qualifies', () => {
+  for (const stages of [
+    [],
+    [loadStage({ errors: 1 }), loadStage({ connections: 5, errors: 2 })],
+  ]) {
+    assert.throws(
+      () => getLoadPeakStage(stages),
+      /No valid SSR load peak: no stage completed with zero errors/,
+    )
+  }
+})
+
+test('routes and result keys separate the two load tests', () => {
+  for (const pkg of [
+    'app-next-js',
+    'app-nuxt',
+    'app-pracht',
+    'app-react-router',
+    'app-tanstack-start-react',
+  ]) {
+    const framework = frameworksConfig.find(({ app }) => app?.package === pkg)
+    assert.ok(framework)
+    assert.equal(
+      getSSRLoadPath(framework, 'ssrLoad'),
+      '/server-side-rendered-plain-links',
+    )
+    assert.equal(
+      getSSRLoadPath(framework, 'ssrLoadRouterLinks'),
+      '/server-side-rendered',
+    )
+  }
+  for (const pkg of [
+    'app-astro',
+    'app-solid-start',
+    'app-solid',
+    'app-sveltekit',
+    'app-baseline-html',
+  ]) {
+    const framework = frameworksConfig.find(({ app }) => app?.package === pkg)
+    assert.ok(framework)
+    assert.equal(getSSRLoadPath(framework, 'ssrLoad'), '/server-side-rendered')
+    assert.throws(() => getSSRLoadPath(framework, 'ssrLoadRouterLinks'))
+  }
+})
+
+test('each load measurement requires its own series name', () => {
+  const result = summarizeBenchmarkSweeps([loadSweep()])
+  assert.ok(SSRLoadBenchmark.safeParse(result).success)
+  assert.equal(SSRLoadRouterLinksBenchmark.safeParse(result).success, false)
+})
+
+test('fresh load artifacts require the configured stages in order', () => {
+  const sweep = loadSweep()
+  assert.throws(() => summarizeBenchmarkSweeps([sweep.slice(0, -1)]))
+  assert.throws(() => summarizeBenchmarkSweeps([sweep.toReversed()]))
+})
+
+test('HTTP table verification rejects missing rows, wrong columns, text, and destinations', async () => {
+  const html = renderBaselineHtml(await testData())
+  verifySSRLoadTable(html)
+  for (const invalid of [
+    html.replace(/<tr>.*?<\/tr>/, ''),
+    html.replace(/<td>.*?<\/td>/, ''),
+    html.replace('View →', 'View'),
+    html.replace('/server-side-rendered/', '/wrong/'),
+  ]) {
+    assert.throws(() => verifySSRLoadTable(invalid))
+  }
+})
+
+const readRouteSource = (path: string) =>
+  readFileSync(new URL(`../../../../${path}`, import.meta.url), 'utf8')
+const compact = (source: string) => source.replace(/\s+/g, '')
+
+test('Next.js SSR routes load the same data and render equivalent client tables', () => {
+  const routerRoute = 'app-next-js/app/server-side-rendered'
+  const anchorRoute = `${routerRoute}-plain-links`
+  const anchorPage = readRouteSource(`${anchorRoute}/page.tsx`)
+    .replace(/\bRequestTable\b/g, 'Table')
+    .replace(
+      /const entries = await getTestData\(\)\s+return <Table entries=\{entries\} \/>/,
+      'return <Table entries={await getTestData()} />',
+    )
+  assert.equal(
+    compact(anchorPage),
+    compact(readRouteSource(`${routerRoute}/page.tsx`)),
+    'Next.js SSR route pages should load data and render their tables identically',
+  )
+
+  const tableMarkup = (source: string, route: string) => {
+    assert.match(source, /^'use client'/, route)
+    const markup = source.match(/<table\b[\s\S]*?<\/table>/)?.[0]
+    assert.ok(markup, `Expected table markup in ${route}`)
+    return markup
+  }
+  const routerTable = readRouteSource(`${routerRoute}/table.tsx`)
+  const anchorTable = readRouteSource(`${anchorRoute}/table.tsx`)
+  const routerMarkup = tableMarkup(routerTable, routerRoute)
+  const anchorMarkup = tableMarkup(anchorTable, anchorRoute)
+  assert.match(routerTable, /^import Link from 'next\/link'$/m)
+  assert.match(routerMarkup, /<Link\b/)
+  assert.equal(
+    compact(anchorMarkup),
+    compact(routerMarkup.replace(/<(\/?)Link\b/g, '<$1a')),
+  )
+})
+
+test('paired route sources preserve the loader and table except for link implementation', () => {
+  const paths = [
+    [
+      'app-nuxt/app/pages/server-side-rendered/index.vue',
+      'app-nuxt/app/pages/server-side-rendered-plain-links/index.vue',
+    ],
+    [
+      'app-pracht/src/routes/server-side-rendered.tsx',
+      'app-pracht/src/routes/server-side-rendered-plain-links.tsx',
+    ],
+    [
+      'app-react-router/app/routes/server-side-rendered.tsx',
+      'app-react-router/app/routes/server-side-rendered-plain-links.tsx',
+    ],
+    [
+      'app-tanstack-start-react/src/routes/server-side-rendered.tsx',
+      'app-tanstack-start-react/src/routes/server-side-rendered-plain-links.tsx',
+    ],
+    [
+      'app-void/pages/server-side-rendered.tsx',
+      'app-void/pages/server-side-rendered-plain-links.tsx',
+    ],
+  ]
+  for (const [routerPath, anchorPath] of paths) {
+    const original = readRouteSource(routerPath)
+    const anchor = readRouteSource(anchorPath)
+    assert.match(original, /<(?:Link|NuxtLink)\b/, routerPath)
+    assert.doesNotMatch(anchor, /<(?:Link|NuxtLink)\b/, anchorPath)
+    const normalized = original
+      .replace(
+        "import { Link, type RouteComponentProps } from '@pracht/core'",
+        "import type { RouteComponentProps } from '@pracht/core'",
+      )
+      .replace(
+        /<Link\s+route="server-side-rendered-detail"\s+params=\{\{ id: entry\.id \}\}\s*>/,
+        '<a href={`/server-side-rendered/${entry.id}`}>',
+      )
+      .replace(/import \{ Link \} from 'react-router'\n/, '')
+      .replace(/import \{ Link \} from '@void\/react'\n/, '')
+      .replace(
+        './server-side-rendered.server',
+        './server-side-rendered-plain-links.server',
+      )
+      .replace('createFileRoute, Link', 'createFileRoute')
+      .replace(
+        "createFileRoute('/server-side-rendered')",
+        "createFileRoute('/server-side-rendered-plain-links')",
+      )
+      .replace(
+        './+types/server-side-rendered',
+        './+types/server-side-rendered-plain-links',
+      )
+      .replace(
+        '<Link to="/server-side-rendered/$id" params={{ id: entry.id }}>',
+        '<a href={`/server-side-rendered/${entry.id}`}>',
+      )
+      .replace(/<Link (?:href|to)=/g, '<a href=')
+      .replace(/<NuxtLink :to=/g, '<a :href=')
+      .replace(/<\/(?:Link|NuxtLink)>/g, '</a>')
+    assert.equal(compact(anchor), compact(normalized), routerPath)
+  }
+})
+
+test('Void SSR load routes use identical loaders', () => {
+  assert.equal(
+    compact(readRouteSource('app-void/pages/server-side-rendered.server.ts')),
+    compact(
+      readRouteSource(
+        'app-void/pages/server-side-rendered-plain-links.server.ts',
+      ),
+    ),
+  )
+})
+
+test('repeated load sweeps select the median peak sweep without mixing metrics', () => {
+  const samples = [300, 100, 200].map((requestsPerSecond) =>
+    loadSweep([
+      loadStage({ requestsPerSecond, p99Latency: requestsPerSecond / 2 }),
+    ]),
+  )
+  const result = summarizeBenchmarkSweeps(samples)
+  assert.equal(result.stage1.requests.unit, 'requests')
+  assert.equal(result.stage1.errors.unit, 'errors')
+  assert.equal(result.stage1.requestsPerSecond.unit, 'requests')
+  assert.equal(result.stage1.bytesPerSecond.unit, 'bytes')
+  assert.equal(result.stage1.p99Latency.unit, 'ms')
+  assert.equal(result.representativeIterationIndex, 2)
+  const peak = getLoadPeakStage(
+    Object.values(
+      result.iterations.iterations[result.representativeIterationIndex]!,
+    ),
+  )
+  assert.equal(peak.requestsPerSecond.value, 200)
+  assert.equal(peak.p99Latency.value, 100)
+  assert.deepEqual(
+    result.iterations.iterations.map((sweep) => Object.values(sweep)),
+    samples,
+  )
+  assert.equal(result.iterations.runs, 3)
+  assert.equal(samples[0]![0]!.requestsPerSecond.value, 300)
+  assert.throws(() => summarizeBenchmarkSweeps([]))
+  assert.throws(() => summarizeBenchmarkSweeps(samples.slice(0, 2)))
+  SSRLoadBenchmark.parse(result)
+})
+
+test('load runner warms up before each full sweep and excludes warm-up requests', async () => {
+  const calls: number[] = []
+  const pauses: number[] = []
+  const result = await runLoadTest(
+    'http://example.test/server-side-rendered',
+    async (_, connections) => {
+      calls.push(connections)
+      return loadStage({
+        connections,
+        requests: calls.length % 8 === 1 ? 99999 : 500,
+      })
+    },
+    async (ms) => {
+      pauses.push(ms)
+    },
+  )
+  assert.deepEqual(
+    calls,
+    Array.from({ length: 3 }, () => [1, 1, 5, 10, 25, 50, 100, 200]).flat(),
+  )
+  assert.deepEqual(pauses, [5000, 5000])
+  assert.equal(result.iterations.runs, 3)
+  assert.equal(result.totalRequests.value, 10500)
+  assert.ok(
+    result.iterations.iterations.every(
+      (sample) =>
+        Object.values(sample).reduce(
+          (total, stage) => total + stage.requests.value,
+          0,
+        ) === 3500,
+    ),
+  )
+  SSRLoadBenchmark.parse(result)
+})
+
+test('warm-up recovers after an overloaded sweep without retaining retry measurements', async () => {
+  const events: string[] = []
+  let calls = 0
+  const result = await runLoadTest(
+    'http://example.test/server-side-rendered',
+    async (_, connections) => {
+      events.push(`stage:${connections}`)
+      calls++
+      return loadStage({
+        connections,
+        requests: calls === 9 ? 99999 : 500,
+        errors: calls === 9 ? 2 : 0,
+      })
+    },
+    async (ms) => {
+      events.push(`pause:${ms}`)
+    },
+  )
+  assert.deepEqual(events.slice(8, 13), [
+    'pause:5000',
+    'stage:1',
+    'pause:5000',
+    'stage:1',
+    'stage:1',
+  ])
+  assert.equal(calls, 25)
+  assert.equal(result.iterations.iterations.length, 3)
+  assert.ok(
+    result.iterations.iterations.every(
+      (sample) =>
+        Object.values(sample).reduce(
+          (total, stage) => total + stage.requests.value,
+          0,
+        ) === 3500 &&
+        Object.values(sample).every((stage) => stage.errors.value === 0),
+    ),
+  )
+})
+
+test('persistently unhealthy warm-up stops after three attempts with diagnostics', async () => {
+  for (const stage of [loadStage({ errors: 2 }), loadStage({ requests: 0 })]) {
+    let calls = 0
+    const pauses: number[] = []
+    await assert.rejects(
+      runLoadTest(
+        'http://example.test/server-side-rendered',
+        async (_, connections) => {
+          assert.equal(connections, 1)
+          calls++
+          return stage
+        },
+        async (ms) => {
+          pauses.push(ms)
+        },
+      ),
+      (error: Error) => {
+        assert.match(error.message, /warm-up failed .*sweep 1\/3, attempt 3\/3/)
+        assert.ok(
+          error.message.includes(
+            `${stage.requests.value} requests, ${stage.errors.value} errors`,
+          ),
+        )
+        return true
+      },
+    )
+    assert.equal(calls, 3)
+    assert.deepEqual(pauses, [5000, 5000])
+  }
+})
+
+test('load results require complete iterations and aligned stages', () => {
+  const sweep = loadSweep([loadStage()])
+  const result = summarizeBenchmarkSweeps([sweep])
+  SSRLoadBenchmark.parse(result)
+  for (const invalid of [
+    sweep,
+    { ...result, iterations: undefined },
+    { ...result, iterations: { ...result.iterations, runs: 3 } },
+    { ...result, iterations: [{ stages: sweep }] },
+    { ...result, stage1: undefined },
+    { ...result, totalRequests: { mean: 500 } },
+  ]) {
+    assert.equal(SSRLoadBenchmark.safeParse(invalid).success, false)
+  }
+  assert.throws(
+    () =>
+      summarizeBenchmarkSweeps([
+        sweep,
+        sweep,
+        loadSweep([loadStage({ connections: 2 })]),
+      ]),
+    /matching worker/,
+  )
+})
+
+test('summaries compare each latency statistic at matching connections across sweeps', () => {
+  const sweeps = [100, 200, 300].map((rate) =>
+    loadSweep([
+      loadStage({
+        connections: 1,
+        requestsPerSecond: rate,
+        avgLatency: rate / 10,
+        p99Latency: rate,
+        requests: rate * 5,
+      }),
+      loadStage({
+        connections: 5,
+        requestsPerSecond: rate * 2,
+        avgLatency: rate / 20,
+        p99Latency: rate * 3,
+        requests: rate * 10,
+      }),
+    ]),
+  )
+  const result = summarizeBenchmarkSweeps(sweeps)
+  assert.equal(result.stage1.connections, 1)
+  assert.equal(result.stage2!.connections, 5)
+  assert.equal(result.stage1.requestsPerSecond.mean, 200)
+  assert.equal(result.stage2!.requestsPerSecond.mean, 400)
+  assert.equal(result.stage1!.avgLatency.mean, 20)
+  assert.equal(result.stage1!.p99Latency.mean, 200)
+  assert.equal(result.totalRequests.value, 9000)
+  assert.deepEqual(
+    result.iterations.iterations.map((sweep) => Object.values(sweep)),
+    sweeps,
+  )
+})

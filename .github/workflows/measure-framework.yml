@@ -282,13 +282,13 @@ jobs:
         if: contains(matrix.framework.measurements, 'dependencyCounts')
         env:
           FRAMEWORK_NAME: ${{ matrix.framework.name }}
-        run: node packages/stats-generator/src/run-framework-dependency-scan.ts "$FRAMEWORK_NAME"
+        run: node packages/stats-generator/src/run-benchmarks-scripts/run-framework-dependency-scan.ts "$FRAMEWORK_NAME"
 
       - name: Collect first-party dependency stats
         if: contains(matrix.framework.measurements, 'dependencyCounts')
         env:
           FRAMEWORK_NAME: ${{ matrix.framework.name }}
-        run: node packages/stats-generator/src/run-first-party-dependency-scan.ts "$FRAMEWORK_NAME"
+        run: node packages/stats-generator/src/run-benchmarks-scripts/run-first-party-dependency-scan.ts "$FRAMEWORK_NAME"
 
       - name: Scan installed dependencies for Node engine constraints
         if: contains(matrix.framework.measurements, 'minimumNodeVersion')
