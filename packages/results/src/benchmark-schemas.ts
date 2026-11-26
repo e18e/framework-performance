@@ -231,23 +231,35 @@ export const SSRLighthouseBenchmark = BaseBenchmark.extend({
 })
 
 export const InitialLoadResourceType = z.enum(InitialLoadResourceOptions)
+const InitialLoadResources = z.record(
+  InitialLoadResourceType,
+  z.object({
+    requestCount: createValueWithUnit(
+      'requests',
+      z.number().int().nonnegative(),
+    ),
+    transferSize: createValueWithUnit('bytes', z.number().int().nonnegative()),
+  }),
+)
 
 export const SSRInitialLoadBenchmark = BaseBenchmark.extend({
   project: z.literal('app'),
   name: z.literal('ssrInitialLoad'),
-  resources: z.record(
-    InitialLoadResourceType,
-    z.object({
-      requestCount: createValueWithUnit(
-        'requests',
-        z.number().int().nonnegative(),
-      ),
-      transferSize: createValueWithUnit(
-        'bytes',
-        z.number().int().nonnegative(),
-      ),
-    }),
-  ),
+  resources: InitialLoadResources,
+})
+
+export const SSRInitialLoadImagesBenchmark = BaseBenchmark.extend({
+  project: z.literal('app'),
+  name: z.literal('ssrInitialLoadImages'),
+  jpegResources: InitialLoadResources,
+  webpResources: InitialLoadResources,
+})
+
+export const SSRInitialLoadFrameworkImagesBenchmark = BaseBenchmark.extend({
+  project: z.literal('app'),
+  name: z.literal('ssrInitialLoadFrameworkImages'),
+  jpegResources: InitialLoadResources,
+  webpResources: InitialLoadResources,
 })
 
 export const SSRThroughputBenchmark = BaseBenchmark.extend({
@@ -369,6 +381,9 @@ const BenchmarkResults = z.object({
   csrLighthouse: CSRLighthouseBenchmark.optional(),
   ssrLighthouse: SSRLighthouseBenchmark.optional(),
   ssrInitialLoad: SSRInitialLoadBenchmark.optional(),
+  ssrInitialLoadImages: SSRInitialLoadImagesBenchmark.optional(),
+  ssrInitialLoadFrameworkImages:
+    SSRInitialLoadFrameworkImagesBenchmark.optional(),
   ssrThroughput: SSRThroughputBenchmark.optional(),
   ssrLoad: SSRLoadBenchmark.optional(),
   ssrLoadRouterLinks: SSRLoadRouterLinksBenchmark.optional(),

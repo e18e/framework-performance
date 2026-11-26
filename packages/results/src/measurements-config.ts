@@ -52,6 +52,13 @@ export const measurementsConfig = {
     status: 'live',
     path: '/initial-load',
   },
+  ssrInitialLoadImages: {
+    status: 'live',
+    paths: {
+      jpeg: 'ssr-img-jpeg',
+      webp: 'ssr-img-webp',
+    },
+  },
 } as const satisfies Record<
   string,
   { status: MeasurementStatus; [setting: string]: unknown }

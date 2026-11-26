@@ -1,4 +1,4 @@
-import { runInitialLoadBenchmark } from '../initialLoad/index.ts'
+import { runInitialLoadBenchmark } from '../initialLoad/run-initial-load-benchmark.ts'
 import { measurementsConfig } from '../measurements.ts'
 import {
   benchmarkOutputPath,
@@ -20,7 +20,11 @@ async function main() {
 
   writeJsonFile(benchmarkOutputPath(packageName, 'ssrInitialLoad-stats.json'), {
     frameworkVersion,
-    ssrInitialLoad: result.initialLoad,
+    ssrInitialLoad: {
+      name: 'ssrInitialLoad',
+      project: 'app',
+      resources: result.initialLoad,
+    },
   })
 
   console.info(`\n✓ Saved ${packageName} v${frameworkVersion} (${packageName})`)

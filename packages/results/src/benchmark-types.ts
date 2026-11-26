@@ -52,6 +52,8 @@ export const MeasurementKeyOptions = [
   'csrLighthouse',
   'ssrLighthouse',
   'ssrInitialLoad',
+  'ssrInitialLoadImages',
+  'ssrInitialLoadFrameworkImages',
   'ssrThroughput',
   'ssrLoad',
   'ssrLoadRouterLinks',

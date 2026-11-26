@@ -1,11 +1,8 @@
-import puppeteer from 'puppeteer-core'
-import { startFlow } from 'lighthouse'
 import { z } from 'zod'
 import {
   InitialLoadResourceType,
   SSRInitialLoadBenchmark,
 } from '@framework-performance/results/benchmark-schemas'
-import { findChromium } from '../find-chromium.ts'
 
 const ResourceRowsSchema = z.array(
   z.object({
@@ -41,40 +38,4 @@ export function parseResourceSummary(details: unknown) {
     project: 'app',
     resources,
   })
-}
-
-export async function runBenchmark(url: string) {
-  const browser = await puppeteer.launch({
-    executablePath: findChromium(),
-    headless: true,
-    defaultViewport: { width: 800, height: 600, deviceScaleFactor: 1 },
-    args: ['--no-sandbox', '--disable-setuid-sandbox'],
-  })
-  try {
-    const page = await browser.newPage()
-    const flow = await startFlow(page, {
-      name: 'Initial load',
-      flags: {
-        throttlingMethod: 'provided',
-        formFactor: 'desktop',
-        screenEmulation: { disabled: true },
-        onlyAudits: ['resource-summary'],
-      },
-    })
-    await flow.navigate(url)
-    const result = await flow.createFlowResult()
-    const lhr = result.steps[0]?.lhr
-    if (!lhr || lhr.runtimeError) {
-      throw new Error(
-        `Initial load failed: ${lhr?.runtimeError?.message ?? 'Missing Lighthouse result'}`,
-      )
-    }
-    return {
-      initialLoad: parseResourceSummary(
-        lhr.audits['resource-summary']?.details,
-      ),
-    }
-  } finally {
-    await browser.close()
-  }
 }
