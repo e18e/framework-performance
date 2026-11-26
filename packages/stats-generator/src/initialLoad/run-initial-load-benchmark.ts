@@ -35,36 +35,32 @@ export async function runInitialLoadBenchmark(
     )
     const url = `http://${INITIAL_LOAD_HOST}:${INITIAL_LOAD_PORT}${path}`
 
-    const browser = await puppeteer.launch({
+    await using browser = await puppeteer.launch({
       executablePath: findChromium(),
       headless: true,
       defaultViewport: { width: 800, height: 600, deviceScaleFactor: 1 },
       args: ['--no-sandbox', '--disable-setuid-sandbox'],
     })
 
-    try {
-      const page = await browser.newPage()
-      const flow = await startFlow(page, {
-        name: 'Initial load',
-        flags: {
-          throttlingMethod: 'provided',
-          formFactor: 'desktop',
-          screenEmulation: { disabled: true },
-          onlyAudits: ['resource-summary'],
-        },
-      })
-      await flow.navigate(url)
-      const result = await flow.createFlowResult()
-      const lhr = result.steps[0]?.lhr
-      if (!lhr || lhr.runtimeError) {
-        throw new Error(
-          `Initial load failed: ${lhr?.runtimeError?.message ?? 'Missing Lighthouse result'}`,
-        )
-      }
-      return parseResourceSummary(lhr.audits['resource-summary']?.details)
-    } finally {
-      await browser.close()
+    const page = await browser.newPage()
+    const flow = await startFlow(page, {
+      name: 'Initial load',
+      flags: {
+        throttlingMethod: 'provided',
+        formFactor: 'desktop',
+        screenEmulation: { disabled: true },
+        onlyAudits: ['resource-summary'],
+      },
+    })
+    await flow.navigate(url)
+    const result = await flow.createFlowResult()
+    const lhr = result.steps[0]?.lhr
+    if (!lhr || lhr.runtimeError) {
+      throw new Error(
+        `Initial load failed: ${lhr?.runtimeError?.message ?? 'Missing Lighthouse result'}`,
+      )
     }
+    return parseResourceSummary(lhr.audits['resource-summary']?.details)
   } finally {
     killServer()
   }
