@@ -12,6 +12,7 @@ import { packagesDir } from './constants.ts'
 import {
   benchmarkOutputPath,
   getBenchmarkContext,
+  requireMeasurements,
   writeJsonFile,
 } from './utils.ts'
 
@@ -85,9 +86,10 @@ async function stageBrowserBuildFiles(buildOutputPath: string) {
 }
 
 async function main() {
-  const { packageName, projectConfig } = await getBenchmarkContext(
-    'Usage: run-browser-baseline-scan <package-name>\nExample: run-browser-baseline-scan starter-astro',
-  )
+  const { packageName, projectConfig, framework } = await getBenchmarkContext({
+    project: 'starter',
+  })
+  requireMeasurements(framework, ['browserBaseline'])
 
   const buildOutputPath = join(
     packagesDir,

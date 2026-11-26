@@ -1,12 +1,14 @@
 import { getSSRLoadKind, getSSRLoadPath } from './ssrLoad/config.ts'
 import { DEFAULT_SSR_LOAD_PORT, startSSRLoadServer } from './ssrLoad/index.ts'
 import { getHost, getPort } from './serve/common.ts'
-import { getBenchmarkContext } from './utils.ts'
+import { getBenchmarkContext, requireMeasurements } from './utils.ts'
 
 async function main() {
-  const { packageName } = await getBenchmarkContext(
-    'Usage: run-ssr-load-server <package-name>\nExample: run-ssr-load-server app-astro',
-  )
+  const { packageName, framework, projectConfig } = await getBenchmarkContext({
+    project: 'app',
+  })
+  const kind = getSSRLoadKind()
+  requireMeasurements(framework, [kind])
 
   const host = getHost('0.0.0.0')
   process.env.HOST = host
@@ -14,10 +16,9 @@ async function main() {
   process.env.PORT = String(port)
 
   console.info(`Starting SSR load server for ${packageName}...`)
-  const stopServer = await startSSRLoadServer(packageName)
-  console.info(
-    `SSR load server is ready on http://${host}:${port}${getSSRLoadPath(packageName, getSSRLoadKind())}`,
-  )
+  const path = getSSRLoadPath(framework, kind)
+  const stopServer = await startSSRLoadServer(projectConfig, path)
+  console.info(`SSR load server is ready on http://${host}:${port}${path}`)
 
   await new Promise<void>((resolve) => {
     const shutdown = () => {

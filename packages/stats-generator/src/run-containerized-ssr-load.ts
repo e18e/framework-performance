@@ -2,7 +2,7 @@ import { getSSRLoadKind, getSSRLoadPath } from './ssrLoad/config.ts'
 import { spawn } from 'node:child_process'
 import { readFileSync } from 'node:fs'
 import { cwd, env, exit, getgid, getuid, pid } from 'node:process'
-import { getBenchmarkContext } from './utils.ts'
+import { getBenchmarkContext, requireMeasurements } from './utils.ts'
 
 const RUN_SUFFIX = `${env.GITHUB_RUN_ID ?? 'local'}-${pid}`
 const NETWORK_NAME = `framework-performance-ssr-load-${RUN_SUFFIX}`
@@ -48,9 +48,10 @@ async function ignoreDockerFailure(
 }
 
 async function main() {
-  const { packageName } = await getBenchmarkContext(
-    'Usage: run-containerized-ssr-load <package-name>\nExample: run-containerized-ssr-load app-astro',
-  )
+  const { framework } = await getBenchmarkContext({ project: 'app' })
+  const kind = getSSRLoadKind()
+  requireMeasurements(framework, [kind])
+
   const workspaceDir = env.GITHUB_WORKSPACE ?? cwd()
   const user = `${getuid?.() ?? 0}:${getgid?.() ?? 0}`
   let cleanupPromise: Promise<void> | undefined
@@ -98,11 +99,11 @@ async function main() {
       '--workdir',
       '/workspace',
       '--env',
-      `SSR_LOAD_KIND=${getSSRLoadKind()}`,
+      `SSR_LOAD_KIND=${kind}`,
       NODE_IMAGE,
       'node',
       'packages/stats-generator/src/run-ssr-load-server.ts',
-      packageName,
+      framework.name,
     ])
 
     await runDocker([
@@ -122,13 +123,13 @@ async function main() {
       '--env',
       'RUNNER_OVERRIDE',
       '--env',
-      `SSR_LOAD_TARGET_URL=http://${SERVER_NAME}:3003${getSSRLoadPath(packageName, getSSRLoadKind())}`,
+      `SSR_LOAD_TARGET_URL=http://${SERVER_NAME}:3003${getSSRLoadPath(framework, kind)}`,
       '--env',
-      `SSR_LOAD_KIND=${getSSRLoadKind()}`,
+      `SSR_LOAD_KIND=${kind}`,
       NODE_IMAGE,
       'node',
       'packages/stats-generator/src/run-ssr-load-benchmark.ts',
-      packageName,
+      framework.name,
     ])
     succeeded = true
   } finally {

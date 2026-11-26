@@ -15,6 +15,7 @@ import {
   benchmarkOutputPath,
   writeJsonFile,
   getBenchmarkContext,
+  requireMeasurements,
 } from './utils.ts'
 
 function execCommand(command: string, cwd: string): string {
@@ -65,9 +66,10 @@ function getFrameworkVersion(cwd: string, frameworkPackage: string): string {
 }
 
 async function main() {
-  const { packageName, framework } = await getBenchmarkContext(
-    'Usage: run-install-benchmark <package-name>\nExample: run-install-benchmark starter-astro',
-  )
+  const { packageName, framework } = await getBenchmarkContext({
+    project: 'starter',
+  })
+  requireMeasurements(framework, ['installDuration', 'dependencyCounts'])
 
   const runFrequency = measurementsConfig.install.runs
 

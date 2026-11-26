@@ -11,23 +11,25 @@ const selected = process.argv.slice(2)
 for (const framework of await getFrameworks()) {
   const { app, measurements } = framework
   if (!app || !measurements.includes('ssrLoad')) continue
-  const pkg = app.package
-  if (selected.length && !selected.includes(pkg)) continue
-  const stop = await startSSRLoadServer(pkg)
+  if (selected.length && !selected.includes(framework.name)) continue
+  const stop = await startSSRLoadServer(
+    app,
+    getSSRLoadPath(framework, 'ssrLoad'),
+  )
   try {
     const kinds = measurements.includes('ssrLoadRouterLinks')
       ? (['ssrLoad', 'ssrLoadRouterLinks'] as const)
       : (['ssrLoad'] as const)
     for (const kind of kinds) {
-      const path = getSSRLoadPath(pkg, kind)
+      const path = getSSRLoadPath(framework, kind)
       const response = await fetch(`http://127.0.0.1:3003${path}`, {
         headers: { Accept: 'text/html' },
       })
       if (!response.ok)
-        throw new Error(`${pkg} ${path}: HTTP ${response.status}`)
+        throw new Error(`${app.package} ${path}: HTTP ${response.status}`)
       verifySSRLoadTable(await response.text())
       console.info(
-        `✓ ${pkg} ${path}: 1,000 rows, three columns, UUID data, View → links and detail destinations`,
+        `✓ ${app.package} ${path}: 1,000 rows, three columns, UUID data, View → links and detail destinations`,
       )
     }
   } finally {

@@ -86,9 +86,7 @@ export async function processCIStats(
       ...measurementsConfig,
       ssrLoad: {
         ...ssrLoad,
-        path: framework.app
-          ? getSSRLoadPath(framework.app.package, 'ssrLoad')
-          : ssrLoad.path,
+        path: getSSRLoadPath(framework, 'ssrLoad'),
       },
     }
     const result = withSummaryVariance(

@@ -3,7 +3,8 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { packagesDir } from './constants.ts'
 import { getFrameworks } from './get-frameworks.ts'
-import type { FrameworkConfig, PackageJson, TestConfig } from './types.ts'
+import type { FrameworkProject } from '@framework-performance/results/benchmark-types'
+import type { FrameworkConfig, PackageJson } from './types.ts'
 
 /** Get directory size in bytes using du on Linux and macOS. */
 export function getDirectorySize(dirPath: string): number {
@@ -124,40 +125,46 @@ function getFrameworkVersion(
   return pkg.version
 }
 
-/** Find the framework and benchmark config for a starter or app package. */
-async function getFrameworkByPackage(
-  packageName: string,
-): Promise<{ framework: FrameworkConfig; projectConfig: TestConfig }> {
-  const frameworks = await getFrameworks()
-
-  for (const framework of frameworks) {
-    if (framework.starter?.package === packageName) {
-      return { framework, projectConfig: framework.starter }
-    }
-    if (framework.app?.package === packageName) {
-      return { framework, projectConfig: framework.app }
-    }
+export function requireMeasurements(
+  framework: FrameworkConfig,
+  measurements: FrameworkConfig['measurements'],
+) {
+  if (
+    !measurements.some((measurement) =>
+      framework.measurements.includes(measurement),
+    )
+  ) {
+    throw new Error(
+      `${framework.name} requires at least one configured measurement from: ${measurements.join(', ')}`,
+    )
   }
-
-  console.error(`Unknown package: ${packageName}`)
-  process.exit(1)
 }
 
-export async function getBenchmarkContext(usage: string) {
-  const packageName = process.argv[2]
+export async function getBenchmarkContext({
+  project,
+}: {
+  project: FrameworkProject
+}) {
+  const frameworkName = process.argv[2]
+  if (!frameworkName)
+    throw new Error('Framework name is required (e.g. astro).')
 
-  if (!packageName) {
-    console.error(usage)
-    process.exit(1)
-  }
-
-  const { framework, projectConfig } = await getFrameworkByPackage(packageName)
+  const framework = (await getFrameworks()).find(
+    ({ name }) => name === frameworkName,
+  )
+  if (!framework) throw new Error(`Unknown framework: ${frameworkName}`)
+  const projectConfig = framework[project]
+  if (!projectConfig)
+    throw new Error(`No ${project} configured for ${frameworkName}`)
   return {
-    packageName,
+    packageName: projectConfig.package,
     framework,
     projectConfig,
     get frameworkVersion() {
-      return getFrameworkVersion(packageName, framework.frameworkPackage)
+      return getFrameworkVersion(
+        projectConfig.package,
+        framework.frameworkPackage,
+      )
     },
   }
 }

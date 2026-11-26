@@ -17,6 +17,7 @@ import { createDevServerStats } from './dev-server-statistics.ts'
 import {
   benchmarkOutputPath,
   getBenchmarkContext,
+  requireMeasurements,
   writeJsonFile,
 } from './utils.ts'
 
@@ -94,9 +95,10 @@ async function measureStartTime(
 }
 
 async function main() {
-  const { packageName, framework, projectConfig } = await getBenchmarkContext(
-    'Usage: run-dev-server-benchmark <package-name>\nExample: run-dev-server-benchmark starter-astro',
-  )
+  const { packageName, framework, projectConfig } = await getBenchmarkContext({
+    project: 'starter',
+  })
+  requireMeasurements(framework, ['devServerStartUpDuration'])
 
   const runFrequency = measurementsConfig.devServer.runs
 

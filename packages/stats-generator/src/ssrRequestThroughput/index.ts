@@ -1,5 +1,4 @@
 import { runBenchmark } from './run-benchmark.ts'
-import { frameworksConfig } from '../frameworks.ts'
 import { buildHandler as buildBaselineHtmlHandler } from './handlers/baseline-html.ts'
 import { buildHandler as buildAstroHandler } from './handlers/astro.ts'
 import { buildHandler as buildNextJSHandler } from './handlers/nextjs.ts'
@@ -11,16 +10,11 @@ import { buildHandler as buildSolidHandler } from './handlers/solid.ts'
 import { buildHandler as buildSveltekitHandler } from './handlers/sveltekit.ts'
 import { buildHandler as buildTanstackStartHandler } from './handlers/tanstack-start.ts'
 import { buildHandler as buildVoidHandler } from './handlers/void.ts'
-import type { FrameworkConfig } from '../types.ts'
+import type { FrameworkConfig, TestConfig } from '../types.ts'
 import type {
   ServerRenderHandler,
   SSRRequestThroughputBenchmarkResult,
 } from './types.ts'
-
-const frameworks: FrameworkConfig[] = frameworksConfig
-const throughputFrameworks = frameworks.filter(({ measurements }) =>
-  measurements.includes('ssrThroughput'),
-)
 
 const handlers = new Map<string, () => Promise<ServerRenderHandler>>([
   ['app-baseline-html', buildBaselineHtmlHandler],
@@ -36,29 +30,14 @@ const handlers = new Map<string, () => Promise<ServerRenderHandler>>([
   ['app-void', buildVoidHandler],
 ])
 
-export function supportsSSRRequestThroughputBenchmark(
-  packageName: string,
-): boolean {
-  return throughputFrameworks.some(({ app }) => app?.package === packageName)
-}
-
 export async function runSSRRequestThroughputBenchmark(
-  packageName: string,
+  framework: FrameworkConfig,
+  app: TestConfig,
 ): Promise<SSRRequestThroughputBenchmarkResult> {
-  const framework = throughputFrameworks.find(
-    ({ app }) => app?.package === packageName,
-  )
-  const app = framework?.app
-
-  if (!framework || !app) {
-    throw new Error(
-      `Unknown SSR request throughput package: ${packageName}. Available: ${throughputFrameworks.map(({ app }) => app?.package).join(', ')}`,
-    )
-  }
-  const buildHandler = handlers.get(packageName)
+  const buildHandler = handlers.get(app.package)
   if (!buildHandler) {
     throw new Error(
-      `SSR request throughput handler is not configured for ${packageName}`,
+      `SSR request throughput handler is not configured for ${app.package}`,
     )
   }
 
@@ -74,7 +53,7 @@ export async function runSSRRequestThroughputBenchmark(
       {
         name,
         displayName,
-        package: packageName,
+        package: app.package,
         handler,
       },
     ])

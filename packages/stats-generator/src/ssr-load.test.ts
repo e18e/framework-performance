@@ -1,3 +1,4 @@
+import { frameworksConfig } from './frameworks.ts'
 import {
   SSRLoadBenchmark,
   SSRLoadRouterLinksBenchmark,
@@ -91,12 +92,14 @@ test('routes and result keys separate the two load tests', () => {
     'app-react-router',
     'app-tanstack-start-react',
   ]) {
+    const framework = frameworksConfig.find(({ app }) => app?.package === pkg)
+    assert.ok(framework)
     assert.equal(
-      getSSRLoadPath(pkg, 'ssrLoad'),
+      getSSRLoadPath(framework, 'ssrLoad'),
       '/server-side-rendered-plain-links',
     )
     assert.equal(
-      getSSRLoadPath(pkg, 'ssrLoadRouterLinks'),
+      getSSRLoadPath(framework, 'ssrLoadRouterLinks'),
       '/server-side-rendered',
     )
   }
@@ -107,8 +110,10 @@ test('routes and result keys separate the two load tests', () => {
     'app-sveltekit',
     'app-baseline-html',
   ]) {
-    assert.equal(getSSRLoadPath(pkg, 'ssrLoad'), '/server-side-rendered')
-    assert.throws(() => getSSRLoadPath(pkg, 'ssrLoadRouterLinks'))
+    const framework = frameworksConfig.find(({ app }) => app?.package === pkg)
+    assert.ok(framework)
+    assert.equal(getSSRLoadPath(framework, 'ssrLoad'), '/server-side-rendered')
+    assert.throws(() => getSSRLoadPath(framework, 'ssrLoadRouterLinks'))
   }
 })
 

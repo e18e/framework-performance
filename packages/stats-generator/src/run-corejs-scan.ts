@@ -8,6 +8,7 @@ import { packagesDir } from './constants.ts'
 import {
   benchmarkOutputPath,
   getBenchmarkContext,
+  requireMeasurements,
   writeJsonFile,
 } from './utils.ts'
 
@@ -41,9 +42,10 @@ function extractVersion(source: string): string {
 }
 
 async function main() {
-  const { packageName, framework, projectConfig } = await getBenchmarkContext(
-    'Usage: run-corejs-scan <package-name>\nExample: run-corejs-scan starter-next-js',
-  )
+  const { packageName, framework, projectConfig } = await getBenchmarkContext({
+    project: 'starter',
+  })
+  requireMeasurements(framework, ['coreJS'])
 
   console.info(
     `Scanning build output for vendored core-js in ${framework.displayName} (${packageName})...\n`,

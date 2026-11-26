@@ -1,5 +1,5 @@
 import { measurementsConfig } from '../measurements.ts'
-import { getFrameworks } from '../get-frameworks.ts'
+import type { FrameworkConfig, TestConfig } from '../types.ts'
 import { startBenchmarkServer } from '../benchmark-server.ts'
 import { getHost } from '../serve/common.ts'
 import { runBenchmark } from './run-benchmark.ts'
@@ -9,28 +9,18 @@ const SERVER_SIDE_RENDERED_HOST = getHost()
 const SERVER_SIDE_RENDERED_PORT = 3002
 
 export async function runServerSideRenderedBenchmark(
-  packageName: string,
+  framework: FrameworkConfig,
+  app: TestConfig,
 ): Promise<ServerSideRenderedBenchmarkResult> {
-  const frameworks = (await getFrameworks()).filter(({ measurements }) =>
-    measurements.includes('ssrLighthouse'),
-  )
-  const framework = frameworks.find(({ app }) => app?.package === packageName)
-  const app = framework?.app
-
-  if (!framework || !app) {
-    throw new Error(
-      `Unknown server side rendered package: ${packageName}. Available: ${frameworks.map(({ app }) => app?.package).join(', ')}`,
-    )
-  }
   if (!app.serveScript) {
-    throw new Error(`Serve script is not configured for ${packageName}`)
+    throw new Error(`Serve script is not configured for ${app.package}`)
   }
 
   const name = `${app.benchmarkName ?? framework.name}-server-side-rendered`
   const displayName = `${framework.displayName} Server Side Rendered`
   console.info(`Starting server for ${displayName}...`)
   const killServer = await startBenchmarkServer(
-    { package: packageName, serveScript: app.serveScript },
+    { package: app.package, serveScript: app.serveScript },
     {
       host: SERVER_SIDE_RENDERED_HOST,
       port: SERVER_SIDE_RENDERED_PORT,

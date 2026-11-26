@@ -80,7 +80,7 @@ jobs:
 
       - name: Run install benchmark
         run: |
-          pnpm --filter @framework-performance/stats-generator run:install ${{ matrix.framework.package }}
+          pnpm --filter @framework-performance/stats-generator run:install ${{ matrix.framework.name }}
 
       - name: Upload install stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -116,15 +116,15 @@ jobs:
 
       - name: Run build benchmark
         run: |
-          pnpm --filter @framework-performance/stats-generator run:build ${{ matrix.framework.package }}
+          pnpm --filter @framework-performance/stats-generator run:build ${{ matrix.framework.name }}
 
       - name: Scan build output for vendored core-js
         if: contains(matrix.framework.measurements, 'coreJS')
-        run: pnpm --filter @framework-performance/stats-generator run:corejs ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:corejs ${{ matrix.framework.name }}
 
       - name: Scan build output for browser baseline requirements
         if: contains(matrix.framework.measurements, 'browserBaseline')
-        run: pnpm --filter @framework-performance/stats-generator run:browser-baseline ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:browser-baseline ${{ matrix.framework.name }}
 
       - name: Upload build stats
         if: contains(matrix.framework.measurements, 'buildDuration')
@@ -180,7 +180,7 @@ jobs:
 
       - name: Run dev server benchmark
         run: |
-          pnpm --filter @framework-performance/stats-generator run:dev-server ${{ matrix.framework.package }}
+          pnpm --filter @framework-performance/stats-generator run:dev-server ${{ matrix.framework.name }}
 
       - name: Upload dev server stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -223,7 +223,7 @@ jobs:
         run: pnpm build
 
       - name: Run SSR request throughput benchmark
-        run: pnpm --filter @framework-performance/stats-generator run:ssr-request-throughput ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:ssr-request-throughput ${{ matrix.framework.name }}
 
       - name: Upload SSR request throughput stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -271,18 +271,18 @@ jobs:
       - name: Collect framework dependency stats
         if: contains(matrix.framework.measurements, 'dependencyCounts')
         env:
-          STARTER_PACKAGE: ${{ matrix.framework.package }}
-        run: node packages/stats-generator/src/run-framework-dependency-scan.ts "$STARTER_PACKAGE"
+          FRAMEWORK_NAME: ${{ matrix.framework.name }}
+        run: node packages/stats-generator/src/run-framework-dependency-scan.ts "$FRAMEWORK_NAME"
 
       - name: Collect first-party dependency stats
         if: contains(matrix.framework.measurements, 'dependencyCounts')
         env:
-          STARTER_PACKAGE: ${{ matrix.framework.package }}
-        run: node packages/stats-generator/src/run-first-party-dependency-scan.ts "$STARTER_PACKAGE"
+          FRAMEWORK_NAME: ${{ matrix.framework.name }}
+        run: node packages/stats-generator/src/run-first-party-dependency-scan.ts "$FRAMEWORK_NAME"
 
       - name: Scan installed dependencies for Node engine constraints
         if: contains(matrix.framework.measurements, 'minimumNodeVersion')
-        run: pnpm --filter @framework-performance/stats-generator run:node-engines ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:node-engines ${{ matrix.framework.name }}
 
       - name: Upload dependency stats
         if: contains(matrix.framework.measurements, 'dependencyCounts')
@@ -340,7 +340,7 @@ jobs:
         run: pnpm build
 
       - name: Run SSR load benchmark
-        run: pnpm --filter @framework-performance/stats-generator run:ssr-load:containerized ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:ssr-load:containerized ${{ matrix.framework.name }}
 
       - name: Upload SSR load stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -385,7 +385,7 @@ jobs:
         run: pnpm build
 
       - name: Run SSR router link load benchmark
-        run: pnpm --filter @framework-performance/stats-generator run:ssr-router-link-load:containerized ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:ssr-router-link-load:containerized ${{ matrix.framework.name }}
 
       - name: Upload SSR router link load stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -428,7 +428,7 @@ jobs:
         run: pnpm build
 
       - name: Run client-side rendered benchmark
-        run: pnpm --filter @framework-performance/stats-generator run:client-side-rendered ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:client-side-rendered ${{ matrix.framework.name }}
 
       - name: Upload client-side rendered stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -471,7 +471,7 @@ jobs:
         run: pnpm build
 
       - name: Run server-side rendered benchmark
-        run: pnpm --filter @framework-performance/stats-generator run:server-side-rendered ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:server-side-rendered ${{ matrix.framework.name }}
 
       - name: Upload server-side rendered stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
@@ -516,7 +516,7 @@ jobs:
         run: pnpm build
 
       - name: Run initial load benchmark
-        run: pnpm --filter @framework-performance/stats-generator run:ssr-initial-load ${{ matrix.framework.package }}
+        run: pnpm --filter @framework-performance/stats-generator run:ssr-initial-load ${{ matrix.framework.name }}
 
       - name: Upload initial load stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1

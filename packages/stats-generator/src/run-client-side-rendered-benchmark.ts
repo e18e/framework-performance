@@ -3,20 +3,22 @@ import { runClientSideRenderedBenchmark } from './clientSideRendered/index.ts'
 import {
   benchmarkOutputPath,
   getBenchmarkContext,
+  requireMeasurements,
   writeJsonFile,
 } from './utils.ts'
 
 async function main() {
-  const { packageName, frameworkVersion } = await getBenchmarkContext(
-    'Usage: run-client-side-rendered-benchmark <package-name>\nExample: run-client-side-rendered-benchmark app-astro',
-  )
+  const { packageName, framework, projectConfig, frameworkVersion } =
+    await getBenchmarkContext({ project: 'app' })
+  requireMeasurements(framework, ['csrLighthouse'])
+
   const runs = measurementsConfig.csrLighthouse.runs
 
   console.info(
     `Running client-side rendered benchmark for ${packageName} (${runs} runs)...\n`,
   )
 
-  const result = await runClientSideRenderedBenchmark(packageName)
+  const result = await runClientSideRenderedBenchmark(framework, projectConfig)
 
   writeJsonFile(benchmarkOutputPath(packageName, 'csrLighthouse-stats.json'), {
     frameworkVersion,

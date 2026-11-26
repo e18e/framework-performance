@@ -1,18 +1,16 @@
 import { measurementsConfig } from './measurements.ts'
-import {
-  runSSRRequestThroughputBenchmark,
-  supportsSSRRequestThroughputBenchmark,
-} from './ssrRequestThroughput/index.ts'
+import { runSSRRequestThroughputBenchmark } from './ssrRequestThroughput/index.ts'
 import {
   benchmarkOutputPath,
   getBenchmarkContext,
+  requireMeasurements,
   writeJsonFile,
 } from './utils.ts'
 
 async function main() {
-  const { packageName, frameworkVersion } = await getBenchmarkContext(
-    'Usage: run-ssr-request-throughput-benchmark <package-name>\nExample: run-ssr-request-throughput-benchmark app-astro',
-  )
+  const { packageName, framework, projectConfig, frameworkVersion } =
+    await getBenchmarkContext({ project: 'app' })
+  requireMeasurements(framework, ['ssrThroughput'])
 
   const runs = measurementsConfig.ssrThroughput.runs
 
@@ -20,14 +18,10 @@ async function main() {
     `Running SSR request throughput benchmark for ${packageName} (${runs} runs)...\n`,
   )
 
-  if (!supportsSSRRequestThroughputBenchmark(packageName)) {
-    console.info(
-      `SSR request throughput benchmark is not configured for ${packageName}; skipping.`,
-    )
-    return
-  }
-
-  const result = await runSSRRequestThroughputBenchmark(packageName)
+  const result = await runSSRRequestThroughputBenchmark(
+    framework,
+    projectConfig,
+  )
 
   writeJsonFile(benchmarkOutputPath(packageName, 'ssrThroughput-stats.json'), {
     frameworkVersion,
