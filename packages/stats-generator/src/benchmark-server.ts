@@ -1,4 +1,5 @@
 import { spawn } from 'node:child_process'
+import { once } from 'node:events'
 import { join } from 'node:path'
 import { setTimeout as sleep } from 'node:timers/promises'
 import { fileURLToPath } from 'node:url'
@@ -29,7 +30,7 @@ export async function startBenchmarkServer(
     readinessPath: string
     timeoutMs?: number
   },
-): Promise<() => void> {
+): Promise<() => Promise<void>> {
   const { host, port, readinessPath, timeoutMs = 30_000 } = options
   const scriptPath = fileURLToPath(
     new URL(`./serve/${config.serveScript}`, import.meta.url),
@@ -61,9 +62,18 @@ export async function startBenchmarkServer(
       new Error(`Server process exited with ${signal ?? `code ${code}`}`),
     )
   })
-  const stop = () => {
+  const stop = async () => {
     lifecycle.abort(new Error('Server stopped'))
-    if (proc.exitCode === null && proc.signalCode === null) proc.kill('SIGTERM')
+    if (
+      proc.pid === undefined ||
+      proc.exitCode !== null ||
+      proc.signalCode !== null
+    )
+      return
+
+    const exited = once(proc, 'exit')
+    if (!proc.killed) proc.kill('SIGTERM')
+    await exited
   }
   const url = `http://${host}:${port}${readinessPath}`
   try {
@@ -72,7 +82,7 @@ export async function startBenchmarkServer(
       AbortSignal.any([lifecycle.signal, AbortSignal.timeout(timeoutMs)]),
     )
   } catch (error) {
-    stop()
+    await stop()
     throw new Error(
       `Server at ${url} failed to become ready within ${timeoutMs}ms`,
       { cause: error },

@@ -37,6 +37,6 @@ export async function runClientSideRenderedBenchmark(
       app.fullDocumentNavigation ?? false,
     )
   } finally {
-    killServer()
+    await killServer()
   }
 }
