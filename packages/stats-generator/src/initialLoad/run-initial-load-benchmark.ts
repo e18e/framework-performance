@@ -10,38 +10,15 @@ import { startFlow } from 'lighthouse'
 const INITIAL_LOAD_HOST = getHost()
 const INITIAL_LOAD_PORT = 3003
 
-export async function runInitialLoadBenchmark(
-  framework: FrameworkConfig,
-  app: TestConfig,
-  path: string,
-) {
-  if (!app.serveScript) {
-    throw new Error(`Serve script is not configured for ${app.package}`)
-  }
-
-  console.info(`Starting server for ${framework.displayName}...`)
-  const killServer = await startBenchmarkServer(
-    { package: app.package, serveScript: app.serveScript },
-    {
-      host: INITIAL_LOAD_HOST,
-      port: INITIAL_LOAD_PORT,
-      readinessPath: path,
-    },
-  )
+async function measureInitialLoad(url: string) {
+  const browser = await puppeteer.launch({
+    executablePath: findChromium(),
+    headless: true,
+    defaultViewport: { width: 800, height: 600, deviceScaleFactor: 1 },
+    args: ['--no-sandbox', '--disable-setuid-sandbox'],
+  })
 
   try {
-    console.info(
-      `Running initial load benchmark for ${framework.displayName}...`,
-    )
-    const url = `http://${INITIAL_LOAD_HOST}:${INITIAL_LOAD_PORT}${path}`
-
-    await using browser = await puppeteer.launch({
-      executablePath: findChromium(),
-      headless: true,
-      defaultViewport: { width: 800, height: 600, deviceScaleFactor: 1 },
-      args: ['--no-sandbox', '--disable-setuid-sandbox'],
-    })
-
     const page = await browser.newPage()
     const flow = await startFlow(page, {
       name: 'Initial load',
@@ -62,6 +39,32 @@ export async function runInitialLoadBenchmark(
     }
     return parseResourceSummary(lhr.audits['resource-summary']?.details)
   } finally {
-    killServer()
+    await browser.close()
   }
 }
+
+export async function runInitialLoadBenchmark(
+  framework: FrameworkConfig,
+  app: TestConfig,
+  path: string,
+) {
+  if (!app.serveScript) {
+    throw new Error(`Serve script is not configured for ${app.package}`)
+  }
+
+  console.info(`Starting server for ${framework.displayName}...`)
+  const killServer = await startBenchmarkServer(
+    { package: app.package, serveScript: app.serveScript },
+    {
+      host: INITIAL_LOAD_HOST,
+      port: INITIAL_LOAD_PORT,
+      readinessPath: path,
+    },
+  )
+
+  console.info(`Running initial load benchmark for ${framework.displayName}...`)
+  const url = `http://${INITIAL_LOAD_HOST}:${INITIAL_LOAD_PORT}${path}`
+  return measureInitialLoad(url).finally(killServer)
+}
+
+
