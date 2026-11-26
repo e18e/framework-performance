@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { use, useState } from 'react'
+import { browser } from 'react-dom'
 import Link from 'next/link'
 
 type Entry = { id: string; name: string }
@@ -13,6 +14,7 @@ function generateData(): Entry[] {
 }
 
 export default function ClientSideRenderedTable() {
+  use(browser())
   const [entries] = useState(generateData)
 
   return (

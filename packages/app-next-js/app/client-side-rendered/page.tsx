@@ -1,12 +1,10 @@
-'use client'
-
-import dynamic from 'next/dynamic'
-
-const ClientSideRenderedTable = dynamic(
-  () => import('./ClientSideRenderedTable'),
-  { ssr: false },
-)
+import { Suspense } from 'react'
+import ClientSideRenderedTable from './ClientSideRenderedTable'
 
 export default function ClientSideRenderedPage() {
-  return <ClientSideRenderedTable />
+  return (
+    <Suspense>
+      <ClientSideRenderedTable />
+    </Suspense>
+  )
 }

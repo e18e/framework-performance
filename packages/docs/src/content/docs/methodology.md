@@ -400,7 +400,9 @@ Current pinned dependencies are listed in each project's `package.json`:
   work to commit must be finite and greater than zero; individual interaction
   components may be zero.
 - Each framework uses its supported production routing and rendering controls.
-- Next.js disables SSR for the measured table and detail content.
+- Next.js renders the measured table and detail content only in the browser
+  with React's `use(browser())` inside a Suspense boundary. The components stay
+  in the route's bundle.
 - Astro uses React client-only islands. Its detail link performs a full-document
   navigation; the other tested frameworks use client routers.
 - Pracht generates UUID rows in the browser. Both routes use `render: 'spa'`
