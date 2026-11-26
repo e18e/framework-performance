@@ -85,14 +85,14 @@ came out of the project or were influenced by its output.
 On the project's CI runner, Nuxt `4.7.0` measured against `4.6.4` a day
 apart:
 
-| | `4.6.4` | `4.7.0` |
-| --- | ---: | ---: |
-| SSR load, 1,000 `<NuxtLink>`s, 25 connections | 134 req/s | 547 req/s |
-| SSR load, 1,000 plain links, 25 connections | 321 req/s | 701 req/s |
-| SSR request throughput | 311 ops/s | 413 ops/s |
-| SSR first contentful paint | 85ms | 75ms |
-| CSR first contentful paint | 225ms | 106ms |
-| initial load | 80 kB, 14 requests | 61 kB, 3 requests |
+|                                               |            `4.6.4` |           `4.7.0` |
+| --------------------------------------------- | -----------------: | ----------------: |
+| SSR load, 1,000 `<NuxtLink>`s, 25 connections |          134 req/s |         547 req/s |
+| SSR load, 1,000 plain links, 25 connections   |          321 req/s |         701 req/s |
+| SSR request throughput                        |          311 ops/s |         413 ops/s |
+| SSR first contentful paint                    |               85ms |              75ms |
+| CSR first contentful paint                    |              225ms |             106ms |
+| initial load                                  | 80 kB, 14 requests | 61 kB, 3 requests |
 
 Not all of that comes from the changes above. Several others in `4.7.0`
 came from profiling a Nuxt UI site at the same time, such as encoding
