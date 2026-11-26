@@ -76,6 +76,8 @@ jobs:
       csrLighthouse: ${{ steps.set-matrix.outputs.csrLighthouse }}
       ssrLighthouse: ${{ steps.set-matrix.outputs.ssrLighthouse }}
       ssrInitialLoad: ${{ steps.set-matrix.outputs.ssrInitialLoad }}
+      ssrInitialLoadImages: ${{ steps.set-matrix.outputs.ssrInitialLoadImages }}
+      ssrInitialLoadFrameworkImages: ${{ steps.set-matrix.outputs.ssrInitialLoadFrameworkImages }}
     steps:
       - name: Capture runner Chrome version
         id: chrome
@@ -126,6 +128,8 @@ jobs:
           echo "csrLighthouse=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.measurements | index("csrLighthouse") != null) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements}]')" >> $GITHUB_OUTPUT
           echo "ssrLighthouse=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.measurements | index("ssrLighthouse") != null) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements}]')" >> $GITHUB_OUTPUT
           echo "ssrInitialLoad=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.measurements | index("ssrInitialLoad") != null) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements}]')" >> $GITHUB_OUTPUT
+          echo "ssrInitialLoadImages=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.measurements | index("ssrInitialLoadImages") != null) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements}]')" >> $GITHUB_OUTPUT
+          echo "ssrInitialLoadFrameworkImages=$(echo "$FRAMEWORKS" | jq -c '[.[] | select(.app) | select(.measurements | index("ssrInitialLoadFrameworkImages") != null) | {name, displayName, package: .app.package, buildScript: .app.buildScript, buildOutputDir: .app.buildOutputDir, measurements}]')" >> $GITHUB_OUTPUT
 
   measure:
     name: Run
@@ -142,6 +146,8 @@ jobs:
       csrLighthouse: ${{ needs.setup.outputs.csrLighthouse }}
       ssrLighthouse: ${{ needs.setup.outputs.ssrLighthouse }}
       ssrInitialLoad: ${{ needs.setup.outputs.ssrInitialLoad }}
+      ssrInitialLoadImages: ${{ needs.setup.outputs.ssrInitialLoadImages }}
+      ssrInitialLoadFrameworkImages: ${{ needs.setup.outputs.ssrInitialLoadFrameworkImages }}
 
   validate:
     name: Validate results

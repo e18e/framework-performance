@@ -55,15 +55,15 @@ export const measurementsConfig = {
   ssrInitialLoadImages: {
     status: 'live',
     paths: {
-      jpeg: 'ssr-img-jpeg',
-      webp: 'ssr-img-webp',
+      jpeg: '/ssr-img-jpeg',
+      webp: '/ssr-img-webp',
     },
   },
-    ssrInitialLoadFrameworkImages: {
+  ssrInitialLoadFrameworkImages: {
     status: 'live',
     paths: {
-      jpeg: 'ssr-img-jpeg-image-component',
-      webp: 'ssr-img-webp-image-component',
+      jpeg: '/ssr-img-jpeg-image-component',
+      webp: '/ssr-img-webp-image-component',
     },
   },
 } as const satisfies Record<
