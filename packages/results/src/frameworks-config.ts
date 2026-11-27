@@ -25,7 +25,7 @@ export const frameworksConfig = [
     name: 'baseline-html',
     displayName: 'Baseline HTML',
     frameworkPackage: 'node',
-    measurements: ['ssrThroughput', 'ssrLoad'],
+    measurements: ['ssrThroughput', 'ssrInitialLoad', 'ssrLoad'],
     app: {
       package: 'app-baseline-html',
       serveScript: 'baseline-html.ts',
