@@ -27,7 +27,9 @@ async function main() {
     },
   })
 
-  console.info(`\n✓ Saved ${packageName} v${frameworkVersion} (${packageName})`)
+  console.info(
+    `\n✓ Saved ${packageName} v${frameworkVersion} (SSR Initial Load)`,
+  )
 }
 
 main().catch((error) => {
