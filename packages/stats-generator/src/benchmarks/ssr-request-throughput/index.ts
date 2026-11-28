@@ -1,6 +1,7 @@
 import { runBenchmark } from './run-benchmark.ts'
 import { buildHandler as buildBaselineHtmlHandler } from './handlers/baseline-html.ts'
 import { buildHandler as buildAstroHandler } from './handlers/astro.ts'
+import { buildHandler as buildMastroHandler } from './handlers/mastro.ts'
 import { buildHandler as buildNextJSHandler } from './handlers/nextjs.ts'
 import { buildHandler as buildNuxtHandler } from './handlers/nuxt.ts'
 import { buildHandler as buildPrachtHandler } from './handlers/pracht.ts'
@@ -19,6 +20,7 @@ import type {
 const handlers = new Map<string, () => Promise<ServerRenderHandler>>([
   ['app-baseline-html', buildBaselineHtmlHandler],
   ['app-astro', buildAstroHandler],
+  ['app-mastro', buildMastroHandler],
   ['app-next-js', buildNextJSHandler],
   ['app-nuxt', buildNuxtHandler],
   ['app-pracht', buildPrachtHandler],

@@ -1,6 +1,7 @@
 export const FrameworkOptions = [
   'baseline-html',
   'astro',
+  'mastro',
   'next',
   'nuxt',
   'pracht',
@@ -17,6 +18,8 @@ export const PackagePathOptions = [
   'packages/app-baseline-html',
   'packages/starter-astro',
   'packages/app-astro',
+  'packages/starter-mastro',
+  'packages/app-mastro',
   'packages/starter-next-js',
   'packages/app-next-js',
   'packages/starter-nuxt',
