@@ -78,6 +78,7 @@ export const DependencyCountBenchmark = BaseBenchmark.extend({
   coreDev: createValueWithUnit('count', z.number().int().nonnegative()),
   firstPartyDev: createValueWithUnit('count', z.number().int().nonnegative()),
   starterDev: createValueWithUnit('count', z.number().int().nonnegative()),
+  coreCompiled: createValueWithUnit('count', z.number().int().nonnegative()),
   coreProd: createValueWithUnit('count', z.number().int().nonnegative()),
   firstPartyProd: createValueWithUnit('count', z.number().int().nonnegative()),
   starterProd: createValueWithUnit('count', z.number().int().nonnegative()),

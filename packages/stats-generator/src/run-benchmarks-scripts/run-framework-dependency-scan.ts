@@ -11,10 +11,7 @@ async function main() {
     project: 'starter',
   })
   requireMeasurements(framework, ['dependencyCounts'])
-  const dependencyCounts = runFrameworkDependencies(
-    packageName,
-    framework.frameworkPackage,
-  )
+  const dependencyCounts = runFrameworkDependencies(packageName, framework)
 
   writeJsonFile(
     benchmarkOutputPath(packageName, 'framework-dependency-stats.json'),
