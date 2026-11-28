@@ -44,7 +44,7 @@ on:
         required: false
         default: '[]'
       ssrLighthouse:
-        description: 'JSON array of frameworks to measure server-side rendered paint and interaction performance'
+        description: 'JSON array of frameworks to measure ssr lighthouse paint and interaction performance'
         type: string
         required: false
         default: '[]'
@@ -480,10 +480,10 @@ jobs:
         working-directory: ./packages/${{ matrix.framework.package }}
         run: pnpm build
 
-      - name: Run server-side rendered benchmark
-        run: pnpm --filter @framework-performance/stats-generator run:server-side-rendered ${{ matrix.framework.name }}
+      - name: Run ssr lighthouse benchmark
+        run: pnpm --filter @framework-performance/stats-generator run:ssr-lighthouse ${{ matrix.framework.name }}
 
-      - name: Upload server-side rendered stats
+      - name: Upload ssr lighthouse stats
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: ssrLighthouse-stats-${{ matrix.framework.name }}
