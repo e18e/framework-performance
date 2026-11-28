@@ -1,15 +1,22 @@
-import { runFrameworkDependencyScan } from '../benchmarks/framework-dependencies/run-scan.ts'
+import { runFrameworkDependencies } from '../benchmarks/framework-dependencies/run-framework-dependencies.ts'
 import {
   getBenchmarkContext,
   requireMeasurements,
 } from '../utils/benchmark-context.ts'
+import { writeJsonFile } from '../utils/files.ts'
+import { benchmarkOutputPath } from '../utils/paths.ts'
 
 async function main() {
   const { packageName, framework } = await getBenchmarkContext({
     project: 'starter',
   })
   requireMeasurements(framework, ['dependencyCounts'])
-  await runFrameworkDependencyScan(packageName, framework)
+  const dependencyCounts = runFrameworkDependencies(packageName, framework)
+
+  writeJsonFile(
+    benchmarkOutputPath(packageName, 'framework-dependency-stats.json'),
+    { dependencyCounts },
+  )
 }
 
 main().catch((error) => {
